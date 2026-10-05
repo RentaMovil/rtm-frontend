@@ -1,29 +1,25 @@
 import { useCallback, useEffect, useState } from "react";
-import { inventoryService } from "../services/inventoryService"
+import { inventoryService } from "../services/inventoryService";
 import { toInventoryViewModel } from "../services/inventoryMapper";
 
-export function useInventory(){
+export function useInventory() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [inventory, setInventory] = useState([]);
 
-    const  fetchInventory = useCallback( async () => {
+    const fetchInventory = useCallback(async () => {
         setIsLoading(true);
         setError(null);
-        try{
-            const response = await inventoryService.getAll()
+        try {
+            const response = await inventoryService.getAll();
             setInventory(response.map(toInventoryViewModel));
-        }catch (err) {
+        } catch (err) {
             setError(err.message);
-        }finally {
+        } finally {
             setIsLoading(false);
         }
-    },[])
+    }, []);
 
-        useEffect(() => {fetchInventory();},[fetchInventory])
-    
-    return {inventory,isLoading,error,refetch: fetchInventory};
+    useEffect(() => { fetchInventory(); }, [fetchInventory]);
+    return { inventory, isLoading, error, refetch: fetchInventory };
 }
-
-
-

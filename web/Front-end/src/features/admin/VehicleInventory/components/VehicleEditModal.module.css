@@ -1,0 +1,421 @@
+.card-check {
+    display: flex;
+    gap: 24px;
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+.card-container-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 340px;
+    max-width: 340px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 24px;
+    margin-right: 10%;
+}
+
+.status-h2 {
+    text-align: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 23px;
+    font-weight: 697;
+    color: var(--primary, #2D7FF9);
+    margin: 34px 12px 27px 39%;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--accent, #00C853);
+    width: 20%;
+}
+
+.card-container-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.card-container-setSearch {
+    width: 170%;
+    margin: -1% -76%;
+}
+
+.card-container-fleetc {
+    width: 100%;
+    margin-top: 12%;
+    margin-left: -76%;
+}
+
+.card-container-status {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+/* MODAL */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+    background-color: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(2px);
+}
+
+.modal-modal {
+    width: min(94vw, 780px);
+    max-height: 90vh;
+    background: var(--card-bg);
+    border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 28px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    flex-shrink: 0;
+}
+
+.modal-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text-h);
+    margin: 0;
+    position: relative;
+    padding-left: 14px;
+}
+
+.modal-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 2px;
+    bottom: 2px;
+    width: 4px;
+    border-radius: 4px;
+    background: var(--accent, #00C853);
+}
+
+.modal-closeButton {
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--text-secondary, #6b7280);
+    transition: background 0.2s, color 0.2s;
+}
+
+.modal-closeButton:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--text-h);
+}
+
+.modalForm {
+    padding: 24px 28px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.modal-section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.modal-section-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--primary, #2D7FF9);
+    margin: 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.modalFields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.vehicle-form-input--full {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 8px;
+}
+
+.modalFields label,
+.vehicle-form-input label {
+    display: grid;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-h);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.modalFields p {
+    color: var(--error, #ef4444);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 2px;
+    padding: 6px 10px;
+    background: rgba(239, 68, 68, 0.08);
+    border-radius: 8px;
+    border-left: 3px solid #ef4444;
+}
+
+.vehicle-form-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.vehicle-form-input input,
+.vehicle-form-input select,
+.modal-input,
+.modal-textarea,
+.modalFields select {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 9px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background: var(--input-bg, #fff);
+    color: var(--text-h);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.vehicle-form-input input:focus,
+.vehicle-form-input select:focus,
+.modal-input:focus,
+.modal-textarea:focus {
+    outline: none;
+    border-color: var(--primary, #2D7FF9);
+    box-shadow: 0 0 0 3px rgba(45, 127, 249, 0.14);
+}
+
+.modal-textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.modalFileDialogWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    margin-top: -60px;
+}
+
+.modalFileDialogWrapper label {
+    color: var(--text-h);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    align-items: center;
+    padding: 16px 28px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.03);
+    flex-shrink: 0;
+}
+
+.modal-cancelButton,
+.modal-submitButton {
+    padding: 11px 20px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: filter 0.15s, background 0.15s;
+}
+
+.modal-cancelButton {
+    background: #f2f2f5;
+    color: #252525;
+}
+
+.modal-cancelButton:hover {
+    background: #e5e5ea;
+}
+
+.modal-submitButton {
+    border-color: var(--modal-button, var(--primary));
+    background-color: var(--modal-button, var(--primary));
+    color: #fff;
+}
+
+.modal-submitButton:hover {
+    filter: brightness(1.08);
+}
+
+.modal-submitButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+.modal-fileDialog{
+    margin-top: 8px;
+}
+
+@media (max-width: 1024px) {
+    .card-check {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .card-container-left,
+    .card-container-right {
+        width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    .modal-modal {
+        width: min(95vw, 680px);
+    }
+
+    .modalFields {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-check {
+        flex-direction: column;
+        padding: 0;
+        gap: 12px;
+    }
+
+    .card-container-setSearch {
+        width: 100%;
+        margin: revert-layer;
+    }
+
+    .card-container-left {
+        width: 100%;
+        max-width: 100%;
+        position: static;
+    }
+
+    .card-container-right {
+        width: 100%;
+    }
+
+    .card-container-fleetc {
+        margin: 0;
+        width: 100%;
+    }
+
+    .card-container-status {
+        width: 100%;
+        max-width: 100%;
+        gap: 18px;
+    }
+
+    .modal-overlay {
+        padding: 0;
+        align-items: stretch;
+    }
+
+    .modal-modal {
+        width: 100%;
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .modal-header {
+        padding: 16px 18px;
+    }
+
+    .modalForm {
+        padding: 18px;
+        gap: 22px;
+    }
+
+    .modal-footer {
+        padding: 12px 18px;
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .modal-cancelButton,
+    .modal-submitButton {
+        width: 100%;
+        padding: 12px 14px;
+    }
+}
+/* Mensajes de error del formulario y del backend */
+.error-message {
+    color: #dc2626;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Agrupa todas las secciones para bloquearlas cuando el vehículo está retirado */
+.modal-fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+}
+
+/* Retirar es irreversible: botón rojo, a la izquierda del pie */
+.modal-retireButton {
+    margin-right: auto;
+    padding: 11px 20px;
+    border-radius: 10px;
+    border: 1px solid #dc2626;
+    background: transparent;
+    color: #dc2626;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.modal-retireButton:hover {
+    background: #fee2e2;
+}

@@ -613,7 +613,11 @@
       "description": "Description",
       "requiredDescriptionMinLength": "Description must have at least 5 characters",
       "requiredDescriptionMaxLength": "Description cannot exceed 200 characters",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "retire": "Retire vehicle",
+      "retireConfirm": "Retire this vehicle? This cannot be undone.",
+      "retireYes": "Yes, retire",
+      "retiredNotice": "This vehicle is retired: it can no longer be edited or rented."
     },
     "actions": {
       "save": "Save changes",

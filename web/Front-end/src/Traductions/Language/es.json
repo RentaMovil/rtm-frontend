@@ -647,7 +647,11 @@
       "description": "Descripción",
       "requiredDescriptionMinLength": "La descripción debe tener al menos 5 caracteres",
       "requiredDescriptionMaxLength": "La descripción no puede exceder los 200 caracteres",
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "retire": "Retirar vehículo",
+      "retireConfirm": "¿Retirar este vehículo? No se puede deshacer.",
+      "retireYes": "Sí, retirar",
+      "retiredNotice": "Este vehículo está retirado: no se puede editar ni rentar."
     },
     "actions": {
       "save": "Guardar cambios",

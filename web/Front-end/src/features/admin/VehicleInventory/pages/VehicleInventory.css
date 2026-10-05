@@ -452,7 +452,8 @@
 .vi-td-nombre {
   font-weight: 600;
 }
-.vi-btn-detail {
+.vi-btn-detail,
+.vi-btn-edit {
   padding: 6px 14px;
   border: 1.5px solid var(--navbar);
   border-radius: 8px;
@@ -462,7 +463,8 @@
   cursor: pointer;
   transition: all 0.18s;
 }
-.vi-btn-detail:hover {
+.vi-btn-detail:hover,
+.vi-btn-edit:hover {
   background: var(--navbar);
   color: #fff;
 }
