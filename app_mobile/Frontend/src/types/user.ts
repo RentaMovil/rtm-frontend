@@ -2,26 +2,25 @@ import type { ISODateTime, UUID } from "./common";
 
 /**
  * Entity: User (Identity & Access).
- * Fuente: `web/Front-end/db.json` (coleccion `users`) y `mock-server.cjs`.
  *
- * IMPORTANTE — convencion de la API: `users` es la unica coleccion en
- * snake_case (`first_name`, `last_login`). `vehicles` es camelCase. La app
- * replica los nombres tal cual llegan en vez de "corregirlos", para que la
- * traza de red sea 1:1 con la API y no haya sorpresas al migrar.
- *
- * `password_hash` nunca se recibe: `mock-server.cjs` lo elimina con
- * `toPublicUser()` antes de responder.
+ * Forma real de rtm-iam: camelCase (firstName/lastName), no snake_case
+ * (eso era del mock). `login`/`register` devuelven UserResponse (sin
+ * `phone`); solo `GET /users/me` (ProfileResponse) lo trae, por eso aqui es
+ * opcional — se completa llamando `refreshUser()` despues de iniciar
+ * sesion. No existe `last_login` en ningun DTO real: se quito.
  */
 export type User = {
   id: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  phone: string;
   username: string;
   role: string;
   status: string;
-  last_login: ISODateTime | null;
+  /** Solo viene en ProfileResponse (GET /users/me), no en login/register. */
+  phone?: string;
+  imageUrl?: string | null;
+  permissions?: string[];
 };
 
 /** Entity: Session. */
@@ -97,8 +96,14 @@ export type AuthResponse = AuthTokens & {
   user: User;
 };
 
-/** Respuesta de `POST /auth/refresh`: no renueva el refresh token. */
-export type RefreshResponse = {
-  accessToken: string;
-  expiresIn: number;
-};
+/**
+ * Respuesta de `POST /auth/refresh`.
+ *
+ * El backend real SI rota el refresh token (de un solo uso: el que se
+ * mando queda invalido): devuelve el mismo AuthResponse completo que login,
+ * con un `refreshToken` nuevo que hay que persistir. Guardar solo el
+ * accessToken y descartar este deja el refresh token viejo guardado, que
+ * el servidor ya invalido; la siguiente renovacion lo manda de nuevo, el
+ * backend lo detecta como reutilizado y cierra todas las sesiones.
+ */
+export type RefreshResponse = AuthResponse;

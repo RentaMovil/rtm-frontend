@@ -106,7 +106,10 @@
     "dateOfBirth": "Date of birth",
     "document": "ID Document No.",
     "phone": "Phone",
-    "submit": "Rent"
+    "submit": "Rent",
+    "terms": {
+      "accept": "I have read and accept the terms and conditions"
+    }
   },
   "login": {
     "createAccount": "Create account",

@@ -39,16 +39,23 @@ export type Payment = {
   rejectionReason?: string;
 };
 
+export type PaymentReceiptFile = {
+  uri: string;
+  fileName?: string | null;
+  mimeType?: string | null;
+  fileSize?: number | null;
+};
+
 /**
  * Payload de `createPayment`.
  *
- * `receiptFile` es una URI local del dispositivo todavia; el servicio la
- * sube y devuelve `Payment` con `receiptFileUrl` ya resuelto.
+ * `receiptFile` conserva los datos locales del archivo para subirlo antes de
+ * crear el pago y guardar una URL accesible en `receiptFileUrl`.
  */
 export type PaymentDraft = {
   reservationId: string;
   bankAccountId: string;
   amount: Money;
   referenceNumber?: string;
-  receiptFile: string;
+  receiptFile: PaymentReceiptFile;
 };

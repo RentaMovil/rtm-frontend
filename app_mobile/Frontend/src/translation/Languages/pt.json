@@ -112,7 +112,10 @@
     "dateOfBirth": "Data de nascimento",
     "document": "Nº do documento de identidade",
     "phone": "Telefone",
-    "submit": "Alugar"
+    "submit": "Alugar",
+    "terms": {
+      "accept": "Li e aceito os termos e condições"
+    }
   },
   "login": {
     "createAccount": "Criar conta",

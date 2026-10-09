@@ -17,6 +17,7 @@ import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
 
 import { createStyles } from "./ReceiptPicker.styles";
+import type { PaymentReceiptFile } from "../../../types";
 
 /**
  * En web no hay camara: expo-image-picker resuelve `launchCameraAsync`
@@ -35,9 +36,9 @@ const SUBTITLE = IS_WEB
   : "Adjunta la foto del comprobante de la transferencia";
 
 type Props = {
-  /** URI de la imagen elegida, o null si no hay ninguna. */
-  receiptFile: string | null;
-  onChange: (uri: string | null) => void;
+  /** Archivo elegido, o null si no hay ninguno. */
+  receiptFile: PaymentReceiptFile | null;
+  onChange: (file: PaymentReceiptFile | null) => void;
 };
 
 /**
@@ -47,9 +48,8 @@ type Props = {
  * (`receiptFileUrl`): sin el, un Admin no tiene nada que revisar. El cliente
  * transfiere por su cuenta y adjunta la imagen del comprobante.
  *
- * Lo que se elige aqui es una URI local. Subirla al storage (S3/MinIO) y
- * convertirla en URL es responsabilidad de `paymentService` cuando exista
- * backend.
+ * La URI local se usa para la vista previa; paymentService sube el archivo
+ * antes de enviar el pago y persiste la URL de almacenamiento.
  */
 export default function ReceiptPicker({ receiptFile, onChange }: Props) {
   const [isPicking, setIsPicking] = useState(false);
@@ -84,7 +84,13 @@ export default function ReceiptPicker({ receiptFile, onChange }: Props) {
         : await ImagePicker.launchCameraAsync({ mediaTypes: ["images"], quality: 0.7 });
 
       if (!result.canceled && result.assets.length > 0) {
-        onChange(result.assets[0].uri);
+        const asset = result.assets[0];
+        onChange({
+          uri: asset.uri,
+          fileName: asset.fileName,
+          mimeType: asset.mimeType,
+          fileSize: asset.fileSize,
+        });
       }
     } catch (error) {
       Alert.alert(
@@ -111,7 +117,7 @@ export default function ReceiptPicker({ receiptFile, onChange }: Props) {
       {receiptFile ? (
         <View>
           <Image
-            source={{ uri: receiptFile }}
+            source={{ uri: receiptFile.uri }}
             style={styles.preview}
             resizeMode="contain"
           />

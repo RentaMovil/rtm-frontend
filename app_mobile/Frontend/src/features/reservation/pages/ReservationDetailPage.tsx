@@ -1,3 +1,5 @@
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
 import {
     ActivityIndicator,
     Alert,
@@ -8,21 +10,18 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { useEffect, useState } from "react";
-import { useLocalSearchParams, router } from "expo-router";
 import {
     RESERVATION_STATUS,
 } from "../../../types";
 
-import type { Reservation, Vehicle } from "../../../types";
+import { themes } from "../../../theme/themes";
+import { useTheme } from "../../../theme/useTheme";
+import type { Branch, Reservation, Vehicle } from "../../../types";
 import { getBranchById } from "../../branches/services/branchService";
-import { vehicleService } from "../../vehicles/services/vehicleService";
 import {
     cancelReservation,
     getReservationById,
 } from "../services/reservationService";
-import { themes } from "../../../theme/themes";
-import { useTheme } from "../../../theme/useTheme";
 import { createStyles } from "./ReservationDetailPage.styles";
 
 // Etiquetas de display sobre los valores de `RESERVATION_STATUS`. El texto va
@@ -50,7 +49,15 @@ export default function ReservationDetailPage() {
     const { themeName } = useTheme();
     const colors = themes[themeName];
     const styles = createStyles(colors);
+    const [pickupBranch, setPickupBranch] = useState<Branch | null>(null);
+    const [returnBranch, setReturnBranch] = useState<Branch | null>(null);
 
+    useEffect(() => {
+        if (!reservation) return;
+        getBranchById(reservation.pickupBranchId).then(setPickupBranch);
+        getBranchById(reservation.returnBranchId).then(setReturnBranch);
+    }, [reservation]);
+    
     useEffect(() => {
         async function loadReservation() {
             if (!id) {
@@ -117,8 +124,8 @@ export default function ReservationDetailPage() {
     }
 
     const canCancel =
-    reservation.status === RESERVATION_STATUS.PENDING_PAYMENT ||
-    reservation.status === RESERVATION_STATUS.CONFIRMED;
+        reservation.status === RESERVATION_STATUS.PENDING_PAYMENT ||
+        reservation.status === RESERVATION_STATUS.CONFIRMED;
 
     return (
         <>
@@ -139,8 +146,8 @@ export default function ReservationDetailPage() {
 
                 <View style={styles.card}>
                     <Text style={styles.sectionTitle}>Información del viaje</Text>
-                    <DetailRow label="Recogida" value={getBranchById(reservation.pickupBranchId)?.name ?? "-"} styles={styles} />
-                    <DetailRow label="Devolución" value={getBranchById(reservation.returnBranchId)?.name ?? "-"} styles={styles} />
+                    <DetailRow label="Recogida" value={pickupBranch?.name ?? "-"} styles={styles} />
+                    <DetailRow label="Devolución" value={returnBranch?.name ?? "-"} styles={styles} />
                     <DetailRow label="Fecha de recogida" value={reservation.start_date} styles={styles} />
                     <DetailRow label="Fecha de devolución" value={reservation.end_date} styles={styles} last />
                 </View>

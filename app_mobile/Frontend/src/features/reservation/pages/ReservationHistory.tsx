@@ -26,6 +26,7 @@ import {
     useTheme,
 } from "../../../theme/useTheme";
 
+import { useAuth } from "../../auth/context/AuthContext";
 import {
     getMyReservations,
 } from "../services/reservationService";
@@ -34,11 +35,9 @@ import {
     Reservation,
 } from "../../../types";
 
-import ReservationCard
-    from "../components/History/card";
+import ReservationCard from "../components/History/card";
 
-import ReservationFilters
-    from "../components/Filter";
+import ReservationFilters from "../components/Filter";
 
 import {
     useReservationFilters,
@@ -46,6 +45,8 @@ import {
 
 
 export default function ReservationHistoryScreen() {
+
+    const { user } = useAuth();
 
     const [
 
@@ -97,10 +98,16 @@ export default function ReservationHistoryScreen() {
 
         async function loadReservations() {
 
+            if (!user?.id) {
+                setReservations([]);
+                setLoading(false);
+                return;
+            }
+
             try {
 
                 const data =
-                    await getMyReservations();
+                    await getMyReservations(user.id);
 
                 setReservations(data);
 
@@ -121,7 +128,7 @@ export default function ReservationHistoryScreen() {
 
         loadReservations();
 
-    }, []);
+    }, [user?.id]);
 
 
     function handlePress(

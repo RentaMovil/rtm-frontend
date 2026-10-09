@@ -13,21 +13,21 @@ import type {
 } from "../../../types";
 
 /**
- * Servicio de autenticacion contra la API mock.
+ * Servicio de autenticacion contra rtm-iam (a traves del gateway).
  *
- * Sustituye por completo la version anterior, que comparaba contra
- * `mocks/auth.ts` y devolvia un token ficticio. Ahora habla HTTP real con
- * `mock-server.cjs`, que emite JWT de 15 min + refresh token de 7 dias.
+ * login/register/profile usan camelCase (firstName, lastName...), no el
+ * snake_case del mock. `login` ademas espera `identifier` (email o
+ * username), no `email`.
  *
- * El `users` de la API es la unica coleccion en snake_case, asi que
- * `register` envia `first_name` / `last_name` tal cual.
+ * forgotPassword/verifyCode/resetPassword quedan sin tocar: ninguna
+ * pantalla los llama todavia (no hay flujo de "olvide mi contrasena" en el
+ * movil) y el real no separa verificar-codigo de cambiar-contrasena en dos
+ * pasos como estas funciones asumen.
  */
 
 export async function login(data: LoginRequest): Promise<AuthResponse> {
-  // El server hace `email.trim().toLowerCase()`; replicarlo aqui evita que
-  // un correo con mayusculas o espacios falle la busqueda.
   return httpClient.post<AuthResponse>(API_ROUTES.auth.login, {
-    email: data.email.trim().toLowerCase(),
+    identifier: data.email.trim().toLowerCase(),
     password: data.password,
   });
 }
@@ -36,8 +36,8 @@ export async function register(
   data: RegisterRequest,
 ): Promise<AuthResponse> {
   return httpClient.post<AuthResponse>(API_ROUTES.auth.register, {
-    first_name: data.first_name.trim(),
-    last_name: data.last_name.trim(),
+    firstName: data.first_name.trim(),
+    lastName: data.last_name.trim(),
     email: data.email.trim().toLowerCase(),
     phone: data.phone.trim(),
     username: data.username.trim(),
@@ -60,6 +60,7 @@ export async function logout(refreshToken: string): Promise<void> {
     .catch(() => undefined);
 }
 
+/** GET /users/me (ProfileResponse): trae el perfil completo, incluido el telefono. */
 export async function getCurrentUser(): Promise<User> {
   return httpClient.get<User>(API_ROUTES.auth.me);
 }
@@ -88,8 +89,24 @@ export async function resetPassword(
   });
 }
 
+/** PATCH /users/me/password (ChangePasswordRequest): currentPassword/newPassword, ya coincide. */
 export async function changePassword(
   data: ChangePasswordRequest,
 ): Promise<void> {
   await httpClient.patch<void>(API_ROUTES.auth.changePassword, data);
+}
+
+/**
+ * Actualiza el perfil del usuario autenticado.
+ *
+ * `PATCH /users/me` (UpdateProfileRequest): firstName/lastName/phone/imageUrl,
+ * todos opcionales. El server resuelve el usuario por el access token.
+ */
+export async function updateProfile(data: {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  imageUrl?: string | null;
+}): Promise<User> {
+  return httpClient.patch<User>(API_ROUTES.auth.me, data);
 }

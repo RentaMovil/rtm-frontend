@@ -172,15 +172,14 @@
     {
       "id": 2,
       "first_name": "juan",
-      "last_name": "hernandez",
+      "last_name": "ssssss",
       "email": "elcapitojuan@gmail.com",
-      "phone": "3213547890",
-      "username": "juaniti21",
+      "phone": "3213547891",
       "password_hash": "$2b$12$arElmp4QqkZ1CiUZsjXEG./ffvutC7Wo4RgHAwgu9z13eEhYqaL2.",
       "role": "ADMIN",
       "status": "ACTIVE",
-      "last_login": "2026-09-30T15:28:01.623Z",
-      "photo": null,
+      "last_login": "2026-10-07T05:59:11.200Z",
+      "photo": "blob:http://localhost:8081/86fe1d18-4924-4954-96d9-5501d0a138d9",
       "registeredAt": "2026-08-14"
     },
     {
@@ -196,6 +195,18 @@
       "last_login": "2026-09-29T22:33:14.343Z",
       "photo": null,
       "registeredAt": "2026-09-02"
+    },
+    {
+      "id": 4,
+      "first_name": "bainhandler",
+      "last_name": "shutc",
+      "email": "canonfeiber@gmail.com",
+      "phone": "3112091340",
+      "username": "ccanoonq",
+      "password_hash": "$2b$12$bTRVfJVbQ5CkBaOKncZk4OAdkHTNJHZIt4VVuaYd9etADbACWC1kO",
+      "role": "CLIENT",
+      "status": "ACTIVE",
+      "last_login": null
     }
   ],
   "sessions": [
@@ -257,6 +268,26 @@
       "expires_at": "2026-10-07T15:28:01.625Z",
       "ip_address": "::ffff:127.0.0.1",
       "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:156.0) Gecko/20100101 Firefox/156.0",
+      "revoked": false
+    },
+    {
+      "id": "05a7f332-ce8b-4d65-8fe4-683cb9364d7f",
+      "user_id": 2,
+      "refresh_token": "a7e90078-eccb-458c-8267-f25d10e2122d",
+      "created_at": "2026-10-07T05:59:11.204Z",
+      "expires_at": "2026-10-14T05:59:11.204Z",
+      "ip_address": "::ffff:127.0.0.1",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:157.0) Gecko/20100101 Firefox/157.0",
+      "revoked": false
+    },
+    {
+      "id": "e8ffaa58-9bcc-40cc-8e8d-38f053e953f0",
+      "user_id": 4,
+      "refresh_token": "5ece6256-f089-4f8f-a55e-9dc4b162b7b3",
+      "created_at": "2026-10-08T16:04:07.206Z",
+      "expires_at": "2026-10-15T16:04:07.206Z",
+      "ip_address": "::ffff:127.0.0.1",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:157.0) Gecko/20100101 Firefox/157.0",
       "revoked": false
     }
   ],
@@ -476,7 +507,7 @@
       "vehicle_subtotal": 100,
       "insurance_subtotal": 0,
       "total_amount": 100,
-      "status": "PENDING_PAYMENT",
+      "status": "CANCELLED",
       "id": 1
     },
     {
@@ -508,6 +539,78 @@
       "total_amount": 100,
       "status": "PENDING_PAYMENT",
       "id": 3
+    },
+    {
+      "client_id": 2,
+      "vehicle_id": 1,
+      "insurance_type_id": 1,
+      "pickup_branch_id": 2,
+      "return_branch_id": 2,
+      "reservation_date": "2026-10-07T18:36:40.552Z",
+      "start_date": "2026-10-07T18:36:18.587Z",
+      "end_date": "2026-10-08T18:36:18.587Z",
+      "days": 1,
+      "price_per_day": 100000,
+      "vehicle_subtotal": 100000,
+      "insurance_per_day": 10000,
+      "insurance_subtotal": 10000,
+      "total_amount": 110000,
+      "status": "PENDING_REVIEW",
+      "id": 4
+    },
+    {
+      "client_id": 2,
+      "vehicle_id": 8,
+      "insurance_type_id": 1,
+      "pickup_branch_id": 2,
+      "return_branch_id": 2,
+      "reservation_date": "2026-10-08T00:22:21.214Z",
+      "start_date": "2026-10-08T00:20:41.533Z",
+      "end_date": "2026-10-09T00:20:41.533Z",
+      "days": 1,
+      "price_per_day": 100000,
+      "vehicle_subtotal": 100000,
+      "insurance_per_day": 10000,
+      "insurance_subtotal": 10000,
+      "total_amount": 110000,
+      "status": "PENDING_REVIEW",
+      "id": 5
+    },
+    {
+      "client_id": 4,
+      "vehicle_id": 7,
+      "insurance_type_id": 1,
+      "pickup_branch_id": 4,
+      "return_branch_id": 4,
+      "reservation_date": "2026-10-08T16:21:07.684Z",
+      "start_date": "2026-10-08T16:04:10.532Z",
+      "end_date": "2026-10-09T16:04:10.532Z",
+      "days": 1,
+      "price_per_day": 10000,
+      "vehicle_subtotal": 10000,
+      "insurance_per_day": 10000,
+      "insurance_subtotal": 10000,
+      "total_amount": 20000,
+      "status": "PENDING_REVIEW",
+      "id": 6
+    },
+    {
+      "client_id": 4,
+      "vehicle_id": 7,
+      "insurance_type_id": 1,
+      "pickup_branch_id": 4,
+      "return_branch_id": 4,
+      "reservation_date": "2026-10-08T16:21:43.599Z",
+      "start_date": "2026-10-08T16:04:10.532Z",
+      "end_date": "2026-10-09T16:04:10.532Z",
+      "days": 1,
+      "price_per_day": 10000,
+      "vehicle_subtotal": 10000,
+      "insurance_per_day": 10000,
+      "insurance_subtotal": 10000,
+      "total_amount": 20000,
+      "status": "PENDING_PAYMENT",
+      "id": 7
     }
   ],
   "payments": [
@@ -550,6 +653,36 @@
       "receipt_file_url": "https://res.cloudinary.com/dz6ohgjub/image/upload/v1791216567/Certificado_tecnico_1_lihugw.pdf",
       "status": "PENDING_REVIEW",
       "id": 4
+    },
+    {
+      "reservation_id": 4,
+      "bank_account_id": 2,
+      "payment_date": "2026-10-07T18:36:53.508Z",
+      "amount": 110000,
+      "reference_number": null,
+      "receipt_file_url": "blob:http://localhost:8081/b5ad5608-1710-45de-a952-bdc70b1afa6c",
+      "status": "PENDING_REVIEW",
+      "id": 5
+    },
+    {
+      "reservation_id": 5,
+      "bank_account_id": 1,
+      "payment_date": "2026-10-08T00:22:51.082Z",
+      "amount": 110000,
+      "reference_number": null,
+      "receipt_file_url": "blob:http://localhost:8081/616aba84-b741-437d-8b6f-66d5105780a8",
+      "status": "PENDING_REVIEW",
+      "id": 6
+    },
+    {
+      "reservation_id": 6,
+      "bank_account_id": 2,
+      "payment_date": "2026-10-08T16:21:18.866Z",
+      "amount": 20000,
+      "reference_number": null,
+      "receipt_file_url": "https://res.cloudinary.com/dz6ohgjub/image/upload/v1791476478/260514_22h14m09s_screenshot_yy7ifa.png",
+      "status": "PENDING_REVIEW",
+      "id": 7
     }
   ],
   "notifications": [

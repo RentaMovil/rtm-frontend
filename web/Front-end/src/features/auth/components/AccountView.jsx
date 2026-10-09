@@ -13,6 +13,7 @@ import english from "../../../assets/img/eeuu.png";
 import french from "../../../assets/img/francia2.png";
 import portuguese from "../../../assets/img/portugal.png";
 
+
 export default function AccountView({ theme, setTheme }) {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
@@ -172,12 +173,14 @@ export default function AccountView({ theme, setTheme }) {
                     </div>
                 </div>
                 <RoleFooter />
+                <RoleFooter />
             </>
         );
     }
 
     return (
         <>
+            <RoleNavbar />
             <RoleNavbar />
             <div className="containerC">
                 <div className="cardC">
@@ -565,7 +568,7 @@ export default function AccountView({ theme, setTheme }) {
                 </div>
             )}
 
-            <FooterComponent />
+            <RoleFooter />
         </>
     );
 }

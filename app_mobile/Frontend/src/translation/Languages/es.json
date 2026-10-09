@@ -106,7 +106,10 @@
     "dateOfBirth": "Fecha de nacimiento",
     "document": "Nº Documento de identidad",
     "phone": "Teléfono",
-    "submit": "Alquilar"
+    "submit": "Alquilar",
+    "terms": {
+      "accept": "He leído y acepto los términos y condiciones"
+    }
   },
   "login": {
     "createAccount": "Crear cuenta",

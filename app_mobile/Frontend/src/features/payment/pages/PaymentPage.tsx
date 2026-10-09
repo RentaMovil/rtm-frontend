@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
+import { router } from "expo-router";
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
@@ -17,7 +18,7 @@ import { usePayment } from "../context/PaymentContext";
 import { calculateDays } from "../utils/calculateDays";
 import { calculateInvoiceTotal } from "../utils/calculateInvoiceTotal";
 
-import type { InsuranceType } from "../../../types";
+import type { InsuranceType, PaymentReceiptFile } from "../../../types";
 
 import { createStyles } from "./PaymentPage.styles";
 
@@ -33,12 +34,12 @@ import { createStyles } from "./PaymentPage.styles";
  * asi que aqui no se crea nada: solo se le reporta el pago.
  */
 export default function PaymentPage() {
-  const { selectedBankAccount, processPayment, payment } = usePayment();
+  const { selectedBankAccount, processPayment, payment, clearPayment } = usePayment();
 
-  const { reservation, createdReservation } = useReservation();
+  const { reservation, createdReservation, clearReservation } = useReservation();
 
   const [insuranceOptions, setInsuranceOptions] = useState<InsuranceType[]>([]);
-  const [receiptFile, setReceiptFile] = useState<string | null>(null);
+  const [receiptFile, setReceiptFile] = useState<PaymentReceiptFile | null>(null);
   const [referenceNumber, setReferenceNumber] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -81,7 +82,7 @@ export default function PaymentPage() {
     !!createdReservation && !!selectedBankAccount && !!receiptFile && !isSubmitting;
 
   async function handlePayment() {
-    if (!canPay || !createdReservation || !selectedBankAccount) {
+    if (!canPay || !createdReservation || !selectedBankAccount || !receiptFile) {
       return;
     }
 
@@ -93,7 +94,7 @@ export default function PaymentPage() {
         bankAccountId: selectedBankAccount.id,
         amount: total,
         ...(referenceNumber ? { referenceNumber } : {}),
-        receiptFile: receiptFile as string,
+        receiptFile,
       });
 
       Alert.alert(
@@ -113,6 +114,14 @@ export default function PaymentPage() {
   }
 
   if (payment) {
+    // Se limpia la reserva y el pago del borrador: volver al menu no debe
+    // dejar datos de esta reserva ya enviada para la siguiente.
+    const handleGoToMenu = () => {
+      clearPayment();
+      clearReservation();
+      router.replace("/menu");
+    };
+
     return (
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.stateTitle}>Pago en revision</Text>
@@ -121,6 +130,10 @@ export default function PaymentPage() {
           Tu pago quedo registrado y esta esperando que un administrador lo
           confirme.
         </Text>
+
+        <View style={{ marginTop: 24 }}>
+          <ContinueButton title="Volver al menu" onPress={handleGoToMenu} />
+        </View>
       </ScrollView>
     );
   }

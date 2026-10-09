@@ -112,7 +112,10 @@
     "dateOfBirth": "Date de naissance",
     "document": "Nº de pièce d'identité",
     "phone": "Téléphone",
-    "submit": "Louer"
+    "submit": "Louer",
+    "terms": {
+      "accept": "J'ai lu et j'accepte les termes et conditions"
+    }
   },
   "login": {
     "createAccount": "Créer un compte",
