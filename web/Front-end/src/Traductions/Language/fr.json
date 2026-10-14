@@ -140,7 +140,13 @@
     "passwordShort": "Le mot de passe doit contenir au moins 8 caractères",
     "passwordWeak": "Le mot de passe doit contenir au moins une majuscule et un chiffre",
     "passwordMatch": "Les mots de passe ne correspondent pas",
-    "errorCreate": "Erreur lors de la création du compte"
+    "errorCreate": "Erreur lors de la création du compte",
+    "termsAccept": "J'accepte les",
+    "termsLink": "conditions générales et la politique de traitement des données personnelles",
+    "termsRequired": "Vous devez accepter les conditions générales et la politique de traitement des données personnelles pour vous inscrire",
+    "termsTitle": "Conditions générales et traitement des données personnelles",
+    "termsClose": "Fermer",
+    "termsBody": ["En créant un compte sur RentaMovil, vous autorisez le traitement de vos données personnelles (prénom, nom, e-mail, téléphone et nom d'utilisateur) conformément à la loi colombienne 1581 de 2012 (Habeas Data).", "Finalité : gérer votre compte, vos réservations, paiements et facturation, et vous contacter au sujet du service.", "Vos droits : consulter, mettre à jour, rectifier et supprimer vos données, et révoquer cette autorisation à tout moment.", "Vos données ne seront pas partagées avec des tiers, sauf obligation légale ou pour réaliser le service contracté (par exemple le traitement des paiements).", "Les conditions de location de véhicules seront de nouveau présentées et acceptées lors de la réservation."]
   },
   "quotes": {
     "quote1": "Faites confiance à votre voyage. Faites confiance à Rentamovil.",

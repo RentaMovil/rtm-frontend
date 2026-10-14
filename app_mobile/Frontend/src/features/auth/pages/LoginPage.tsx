@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { Link } from "expo-router";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import BrandLogo from "../../../shared/components/Brand/BrandLogo";
 
@@ -56,6 +57,7 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -118,14 +120,34 @@ export default function LoginPage() {
           <View>
             <Text style={styles.label}>{t("loginForm.password")}</Text>
 
-            <TextInput
-              placeholder={t("loginForm.passwordPlaceholder")}
-              placeholderTextColor={colors.secondaryText}
-              secureTextEntry
-              value={password}
-              onChangeText={setPassword}
-              style={[styles.input, styles.inputWeb]}
-            />
+            <View style={styles.passwordField}>
+              <TextInput
+                placeholder={t("loginForm.passwordPlaceholder")}
+                placeholderTextColor={colors.secondaryText}
+                secureTextEntry={!showPassword}
+                value={password}
+                onChangeText={setPassword}
+                style={[styles.input, styles.inputWeb, styles.inputPassword]}
+              />
+
+              <TouchableOpacity
+                style={styles.togglePassword}
+                onPress={() => setShowPassword((prev) => !prev)}
+                accessibilityRole="button"
+                accessibilityLabel={t(
+                  showPassword
+                    ? "loginForm.hidePassword"
+                    : "loginForm.showPassword"
+                )}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <FontAwesome
+                  name={showPassword ? "eye-slash" : "eye"}
+                  size={18}
+                  color={colors.primary}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
 
           {error ? <Text style={styles.error}>{error}</Text> : null}

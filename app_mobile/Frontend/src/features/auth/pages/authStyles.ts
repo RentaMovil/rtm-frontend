@@ -79,6 +79,29 @@ export const createAuthStyles = (colors: any) => {
       backgroundColor: "transparent",
     },
 
+    /**
+     * Campo de contrasena con el boton de mostrar/ocultar superpuesto a la
+     * derecha (`passwordField` + `togglePassword`). El input reserva espacio
+     * con `inputPassword` para que el texto no quede debajo del boton.
+     */
+    passwordField: {
+      position: "relative",
+      justifyContent: "center",
+    },
+
+    inputPassword: {
+      paddingRight: 52,
+    },
+
+    togglePassword: {
+      position: "absolute",
+      right: 4,
+      width: 44,
+      height: 44,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+
     inputError: {
       borderColor: colors.error,
     },

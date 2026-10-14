@@ -108,8 +108,11 @@ function Reservation() {
     const finalReturnBranch =
         selectedBranch ?? finalPickupBranch;
 
+    // Igual que el backend (InsuranceType.costFor): selectedInsurance.price es el costo
+    // DIARIO del seguro (daily_cost) y se cobra una vez por toda la duración de la
+    // reserva (dailyCost * days), no como un monto plano.
     const reservationTotal =
-        Number(total) + Number(selectedInsurance?.price ?? 0);
+        Number(total) + Number(selectedInsurance?.price ?? 0) * Number(days || 0);
 
     const currentCalendarValue = {
         branch: pickupBranch,

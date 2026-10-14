@@ -467,6 +467,41 @@
     opacity: 0.9;
     }
 
+    /* Botones del modal de logout */
+    .btn-negative {
+    background: transparent;
+    color: var(--text-h);
+    border: 1px solid var(--bordercard);
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    }
+
+    .btn-negative:hover {
+    background: var(--hover);
+    }
+
+    .btn-danger {
+    background: var(--cancel);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    }
+
+    .btn-danger:hover {
+    opacity: 0.9;
+    }
+
     
     /* Con el boton de cancelar eliminado, la X pasa a la esquina superior
        derecha del modal. Se posiciona con `absolute` respecto al

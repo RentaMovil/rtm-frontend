@@ -47,7 +47,7 @@
 .login-form input:focus {
   outline: none;
   border-color: var(--accent);
-  background: var(--card-bg);
+  background: white;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   transform: translateY(-2px);
 }
@@ -84,11 +84,11 @@
 
 .toggle-password:hover {
   color: var(--accent);
-  background: rgba(253, 253, 253, 0.08);
+  background: rgba(59, 130, 246, 0.08);
 }
 
 .toggle-password:focus-visible {
-  outline: 2px solid #ffffff;
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -123,7 +123,9 @@
   background-color: transparent;
   margin: -8px 0 8px 0;
 }
-
+.button :hover{
+  background-color: var(--accent);
+}
 .register-link:hover {
   color: var(--accent);
   text-decoration: underline;

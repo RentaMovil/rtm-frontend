@@ -4,7 +4,7 @@ export function calculateDays(startDate, endDate) {
         return 0;
     }
 
-    // 🟢 LA SOLUCIÓN: Convertimos los parámetros a objetos Date reales por si vienen como Strings
+    // Convertimos los parámetros a objetos Date reales por si vienen como Strings
     const startObj = new Date(startDate);
     const endObj = new Date(endDate);
 
@@ -13,21 +13,12 @@ export function calculateDays(startDate, endDate) {
         return 0;
     }
 
-    const start = new Date(
-        startObj.getFullYear(),
-        startObj.getMonth(),
-        startObj.getDate()
-    );
+    const difference = endObj.getTime() - startObj.getTime();
 
-    const end = new Date(
-        endObj.getFullYear(),
-        endObj.getMonth(),
-        endObj.getDate()
-    );
-
-    const difference = end.getTime() - start.getTime();
-    
-    const days = difference / (1000 * 60 * 60 * 24);
+    // Igual que el backend (ReservationUseCaseImpl.daysBetween, que usa
+    // Duration.between(start, end).toDays()): se usa la fecha y hora completas (sin truncar
+    // a medianoche) y se trunca hacia abajo (floor), nunca se redondea, con mínimo 1 día.
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
 
     return Math.max(days, 1);
 }

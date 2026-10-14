@@ -131,6 +131,8 @@
     "password": "Mot de passe",
     "emailPlaceholder": "votre@email.com",
     "passwordPlaceholder": "••••••••",
+    "showPassword": "Afficher le mot de passe",
+    "hidePassword": "Masquer le mot de passe",
     "submitting": "Connexion...",
     "submit": "Se connecter",
     "noAccount": "Vous n'avez pas de compte ? Inscrivez-vous",

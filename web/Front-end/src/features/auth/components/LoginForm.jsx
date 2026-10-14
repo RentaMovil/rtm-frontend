@@ -109,7 +109,7 @@
                             : "loginForm.showPassword"
                     )}
                 >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    {showPassword ? <FaEye /> : <FaEyeSlash />}
                 </button>
             </div>
             </div>

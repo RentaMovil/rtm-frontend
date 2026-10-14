@@ -131,6 +131,8 @@
     "password": "Senha",
     "emailPlaceholder": "seu@email.com",
     "passwordPlaceholder": "••••••••",
+    "showPassword": "Mostrar senha",
+    "hidePassword": "Ocultar senha",
     "submitting": "Entrando...",
     "submit": "Entrar",
     "noAccount": "Não tem uma conta? Cadastre-se",

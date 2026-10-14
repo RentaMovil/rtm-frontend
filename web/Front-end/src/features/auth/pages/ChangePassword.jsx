@@ -60,7 +60,7 @@ function ChangePassword() {
                                     aria-label="Mostrar u ocultar contraseña"
                                     aria-pressed={showPassword}
                                 >
-                                    {showPassword ? <FaEye /> : <FaEyeSlash />}
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
                                 </button>
                             </div>
                         </div>
@@ -85,7 +85,7 @@ function ChangePassword() {
                                     aria-label="Mostrar u ocultar contraseña"
                                     aria-pressed={showPassword}
                                 >
-                                    {showPassword ? <FaEye /> : <FaEyeSlash /> }
+                                    {showPassword ? <FaEyeSlash /> : <FaEye /> }
                                 </button>
                             </div>
                         </div>
@@ -122,7 +122,7 @@ function ChangePassword() {
                                     aria-label="Mostrar u ocultar confirmación"
                                     aria-pressed={showConfirm}
                                 >
-                                    {showConfirm ? <FaEye /> : <FaEyeSlash />}
+                                    {showConfirm ? <FaEyeSlash /> : <FaEye />}
                                 </button>
                             </div>
                             {confirmPassword.length > 0 && !passwordsMatch && (

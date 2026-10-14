@@ -13,6 +13,7 @@ import english from "../../../assets/img/eeuu.png";
 import french from "../../../assets/img/francia2.png";
 import portuguese from "../../../assets/img/portugal.png";
 
+
 export default function AccountView({ theme, setTheme }) {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
@@ -24,6 +25,7 @@ export default function AccountView({ theme, setTheme }) {
     }, [refreshProfile]);
     const [showThemeModal, setShowThemeModal] = useState(false);
     const [showLangModal, setShowLangModal] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     // Cambio de correo (HU-IAM-004). Vive en su propio modal, no en el modo
     // edicion del perfil: la confirmacion es la contrasena actual, no un
@@ -140,6 +142,7 @@ export default function AccountView({ theme, setTheme }) {
     const handleLogout = async () => {
         await logout();
         navigate("/");
+        setShowLogoutModal(false);
     };
 
     if (isLoading) {
@@ -170,12 +173,14 @@ export default function AccountView({ theme, setTheme }) {
                     </div>
                 </div>
                 <RoleFooter />
+                <RoleFooter />
             </>
         );
     }
 
     return (
         <>
+            <RoleNavbar />
             <RoleNavbar />
             <div className="containerC">
                 <div className="cardC">
@@ -227,7 +232,7 @@ export default function AccountView({ theme, setTheme }) {
                             <button
                                 className="icon-btnC"
                                 type="button"
-                                onClick={handleLogout}
+                                onClick={() => setShowLogoutModal(true)}
                                 aria-label={t("account.logout")}
                                 title={t("account.logout")}
                             >
@@ -539,6 +544,25 @@ export default function AccountView({ theme, setTheme }) {
                                     </div>
                                 </button>
                             ))}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* MODAL DE CONFIRMACIÓN DE CIERRE DE SESIÓN */}
+            {showLogoutModal && (
+                <div className="modal-overlay" onClick={() => setShowLogoutModal(false)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <p>
+                            ¿Estás seguro de que deseas <strong>cerrar sesión</strong>?
+                        </p>
+                        <div className="modal-actions">
+                            <button className="btn-negative" onClick={() => setShowLogoutModal(false)}>
+                                {t("account.cancelar", "Cancelar")}
+                            </button>
+                            <button className="btn-danger" onClick={handleLogout}>
+                                {t("account.confirmLogout", "Sí, Cerrar Sesión")}
+                            </button>
                         </div>
                     </div>
                 </div>

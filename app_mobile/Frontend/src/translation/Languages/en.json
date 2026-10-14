@@ -125,6 +125,8 @@
     "password": "Password",
     "emailPlaceholder": "your@email.com",
     "passwordPlaceholder": "••••••••",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
     "submitting": "Logging in...",
     "submit": "Log in",
     "noAccount": "Don't have an account? Sign up",

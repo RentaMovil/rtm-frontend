@@ -62,7 +62,7 @@ function ChangePassword() {
                                     aria-label="Mostrar u ocultar contraseña"
                                     aria-pressed={showPassword}
                                 >
-                                    {showPassword ? <FaEye /> : <FaEyeSlash /> }
+                                    {showPassword ? <FaEyeSlash /> : <FaEye /> }
                                 </button>
                             </div>
                         </div>

@@ -140,7 +140,13 @@
     "passwordShort": "La contraseña debe tener al menos 8 caracteres",
     "passwordWeak": "La contraseña debe tener al menos una mayúscula y un número",
     "passwordMatch": "Las contraseñas no coinciden",
-    "errorCreate": "Error al crear la cuenta"
+    "errorCreate": "Error al crear la cuenta",
+    "termsAccept": "Acepto los",
+    "termsLink": "términos y condiciones y la política de tratamiento de datos personales",
+    "termsRequired": "Debes aceptar los términos y condiciones y la política de tratamiento de datos personales para registrarte",
+    "termsTitle": "Términos y condiciones y tratamiento de datos personales",
+    "termsClose": "Cerrar",
+    "termsBody": ["Al crear una cuenta en RentaMovil autorizas el tratamiento de tus datos personales (nombre, apellido, correo electrónico, teléfono y usuario) conforme a la Ley 1581 de 2012 (Habeas Data) de Colombia.", "Finalidad: gestionar tu cuenta, tus reservas, pagos y facturación, y comunicarnos contigo sobre el servicio.", "Tus derechos: conocer, actualizar, rectificar y suprimir tus datos, y revocar esta autorización en cualquier momento.", "Tus datos no se compartirán con terceros salvo obligación legal o para completar el servicio contratado (por ejemplo, el procesamiento de pagos).", "Las condiciones del alquiler de vehículos se presentarán y aceptarán de nuevo durante el proceso de reserva."]
   },
   "quotes": {
     "quote1": "Confía en tu viaje. Confía en Rentamovil.",
