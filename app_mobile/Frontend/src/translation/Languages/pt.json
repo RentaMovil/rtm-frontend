@@ -260,7 +260,12 @@
     "confirmPassword": "Confirmar nova senha",
     "invalid": "As senhas não coincidem",
     "saving": "Salvando...",
-    "save": "Salvar alterações"
+    "save": "Salvar alterações",
+    "methodPassword": "Senha atual",
+    "methodCode": "Código por e-mail",
+    "cancel": "Cancelar",
+    "samePassword": "A nova senha deve ser diferente da atual",
+    "successRelogin": "Senha alterada com sucesso. Entre novamente com a nova."
   },
   "vehicleForm": {
     "title": "Registrar um novo veículo",

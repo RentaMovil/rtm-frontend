@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   Alert,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -15,25 +17,32 @@ import AppCard from "../../../shared/components/AppCard/AppCard";
 
 import { ApiError } from "../../../shared/api/httpClient";
 import { useAuth } from "../../auth/context/AuthContext";
+import PasswordCodeFlow from "../../auth/components/PasswordCodeFlow";
+import {
+  buildPasswordRules,
+  isPasswordValid,
+} from "../../auth/utils/passwordRules";
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
 
+type Method = "password" | "code";
+
 /**
- * Cambio de contrasena.
+ * Cambio de contrasena con sesion iniciada. Hay dos metodos:
+ *  - "password": con la contrasena actual (`PATCH /users/me/password`).
+ *  - "code": con un codigo enviado al correo de la cuenta (mismos endpoints
+ *    de recuperar contrasena: forgot, verify-code y reset).
  *
- * Sustituye al `router.push("/count")` que habia en la pantalla de cuenta:
- * ese boton decia "Cambiar contrasena" pero apuntaba a una ruta que no
- * existe (queda de un renombrado a medias de `AccountRoute`).
- *
- * El endpoint existe de verdad en la API mock: `PATCH /auth/me/password`
- * con `{ currentPassword, newPassword }`, autenticado. Asi que esto no es
- * un placeholder.
+ * En ambos casos iam cierra todas las sesiones al cambiarla, asi que despues
+ * se cierra la sesion local y el guard de `app/_layout.tsx` lleva al login.
  */
 export default function ChangePasswordPage() {
-  const { changePassword } = useAuth();
+  const { t } = useTranslation();
+  const { changePassword, logout, user } = useAuth();
   const router = useRouter();
 
+  const [method, setMethod] = useState<Method>("password");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -41,23 +50,37 @@ export default function ChangePasswordPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { themeName } = useTheme();
-  const styles = createStyles(themes[themeName]);
+  const colors = themes[themeName];
+  const styles = createStyles(colors);
+
+  const rules = buildPasswordRules(newPassword, t);
+
+  function selectMethod(next: Method) {
+    setMethod(next);
+    setError(null);
+  }
+
+  async function finish() {
+    Alert.alert(t("changePassword.title"), t("changePassword.successRelogin"));
+
+    await logout();
+  }
 
   function validate(): string | null {
     if (!currentPassword || !newPassword || !confirmPassword) {
-      return "Completa todos los campos.";
+      return t("loginForm.errorFields");
     }
 
     if (newPassword !== confirmPassword) {
-      return "La nueva contrasena no coincide con la confirmacion.";
+      return t("changePassword.invalid");
     }
 
-    if (newPassword.length < 6) {
-      return "La nueva contrasena debe tener al menos 6 caracteres.";
+    if (!isPasswordValid(newPassword)) {
+      return t("changePassword.errorPassword");
     }
 
     if (newPassword === currentPassword) {
-      return "La nueva contrasena debe ser distinta de la actual.";
+      return t("changePassword.samePassword");
     }
 
     return null;
@@ -76,85 +99,130 @@ export default function ChangePasswordPage() {
 
     try {
       await changePassword(currentPassword, newPassword);
-
-      Alert.alert(
-        "Contrasena actualizada",
-        "Tu contrasena se cambio correctamente.",
-      );
-
-      router.back();
+      await finish();
     } catch (err) {
-      // El server responde 401 con "Contrasena actual incorrecta".
+      // El server responde 401 si la contrasena actual es incorrecta.
       setError(
         err instanceof ApiError || err instanceof Error
           ? err.message
-          : "No se pudo actualizar la contrasena.",
+          : t("changePassword.errorRequest"),
       );
-    } finally {
       setIsSubmitting(false);
     }
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Cambiar contrasena</Text>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+    >
+      <Text style={styles.title}>{t("changePassword.title")}</Text>
+
+      <View style={styles.tabs}>
+        <TouchableOpacity
+          style={[styles.tab, method === "password" && styles.tabActive]}
+          onPress={() => selectMethod("password")}
+          accessibilityRole="tab"
+          accessibilityState={{ selected: method === "password" }}
+        >
+          <Text
+            style={[
+              styles.tabText,
+              method === "password" && styles.tabTextActive,
+            ]}
+          >
+            {t("changePassword.methodPassword")}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.tab, method === "code" && styles.tabActive]}
+          onPress={() => selectMethod("code")}
+          accessibilityRole="tab"
+          accessibilityState={{ selected: method === "code" }}
+        >
+          <Text
+            style={[styles.tabText, method === "code" && styles.tabTextActive]}
+          >
+            {t("changePassword.methodCode")}
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       <AppCard>
-        <Text style={styles.label}>Contrasena actual</Text>
-        <TextInput
-          style={styles.input}
-          value={currentPassword}
-          onChangeText={setCurrentPassword}
-          secureTextEntry
-          autoCapitalize="none"
-          placeholder="Tu contrasena actual"
-          placeholderTextColor="#8A8A8A"
-        />
-
-        <Text style={styles.label}>Nueva contrasena</Text>
-        <TextInput
-          style={styles.input}
-          value={newPassword}
-          onChangeText={setNewPassword}
-          secureTextEntry
-          autoCapitalize="none"
-          placeholder="Al menos 6 caracteres"
-          placeholderTextColor="#8A8A8A"
-        />
-
-        <Text style={styles.label}>Confirmar nueva contrasena</Text>
-        <TextInput
-          style={styles.input}
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry
-          autoCapitalize="none"
-          placeholder="Repite la nueva contrasena"
-          placeholderTextColor="#8A8A8A"
-        />
-
-        {error ? <Text style={styles.error}>{error}</Text> : null}
-
-        <View style={styles.actions}>
-          {isSubmitting ? (
-            <ActivityIndicator color="#FFFFFF" />
-          ) : (
-            <ContinueButton
-              title="Actualizar contrasena"
-              onPress={handleSubmit}
+        {method === "password" ? (
+          <>
+            <Text style={styles.label}>{t("changePassword.currentPassword")}</Text>
+            <TextInput
+              style={styles.input}
+              value={currentPassword}
+              onChangeText={setCurrentPassword}
+              secureTextEntry
+              autoCapitalize="none"
+              placeholder={t("loginForm.passwordPlaceholder")}
+              placeholderTextColor={colors.secondaryText}
             />
-          )}
 
-          <TouchableOpacity
-            style={styles.cancel}
-            onPress={() => router.back()}
-            disabled={isSubmitting}
-          >
-            <Text style={styles.cancelText}>Cancelar</Text>
-          </TouchableOpacity>
-        </View>
+            <Text style={styles.label}>{t("changePassword.newPassword")}</Text>
+            <TextInput
+              style={styles.input}
+              value={newPassword}
+              onChangeText={setNewPassword}
+              secureTextEntry
+              autoCapitalize="none"
+              placeholder={t("loginForm.passwordPlaceholder")}
+              placeholderTextColor={colors.secondaryText}
+            />
+
+            <View style={styles.rules}>
+              {rules.map((rule) => (
+                <Text
+                  key={rule.label}
+                  style={rule.valid ? styles.ruleValid : styles.ruleInvalid}
+                >
+                  {rule.label}
+                </Text>
+              ))}
+            </View>
+
+            <Text style={styles.label}>{t("changePassword.confirmPassword")}</Text>
+            <TextInput
+              style={styles.input}
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry
+              autoCapitalize="none"
+              placeholder={t("loginForm.passwordPlaceholder")}
+              placeholderTextColor={colors.secondaryText}
+            />
+
+            {error ? <Text style={styles.error}>{error}</Text> : null}
+
+            <View style={styles.actions}>
+              {isSubmitting ? (
+                <ActivityIndicator color={colors.primary} />
+              ) : (
+                <ContinueButton
+                  title={t("changePassword.save")}
+                  onPress={handleSubmit}
+                />
+              )}
+            </View>
+          </>
+        ) : (
+          <PasswordCodeFlow fixedEmail={user?.email} onDone={finish} />
+        )}
       </AppCard>
-    </View>
+
+      <TouchableOpacity
+        style={styles.cancel}
+        onPress={() => router.back()}
+        disabled={isSubmitting}
+      >
+        <Text style={styles.cancelText}>{t("changePassword.cancel")}</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
 
@@ -162,8 +230,11 @@ const createStyles = (colors: any) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      padding: 20,
       backgroundColor: colors.background,
+    },
+
+    content: {
+      padding: 20,
     },
 
     title: {
@@ -171,6 +242,36 @@ const createStyles = (colors: any) =>
       fontWeight: "800",
       color: colors.text,
       marginBottom: 16,
+    },
+
+    tabs: {
+      flexDirection: "row",
+      gap: 8,
+      marginBottom: 16,
+    },
+
+    tab: {
+      flex: 1,
+      alignItems: "center",
+      paddingVertical: 10,
+      borderRadius: 999,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+
+    tabActive: {
+      backgroundColor: colors.primary,
+      borderColor: colors.primary,
+    },
+
+    tabText: {
+      fontSize: 13,
+      fontWeight: "700",
+      color: colors.secondaryText,
+    },
+
+    tabTextActive: {
+      color: colors.buttonText,
     },
 
     label: {
@@ -192,6 +293,21 @@ const createStyles = (colors: any) =>
       marginBottom: 16,
     },
 
+    rules: {
+      gap: 2,
+      marginBottom: 16,
+    },
+
+    ruleValid: {
+      fontSize: 12,
+      color: colors.success,
+    },
+
+    ruleInvalid: {
+      fontSize: 12,
+      color: colors.error,
+    },
+
     error: {
       color: colors.error,
       fontSize: 14,
@@ -204,7 +320,7 @@ const createStyles = (colors: any) =>
 
     cancel: {
       alignItems: "center",
-      paddingVertical: 12,
+      paddingVertical: 16,
     },
 
     cancelText: {

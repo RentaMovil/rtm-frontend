@@ -254,7 +254,12 @@
     "confirmPassword": "Confirmar nueva contraseña",
     "invalid": "Las contraseñas no coinciden",
     "saving": "Guardando...",
-    "save": "Guardar cambios"
+    "save": "Guardar cambios",
+    "methodPassword": "Contraseña actual",
+    "methodCode": "Código al correo",
+    "cancel": "Cancelar",
+    "samePassword": "La nueva contraseña debe ser distinta de la actual",
+    "successRelogin": "Contraseña cambiada con éxito. Inicia sesión de nuevo con la nueva."
   },
   "vehicleForm": {
     "title": "Registrar un nuevo vehículo",

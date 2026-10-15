@@ -254,7 +254,12 @@
     "confirmPassword": "Confirm new password",
     "invalid": "Passwords do not match",
     "saving": "Saving...",
-    "save": "Save changes"
+    "save": "Save changes",
+    "methodPassword": "Current password",
+    "methodCode": "Code by email",
+    "cancel": "Cancel",
+    "samePassword": "The new password must be different from the current one",
+    "successRelogin": "Password changed successfully. Sign in again with the new one."
   },
   "vehicleForm": {
     "title": "Register a new vehicle",

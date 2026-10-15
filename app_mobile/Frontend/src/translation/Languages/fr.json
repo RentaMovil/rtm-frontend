@@ -260,7 +260,12 @@
     "confirmPassword": "Confirmer le nouveau mot de passe",
     "invalid": "Les mots de passe ne correspondent pas",
     "saving": "Enregistrement...",
-    "save": "Enregistrer les modifications"
+    "save": "Enregistrer les modifications",
+    "methodPassword": "Mot de passe actuel",
+    "methodCode": "Code par e-mail",
+    "cancel": "Annuler",
+    "samePassword": "Le nouveau mot de passe doit être différent de l’actuel",
+    "successRelogin": "Mot de passe modifié avec succès. Reconnectez-vous avec le nouveau."
   },
   "vehicleForm": {
     "title": "Enregistrer un nouveau véhicule",
