@@ -241,7 +241,19 @@
     "confirmPassword": "Confirm new password",
     "invalid": "Passwords do not match",
     "saving": "Saving...",
-    "save": "Save changes"
+    "save": "Save changes",
+    "methodPassword": "Current password",
+    "methodCode": "Code by email",
+    "codeIntro": "We will send a 6-digit code to {{email}} to confirm it is you.",
+    "sendCode": "Send code",
+    "sending": "Sending...",
+    "codeSent": "We sent a code to {{email}}",
+    "codeLabel": "Verification code",
+    "verifyCode": "Verify code",
+    "verifying": "Verifying...",
+    "invalidCode": "Incorrect or expired code. Please try again.",
+    "resendCode": "Resend code",
+    "resendIn": "Resend in {{seconds}}s"
   },
   "vehicleForm": {
     "title": "Register a new vehicle",

@@ -241,7 +241,19 @@
     "confirmPassword": "Confirmer le nouveau mot de passe",
     "invalid": "Les mots de passe ne correspondent pas",
     "saving": "Enregistrement...",
-    "save": "Enregistrer les modifications"
+    "save": "Enregistrer les modifications",
+    "methodPassword": "Mot de passe actuel",
+    "methodCode": "Code par e-mail",
+    "codeIntro": "Nous enverrons un code à 6 chiffres à {{email}} pour confirmer votre identité.",
+    "sendCode": "Envoyer le code",
+    "sending": "Envoi...",
+    "codeSent": "Nous avons envoyé un code à {{email}}",
+    "codeLabel": "Code de vérification",
+    "verifyCode": "Vérifier le code",
+    "verifying": "Vérification...",
+    "invalidCode": "Code incorrect ou expiré. Veuillez réessayer.",
+    "resendCode": "Renvoyer le code",
+    "resendIn": "Renvoyer dans {{seconds}}s"
   },
   "vehicleForm": {
     "title": "Enregistrer un nouveau véhicule",
