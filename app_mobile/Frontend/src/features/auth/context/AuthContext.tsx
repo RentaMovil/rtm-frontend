@@ -37,8 +37,8 @@ type AuthContextType = {
   register: (data: RegisterRequest) => Promise<void>;
   logout: () => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
-  verifyCode: (email: string, code: string) => Promise<boolean>;
-  resetPassword: (email: string, newPassword: string) => Promise<void>;
+  verifyCode: (email: string, code: string) => Promise<void>;
+  resetPassword: (email: string, code: string, newPassword: string) => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
   refreshUser: () => Promise<void>;
   updateProfile: (data: { firstName: string; lastName: string; phone: string; imageUrl?: string | null }) => Promise<void>;
@@ -160,8 +160,8 @@ export function AuthProvider({ children }: Props) {
   }, []);
 
   const handleResetPassword = useCallback(
-    (email: string, newPassword: string) => {
-      return resetPassword({ email, newPassword });
+    (email: string, code: string, newPassword: string) => {
+      return resetPassword({ email, code, newPassword });
     },
     [],
   );

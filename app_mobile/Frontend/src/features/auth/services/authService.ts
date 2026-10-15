@@ -19,10 +19,10 @@ import type {
  * snake_case del mock. `login` ademas espera `identifier` (email o
  * username), no `email`.
  *
- * forgotPassword/verifyCode/resetPassword quedan sin tocar: ninguna
- * pantalla los llama todavia (no hay flujo de "olvide mi contrasena" en el
- * movil) y el real no separa verificar-codigo de cambiar-contrasena en dos
- * pasos como estas funciones asumen.
+ * forgotPassword/verifyCode/resetPassword siguen el flujo de recuperar
+ * contrasena de iam: enviar codigo (202), verificarlo sin gastarlo (204) y
+ * cambiar la contrasena con el mismo codigo (204). Sirven tanto para el
+ * "olvide mi contrasena" del login como para cambiarla con sesion iniciada.
  */
 
 export async function login(data: LoginRequest): Promise<AuthResponse> {
@@ -71,13 +71,12 @@ export async function forgotPassword(email: string): Promise<void> {
   });
 }
 
-export async function verifyCode(data: VerifyCodeRequest): Promise<boolean> {
-  const res = await httpClient.post<{ verified: boolean }>(
-    API_ROUTES.auth.verifyCode,
-    { email: data.email.trim().toLowerCase(), code: data.code.trim() },
-  );
-
-  return res.verified;
+/** Responde 204 si el codigo sirve. Si es incorrecto o vencio lanza un ApiError (400). */
+export async function verifyCode(data: VerifyCodeRequest): Promise<void> {
+  await httpClient.post<void>(API_ROUTES.auth.verifyCode, {
+    email: data.email.trim().toLowerCase(),
+    code: data.code.trim(),
+  });
 }
 
 export async function resetPassword(
@@ -85,6 +84,7 @@ export async function resetPassword(
 ): Promise<void> {
   await httpClient.post<void>(API_ROUTES.auth.resetPassword, {
     email: data.email.trim().toLowerCase(),
+    code: data.code.trim(),
     newPassword: data.newPassword,
   });
 }

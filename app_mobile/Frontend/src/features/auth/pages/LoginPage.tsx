@@ -164,6 +164,14 @@ export default function LoginPage() {
             )}
           </TouchableOpacity>
 
+          <Link href="/auth/forgot-password" asChild>
+            <TouchableOpacity style={styles.forgotRow}>
+              <Text style={styles.switchLink}>
+                {t("loginForm.forgotPassword")}
+              </Text>
+            </TouchableOpacity>
+          </Link>
+
           <View style={styles.switchRow}>
             <Text style={styles.switchText}>{t("loginForm.noAccount")}</Text>
 

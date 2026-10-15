@@ -136,6 +136,7 @@
     "submitting": "Connexion...",
     "submit": "Se connecter",
     "noAccount": "Vous n'avez pas de compte ? Inscrivez-vous",
+    "forgotPassword": "Mot de passe oublié ?",
     "error": "Erreur"
   },
   "register": {
@@ -222,6 +223,30 @@
     "con-new": "Nouveau contrat",
     "con-history": "Historique des contrats"
   },
+  "passwordRecovery": {
+    "title": "Récupérer le mot de passe",
+    "emailIntro": "Saisissez l’e-mail de votre compte et nous vous enverrons un code à 6 chiffres.",
+    "emailLabel": "E-mail",
+    "sendIntro": "Nous enverrons un code à 6 chiffres à {{email}} pour confirmer votre identité.",
+    "sendCode": "Envoyer le code",
+    "codeSent": "Si {{email}} est enregistré, nous vous avons envoyé un code.",
+    "codeLabel": "Code de vérification",
+    "verifyCode": "Vérifier le code",
+    "invalidCode": "Code incorrect ou expiré. Veuillez réessayer.",
+    "resendCode": "Renvoyer le code",
+    "resendIn": "Renvoyer dans {{seconds}}s",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "mismatch": "Les mots de passe ne correspondent pas",
+    "save": "Changer le mot de passe",
+    "success": "Mot de passe modifié avec succès. Connectez-vous avec le nouveau.",
+    "backToLogin": "Retour à la connexion",
+    "ruleLength": "Au moins 8 caractères",
+    "ruleSpecial": "Au moins un caractère spécial (#, @, etc)",
+    "ruleUpper": "Au moins une lettre majuscule",
+    "ruleNumber": "Au moins un chiffre",
+    "genericError": "La demande n’a pas pu aboutir"
+  },
   "changePassword": {
     "caracters": "Au moins 8 caractères",
     "specialCaracters": "Au moins un caractère spécial (#, @, etc)",
@@ -235,7 +260,12 @@
     "confirmPassword": "Confirmer le nouveau mot de passe",
     "invalid": "Les mots de passe ne correspondent pas",
     "saving": "Enregistrement...",
-    "save": "Enregistrer les modifications"
+    "save": "Enregistrer les modifications",
+    "methodPassword": "Mot de passe actuel",
+    "methodCode": "Code par e-mail",
+    "cancel": "Annuler",
+    "samePassword": "Le nouveau mot de passe doit être différent de l’actuel",
+    "successRelogin": "Mot de passe modifié avec succès. Reconnectez-vous avec le nouveau."
   },
   "vehicleForm": {
     "title": "Enregistrer un nouveau véhicule",

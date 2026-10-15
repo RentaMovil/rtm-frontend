@@ -8,7 +8,7 @@ import Login from './features/auth/pages/Login.jsx';
 // /account y /account/admin usan el mismo componente: el prop `admin` solo cambia
 // el Navbar y el Footer. Antes cada ruta tenía su propio perfil y divergían.
 import AccountView from './features/auth/components/AccountView';
-import AccountAdmin from './features/count/pages/AccountAdmin.jsx';
+import AccountAdmin from './features/account/pages/AccountAdmin.jsx';
 
 import ChangePassword from './features/auth/pages/ChangePassword.jsx';
 
