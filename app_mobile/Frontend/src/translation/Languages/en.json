@@ -130,6 +130,7 @@
     "submitting": "Logging in...",
     "submit": "Log in",
     "noAccount": "Don't have an account? Sign up",
+    "forgotPassword": "Forgot your password?",
     "error": "Error"
   },
   "register": {
@@ -215,6 +216,30 @@
     "contracts": "Contracts",
     "con-new": "New contract",
     "con-history": "Contract history"
+  },
+  "passwordRecovery": {
+    "title": "Recover password",
+    "emailIntro": "Enter your account email and we will send you a 6-digit code.",
+    "emailLabel": "Email",
+    "sendIntro": "We will send a 6-digit code to {{email}} to confirm it is you.",
+    "sendCode": "Send code",
+    "codeSent": "If {{email}} is registered, we sent you a code.",
+    "codeLabel": "Verification code",
+    "verifyCode": "Verify code",
+    "invalidCode": "Incorrect or expired code. Please try again.",
+    "resendCode": "Resend code",
+    "resendIn": "Resend in {{seconds}}s",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "mismatch": "Passwords do not match",
+    "save": "Change password",
+    "success": "Password changed successfully. Sign in with the new one.",
+    "backToLogin": "Back to sign in",
+    "ruleLength": "At least 8 characters",
+    "ruleSpecial": "At least one special character (#, @, etc)",
+    "ruleUpper": "At least one uppercase letter",
+    "ruleNumber": "At least one number",
+    "genericError": "The request could not be completed"
   },
   "changePassword": {
     "caracters": "At least 8 characters",

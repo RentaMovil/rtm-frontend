@@ -130,6 +130,7 @@
     "submitting": "Iniciando sesión...",
     "submit": "Iniciar sesión",
     "noAccount": "¿No tienes cuenta? Regístrate",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
     "error": "Error"
   },
   "register": {
@@ -215,6 +216,30 @@
     "contracts": "Contratos",
     "con-new": "Nuevo contrato",
     "con-history": "Historial de contratos"
+  },
+  "passwordRecovery": {
+    "title": "Recuperar contraseña",
+    "emailIntro": "Ingresa el correo de tu cuenta y te enviaremos un código de 6 dígitos.",
+    "emailLabel": "Correo electrónico",
+    "sendIntro": "Te enviaremos un código de 6 dígitos a {{email}} para confirmar que eres tú.",
+    "sendCode": "Enviar código",
+    "codeSent": "Si {{email}} está registrado, te enviamos un código.",
+    "codeLabel": "Código de verificación",
+    "verifyCode": "Verificar código",
+    "invalidCode": "Código incorrecto o vencido. Inténtalo de nuevo.",
+    "resendCode": "Reenviar código",
+    "resendIn": "Reenviar en {{seconds}}s",
+    "newPassword": "Nueva contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "mismatch": "Las contraseñas no coinciden",
+    "save": "Cambiar contraseña",
+    "success": "Contraseña cambiada con éxito. Inicia sesión con la nueva.",
+    "backToLogin": "Volver al inicio de sesión",
+    "ruleLength": "Al menos 8 caracteres",
+    "ruleSpecial": "Al menos un carácter especial (#, @, etc)",
+    "ruleUpper": "Al menos una letra mayúscula",
+    "ruleNumber": "Al menos un número",
+    "genericError": "No se pudo completar la solicitud"
   },
   "changePassword": {
     "caracters": "Al menos 8 caracteres",

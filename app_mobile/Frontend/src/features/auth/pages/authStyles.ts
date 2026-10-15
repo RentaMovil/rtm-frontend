@@ -146,5 +146,56 @@ export const createAuthStyles = (colors: any) => {
       marginTop: 4,
       color: colors.primary,
     },
+
+    /** "Olvide mi contrasena" bajo el boton de iniciar sesion. */
+    forgotRow: {
+      alignItems: "center",
+      marginTop: Spacing.sm,
+    },
+
+    /** Recuperar contrasena por codigo. */
+    hint: {
+      ...text.body,
+      color: colors.text,
+    },
+
+    info: {
+      ...text.caption,
+      color: colors.success,
+    },
+
+    codeInput: {
+      textAlign: "center",
+      fontSize: 24,
+      letterSpacing: 8,
+    },
+
+    rules: {
+      gap: 2,
+    },
+
+    ruleValid: {
+      ...text.caption,
+      color: colors.success,
+    },
+
+    ruleInvalid: {
+      ...text.caption,
+      color: colors.error,
+    },
+
+    linkButton: {
+      alignItems: "center",
+      paddingVertical: Spacing.sm,
+    },
+
+    linkButtonText: {
+      ...text.label,
+      color: colors.primary,
+    },
+
+    linkButtonDisabled: {
+      opacity: 0.5,
+    },
   });
 };
