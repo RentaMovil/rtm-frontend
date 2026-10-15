@@ -97,9 +97,9 @@ export const authService = {
 
     // Verificar codigo
     verifyCode: (email, code) =>
-        httpClient.post (`${RESOURCE}/verify-code`, {email, code}),
+        httpClient.post(`${RESOURCE}/password/verify-code`, { email, code }),
 
-    // { email, code, newPassword }. El código se valida aquí (no hay paso aparte de verificar).
+    // { email, code, newPassword }. El código se vuelve a validar aquí; verifyCode solo lo comprueba antes, sin gastarlo.
     resetPassword: (payload) =>
         httpClient.post(`${RESOURCE}/password/reset`, payload),
 

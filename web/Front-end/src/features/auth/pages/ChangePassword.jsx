@@ -1,11 +1,15 @@
 import './ChangePassword.css'
+import { useState } from "react";
 import {  FaEye, FaEyeSlash } from "react-icons/fa";
 import { RoleNavbar, RoleFooter } from "../../../shared/components/layout/RoleChrome.jsx";
 import { useTranslation } from "react-i18next";
 import useChangePassword from "../hooks/useChangePassword.js";
+import ChangePasswordByCode from "../components/ChangePasswordByCode.jsx";
 
 function ChangePassword() {
     const { t } = useTranslation();
+    // "password": con la contraseña actual. "code": con un código enviado al correo
+    const [method, setMethod] = useState("password");
 
     const {
         currentPassword,
@@ -38,6 +42,32 @@ function ChangePassword() {
                     <div className='formP'>
 
                         <h2 className='form-labelP-title'>{t("changePassword.title")}</h2>
+
+                        <div className="methodTabsP" role="tablist">
+                            <button
+                                type="button"
+                                role="tab"
+                                aria-selected={method === "password"}
+                                className={method === "password" ? "methodTabP methodTabActiveP" : "methodTabP"}
+                                onClick={() => setMethod("password")}
+                            >
+                                {t("changePassword.methodPassword")}
+                            </button>
+                            <button
+                                type="button"
+                                role="tab"
+                                aria-selected={method === "code"}
+                                className={method === "code" ? "methodTabP methodTabActiveP" : "methodTabP"}
+                                onClick={() => setMethod("code")}
+                            >
+                                {t("changePassword.methodCode")}
+                            </button>
+                        </div>
+
+                        {method === "code" ? (
+                            <ChangePasswordByCode t={t} />
+                        ) : (
+                        <>
                         {error && <p className="errorMessageP invalidP">{error}</p>}
                         <div className="inputGroupP">
                             <label className='form-labelP' htmlFor='currentPassword'>
@@ -140,6 +170,8 @@ function ChangePassword() {
                         >
                             {loading ? t('changePassword.saving') : t('changePassword.save')}
                         </button>
+                        </>
+                        )}
 
                     </div>
                 </div>

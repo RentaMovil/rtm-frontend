@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineLock, AiOutlineSafety, AiOutlineArrowRight } from 'react-icons/ai';
 import NavbarTwo from '../../../shared/components/layout/NavbarTwo';
@@ -10,12 +10,22 @@ function CodeVerification() {
     const location = useLocation();
     const email = location.state?.email;
     const CODE_LENGTH = 6;
+    const RESEND_SECONDS = 30;
     const [code, setCode] = useState(new Array(CODE_LENGTH).fill(''));
     const inputsRef = useRef([]);
     const navigate = useNavigate();
     const [isVerifying, setIsVerifying] = useState(false);
     const [error, setError] = useState('');
+    const [info, setInfo] = useState('');
+    const [cooldown, setCooldown] = useState(0);
+    const [isResending, setIsResending] = useState(false);
 
+    // Cuenta regresiva para no pedir códigos seguidos
+    useEffect(() => {
+        if (cooldown <= 0) return;
+        const timer = setTimeout(() => setCooldown((c) => c - 1), 1000);
+        return () => clearTimeout(timer);
+    }, [cooldown]);
 
     // El código de iam son 6 dígitos
     const allowedChars = /^[0-9]$/;
@@ -62,6 +72,24 @@ function CodeVerification() {
     };
 
     
+const handleResend = async () => {
+    setError('');
+    setInfo('');
+    setIsResending(true);
+    try {
+        await authService.forgotPassword(email);
+        setCode(new Array(CODE_LENGTH).fill(''));
+        inputsRef.current[0]?.focus();
+        setInfo('Te enviamos un nuevo código');
+        setCooldown(RESEND_SECONDS);
+    } catch (err) {
+        // ej. 429 si se pidieron demasiados códigos
+        setError(err.message || 'No se pudo reenviar el código');
+    } finally {
+        setIsResending(false);
+    }
+};
+
 const handleVerify = async (e) => {
     e.preventDefault();
     const joined = code.join('');
@@ -123,6 +151,10 @@ const handleVerify = async (e) => {
                             <p className={style["error-message"]}>{error}</p>
                         )}
 
+                        {info && !error && (
+                            <p className={style["resend-link"]}>{info}</p>
+                        )}
+
                         <button 
                             type="submit" 
                             className={style["confirm-button"]}
@@ -133,7 +165,13 @@ const handleVerify = async (e) => {
                         </button>
 
                         <div className={style["resend-link"]}>
-                            ¿No recibiste el código? <button type="button" onClick={() => {}}>Reenviar</button>
+                            ¿No recibiste el código? <button
+                                type="button"
+                                onClick={handleResend}
+                                disabled={isResending || cooldown > 0}
+                            >
+                                {cooldown > 0 ? `Reenviar (${cooldown}s)` : 'Reenviar'}
+                            </button>
                         </div>
                     </form>
 

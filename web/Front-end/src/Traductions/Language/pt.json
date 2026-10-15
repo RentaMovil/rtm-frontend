@@ -241,7 +241,19 @@
     "confirmPassword": "Confirmar nova senha",
     "invalid": "As senhas não coincidem",
     "saving": "Salvando...",
-    "save": "Salvar alterações"
+    "save": "Salvar alterações",
+    "methodPassword": "Senha atual",
+    "methodCode": "Código por e-mail",
+    "codeIntro": "Enviaremos um código de 6 dígitos para {{email}} para confirmar que é você.",
+    "sendCode": "Enviar código",
+    "sending": "Enviando...",
+    "codeSent": "Enviamos um código para {{email}}",
+    "codeLabel": "Código de verificação",
+    "verifyCode": "Verificar código",
+    "verifying": "Verificando...",
+    "invalidCode": "Código incorreto ou expirado. Tente novamente.",
+    "resendCode": "Reenviar código",
+    "resendIn": "Reenviar em {{seconds}}s"
   },
   "vehicleForm": {
     "title": "Registrar um novo veículo",
