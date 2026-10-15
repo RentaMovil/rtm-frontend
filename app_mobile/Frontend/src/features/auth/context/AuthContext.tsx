@@ -20,6 +20,7 @@ import {
   register as registerService,
   resetPassword,
   verifyCode,
+  updateProfile as updateProfileService,
 } from "../services/authService";
 
 import type {
@@ -36,10 +37,11 @@ type AuthContextType = {
   register: (data: RegisterRequest) => Promise<void>;
   logout: () => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
-  verifyCode: (email: string, code: string) => Promise<boolean>;
-  resetPassword: (email: string, newPassword: string) => Promise<void>;
+  verifyCode: (email: string, code: string) => Promise<void>;
+  resetPassword: (email: string, code: string, newPassword: string) => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
   refreshUser: () => Promise<void>;
+  updateProfile: (data: { firstName: string; lastName: string; phone: string; imageUrl?: string | null }) => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -70,9 +72,12 @@ export function AuthProvider({ children }: Props) {
           return;
         }
 
-        const { accessToken } = await refreshService(refreshToken);
+        const response = await refreshService(refreshToken);
 
-        tokenStore.setAccessToken(accessToken);
+        tokenStore.setAccessToken(response.accessToken);
+        // rtm-iam rota el refresh token: hay que guardar el nuevo o la
+        // siguiente renovacion reenvia uno ya invalido (ver httpClient.ts).
+        await tokenStore.setRefreshToken(response.refreshToken);
 
         const currentUser = await getCurrentUser();
 
@@ -155,8 +160,8 @@ export function AuthProvider({ children }: Props) {
   }, []);
 
   const handleResetPassword = useCallback(
-    (email: string, newPassword: string) => {
-      return resetPassword({ email, newPassword });
+    (email: string, code: string, newPassword: string) => {
+      return resetPassword({ email, code, newPassword });
     },
     [],
   );
@@ -167,7 +172,13 @@ export function AuthProvider({ children }: Props) {
     },
     [],
   );
-
+const updateProfile = useCallback(
+    async (data: { firstName: string; lastName: string; phone: string; imageUrl?: string | null }) => {
+        const updatedUser = await updateProfileService(data);
+        setUser(updatedUser);
+    },
+    [],
+);
   const value = useMemo<AuthContextType>(
     () => ({
       user,
@@ -181,6 +192,7 @@ export function AuthProvider({ children }: Props) {
       resetPassword: handleResetPassword,
       changePassword: handleChangePassword,
       refreshUser,
+      updateProfile,
     }),
     [
       user,
@@ -193,6 +205,7 @@ export function AuthProvider({ children }: Props) {
       handleVerifyCode,
       handleResetPassword,
       handleChangePassword,
+      updateProfile
     ],
   );
 
@@ -208,3 +221,4 @@ export function useAuth(): AuthContextType {
 
   return context;
 }
+

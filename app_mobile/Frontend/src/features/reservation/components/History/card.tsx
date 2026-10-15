@@ -5,7 +5,7 @@ import {
 
 import {
     Reservation,
-} from "../../../../types"
+} from "../../../../types";
 
 import {
     themes,

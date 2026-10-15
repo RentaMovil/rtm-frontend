@@ -8,17 +8,18 @@
  * propio mock usa `id` y el web lo dejo asi a proposito para no romper a sus
  * consumidores. Aqui se replica el mock (`id`), que es lo que estableciste.
  */
-export type Branch = {
-  id: string;
-  name: string;
-  address: string;
-  city: string;
-  lat?: number;
-  lng?: number;
-};
+// types/branch.ts (o donde vivan tus types)
+export interface Branch {
+    id: string;
+    name: string;
+    address: string;
+    city: string;
+    phone: string;
+    latitude: number | null;
+    longitude: number | null;
+}
 
-/** Resumen para los selectores de sucursal (evita traer direccion y coords). */
-export type BranchOption = {
-  id: string;
-  name: string;
-};
+export interface BranchOption {
+    id: string;
+    name: string;
+}

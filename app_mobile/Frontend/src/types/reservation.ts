@@ -90,6 +90,8 @@ export type ReservationDraft = {
   returnBranch: Branch;
   pickupDate: Date;
   returnDate: Date;
+  /** HU-BOOKING-007: el backend exige termsAccepted=true para crear la reserva. */
+  termsAccepted: boolean;
 };
 
 /** Payload normalizado que se enviara al backend (FKs, no objetos). */
@@ -100,6 +102,7 @@ export type ReservationRequest = {
   returnBranchId: string;
   pickupDate: ISODateTime;
   returnDate: ISODateTime;
+  termsAccepted: boolean;
 };
 
 /** Respuesta de la creacion de una reserva. */

@@ -1,5 +1,5 @@
 import NavBarAdmin from "../../../../shared/components/layout/NavBarAdmin";
-import Footer from '../../../../shared/components/layout/Footer';
+import FooterAdmin from '../../../../shared/components/layout/FooterAdmin';
 import MaintenanceForm from "../components/MaintenanceForm";
 
 function Maintenance() {
@@ -8,7 +8,7 @@ function Maintenance() {
         <>
             <NavBarAdmin />
             <MaintenanceForm />
-            <Footer />
+            <FooterAdmin />
         </>
 
     );

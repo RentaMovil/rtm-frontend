@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CartVehicleHistory from '../../historyMaintenance/components/CartVehicleHistory.jsx';
 import style from './History.module.css';
-import Footer from '../../../../shared/components/layout/Footer.jsx';
+import FooterAdmin from '../../../../shared/components/layout/FooterAdmin.jsx';
 import { useForm } from 'react-hook-form';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import ValidateDate from '../../registerMaintenance/components/ValidateDate.jsx';
@@ -228,7 +228,7 @@ function History() {
           </div>
         )}
       </div>
-      <Footer />
+      <FooterAdmin />
     </>
   );
 }

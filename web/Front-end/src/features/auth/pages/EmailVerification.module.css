@@ -1,41 +1,215 @@
-.container-email{
-      margin: 30px auto;
+/* Fondo de página consistente con RentaMovil */
+.page-background {
+  min-height: calc(100vh - 120px);
+  background-color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* Tarjeta principal */
+.container-email {
   max-width: 480px;
-  padding: 24px;
+  width: 100%;
+  padding: 48px 40px;
   border-radius: 24px;
-  text-align: center;
-  position: relative;
   background-color: var(--card-bg);
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--shadow);
+  text-align: center;
 }
-.container-email label{
-    font-size: 16px;
-    color: var(--text);
+
+/* Título */
+.title {
+  font-family: var(--heading);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0 0 12px 0;
 }
-.error-message {
-    color: brown;
-  margin-top: 12px;
+
+/* Descripción */
+.description {
+  font-family: var(--sans);
   font-size: 14px;
+  color: var(--placeholder);
+  line-height: 1.6;
+  margin: 0 0 32px 0;
 }
+
+/* Wrapper del input con icono */
+.input-wrapper {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: var(--icon);
+  pointer-events: none;
+}
+
+/* Input de email */
 .input-email {
-    width: 100%;
-    height: 48px;
-    padding: 14px 46px 14px 16px;
-    border-radius: 5px;
-    border: 1px solid var(--border);
-    background-color: var(--card-bg);
-    color: var(--text);
-    box-sizing: border-box;
-    outline: none;
+  width: 100%;
+  height: 56px;
+  padding: 14px 16px 14px 48px;
+  border-radius: 12px;
+  border: 1px solid var(--border-filter);
+  background-color: var(--input);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.2s;
 }
-.container-email button {
-  padding: 12px 24px;
+
+.input-email:focus {
+  border-color: var(--accent);
+  background-color: var(--card-bg);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.input-email::placeholder {
+  color: var(--placeholder);
+}
+
+/* Mensaje de error */
+.error-message {
+  color: #ef4444;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  font-family: var(--sans);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Botón confirmar */
+/* Botón confirmar */
+.confirm-button {
+  width: 100%;
+  height: 56px;
+  padding: 14px 24px;
   border-radius: 12px;
   border: none;
-  margin-top: 12px;
   background: var(--button);
   color: var(--text-btn);
-  cursor: pointer;
-  transition: 0.2s;
+  font-family: var(--sans);
+  font-size: 16px;
   font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow);
+}
+
+.confirm-button:hover:not(:disabled) {
+  background: var(--modal-hover);
+  transform: translateY(-2px);
+}
+
+.confirm-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.confirm-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background: var(--buttonLoading);
+}
+
+.button-icon {
+  font-size: 20px;
+  transition: transform 0.3s;
+}
+
+.confirm-button:hover:not(:disabled) .button-icon {
+  transform: translateX(4px);
+}
+
+/* Spinner de carga */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid var(--text-btn);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Link de soporte */
+.support-link {
+  margin-top: 24px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.support-link a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.support-link a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+/* Footer de seguridad */
+.security-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.security-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--placeholder);
+}
+
+.security-item svg {
+  font-size: 18px;
+  color: var(--icon);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .container-email {
+    padding: 32px 24px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .security-footer {
+    flex-direction: column;
+    gap: 16px;
+  }
 }

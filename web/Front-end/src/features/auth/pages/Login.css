@@ -33,7 +33,7 @@
   margin-bottom: 0;
   padding: 12px 24px;
   background: var(--button);
-  color: white;
+  color: var(--button);
   border: none;
   border-radius: 10px;
   font-size: 14px;

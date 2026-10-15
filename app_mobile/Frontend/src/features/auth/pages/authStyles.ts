@@ -79,6 +79,29 @@ export const createAuthStyles = (colors: any) => {
       backgroundColor: "transparent",
     },
 
+    /**
+     * Campo de contrasena con el boton de mostrar/ocultar superpuesto a la
+     * derecha (`passwordField` + `togglePassword`). El input reserva espacio
+     * con `inputPassword` para que el texto no quede debajo del boton.
+     */
+    passwordField: {
+      position: "relative",
+      justifyContent: "center",
+    },
+
+    inputPassword: {
+      paddingRight: 52,
+    },
+
+    togglePassword: {
+      position: "absolute",
+      right: 4,
+      width: 44,
+      height: 44,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+
     inputError: {
       borderColor: colors.error,
     },
@@ -122,6 +145,57 @@ export const createAuthStyles = (colors: any) => {
       ...text.label,
       marginTop: 4,
       color: colors.primary,
+    },
+
+    /** "Olvide mi contrasena" bajo el boton de iniciar sesion. */
+    forgotRow: {
+      alignItems: "center",
+      marginTop: Spacing.sm,
+    },
+
+    /** Recuperar contrasena por codigo. */
+    hint: {
+      ...text.body,
+      color: colors.text,
+    },
+
+    info: {
+      ...text.caption,
+      color: colors.success,
+    },
+
+    codeInput: {
+      textAlign: "center",
+      fontSize: 24,
+      letterSpacing: 8,
+    },
+
+    rules: {
+      gap: 2,
+    },
+
+    ruleValid: {
+      ...text.caption,
+      color: colors.success,
+    },
+
+    ruleInvalid: {
+      ...text.caption,
+      color: colors.error,
+    },
+
+    linkButton: {
+      alignItems: "center",
+      paddingVertical: Spacing.sm,
+    },
+
+    linkButtonText: {
+      ...text.label,
+      color: colors.primary,
+    },
+
+    linkButtonDisabled: {
+      opacity: 0.5,
     },
   });
 };

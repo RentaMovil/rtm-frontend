@@ -1,7 +1,6 @@
 import "./Notification.css";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../../shared/components/layout/Navbar.jsx";
-import Footer from "../../../shared/components/layout/Footer.jsx";
+import { RoleNavbar, RoleFooter } from "../../../shared/components/layout/RoleChrome.jsx";
 import NotificationCenter from "../components/NotificationCenter.jsx";
 
 function Notification() {
@@ -9,9 +8,9 @@ function Notification() {
 
   return (
     <>
-      <Navbar />
+      <RoleNavbar />
       <NotificationCenter onBack={() => navigate(-1)} />
-      <Footer />
+      <RoleFooter />
     </>
   );
 }

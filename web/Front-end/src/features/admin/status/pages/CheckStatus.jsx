@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import NavBarAdmin from "../../../../shared/components/layout/NavBarAdmin";
-import Footer from '../../../../shared/components/layout/Footer';
+import FooterAdmin from '../../../../shared/components/layout/FooterAdmin';
 import CartVehiculeStatus from "../components/CartVehiculeStatus";
 import FiltrerStatus from "../components/FiltrerStatus";
 import FleetChart from "../components/FleetChart";
@@ -390,7 +390,7 @@ function CheckStatus() {
                 </div>
             )}
 
-            <Footer />
+            <FooterAdmin />
         </>
     );
 }

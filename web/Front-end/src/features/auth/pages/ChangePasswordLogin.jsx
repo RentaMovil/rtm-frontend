@@ -4,6 +4,7 @@ import Navbar from "../../../shared/components/layout/Navbar";
 import Footer from '../../../shared/components/layout/Footer';
 import { useTranslation } from "react-i18next";
 import useChangePasswordLogin from "../hooks/useChangePasswordLogin.js";
+import { RoleFooter, RoleNavbar } from '../../../shared/components/layout/RoleChrome.jsx';
 
 function ChangePassword() {
     const { t } = useTranslation();
@@ -29,7 +30,7 @@ function ChangePassword() {
 
     return (
         <>
-            <Navbar />
+            <RoleNavbar />
 
             <div className='containerP'>
                 <div className='cardP'>
@@ -61,7 +62,7 @@ function ChangePassword() {
                                     aria-label="Mostrar u ocultar contraseña"
                                     aria-pressed={showPassword}
                                 >
-                                    {showPassword ? <FaEye /> : <FaEyeSlash /> }
+                                    {showPassword ? <FaEyeSlash /> : <FaEye /> }
                                 </button>
                             </div>
                         </div>
@@ -119,7 +120,7 @@ function ChangePassword() {
                 </div>
             </div>
 
-            <Footer />
+            <RoleFooter />
         </>
     );
 }

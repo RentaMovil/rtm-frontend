@@ -6,7 +6,7 @@ function NavbarTwo(){
     return (
     <nav className="nav-navbarCard">
         <div className="logo-container">
-            <h2 className="Title">RentaMovil</h2>
+            <h2 className="Title">Renta<span className="subName">Movil</span></h2>
             <FaCar className='icon'/>
         </div>
     </nav>

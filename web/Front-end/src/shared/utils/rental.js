@@ -10,9 +10,11 @@ export const calculateRentalDays = (pickupDate, returnDate) => {
 
   const difference = end - start;
 
+  // Igual que el backend (ReservationUseCaseImpl.daysBetween): se trunca a días completos
+  // (floor), nunca se redondea hacia arriba, con un mínimo de 1 día.
   return Math.max(
     1,
-    Math.ceil(difference / (1000 * 60 * 60 * 24))
+    Math.floor(difference / (1000 * 60 * 60 * 24))
   );
 };
 

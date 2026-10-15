@@ -28,6 +28,7 @@ export function buildReservationRequest(
     returnBranchId: draft.returnBranch.id,
     pickupDate: draft.pickupDate.toISOString(),
     returnDate: draft.returnDate.toISOString(),
+    termsAccepted: draft.termsAccepted,
   };
 }
 

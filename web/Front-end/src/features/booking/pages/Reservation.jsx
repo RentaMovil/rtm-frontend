@@ -7,11 +7,7 @@ import L from "leaflet";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
-import Navbar from "../../../shared/components/layout/Navbar";
-import NavbarAdmin from "../../../shared/components/layout/NavBarAdmin";
-import Footer from "../../../shared/components/layout/Footer";
-import FooterAdmin from "../../../shared/components/layout/FooterAdmin";
-import { useAuth } from "../../../contexts/AuthContext.jsx";
+import { RoleNavbar, RoleFooter } from "../../../shared/components/layout/RoleChrome";
 import { useIsMobile } from "../../../shared/hooks/useIsMobile";
 import { useBranches } from "../../admin/branches/hooks/useBranch";
 import FilterCalendar from "../../vehicles/components/FilterCalendar";
@@ -112,8 +108,11 @@ function Reservation() {
     const finalReturnBranch =
         selectedBranch ?? finalPickupBranch;
 
+    // Igual que el backend (InsuranceType.costFor): selectedInsurance.price es el costo
+    // DIARIO del seguro (daily_cost) y se cobra una vez por toda la duración de la
+    // reserva (dailyCost * days), no como un monto plano.
     const reservationTotal =
-        Number(total) + Number(selectedInsurance?.price ?? 0);
+        Number(total) + Number(selectedInsurance?.price ?? 0) * Number(days || 0);
 
     const currentCalendarValue = {
         branch: pickupBranch,
@@ -210,7 +209,7 @@ function Reservation() {
 
     return (
         <>
-            <NavbarComponent />
+            <RoleNavbar />
 
             <div className="containerR">
 
@@ -410,7 +409,7 @@ function Reservation() {
 
             </div>
 
-            <FooterComponent />
+            <RoleFooter />
         </>
     );
 }

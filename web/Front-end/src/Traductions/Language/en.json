@@ -140,7 +140,13 @@
     "passwordShort": "Password must be at least 8 characters",
     "passwordWeak": "Password must have at least one uppercase letter and one number",
     "passwordMatch": "Passwords do not match",
-    "errorCreate": "Error creating account"
+    "errorCreate": "Error creating account",
+    "termsAccept": "I accept the",
+    "termsLink": "terms and conditions and the personal data processing policy",
+    "termsRequired": "You must accept the terms and conditions and the personal data processing policy to register",
+    "termsTitle": "Terms and conditions and personal data processing",
+    "termsClose": "Close",
+    "termsBody": ["By creating an account on RentaMovil you authorize the processing of your personal data (first name, last name, email, phone and username) in accordance with Colombian Law 1581 of 2012 (Habeas Data).", "Purpose: managing your account, reservations, payments and invoicing, and contacting you about the service.", "Your rights: to access, update, rectify and delete your data, and to revoke this authorization at any time.", "Your data will not be shared with third parties except where legally required or to complete the contracted service (e.g. payment processing).", "Vehicle rental conditions will be presented and accepted again during the reservation process."]
   },
   "quotes": {
     "quote1": "Trust your journey. Trust Rentamovil.",
@@ -235,7 +241,19 @@
     "confirmPassword": "Confirm new password",
     "invalid": "Passwords do not match",
     "saving": "Saving...",
-    "save": "Save changes"
+    "save": "Save changes",
+    "methodPassword": "Current password",
+    "methodCode": "Code by email",
+    "codeIntro": "We will send a 6-digit code to {{email}} to confirm it is you.",
+    "sendCode": "Send code",
+    "sending": "Sending...",
+    "codeSent": "We sent a code to {{email}}",
+    "codeLabel": "Verification code",
+    "verifyCode": "Verify code",
+    "verifying": "Verifying...",
+    "invalidCode": "Incorrect or expired code. Please try again.",
+    "resendCode": "Resend code",
+    "resendIn": "Resend in {{seconds}}s"
   },
   "vehicleForm": {
     "title": "Register a new vehicle",

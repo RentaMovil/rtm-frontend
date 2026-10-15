@@ -1,19 +1,20 @@
-import { insurance } from "../mocks/insurance";
-
+import { httpClient } from "../../../shared/api/httpClient";
+import { toInsuranceViewModel } from "./insuranceMapper";
 import type { InsuranceType } from "../../../types";
 
-/**
- * Acceso al catalogo de seguros.
- *
- * NO esta en la API mock, asi que se resuelve localmente. La consumen las
- * features payment y reservation, por eso queda detras de un servicio y no
- * se importa desde `mocks/` directamente.
- */
-export async function getInsuranceOptions(): Promise<InsuranceType[]> {
-  // Futuro:
-  // return supabase
-  //   .from("insurance_types")
-  //   .select("*");
+// GET /reservations/insurance-types (rtm-booking-reservation, publico, sin token).
+// No es /insuranceTypes: el gateway solo enruta /reservations/**, /rentals/** y
+// /notifications/** hacia booking-reservation (ver su README, "Rutas bajo los prefijos del gateway").
+const RESOURCE = "/reservations/insurance-types";
 
-  return insurance;
+/**
+ * Acceso al catálogo de seguros.
+ *
+ * Antes se resolvía localmente con un mock; ahora viene de rtm-booking-reservation,
+ * la misma API real que usa el frontend web.
+ */
+
+export async function getInsuranceOptions(): Promise<InsuranceType[]> {
+    const response = await httpClient.get<any[]>(RESOURCE);
+    return response.map(toInsuranceViewModel);
 }

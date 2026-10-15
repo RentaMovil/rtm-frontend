@@ -159,3 +159,56 @@ input:-webkit-autofill:focus {
     min-width: 0;
   }
 }
+
+/* TÉRMINOS Y CONDICIONES */
+.terms-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.register-form .terms-label input[type="checkbox"] {
+  width: auto;
+  margin-top: 3px;
+  padding: 0;
+}
+
+.terms-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+}
+
+.terms-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.terms-modal {
+  background: var(--card-bg);
+  color: var(--text);
+  max-width: 560px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.terms-modal p {
+  margin: 10px 0;
+  line-height: 1.5;
+  font-size: 14px;
+}

@@ -31,7 +31,7 @@ function NavbarAdmin() {
       <header className="navbar-admin">
         <div className="navbar-admin-content">
           <Link to="/HomeAdmin" className="navbar-admin-logo" onClick={closeAll}>
-            <span className="navbar-admin-logo-text">RentaMovil</span>
+            <span className="logo-text">Renta<span className="logo-container2">Movil</span></span>
             <FaCar className="navbar-admin-logo-icon" />
           </Link>
 

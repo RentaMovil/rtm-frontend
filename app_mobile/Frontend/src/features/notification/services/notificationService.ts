@@ -5,8 +5,8 @@ import { vehicleService } from "../../vehicles/services/vehicleService";
 import type { Notification } from "../../../types";
 
 import {
-  attachVehicle,
-  type NotificationWithVehicle,
+    attachVehicle,
+    type NotificationWithVehicle,
 } from "../utils/notificationUtils";
 
 /**
@@ -26,17 +26,15 @@ import {
  */
 export const notificationService = {
   /**
-   * @param personId si se pasa, la API filtra por query param. Sin el, devuelve
-   *   todas, que es lo que hace el web.
+  * @param personId si se pasa, filtra las notificaciones por destinatario.
    */
   async getNotifications(
     personId?: string,
   ): Promise<NotificationWithVehicle[]> {
-    const query = personId ? `?person_id=${encodeURIComponent(personId)}` : "";
-
-    const notifications = await httpClient.get<Notification[]>(
-      `${API_ROUTES.notifications}${query}`,
-    );
+    const response = await httpClient.get<Notification[]>(API_ROUTES.notifications);
+    const notifications = personId
+      ? response.filter((notification) => String(notification.person_id) === String(personId))
+      : response;
 
     const vehicles = await vehicleService.getVehicles();
 
@@ -45,7 +43,8 @@ export const notificationService = {
 
   async markAsRead(notificationId: number): Promise<Notification> {
     return httpClient.patch<Notification>(
-      `${API_ROUTES.notifications}/${notificationId}/read`,
+      `${API_ROUTES.notifications}/${notificationId}`,
+      { is_read: true, read_at: new Date().toISOString() },
     );
   },
 };

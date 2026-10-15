@@ -35,18 +35,18 @@
 
 .login-form input {
   padding: 14px 16px;
-  border: 2px solid #e5e7eb;
+  border: 3px solid var(--border);
   border-radius: 10px;
   font-size: 15px;
   font-family: inherit;
   transition: all 0.3s ease;
   background: var(--card-bg);
-  color: #1f2937;
+  color: var(--text);
 }
 
 .login-form input:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--accent);
   background: white;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   transform: translateY(-2px);
@@ -66,29 +66,29 @@
 
 .toggle-password {
   position: absolute;
-  right: 6px;
+  right: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   padding: 0;
-  border: none;
   border-radius: 8px;
   background: transparent;
-  color: #6b7280;
+  border: none;
+  color: var(--accent);
   font-size: 16px;
   cursor: pointer;
   transition: color 0.2s ease, background 0.2s ease;
 }
 
 .toggle-password:hover {
-  color: #3b82f6;
+  color: var(--accent);
   background: rgba(59, 130, 246, 0.08);
 }
 
 .toggle-password:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -96,6 +96,9 @@
   color: #9ca3af;
 }
 
+.showPassword {
+  color: var(--accent);
+}
 .login-error {
   padding: 12px 16px;
   background: #fee2e2;
@@ -120,7 +123,9 @@
   background-color: transparent;
   margin: -8px 0 8px 0;
 }
-
+.button :hover{
+  background-color: var(--accent);
+}
 .register-link:hover {
   color: var(--accent);
   text-decoration: underline;
@@ -130,7 +135,7 @@
 .email-btn {
   padding: 14px 24px;
   background: var(--button);
-  color: white;
+  color: var(--text);
   border: none;
   border-radius: 10px;
   font-size: 15px;

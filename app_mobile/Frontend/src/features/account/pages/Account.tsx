@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import * as ImagePicker from "expo-image-picker";
 
@@ -21,6 +21,7 @@ import ThemeSelector from "../../../shared/components/Select/SelectTheme";
 import AppCard from "../../../shared/components/AppCard/AppCard";
 
 import { useAuth } from "../../auth/context/AuthContext";
+import { uploadProfileImage } from "../services/profileImageService";
 
 
 const defaultUser =
@@ -36,9 +37,17 @@ export default function Account() {
         user,
         logout,
         refreshUser,
+        updateProfile,
     } = useAuth();
 
+    const [saveError, setSaveError] = useState<string | null>(null);
+    const [isSaving, setIsSaving] = useState(false);
 
+    // Login/registro no traen el telefono (UserResponse no lo incluye); se
+    // completa pidiendo el perfil completo (GET /users/me, con phone).
+    useEffect(() => {
+        refreshUser().catch(() => undefined);
+    }, [refreshUser]);
     const {
         themeName,
     } = useTheme();
@@ -79,7 +88,7 @@ export default function Account() {
     ] =
         useState(
             user
-                ? `${user.first_name} ${user.last_name}`
+                ? `${user.firstName} ${user.lastName}`
                 : ""
         );
 
@@ -91,6 +100,16 @@ export default function Account() {
         useState(
             user?.phone ?? ""
         );
+
+    // `user` llega primero sin phone (login/registro) y luego se completa con
+    // refreshUser() (GET /users/me). Sincroniza los campos cuando eso pasa,
+    // pero no mientras el usuario esta editando (no le pisa lo que escribio).
+    useEffect(() => {
+        if (!user || editing) return;
+
+        setName(`${user.firstName} ${user.lastName}`);
+        setPhone(user.phone ?? "");
+    }, [user, editing]);
 
 
     const pickImage =
@@ -120,20 +139,37 @@ export default function Account() {
 
         };
 
-        async function handleSave() {
+    async function handleSave() {
+        if (!user) return;
 
-    if (!user) return;
+        setSaveError(null);
+        setIsSaving(true);
 
-    // `mock-server.cjs` no expone PATCH /users/:id todavia (solo
-    // PATCH /auth/me/password), asi que la API no puede persistir la
-    // edicion de perfil. Se resincroniza contra /auth/me en lugar de
-    // escribir un estado local que mentiria sobre lo que quedo guardado.
-    // Cuando exista el endpoint, aqui se sustituye por la llamada real.
-    await refreshUser();
+        const [firstName, ...rest] = name.trim().split(" ");
+        const lastName = rest.join(" ");
 
-    setEditing(false);
+        try {
+            // `image` es una URI local (expo-image-picker): PATCH /users/me
+            // rechaza cualquier imageUrl que no empiece con el prefijo de
+            // nuestra cuenta de Cloudinary, asi que se sube antes de guardar.
+            const imageUrl = image ? await uploadProfileImage(image) : undefined;
 
-}
+            await updateProfile({
+                firstName,
+                lastName,
+                phone,
+                imageUrl,
+            });
+
+            setEditing(false);
+        } catch (err) {
+            setSaveError(
+                err instanceof Error ? err.message : "No se pudo guardar el perfil.",
+            );
+        } finally {
+            setIsSaving(false);
+        }
+    }
 
 
     async function handleLogout() {
@@ -152,46 +188,46 @@ export default function Account() {
             {/* FOTO */}
 
             <View style={styles.profileHeader}>
-            <View style={styles.photoContainer}>
+                <View style={styles.photoContainer}>
 
-                <View style={styles.photoRing}>
-                <Image
+                    <View style={styles.photoRing}>
+                        <Image
 
-                    source={
-                        image
-                            ? { uri: image }
-                            : defaultUser
-                    }
+                            source={
+                                image
+                                    ? { uri: image }
+                                    : defaultUser
+                            }
 
-                    style={styles.image}
+                            style={styles.image}
 
-                />
-                </View>
+                        />
+                    </View>
 
 
-                <TouchableOpacity
+                    <TouchableOpacity
 
-                    style={styles.selectButton}
+                        style={styles.selectButton}
 
-                    onPress={pickImage}
+                        onPress={pickImage}
 
-                >
-
-                    <Text
-                        style={
-                            styles.selectButtonText
-                        }
                     >
 
-                        Cambiar foto
+                        <Text
+                            style={
+                                styles.selectButtonText
+                            }
+                        >
 
-                    </Text>
+                            Cambiar foto
 
-                </TouchableOpacity>
+                        </Text>
 
-            </View>
-            <Text style={styles.pageTitle}>{user ? `${user.first_name} ${user.last_name}` : "Mi cuenta"}</Text>
-            <Text style={styles.pageSubtitle}>Gestiona tu información y preferencias.</Text>
+                    </TouchableOpacity>
+
+                </View>
+                <Text style={styles.pageTitle}>{user ? `${user.firstName} ${user.lastName}` : "Mi cuenta"}</Text>
+                <Text style={styles.pageSubtitle}>Gestiona tu información y preferencias.</Text>
             </View>
 
 
@@ -430,28 +466,29 @@ export default function Account() {
                 }
             >
 
-        <TouchableOpacity
-            style={styles.editButton}
-            onPress={() => {
+                <TouchableOpacity
+                    style={styles.editButton}
+                    disabled={isSaving}
+                    onPress={() => {
 
-                if (editing) {
+                        if (editing) {
 
-                    handleSave();
+                            handleSave();
 
-                } else {
+                        } else {
 
-                    setEditing(true);
+                            setEditing(true);
 
-                }
+                        }
 
-            }}
-        >
-            <Text style={styles.buttonEditar}>
+                    }}
+                >
+                    <Text style={styles.buttonEditar}>
 
-                {editing ? "Guardar" : "Editar"}
+                        {editing ? (isSaving ? "Guardando..." : "Guardar") : "Editar"}
 
-            </Text>
-        </TouchableOpacity>
+                    </Text>
+                </TouchableOpacity>
 
 
                 <TouchableOpacity

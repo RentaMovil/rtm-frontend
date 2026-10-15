@@ -1,16 +1,31 @@
-import React, { useRef, useState } from 'react';
-import { useLocation,useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AiOutlineLock, AiOutlineSafety, AiOutlineArrowRight } from 'react-icons/ai';
 import NavbarTwo from '../../../shared/components/layout/NavbarTwo';
 import Footer from '../../../shared/components/layout/Footer';
+import { authService } from '../services/authService';
 import style from "../../auth/pages/CodeVerification.module.css";
 
 function CodeVerification() {
     const location = useLocation();
     const email = location.state?.email;
     const CODE_LENGTH = 6;
+    const RESEND_SECONDS = 30;
     const [code, setCode] = useState(new Array(CODE_LENGTH).fill(''));
     const inputsRef = useRef([]);
     const navigate = useNavigate();
+    const [isVerifying, setIsVerifying] = useState(false);
+    const [error, setError] = useState('');
+    const [info, setInfo] = useState('');
+    const [cooldown, setCooldown] = useState(0);
+    const [isResending, setIsResending] = useState(false);
+
+    // Cuenta regresiva para no pedir códigos seguidos
+    useEffect(() => {
+        if (cooldown <= 0) return;
+        const timer = setTimeout(() => setCooldown((c) => c - 1), 1000);
+        return () => clearTimeout(timer);
+    }, [cooldown]);
 
     // El código de iam son 6 dígitos
     const allowedChars = /^[0-9]$/;
@@ -57,47 +72,121 @@ function CodeVerification() {
     };
 
     
-    const handleVerify = async (e) => {
-        e.preventDefault();
-        const joined = code.join('');
-        if (joined.length !== CODE_LENGTH || code.some((c) => c === '')) return;
+const handleResend = async () => {
+    setError('');
+    setInfo('');
+    setIsResending(true);
+    try {
+        await authService.forgotPassword(email);
+        setCode(new Array(CODE_LENGTH).fill(''));
+        inputsRef.current[0]?.focus();
+        setInfo('Te enviamos un nuevo código');
+        setCooldown(RESEND_SECONDS);
+    } catch (err) {
+        // ej. 429 si se pidieron demasiados códigos
+        setError(err.message || 'No se pudo reenviar el código');
+    } finally {
+        setIsResending(false);
+    }
+};
 
-        // iam no tiene un endpoint para verificar el código solo: se valida junto con la
-        // nueva contraseña en POST /auth/password/reset (si está mal, el error sale allá)
+const handleVerify = async (e) => {
+    e.preventDefault();
+    const joined = code.join('');
+    if (joined.length !== CODE_LENGTH || code.some((c) => c === '')) {
+        setError('Por favor completa los 6 dígitos');
+        return;
+    }
+
+    setIsVerifying(true);
+    setError('');
+
+    try {
+        await authService.verifyCode(email, joined);
+        // Si llega aquí, el código es válido
         navigate('/ChangePasswordLogin', { state: { email, code: joined } });
-    };
+    } catch (err) {
+        setError('Código incorrecto o expirado. Intenta de nuevo.');
+    } finally {
+        setIsVerifying(false);
+    }
+};
+
 
     return (
         <>
             <NavbarTwo />
-            <div className={style["container-code"]}>
-                <label>Ingrese el código enviado a su correo electrónico:
-                </label>
-                <form onSubmit={handleVerify}>
-                    <div className={style["code-inputs"]}>
-                        {code.map((c, i) => (
-                            <input 
-                                className={style["code-input"]}
-                                key={i}
-                                type="text"
-                                inputMode="numeric"
-                                maxLength={1}
-                                value={c}
-                                onChange={(e) => handleChange(e, i)}
-                                onKeyDown={(e) => handleKeyDown(e, i)}
-                                ref={(el) => (inputsRef.current[i] = el)}
-                                aria-label={`code-${i + 1}`}
-                            />
-                        ))}
-                        
+            
+            <div className={style["page-background"]}>
+                <div className={style["container-code"]}>
+                    <div className={style["header-icon"]}>
+                        <AiOutlineLock />
                     </div>
+                    
+                    <h2 className={style["title"]}>Código de Verificación</h2>
+                    <p className={style["description"]}>
+                        Ingrese el código de 6 dígitos enviado a<br />
+                        <strong>{email}</strong>
+                    </p>
 
-                    <div className={style["confirm-button"]}>
-                        <button type="submit">Verificar</button>
+                    <form onSubmit={handleVerify}>
+                        <div className={style["code-inputs"]}>
+                            {code.map((c, i) => (
+                                <input
+                                    className={style["code-input"]}
+                                    key={i}
+                                    type="text"
+                                    inputMode="numeric"
+                                    maxLength={1}
+                                    value={c}
+                                    onChange={(e) => handleChange(e, i)}
+                                    onKeyDown={(e) => handleKeyDown(e, i)}
+                                    ref={(el) => (inputsRef.current[i] = el)}
+                                    aria-label={`code-${i + 1}`}
+                                />
+                            ))}
+                        </div>
+
+                        {error && (
+                            <p className={style["error-message"]}>{error}</p>
+                        )}
+
+                        {info && !error && (
+                            <p className={style["resend-link"]}>{info}</p>
+                        )}
+
+                        <button 
+                            type="submit" 
+                            className={style["confirm-button"]}
+                            disabled={isVerifying}
+                        >
+                            {isVerifying ? 'Verificando...' : 'Verificar Código'}
+                            {!isVerifying && <AiOutlineArrowRight className={style["button-icon"]} />}
+                        </button>
+
+                        <div className={style["resend-link"]}>
+                            ¿No recibiste el código? <button
+                                type="button"
+                                onClick={handleResend}
+                                disabled={isResending || cooldown > 0}
+                            >
+                                {cooldown > 0 ? `Reenviar (${cooldown}s)` : 'Reenviar'}
+                            </button>
+                        </div>
+                    </form>
+
+                    <div className={style["security-footer"]}>
+                        <div className={style["security-item"]}>
+                            <AiOutlineLock />
+                            <span>Código expira en 15 min</span>
+                        </div>
+                        <div className={style["security-item"]}>
+                            <AiOutlineSafety />
+                            <span>Datos Encriptados</span>
+                        </div>
                     </div>
-                </form>
+                </div>
             </div>
-            <Footer />
         </>
     );
 }

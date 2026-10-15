@@ -1,10 +1,6 @@
 import { useState } from "react";
 import "./HistorialReservation.css";
-import Navbar from "../../../shared/components/layout/Navbar.jsx";
-import NavbarAdmin from "../../../shared/components/layout/NavBarAdmin.jsx";
-import Footer from "../../../shared/components/layout/Footer.jsx";
-import FooterAdmin from "../../../shared/components/layout/FooterAdmin.jsx";
-import { useAuth } from "../../../contexts/AuthContext.jsx";
+import { RoleNavbar, RoleFooter } from "../../../shared/components/layout/RoleChrome.jsx";
 import ReservationDetailModal from "../components/HistoryReservationDetail.jsx";
 import { useTranslation } from "react-i18next";
 import { useReservationsList } from "../hooks/useReservationsList.js";
@@ -25,7 +21,6 @@ function HistorialReservation() {
   const { cancelReservation } = useCancelReservation();
   const { updateReturnBranch } = useUpdateReturnBranch();
   const { branches } = useBranches();
-
   const getBranchById = (id) => branches.find((b) => b.id === id);
 
   const [selectedReserva, setSelectedReserva] = useState(null);
@@ -51,7 +46,7 @@ function HistorialReservation() {
 
   return (
     <>
-      <NavbarComponent />
+      <RoleNavbar />
       <div className="historial-page">
         <div className="cards-container">
 
@@ -224,18 +219,7 @@ function HistorialReservation() {
         onUpdateReturnBranch={handleUpdateReturnBranch}
       />
 
-      {uploadReserva && (
-        <UploadReceiptModal
-          reservation={uploadReserva}
-          onClose={() => setUploadReserva(null)}
-          onSuccess={async () => {
-            setUploadReserva(null);
-            await refetch();
-          }}
-        />
-      )}
-
-      <FooterComponent />
+      <RoleFooter />
     </>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "./RegisterForm.css";
 import Quotes from '../../../shared/components/Quotes';
 import { useTranslation } from 'react-i18next'; 
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 function RegisterForm({ onSubmit, onSwitchToLogin }) {
@@ -16,6 +17,8 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   // Un solo toggle para contraseña y su confirmación: es el mismo valor.
   const [showPassword, setShowPassword] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -49,6 +52,11 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
 
     if (password !== confirmPassword) {
       return setError(t('register.passwordMatch'));
+    }
+
+    // Validación solo en frontend (Ley 1581 de 2012 - Habeas Data)
+    if (!acceptedTerms) {
+      return setError(t('register.termsRequired'));
     }
 
     setLoading(true);
@@ -152,7 +160,7 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
               aria-label={t(showPassword ? 'loginForm.hidePassword' : 'loginForm.showPassword')}
               title={t(showPassword ? 'loginForm.hidePassword' : 'loginForm.showPassword')}
             >
-              <i className={showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'} />
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
         </div>
@@ -172,6 +180,23 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
           </div>
         </div>
 
+        {/* Términos y condiciones / tratamiento de datos */}
+        <div className="form-group full terms-group">
+          <label className="terms-label">
+            <input
+              type="checkbox"
+              checked={acceptedTerms}
+              onChange={(e) => setAcceptedTerms(e.target.checked)}
+            />
+            <span>
+              {t('register.termsAccept')}{' '}
+              <button type="button" className="terms-link" onClick={() => setShowTerms(true)}>
+                {t('register.termsLink')}
+              </button>
+            </span>
+          </label>
+        </div>
+
         {/* Error */}
         {error && <div className="register-error">{error}</div>}
 
@@ -186,6 +211,19 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
 
       </form>
     </section>
+    {showTerms && (
+      <div className="terms-overlay" onClick={() => setShowTerms(false)}>
+        <div className="terms-modal" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
+          <h3>{t('register.termsTitle')}</h3>
+          {t('register.termsBody', { returnObjects: true }).map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
+          <button type="button" className="register-btn" onClick={() => setShowTerms(false)}>
+            {t('register.termsClose')}
+          </button>
+        </div>
+      </div>
+    )}
     <div>
     <Quotes />
     </div>

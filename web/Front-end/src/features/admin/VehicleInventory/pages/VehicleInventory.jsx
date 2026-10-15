@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import NavBarAdmin from "../../../../shared/components/layout/NavBarAdmin";
-import Footer from "../../../../shared/components/layout/Footer";
+import FooterAdmin from "../../../../shared/components/layout/FooterAdmin";
 import { useNavigate } from "react-router-dom";
 import "./VehicleInventory.css";
 import { useTranslation } from "react-i18next";
@@ -275,7 +275,7 @@ export default function VehicleInventory() {
           </>
         )}
       </div>
-      <Footer />
+      <FooterAdmin />
     </div>
   );
 }

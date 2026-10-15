@@ -1,7 +1,7 @@
 import "./Notification.css";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../../shared/components/layout/NavBarAdmin.jsx";
-import Footer from "../../../shared/components/layout/FooterAdmin.jsx";
+import NavbarAdmin from "../../../shared/components/layout/NavBarAdmin.jsx";
+import FooterAdmin from "../../../shared/components/layout/FooterAdmin.jsx";
 import NotificationCenter from "../components/NotificationCenter.jsx";
 
 function NotificationAdmin() {
@@ -9,9 +9,9 @@ function NotificationAdmin() {
 
   return (
     <>
-      <Navbar />
+      <NavbarAdmin />
       <NotificationCenter onBack={() => navigate(-1)} />
-      <Footer />
+      <FooterAdmin />
     </>
   );
 }

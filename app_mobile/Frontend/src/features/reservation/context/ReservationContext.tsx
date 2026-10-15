@@ -36,6 +36,7 @@ type ReservationContextType = {
   updatePickupBranch: (branch: Branch) => void;
   updateReturnBranch: (branch: Branch) => void;
   updateInsurance: (insuranceTypeId: string | null) => void;
+  updateTermsAccepted: (accepted: boolean) => void;
   clearReservation: () => void;
 };
 
@@ -65,6 +66,7 @@ export function ReservationProvider({ children }: Props) {
         returnBranch,
         pickupDate,
         returnDate,
+        termsAccepted: false,
       });
     },
     [],
@@ -93,6 +95,10 @@ export function ReservationProvider({ children }: Props) {
     });
   }, []);
 
+  const updateTermsAccepted = useCallback((accepted: boolean) => {
+    setReservation((prev) => (prev ? { ...prev, termsAccepted: accepted } : prev));
+  }, []);
+
   const clearReservation = useCallback(() => {
     setReservation(null);
     setCreatedReservation(null);
@@ -108,6 +114,7 @@ export function ReservationProvider({ children }: Props) {
         updatePickupBranch,
         updateReturnBranch,
         updateInsurance,
+        updateTermsAccepted,
         clearReservation,
       }}
     >

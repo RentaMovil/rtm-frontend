@@ -1,0 +1,738 @@
+    /* Contenedor Principal */
+    .containerC {
+    background-color: var(--bg);
+    min-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    box-sizing: border-box;
+    transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Tarjeta de Perfil Ampliada */
+    .cardC {
+    background: var(--card-bg);
+    border: 1px solid var(--bordercard);
+    width: 100%;
+    max-width: 950px;
+    border-radius: 24px;
+    padding: 45px 55px;
+    box-shadow: var(--shadow);
+    position: relative;
+    box-sizing: border-box;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .header-page {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        width: 100%;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--border-Card);
+        box-sizing: border-box;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+    }
+
+    .header-page button:not(.icon-btnC),
+    .header-page a:not(.icon-btnC) {
+    color: var(--button) !important;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 18px;
+    background: transparent !important;
+    border: none !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 0 !important;
+    }
+
+    /* Estado Centrado en la cabecera */
+    .status2 {
+    color: var(--button);
+    font-family: var(--heading);
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    }
+
+    .status2::before {
+    content: "✓ ";
+    }
+
+    .status2.pending {
+    color: var(--accent);
+    }
+
+    .status2.pending::before {
+    content: "✎ ";
+    }
+
+    /* Botones Circulares de Acción (Editar, Tema, Idioma) */
+
+    /* Se quedo dentro del header, asi que ya no va en absolute: el
+       flex del header lo coloca a la derecha y comparte eje con el
+       boton de volver. */
+    .actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex: none;
+    }
+
+    .icon-btnC {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background-color: var(--button);
+    color: var(--text-btn);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: transform 0.2s ease, background-color 0.3s ease, opacity 0.2s;
+    }
+
+
+    /* Boton de editar: se marca cuando el modo edicion esta abierto, para
+       que se sepa que los campos ya no son de solo lectura. */
+    .icon-btnC--on {
+        background-color: var(--accent);
+        color: var(--text-btn);
+    }
+
+    .icon-btnC:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    }
+
+    /* Formulario en Grid */
+
+    /* El enlace de cambiar contrasena y el boton Guardar ocupan las dos
+       columnas, para que queden centrados y no descuadrados. */
+    .form-groupC--full {
+        grid-column: 1 / -1;
+    }
+
+    .btn-saveProfile {
+        background: var(--button);
+        color: var(--text-btn);
+        border: none;
+        padding: 13px 28px;
+        border-radius: 12px;
+        font-family: var(--sans);
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn-saveProfile:hover:not(:disabled) {
+        transform: translateY(-2px);
+    }
+
+    .btn-saveProfile:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .formC {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 35px;
+    margin-top: 20px;
+    }
+
+    /* Foto de Perfil Agranda */
+    .form-image {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 25px;
+    }
+
+    .form-image label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    }
+
+    .imgPerfile {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: var(--input);
+    border: 3px solid var(--bordercard);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit {
+    color: var(--button);
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 12px;
+    }
+
+    /* Campos de Formulario Agrandados */
+    .form-groupC {
+    display: flex;
+    flex-direction: column;
+    }
+
+    .form-labelC {
+    color: var(--text-h);
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 10px;
+    }
+
+    .inputC {
+    background-color: var(--input);
+    border: 1px solid var(--bordercard);
+    border-radius: 14px;
+    padding: 15px 18px;
+    font-size: 16px;
+    font-family: var(--sans);
+    color: var(--text);
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .inputC.editing {
+    background-color: var(--card-bg);
+    border-color: var(--button);
+    }
+
+    .accountLink {
+    margin-top: 8px;
+    }
+
+    .linkC {
+    color: var(--button);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    }
+
+    .linkC:hover {
+    text-decoration: underline;
+    }
+
+
+    .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    }
+
+    .modal-content {
+    background: var(--modal-bg);
+    border: 1px solid var(--border-Card);
+    border-radius: 20px;
+    padding: 28px;
+    width: 90%;
+    max-width: 560px;
+    box-shadow: var(--shadow);
+    }
+
+    .modal-title {
+    font-family: var(--heading);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--modal-title);
+    margin-bottom: 20px;
+    }
+
+    .theme-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+    }
+
+
+    /* La tarjeta va en columna: el markup es miniatura arriba y texto
+       abajo. En fila —como estaba, con `align-items: center` y `gap: 12px`—
+       la miniatura se encogia al ancho de su contenido y se veia de 20px. */
+    .theme-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    border: 1px solid var(--modal-card-border);
+    border-radius: 14px;
+    padding: 14px;
+    background: var(--modal-card-bg);
+    color: var(--modal-card-text);
+    cursor: pointer;
+    text-align: left;
+    gap: 0;
+    transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .theme-card.active,
+    .theme-card.active2 {
+    border-color: var(--button);
+    background-color: var(--accent-bg);
+    }
+
+    .theme-card-info .theme-name {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--modal-card-text);
+    }
+
+    .theme-card-info .theme-desc {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--modal-subtext);
+    }
+    /* ── Miniatura de referencia del tema ────────────────────────────────
+       Esta miniatura SI existed en el JSX, pero no tenia ningun estilo, asi
+       que salia de 0x0 y no se veia nada: no habia forma de elegir tema.
+
+       Los colores son literales, no `var(--bg)`: con un solo tema
+       activo a la vez, una variable CSS solo da el color del tema que esta
+       puesto, y todas las miniaturas se verian iguales. Los valores salen de
+       los bloques :root de index.css. */
+    .theme-preview {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-self: stretch;
+        flex: none;
+        height: 64px;
+        border-radius: 9px;
+        overflow: hidden;
+        border: 1px solid var(--modal-card-border);
+        margin-bottom: 12px;
+    }
+
+    /* Barra superior, como el navbar real */
+    .theme-preview-bar {
+        height: 14px;
+        flex: none;
+    }
+
+    /* Cuerpo: fondo del tema con una superficie encima, como una tarjeta */
+    .theme-preview-body {
+        flex: 1;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 5px;
+        padding: 6px 7px;
+    }
+
+    .theme-preview-surface {
+        flex: 1;
+        height: 14px;
+        border-radius: 4px;
+    }
+
+    /* Punto de acento, para comparar el color de marca de un vistazo */
+    .theme-preview-accent {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        flex: none;
+    }
+
+    /* Paleta de cada tema, tomada de index.css */
+    .preview-skylight .theme-preview-bar {
+        background: #0A192F;
+    }
+    .preview-skylight .theme-preview-body {
+        background: #F8FAFC;
+    }
+    .preview-skylight .theme-preview-surface {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+    }
+    .preview-skylight .theme-preview-accent {
+        background: #F2C063;
+    }
+
+    .preview-light .theme-preview-bar {
+        background: #FAFAFA;
+    }
+    .preview-light .theme-preview-body {
+        background: #FAFAFA;
+    }
+    .preview-light .theme-preview-surface {
+        background: #FFFFFF;
+        border: 1px solid #E5E7EB;
+    }
+    .preview-light .theme-preview-accent {
+        background: #F2C063;
+    }
+
+    .preview-dark .theme-preview-bar {
+        background: #1C1C1C;
+    }
+    .preview-dark .theme-preview-body {
+        background: #121212;
+    }
+    .preview-dark .theme-preview-surface {
+        background: #1C1C1C;
+    }
+    .preview-dark .theme-preview-accent {
+        background: #C59B27;
+    }
+
+    .preview-darkPurple .theme-preview-bar {
+        background: #070F22;
+    }
+    .preview-darkPurple .theme-preview-body {
+        background: #030712;
+    }
+    .preview-darkPurple .theme-preview-surface {
+        background: #070F22;
+    }
+    .preview-darkPurple .theme-preview-accent {
+        background: #C59B27;
+    }
+
+    .lang-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    .lang-flag {
+    width: 32px;
+    height: 22px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    }
+
+    .close-btn {
+    background: var(--modal-button);
+    color: var(--modal-button-text);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    }
+
+    .close-btn:hover {
+    opacity: 0.9;
+    }
+
+    /* Botones del modal de logout */
+    .btn-negative {
+    background: transparent;
+    color: var(--text-h);
+    border: 1px solid var(--bordercard);
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    }
+
+    .btn-negative:hover {
+    background: var(--hover);
+    }
+
+    .btn-danger {
+    background: var(--cancel);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    }
+
+    .btn-danger:hover {
+    opacity: 0.9;
+    }
+
+    
+    /* Con el boton de cancelar eliminado, la X pasa a la esquina superior
+       derecha del modal. Se posiciona con `absolute` respecto al
+       modal, asi que .modal-content necesita `position: relative`. */
+    .modal-content {
+        position: relative;
+    }
+
+    .btn-times--corner {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        z-index: 2;
+        width: 32px;
+        height: 32px;
+        justify-content: center;
+        border-radius: 8px;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-times--corner:hover {
+        background: var(--hover);
+    }
+
+    .btn-times {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--modal-subtext);
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    }
+
+    .btn-times:hover {
+    color: var(--text-h);
+    }
+
+
+    .route-loading {
+        min-height: 40vh;
+        display: grid;
+        place-items: center;
+        color: var(--text-h);
+        font-family: var(--sans);
+    }
+
+
+    /* Aviso de confirmacion tras guardar el perfil. Usa --success, que si
+       esta definido en los cuatro temas, a diferencia de un verde fijo. */
+    .account-saved {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 18px 0 0;
+        padding: 11px 16px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: var(--card-brand);
+        color: var(--success);
+        font-family: var(--sans);
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .account-error {
+        margin: 16px 0;
+        padding: 12px 14px;
+        border: 1px solid color-mix(in srgb, var(--cancel, #ef4444) 35%, transparent);
+        border-radius: 10px;
+        background: color-mix(in srgb, var(--cancel, #ef4444) 10%, transparent);
+        color: var(--cancel, #ef4444);
+        font-family: var(--sans);
+        text-align: center;
+    }
+
+    .account-actions-fallback {
+        position: static;
+        justify-content: center;
+        margin-top: 18px;
+    }
+
+    /* ── Cambio de correo (HU-IAM-004) ──
+       Colores por variable de tema, no los hex del mockup: asi el modal
+       sigue al resto de la pantalla en los cuatro modos. */
+
+    .ce-open {
+        align-self: flex-start;
+        margin-top: 10px;
+        padding: 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .ce-banner {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 22px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid color-mix(in srgb, var(--button) 35%, transparent);
+        background: color-mix(in srgb, var(--button) 10%, transparent);
+        color: var(--text-h);
+        font-family: var(--sans);
+        font-size: 13px;
+        line-height: 1.45;
+    }
+
+    .ce-banner svg {
+        flex: none;
+        margin-top: 2px;
+        color: var(--button);
+    }
+
+    .ce-hint {
+        display: block;
+        margin-top: 8px;
+        font-family: var(--sans);
+        font-size: 12px;
+        color: var(--placeholder);
+    }
+
+    .ce-actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .ce-btn-ghost {
+        background: transparent;
+        color: var(--text-h);
+        border: 1px solid var(--bordercard);
+        padding: 13px 24px;
+        border-radius: 12px;
+        font-family: var(--sans);
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    .ce-btn-ghost:hover:not(:disabled) {
+        background: var(--hover);
+    }
+
+    .ce-btn-ghost:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .form-image-preview {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    @media (max-width: 700px) {
+    .cardC {
+        padding: 90px 24px 35px 24px;
+    }
+
+    .formC {
+        grid-template-columns: 1fr;
+    }
+
+    .theme-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-page {
+        top: 25px;
+        left: 20px;
+    }
+
+    .status2 {
+        margin-top: 15px;
+        font-size: 16px;
+    }
+
+    .actions {
+        top: 25px;
+        right: 20px;
+    }
+    }
+/* ─── Campo de contraseña con botón mostrar/ocultar ──────────────────────────
+   El input conserva su .inputC; el botón se superpone a la derecha. */
+.password-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-wrap .inputC {
+    width: 100%;
+    padding-right: 46px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--button);
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.password-toggle:hover:not(:disabled) {
+    background: rgba(245, 176, 65, 0.15);
+}
+
+.password-toggle:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.password-toggle:focus-visible {
+    outline: 2px solid var(--button);
+    outline-offset: 1px;
+}

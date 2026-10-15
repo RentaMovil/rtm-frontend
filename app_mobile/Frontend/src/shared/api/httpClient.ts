@@ -56,8 +56,11 @@ let refreshPromise: Promise<string> | null = null;
 /**
  * Renueva el access token.
  *
- * El refresh token no se renueva a si mismo (`mock-server.cjs` responde solo
- * `{ accessToken, expiresIn }`), asi que basta con persistir el nuevo access.
+ * rtm-iam ROTA el refresh token (de un solo uso): el que se manda aqui queda
+ * invalido en el servidor y la respuesta trae uno nuevo. Si no se persiste,
+ * la proxima renovacion reenvia el viejo, el servidor lo detecta como
+ * reutilizado y cierra TODAS las sesiones (bucle de "vuelve a iniciar
+ * sesion" en cuanto algo dispara un segundo refresh).
  */
 async function refreshAccessToken(): Promise<string> {
   const refreshToken = await tokenStore.getRefreshToken();
@@ -76,9 +79,10 @@ async function refreshAccessToken(): Promise<string> {
     throw new Error("No se pudo refrescar la sesion");
   }
 
-  const data = (await res.json()) as { accessToken: string };
+  const data = (await res.json()) as { accessToken: string; refreshToken: string };
 
   tokenStore.setAccessToken(data.accessToken);
+  await tokenStore.setRefreshToken(data.refreshToken);
 
   return data.accessToken;
 }

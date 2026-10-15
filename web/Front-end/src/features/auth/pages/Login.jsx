@@ -56,7 +56,6 @@ function Login() {
 
             </div>
 
-            <FooterTwo />
         </>
     );
 }

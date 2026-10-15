@@ -1,89 +1,242 @@
-.container-code{
-  margin: 30px auto;
-  max-width: 480px;
-  padding: 24px;
+/* Fondo de página consistente con RentaMovil */
+.page-background {
+  min-height: calc(100vh - 120px);
+  background-color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* Tarjeta principal */
+.container-code {
+  max-width: 520px;
+  width: 100%;
+  padding: 48px 40px;
   border-radius: 24px;
-  text-align: center;
-  position: relative;
   background-color: var(--card-bg);
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--shadow);
+  text-align: center;
 }
 
-.container-code label{
-    font-size: 16px;
-    color: var(--text);
+/* Icono del header */
+.header-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 32px;
 }
 
-.code-inputs{
-  margin-top: 20px;
+/* Título */
+.title {
+  font-family: var(--heading);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0 0 12px 0;
+}
+
+/* Descripción */
+.description {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--placeholder);
+  line-height: 1.6;
+  margin: 0 0 32px 0;
+}
+
+.description strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Inputs del código */
+.code-inputs {
   display: flex;
   justify-content: center;
   gap: 12px;
-  flex-wrap: wrap;
+  margin-bottom: 24px;
 }
 
-.code-input{
-  width: 48px;
-  height: 56px;
+.code-input {
+  width: 56px;
+  height: 64px;
   text-align: center;
-  font-size: 20px;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 8px;
-background-color: var(--card-bg);
-       border: 1px solid var(--border);
-
+  font-family: var(--mono);
+  font-size: 24px;
+  font-weight: 600;
+  border: 2px solid var(--border-filter);
+  border-radius: 12px;
+  background-color: var(--input);
+  color: var(--text);
   outline: none;
+  transition: all 0.2s;
 }
 
-.code-input:focus{
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
-  border-color: rgba(99,102,241,0.6);
+.code-input:focus {
+  border-color: var(--accent);
+  background-color: var(--card-bg);
+  box-shadow: 0 0 0 3px var(--accent-bg);
 }
 
-.confirm-button{
-  display: flex;
-  justify-content: center;
-  margin-top: 24px;
+.code-input:not(:placeholder-shown) {
+  border-color: var(--accent);
 }
 
-.confirm-button button {
-  padding: 12px 24px;
+/* Mensaje de error */
+.error-message {
+  color: #ef4444;
+  margin-bottom: 16px;
+  font-family: var(--sans);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Botón confirmar */
+.confirm-button {
+  width: 100%;
+  height: 56px;
+  padding: 14px 24px;
   border-radius: 12px;
   border: none;
   background: var(--button);
   color: var(--text-btn);
-  cursor: pointer;
-  transition: 0.2s;
+  font-family: var(--sans);
+  font-size: 16px;
   font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
 }
 
-@media (min-width: 768px) {
-  .container-code{
-    max-width: 640px;
-    padding: 32px;
+.confirm-button:hover:not(:disabled) {
+  background: var(--modal-hover);
+  transform: translateY(-2px);
+}
+
+.confirm-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.confirm-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button-icon {
+  font-size: 20px;
+  transition: transform 0.3s;
+}
+
+.confirm-button:hover:not(:disabled) .button-icon {
+  transform: translateX(4px);
+}
+
+/* Link de reenvío */
+.resend-link {
+  margin-bottom: 32px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.resend-link button {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.resend-link button:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+/* Footer de seguridad */
+.security-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.security-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--placeholder);
+}
+
+.security-item svg {
+  font-size: 18px;
+  color: var(--icon);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container-code {
+    padding: 32px 24px;
   }
 
-  .code-inputs{
+  .title {
+    font-size: 20px;
+  }
+
+  .code-inputs {
+    gap: 8px;
+  }
+
+  .code-input {
+    width: 48px;
+    height: 56px;
+    font-size: 20px;
+  }
+
+  .security-footer {
+    flex-direction: column;
     gap: 16px;
-  }
-
-  .code-input{
-    width: 56px;
-    height: 64px;
-    font-size: 22px;
   }
 }
 
 @media (max-width: 420px) {
-  .container-code{
-    margin: 16px;
-    padding: 18px;
-    border-radius: 16px;
+  .container-code {
+    padding: 24px 16px;
   }
 
-  .code-input{
+  .header-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+  }
+
+  .code-inputs {
+    gap: 6px;
+  }
+
+  .code-input {
     width: 44px;
-    height: 48px;
+    height: 52px;
     font-size: 18px;
   }
 }

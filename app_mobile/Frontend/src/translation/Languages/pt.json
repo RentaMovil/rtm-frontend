@@ -112,7 +112,10 @@
     "dateOfBirth": "Data de nascimento",
     "document": "Nº do documento de identidade",
     "phone": "Telefone",
-    "submit": "Alugar"
+    "submit": "Alugar",
+    "terms": {
+      "accept": "Li e aceito os termos e condições"
+    }
   },
   "login": {
     "createAccount": "Criar conta",
@@ -128,9 +131,12 @@
     "password": "Senha",
     "emailPlaceholder": "seu@email.com",
     "passwordPlaceholder": "••••••••",
+    "showPassword": "Mostrar senha",
+    "hidePassword": "Ocultar senha",
     "submitting": "Entrando...",
     "submit": "Entrar",
     "noAccount": "Não tem uma conta? Cadastre-se",
+    "forgotPassword": "Esqueceu sua senha?",
     "error": "Erro"
   },
   "register": {
@@ -217,6 +223,30 @@
     "con-new": "Novo contrato",
     "con-history": "Histórico de contratos"
   },
+  "passwordRecovery": {
+    "title": "Recuperar senha",
+    "emailIntro": "Digite o e-mail da sua conta e enviaremos um código de 6 dígitos.",
+    "emailLabel": "E-mail",
+    "sendIntro": "Enviaremos um código de 6 dígitos para {{email}} para confirmar que é você.",
+    "sendCode": "Enviar código",
+    "codeSent": "Se {{email}} estiver cadastrado, enviamos um código.",
+    "codeLabel": "Código de verificação",
+    "verifyCode": "Verificar código",
+    "invalidCode": "Código incorreto ou expirado. Tente novamente.",
+    "resendCode": "Reenviar código",
+    "resendIn": "Reenviar em {{seconds}}s",
+    "newPassword": "Nova senha",
+    "confirmPassword": "Confirmar senha",
+    "mismatch": "As senhas não coincidem",
+    "save": "Alterar senha",
+    "success": "Senha alterada com sucesso. Entre com a nova.",
+    "backToLogin": "Voltar ao login",
+    "ruleLength": "Pelo menos 8 caracteres",
+    "ruleSpecial": "Pelo menos um caractere especial (#, @, etc)",
+    "ruleUpper": "Pelo menos uma letra maiúscula",
+    "ruleNumber": "Pelo menos um número",
+    "genericError": "Não foi possível concluir a solicitação"
+  },
   "changePassword": {
     "caracters": "Pelo menos 8 caracteres",
     "specialCaracters": "Pelo menos um caractere especial (#, @, etc)",
@@ -230,7 +260,12 @@
     "confirmPassword": "Confirmar nova senha",
     "invalid": "As senhas não coincidem",
     "saving": "Salvando...",
-    "save": "Salvar alterações"
+    "save": "Salvar alterações",
+    "methodPassword": "Senha atual",
+    "methodCode": "Código por e-mail",
+    "cancel": "Cancelar",
+    "samePassword": "A nova senha deve ser diferente da atual",
+    "successRelogin": "Senha alterada com sucesso. Entre novamente com a nova."
   },
   "vehicleForm": {
     "title": "Registrar um novo veículo",

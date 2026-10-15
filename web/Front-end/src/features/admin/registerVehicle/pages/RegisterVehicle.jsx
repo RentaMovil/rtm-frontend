@@ -1,5 +1,5 @@
 import NavBarAdmin from "../../../../shared/components/layout/NavBarAdmin";
-import Footer from '../../../../shared/components/layout/Footer';
+import FooterAdmin from '../../../../shared/components/layout/FooterAdmin';
 import VehicleForm from "../components/VehicleForm";
 import style from'./RegisterVehicle.module.css';
 function RegisterVehicle() {
@@ -7,7 +7,7 @@ function RegisterVehicle() {
         <>
             <NavBarAdmin/>
             <VehicleForm />
-            <Footer/>
+            <FooterAdmin/>
 
         </>
     );

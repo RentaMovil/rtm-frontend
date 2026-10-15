@@ -4,6 +4,7 @@
     import { useTranslation } from "react-i18next";
     import "./RegisterForm.jsx";
     import { useNavigate } from "react-router-dom";
+    import { FaEye, FaEyeSlash } from "react-icons/fa";
 
     // "90 segundos" -> "2 minutos": el rate limit del login es de 5 minutos
     function formatWait(seconds) {
@@ -108,11 +109,7 @@
                             : "loginForm.showPassword"
                     )}
                 >
-                    <i
-                        className={
-                            showPassword ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"
-                        }
-                    />
+                    {showPassword ? <FaEye /> : <FaEyeSlash />}
                 </button>
             </div>
             </div>

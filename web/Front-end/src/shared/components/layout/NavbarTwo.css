@@ -32,6 +32,14 @@
   color:  var( --textNavabar);
 }
 
+.subName{
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1.8rem;
+  color: var(--accent);
+}
+
 .Title-hover{
   color: var(--accent);
 }

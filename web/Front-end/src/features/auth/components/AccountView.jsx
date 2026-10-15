@@ -3,10 +3,7 @@ import { FaGlobe, FaMoon, FaPen, FaSignOutAlt, FaTimes, FaInfoCircle, FaEye, FaE
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import Navbar from "../../../shared/components/layout/Navbar";
-import NavbarAdmin from "../../../shared/components/layout/NavBarAdmin";
-import Footer from "../../../shared/components/layout/Footer";
-import FooterAdmin from "../../../shared/components/layout/FooterAdmin";
+import { RoleNavbar, RoleFooter } from "../../../shared/components/layout/RoleChrome";
 import ButtonBack from "../../../shared/components/buttonBack";
 import { useAuth } from "../../../contexts/AuthContext";
 import ProfileIdentity from "./ProfileIdentity";
@@ -16,7 +13,8 @@ import english from "../../../assets/img/eeuu.png";
 import french from "../../../assets/img/francia2.png";
 import portuguese from "../../../assets/img/portugal.png";
 
-export default function AccountView({ theme, setTheme, admin = false }) {
+
+export default function AccountView({ theme, setTheme }) {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
     const { user, isLoading, error, refreshProfile, updateProfile, changeEmail, logout } = useAuth();
@@ -27,6 +25,7 @@ export default function AccountView({ theme, setTheme, admin = false }) {
     }, [refreshProfile]);
     const [showThemeModal, setShowThemeModal] = useState(false);
     const [showLangModal, setShowLangModal] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     // Cambio de correo (HU-IAM-004). Vive en su propio modal, no en el modo
     // edicion del perfil: la confirmacion es la contrasena actual, no un
@@ -69,9 +68,6 @@ export default function AccountView({ theme, setTheme, admin = false }) {
             setIsSaving(false);
         }
     };
-
-    const NavbarComponent = admin ? NavbarAdmin : Navbar;
-    const FooterComponent = admin ? FooterAdmin : Footer;
 
     const openEmailModal = () => {
         setNewEmail("");
@@ -146,6 +142,7 @@ export default function AccountView({ theme, setTheme, admin = false }) {
     const handleLogout = async () => {
         await logout();
         navigate("/");
+        setShowLogoutModal(false);
     };
 
     if (isLoading) {
@@ -155,7 +152,7 @@ export default function AccountView({ theme, setTheme, admin = false }) {
     if (!user) {
         return (
             <>
-                <NavbarComponent />
+                <RoleNavbar />
                 <div className="containerC">
                     <div className="cardC">
                         <p className="account-error" role="alert">
@@ -175,14 +172,16 @@ export default function AccountView({ theme, setTheme, admin = false }) {
                         </div>
                     </div>
                 </div>
-                <FooterComponent />
+                <RoleFooter />
+                <RoleFooter />
             </>
         );
     }
 
     return (
         <>
-            <NavbarComponent />
+            <RoleNavbar />
+            <RoleNavbar />
             <div className="containerC">
                 <div className="cardC">
                     <div className="header-page">
@@ -233,7 +232,7 @@ export default function AccountView({ theme, setTheme, admin = false }) {
                             <button
                                 className="icon-btnC"
                                 type="button"
-                                onClick={handleLogout}
+                                onClick={() => setShowLogoutModal(true)}
                                 aria-label={t("account.logout")}
                                 title={t("account.logout")}
                             >
@@ -550,7 +549,26 @@ export default function AccountView({ theme, setTheme, admin = false }) {
                 </div>
             )}
 
-            <FooterComponent />
+            {/* MODAL DE CONFIRMACIÓN DE CIERRE DE SESIÓN */}
+            {showLogoutModal && (
+                <div className="modal-overlay" onClick={() => setShowLogoutModal(false)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <p>
+                            ¿Estás seguro de que deseas <strong>cerrar sesión</strong>?
+                        </p>
+                        <div className="modal-actions">
+                            <button className="btn-negative" onClick={() => setShowLogoutModal(false)}>
+                                {t("account.cancelar", "Cancelar")}
+                            </button>
+                            <button className="btn-danger" onClick={handleLogout}>
+                                {t("account.confirmLogout", "Sí, Cerrar Sesión")}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <RoleFooter />
         </>
     );
 }

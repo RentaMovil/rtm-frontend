@@ -14,6 +14,7 @@ import FilterCalendar, { SearchData } from "../components/Filter";
 import ProcessSteps from "../components/ProcessSteps";
 
 import { vehicleService } from "../../vehicles/services/vehicleService";
+import { formatDateOnly } from "../../vehicles/utils/formatDateOnly";
 import VehicleCard from "../components/VehicleCard";
 
 
@@ -81,13 +82,42 @@ export default function HomePage() {
 
     setEmptyMessage("");
 
-    // La API expone el vehiculo con `location` como texto libre y sin
-    // disponibilidad por rango de fechas, asi que todavia no puede filtrar
-    // por sucursal ni por fechas. Cuando `vehicles` exponga `branchId` y un
-    // endpoint de disponibilidad, se anaden aqui los tres criterios.
-    const filteredVehicles = await vehicleService.getVehicles({
+    const byGenericFilters = await vehicleService.getVehicles({
       ...currentFilters,
     });
+
+    // Sucursal elegida en el buscador: por branchId si la API lo dio, y por
+    // nombre como respaldo (location es el unico dato que trae el mock).
+    const byBranch = byGenericFilters.filter((vehicle) =>
+      vehicle.branchId
+        ? vehicle.branchId === currentSearchData.branch.id
+        : vehicle.location === currentSearchData.branch.name,
+    );
+
+    // Un vehiculo puede estar AVAILABLE y aun asi tener otra reserva que se
+    // cruce con estas fechas (GET /vehicles/{id}/availability lo revisa
+    // contra booking-reservation, no solo el estado del vehiculo). Sin este
+    // filtro, "Alquilar" fallaba con 409 en vehiculos que el catalogo
+    // mostraba como si estuvieran libres.
+    const from = formatDateOnly(currentSearchData.startDate);
+    const to = formatDateOnly(currentSearchData.endDate);
+
+    const availabilityChecks = await Promise.all(
+      byBranch.map(async (vehicle) => {
+        try {
+          const available = await vehicleService.getAvailability(vehicle.id, from, to);
+          return available ? vehicle : null;
+        } catch {
+          // Si la verificacion falla no se oculta el vehiculo: el backend
+          // vuelve a validar al crear la reserva y es quien decide (409).
+          return vehicle;
+        }
+      }),
+    );
+
+    const filteredVehicles = availabilityChecks.filter(
+      (vehicle): vehicle is Vehicle => vehicle !== null,
+    );
 
     setVehicles(filteredVehicles);
 

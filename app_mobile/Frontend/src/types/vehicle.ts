@@ -26,8 +26,10 @@ export type Vehicle = {
   capacity: number;
   vehicleType: string;
   fuelType: string;
-  /** Ubicacion actual. La API lo entrega como texto, no como FK a Branch. */
+  /** Ubicacion actual (nombre de la sucursal). */
   location: string;
+  /** FK Branch. La API real si la expone (a diferencia del mock). */
+  branchId?: string;
   image: string;
   status: string;
 };

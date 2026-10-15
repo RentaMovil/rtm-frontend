@@ -1,5 +1,5 @@
-import type { ComponentProps } from "react";
 import type FontAwesome from "@expo/vector-icons/FontAwesome";
+import type { ComponentProps } from "react";
 
 import type { Notification, Vehicle } from "../../../types";
 
@@ -89,10 +89,10 @@ export function attachVehicle(
   notifications: Notification[],
   vehicles: Vehicle[],
 ): NotificationWithVehicle[] {
-  const vehiclesById = new Map(vehicles.map((v) => [v.id, v]));
+  const vehiclesById = new Map(vehicles.map((vehicle) => [String(vehicle.id), vehicle]));
 
   return notifications.map((n) => ({
     ...n,
-    vehicle: n.vehicle_id ? (vehiclesById.get(n.vehicle_id) ?? null) : null,
+    vehicle: n.vehicle_id ? (vehiclesById.get(String(n.vehicle_id)) ?? null) : null,
   }));
 }

@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Platform, Text, TouchableOpacity, View } from "react-native";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 import AppCard from "../../../shared/components/AppCard/AppCard";
 
@@ -27,40 +25,13 @@ import { createStyles } from "./BankAccountSelector.styles";
  * el Admin necesita para conciliar.
  */
 export default function BankAccountSelector() {
-  const { t } = useTranslation();
 
   const { selectedBankAccount, setSelectedBankAccount } = usePayment();
   const [accounts, setAccounts] = useState<BankAccount[]>([]);
 
-  const [copiedId, setCopiedId] = useState<string | null>(null);
-
   const { themeName } = useTheme();
   const colors = themes[themeName];
   const styles = createStyles(colors);
-
-  /**
-   * Copia el numero al portapapeles y muestra la confirmacion un momento.
-   *
-   * Se usa la Web Clipboard API, que es la que existe sin dependencias
-   * extra. En nativo no hay API de portapapeles sin `expo-clipboard`, asi
-   * que ahi el boton no hace nada: el numero esta a la vista y se copia a
-   * mano, que es justo lo que cubre el number-only.
-   */
-  async function copyToClipboard(accountId: string, value: string) {
-    try {
-      if (Platform.OS !== "web" || !navigator?.clipboard) {
-        return;
-      }
-
-      await navigator.clipboard.writeText(value);
-
-      setCopiedId(accountId);
-      setTimeout(() => setCopiedId(null), 2000);
-    } catch {
-      // Sin portapapeles disponible: el numero ya esta a la vista para
-      // copiarlo a mano, que es justo el caso que cubre el number-only.
-    }
-  }
 
   useEffect(() => {
     let cancelled = false;
@@ -123,50 +94,33 @@ export default function BankAccountSelector() {
 
                   <View style={styles.radioWrapper}>
                     <Text style={styles.bankName}>{account.bankName}</Text>
-
-                    <Text style={styles.accountType}>
-                      {account.accountType}
-                    </Text>
                   </View>
                 </View>
 
                 <Text style={styles.holder}>{account.holderName}</Text>
 
-                <View style={styles.numberBox}>
-                  <Text style={styles.numberLabel}>
-                    NUMERO DE CUENTA
-                  </Text>
-
-                  <Text style={styles.accountNumber}>
-                    {account.accountNumber}
-                  </Text>
-                </View>
-
-                <TouchableOpacity
-                  style={styles.copyButton}
-                  onPress={() => copyToClipboard(account.id, account.accountNumber)}
-                >
-                  <FontAwesome
-                    name="copy"
-                    size={12}
-                    color={colors.textHeading}
-                  />
-
-                  <Text style={styles.copyButtonText}>
-                    {copiedId === account.id
-                      ? t("payment.copied")
-                      : t("payment.copyNumber")}
-                  </Text>
-                </TouchableOpacity>
+                {/*
+                  Numero y tipo de cuenta: no existen en el dominio real
+                  (rtm-payment-billing.BankAccount solo tiene bankName,
+                  accountHolder, qrImageUrl, isActive). El cliente transfiere
+                  escaneando el QR de la cuenta, no copiando un numero.
+                */}
 
                 {/*
-                  QR: no se muestra. `qrImageUrl` es null en todas las cuentas
-                  (tambien en el web) y el QR bancario es de valor fijo,
-                  mientras que aqui el monto se calcula por reserva. Se deja
-                  el hueco commented por si el backend llegara a servirlo:
-                  para entonces haria falta generar el QR con el monto, no
-                  reutilizar una imagen fija.
+                  El QR es fijo (una imagen por cuenta, no por reserva): no
+                  codifica el monto a transferir, solo identifica la cuenta.
+                  El cliente ve el total a pagar en esta misma pantalla y lo
+                  transfiere aparte, como con cualquier QR bancario real.
                 */}
+                {account.qrImageUrl && (
+                  <View style={styles.qrBox}>
+                    <Image
+                      source={{ uri: account.qrImageUrl }}
+                      style={styles.qrImage}
+                      resizeMode="contain"
+                    />
+                  </View>
+                )}
               </View>
 
               <View
