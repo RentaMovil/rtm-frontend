@@ -56,9 +56,11 @@ export const API_ROUTES = {
     // gateway solo quita el prefijo "/auth" para AuthController (login/register/
     // refresh/logout), que vive en la raiz. /users/** se enruta tal cual.
     me: "/users/me",
-    forgotPassword: "/auth/forgot-password",
-    verifyCode: "/auth/verify-code",
-    resetPassword: "/auth/reset-password",
+    // Recuperar contrasena (iam, PasswordController): el gateway los deja pasar
+    // sin sesion y limita la frecuencia. Enviar codigo -> verificarlo -> cambiar.
+    forgotPassword: "/auth/password/forgot",
+    verifyCode: "/auth/password/verify-code",
+    resetPassword: "/auth/password/reset",
     changePassword: "/users/me/password",
   },
   vehicles: "/vehicles",

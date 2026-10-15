@@ -62,9 +62,10 @@ export type RegisterRequest = {
   password: string;
 };
 
-/** Reset de contrasena: `POST /auth/reset-password`. */
+/** Reset de contrasena: `POST /auth/password/reset`. El codigo se valida de nuevo aqui. */
 export type ResetPasswordRequest = {
   email: string;
+  code: string;
   newPassword: string;
 };
 
@@ -74,7 +75,7 @@ export type ChangePasswordRequest = {
   newPassword: string;
 };
 
-/** Verificacion de codigo: `POST /auth/verify-code`. */
+/** Verificacion de codigo: `POST /auth/password/verify-code` (204, no gasta el codigo). */
 export type VerifyCodeRequest = {
   email: string;
   code: string;
