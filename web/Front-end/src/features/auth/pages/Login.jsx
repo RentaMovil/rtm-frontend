@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaHeadset } from "react-icons/fa";
 
-import NavbarTwo from "../../../shared/components/layout/NavbarTwo.jsx";
 import LoginForm from "../components/LoginForm.jsx";
 import RegisterForm from "../components/RegisterForm.jsx";
 import AuthShowcase from "../components/AuthShowcase.jsx";
@@ -38,10 +37,8 @@ function Login() {
     };
 
     return (
-        <>
-            <NavbarTwo />
-
-            <div className="auth-page">
+        <div className="auth-page">
+            <div className="auth-modal">
                 <AuthShowcase />
 
                 <div className="auth-card-wrapper">
@@ -81,7 +78,7 @@ function Login() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

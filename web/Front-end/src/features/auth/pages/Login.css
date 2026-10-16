@@ -1,7 +1,24 @@
 .auth-page {
+  min-height: 100vh;
   display: flex;
-  min-height: calc(100vh - 60px);
-  background: var(--bg);
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  background-image:
+    linear-gradient(135deg, rgba(10, 25, 47, 0.82), rgba(10, 25, 47, 0.6)),
+    url("../../../assets/img/auth-background.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+.auth-modal {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  max-height: calc(100vh - 64px);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
 }
 
 .auth-card-wrapper {
@@ -9,16 +26,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 40px;
+  background: var(--card-bg);
+  overflow-y: auto;
 }
 
 .auth-card {
   width: 100%;
-  max-width: 460px;
-  background: var(--card-bg);
-  border-radius: 20px;
-  box-shadow: var(--shadow);
-  padding: 32px;
+  max-width: 400px;
 }
 
 .auth-card-header {
@@ -71,14 +86,26 @@
 }
 
 @media (max-width: 1024px) {
-  .auth-card-wrapper {
-    flex: 1 1 100%;
+  .auth-modal {
+    max-width: 680px;
+  }
+
+  .auth-modal .auth-showcase {
+    display: none;
   }
 }
 
 @media (max-width: 768px) {
-  .auth-card {
+  .auth-page {
+    padding: 16px;
+  }
+
+  .auth-modal {
+    border-radius: 16px;
+    max-height: none;
+  }
+
+  .auth-card-wrapper {
     padding: 24px 18px;
-    border-radius: 14px;
   }
 }

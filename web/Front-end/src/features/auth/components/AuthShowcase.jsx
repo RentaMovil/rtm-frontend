@@ -2,16 +2,21 @@ import { useTranslation } from "react-i18next";
 import { FaCheckCircle, FaShieldAlt, FaKey } from "react-icons/fa";
 
 import Quotes from "../../../shared/components/Quotes.jsx";
+import LogoCar from "../../../shared/components/layout/LogoCar.jsx";
 import "./AuthShowcase.css";
 
-// Panel de marca a la izquierda del login/registro. Texto de marca genérico
-// (sin cifras de uso real) a la espera de que se reemplace con datos reales.
+// Panel de marca a la izquierda del login/registro.
 function AuthShowcase() {
   const { t } = useTranslation();
 
   return (
     <aside className="auth-showcase">
       <div className="auth-showcase-top">
+        <div className="auth-showcase-logo">
+          <h2>Renta<span>Movil</span></h2>
+          <LogoCar className="auth-showcase-logo-icon" />
+        </div>
+
         <span className="auth-showcase-badge">
           <FaCheckCircle /> {t("authShowcase.badge")}
         </span>
