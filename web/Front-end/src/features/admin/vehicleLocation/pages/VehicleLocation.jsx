@@ -23,6 +23,7 @@ export default function VehicleLocation() {
         selected,
         selectedId,
         setSelectedId,
+        lastUpdated,
         isLoading,
         error,
         refetch,
@@ -30,19 +31,7 @@ export default function VehicleLocation() {
 
     const stats = useMemo(() => ({
         conectados: vehicles.filter((v) => v.device?.connected).length,
-        moving: vehicles.filter((v) => v.moving).length,
-        stopped: vehicles.filter((v) => !v.moving).length,
     }), [vehicles]);
-
-    // La hora real del último punto recibido de cualquier vehículo -- no la hora en que el
-    // navegador preguntó (eso es lastUpdated, que solo dice qué tan fresca está la pantalla).
-    const ultimaSenal = useMemo(() => {
-        const timestamps = vehicles
-            .map((v) => v.position?.recordedAt)
-            .filter(Boolean)
-            .map((t) => new Date(t));
-        return timestamps.length ? new Date(Math.max(...timestamps)) : null;
-    }, [vehicles]);
 
     const pos = selected?.position ?? null;
 
@@ -108,8 +97,8 @@ export default function VehicleLocation() {
                             <div className="vl-kpi">
                                 <span className="vl-kpi-label">{t("vehicleLocation.kpiLastUpdate")}</span>
                                 <strong className="vl-kpi-value vl-kpi-value--time">
-                                    {ultimaSenal
-                                        ? `${formatTime(ultimaSenal, lang)} · ${formatDate(ultimaSenal, lang)}`
+                                    {lastUpdated
+                                        ? `${formatTime(lastUpdated, lang)} · ${formatDate(lastUpdated, lang)}`
                                         : "—"}
                                 </strong>
                             </div>
@@ -136,7 +125,7 @@ export default function VehicleLocation() {
                                     <h2 className="vl-list-title">{t("vehicleLocation.listTitle")}</h2>
 
                                     {vehicles.map((v) => {
-                                        const moving = v.moving;
+                                        const moving = (v.position?.speed ?? 0) > 0;
                                         const isSelected = v.vehicle_id === selectedId;
 
                                         return (
