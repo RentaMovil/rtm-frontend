@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./HistorialReservation.css";
 import { RoleNavbar, RoleFooter } from "../../../shared/components/layout/RoleChrome.jsx";
+import { useAuth } from "../../../contexts/AuthContext";
 import ReservationDetailModal from "../components/HistoryReservationDetail.jsx";
 import { useTranslation } from "react-i18next";
 import { useReservationsList } from "../hooks/useReservationsList.js";

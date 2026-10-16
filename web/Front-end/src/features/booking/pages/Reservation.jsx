@@ -8,6 +8,7 @@ import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
 import { RoleNavbar, RoleFooter } from "../../../shared/components/layout/RoleChrome";
+import { useAuth } from "../../../contexts/AuthContext";
 import { useIsMobile } from "../../../shared/hooks/useIsMobile";
 import { useBranches } from "../../admin/branches/hooks/useBranch";
 import FilterCalendar from "../../vehicles/components/FilterCalendar";
