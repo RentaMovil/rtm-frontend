@@ -1,13 +1,34 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaCheckCircle, FaShieldAlt, FaKey } from "react-icons/fa";
+import { FaCheckCircle, FaKey } from "react-icons/fa";
 
 import Quotes from "../../../shared/components/Quotes.jsx";
+import { branchService } from "../../admin/branches/services/branchService";
+import { carsService } from "../../vehicles/Services/carsService";
 import "./AuthShowcase.css";
 
 // Panel de marca a la izquierda del login/registro. El logo ya va en
 // AuthTopbar, arriba de todo, así que este panel arranca en el badge.
 function AuthShowcase() {
   const { t } = useTranslation();
+  // Sucursales y vehículos disponibles: datos reales, no inventados. Ambos
+  // endpoints son públicos (no requieren sesión), igual que el catálogo.
+  const [branchCount, setBranchCount] = useState(null);
+  const [availableCount, setAvailableCount] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+
+    branchService.getAll()
+      .then((branches) => { if (active) setBranchCount(branches.length); })
+      .catch(() => {});
+
+    carsService.getAll()
+      .then((vehicles) => { if (active) setAvailableCount(vehicles.length); })
+      .catch(() => {});
+
+    return () => { active = false; };
+  }, []);
 
   return (
     <aside className="auth-showcase">
@@ -29,11 +50,11 @@ function AuthShowcase() {
 
         <div className="auth-showcase-stats">
           <div className="auth-showcase-stat">
-            <span className="auth-showcase-stat-value">{t("authShowcase.stat1Value")}</span>
+            <span className="auth-showcase-stat-value">{branchCount ?? "–"}</span>
             <span className="auth-showcase-stat-label">{t("authShowcase.stat1Label")}</span>
           </div>
           <div className="auth-showcase-stat">
-            <span className="auth-showcase-stat-value">{t("authShowcase.stat2Value")}</span>
+            <span className="auth-showcase-stat-value">{availableCount ?? "–"}</span>
             <span className="auth-showcase-stat-label">{t("authShowcase.stat2Label")}</span>
           </div>
         </div>
@@ -50,12 +71,6 @@ function AuthShowcase() {
       <div className="auth-showcase-bottom">
         <div className="auth-showcase-quote">
           <Quotes />
-        </div>
-        <div className="auth-showcase-footer">
-          <p>{t("authShowcase.footerNote")}</p>
-          <span className="auth-showcase-ssl">
-            <FaShieldAlt /> {t("authShowcase.ssl")}
-          </span>
         </div>
       </div>
     </aside>
