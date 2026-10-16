@@ -552,7 +552,8 @@
     "model": "Model",
     "loading": "Loading vehicles...",
     "clearSearch": "Clear search",
-    "noMatch": "No vehicles match the filters."
+    "noMatch": "No vehicles match the filters.",
+    "editAria": "Edit {{name}}"
   },
   "CheckStatus": {
     "checkStatus": "Check status",
@@ -613,7 +614,11 @@
       "description": "Description",
       "requiredDescriptionMinLength": "Description must have at least 5 characters",
       "requiredDescriptionMaxLength": "Description cannot exceed 200 characters",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "retire": "Retire vehicle",
+      "retireConfirm": "Retire this vehicle? This cannot be undone.",
+      "retireYes": "Yes, retire",
+      "retiredNotice": "This vehicle is retired: it can no longer be edited or rented."
     },
     "actions": {
       "save": "Save changes",
@@ -723,6 +728,7 @@
   },
   "History": {
     "title": "Maintenance management",
+    "subtitle": "Review and manage the fleet's maintenance history.",
     "detail": "Details",
     "model": "Model",
     "modelPlaceHolder": "Example: Volkswagen Golf, Corolla, Tesla Model 3...",
@@ -841,7 +847,8 @@
     "statusLabel": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
-      "BLOCKED": "Blocked"
+      "BLOCKED": "Blocked",
+      "PENDING_VERIFICATION": "Pending verification"
     },
     "modal": {
       "title": "Change user role",

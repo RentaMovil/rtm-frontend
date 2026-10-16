@@ -1,14 +1,6 @@
 .rd-wrapper {
   gap: 20px;
 }
-.rs-breadcrumb a {
-  color: var(--placeholder);
-  text-decoration: none;
-}
-.rs-breadcrumb a:hover {
-  color: var(--text-h);
-  text-decoration: underline;
-}
 .rd-not-found {
   font-size: 14px;
   color: var(--placeholder);
@@ -33,7 +25,6 @@
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  margin-top: 6px;
 }
 .rd-title {
   font-size: 28px;

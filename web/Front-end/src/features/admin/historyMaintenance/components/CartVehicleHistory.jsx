@@ -6,7 +6,7 @@ import { formatDate } from '../../maintenance/service/maintenanceMapper';
 
 function CartVehicleHistory({ record = {}, onViewMore }) {
     const { t } = useTranslation();
-    const { location,plate, date, typeMaintenance, status, description, image: recordImg, modelName } = record;
+    const { location, plate, date, typeMaintenance, status, description, image: recordImg, modelName, cost } = record;
 
     const stateClass = {
         SCHEDULED: statusStyle['state--mantenimiento'],
@@ -54,6 +54,13 @@ function CartVehicleHistory({ record = {}, onViewMore }) {
                         <div className={statusStyle['info-item']}>
                             <span className={statusStyle['info-label']}>{t("maintenanceForm.date") || 'Fecha'}</span>
                             <span className={statusStyle['info-value']}>{formattedDate}</span>
+                        </div>
+                    )}
+
+                    {cost != null && (
+                        <div className={statusStyle['info-item']}>
+                            <span className={statusStyle['info-label']}>{t("History.cost")}</span>
+                            <span className={statusStyle['info-value']}>$ {Number(cost).toLocaleString("es-CO")}</span>
                         </div>
                     )}
 

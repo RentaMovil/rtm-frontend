@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import {
   FiArrowLeft, FiPrinter, FiAlertCircle, FiXCircle, FiCheckCircle, FiX,
   FiMapPin, FiClock, FiCreditCard, FiFileText, FiZoomIn, FiExternalLink,
-  FiInfo, FiKey, FiChevronRight,
+  FiInfo, FiKey,
 } from "react-icons/fi";
 import { FaCar, FaSatelliteDish } from "react-icons/fa";
 import NavBarAdmin from "../../../../shared/components/layout/NavBarAdmin";
@@ -148,13 +148,6 @@ export default function ReservationDetail() {
       <div className="rs-wrapper rd-wrapper">
         <div className="rd-top">
           <div>
-            <nav className="rs-breadcrumb">
-              <span>{t("reservations.breadcrumbAdmin")}</span>
-              <FiChevronRight />
-              <Link to="/reservations">{t("reservations.title")}</Link>
-              <FiChevronRight />
-              <span className="current">#{reservation.id}</span>
-            </nav>
             <div className="rd-title-row">
               <h1 className="rd-title">{t("reservations.detailTitle", { id: reservation.id })}</h1>
               <span className={`rs-status-badge ${meta.className}`}>

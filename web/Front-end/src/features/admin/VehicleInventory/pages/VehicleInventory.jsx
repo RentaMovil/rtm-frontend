@@ -6,16 +6,17 @@ import "./VehicleInventory.css";
 import { useTranslation } from "react-i18next";
 import { useInventory } from "../hooks/useInventory";
 import carro from "../../../../assets/carro.png";
-import car from "../../../../assets/logo.png";
-import { TfiLayoutGrid2Alt } from "react-icons/tfi";
-import { TfiMenu } from "react-icons/tfi";
-import { FiSearch, FiX } from "react-icons/fi";
+import { TfiLayoutGrid2Alt, TfiMenu } from "react-icons/tfi";
+import { FiSearch, FiX, FiEdit2 } from "react-icons/fi";
+import VehicleEditModal from "../components/VehicleEditModal";
 
 export default function VehicleInventory() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const { inventory, isLoading, error } = useInventory();
+  const { inventory: vehicles, isLoading, error, refetch } = useInventory();
+  // Vehículo abierto en el modal de edición
+  const [editing, setEditing] = useState(null);
 
   const [search, setSearch] = useState("");
   const [activeFilter, setActiveFilter] = useState(null);
@@ -26,9 +27,7 @@ export default function VehicleInventory() {
     marca: null,
     modelo: null,
   });
-
   const [vista, setVista] = useState("grid");
-  const [selected, setSelected] = useState(null);
 
   const filtersRef = useRef(null);
 
@@ -71,22 +70,20 @@ export default function VehicleInventory() {
 
   const SUCURSALES = [
     { value: "Todas", label: t("VehicleInventary.all_f") },
-    ...[...new Set(inventory.map((v) => v.sucursal || v.branch))].filter(Boolean).map((suc) => ({
-      value: suc,
-      label: suc,
-    })),
+    ...[...new Set(vehicles.map((v) => v.sucursal || v.branch))]
+      .filter(Boolean)
+      .map((suc) => ({ value: suc, label: suc })),
   ];
 
   const TIPOS = [
     { value: "Todos", label: t("VehicleInventary.all_m") },
-    ...[...new Set(inventory.map((v) => v.tipo || v.type))].filter(Boolean).map((tipo) => ({
-      value: tipo,
-      label: tipo,
-    })),
+    ...[...new Set(vehicles.map((v) => v.tipo || v.type))]
+      .filter(Boolean)
+      .map((tipo) => ({ value: tipo, label: tipo })),
   ];
 
-  const MARCAS = [...new Set(inventory.map((v) => v.marca))].filter(Boolean);
-  const MODELOS = [...new Set(inventory.map((v) => v.modelo))].filter(Boolean);
+  const MARCAS = [...new Set(vehicles.map((v) => v.marca))].filter(Boolean);
+  const MODELOS = [...new Set(vehicles.map((v) => v.modelo))].filter(Boolean);
 
   const FILTERS = [
     { key: "estado", label: t("VehicleInventary.keyState"), options: ESTADOS },
@@ -96,7 +93,7 @@ export default function VehicleInventory() {
     { key: "modelo", label: t("VehicleInventary.model", "Modelo"), options: [{ value: "Todos", label: t("VehicleInventary.all_m") }, ...MODELOS.map((value) => ({ value, label: value }))] },
   ];
 
-  const filtered = inventory.filter(
+  const filtered = vehicles.filter(
     (v) =>
       (search.trim() === "" ||
         [v.placa, v.marca, v.modelo, v.tipo, v.sucursal]
@@ -115,11 +112,14 @@ export default function VehicleInventory() {
   );
 
   const stats = {
-    total: inventory.length,
-    disponible: inventory.filter((v) => v.estado === "Disponible").length,
-    enUso: inventory.filter((v) => v.estado === "En uso").length,
-    mantenimiento: inventory.filter((v) => v.estado === "Mantenimiento").length,
+    total: vehicles.length,
+    disponible: vehicles.filter((v) => v.estado === "Disponible").length,
+    enUso: vehicles.filter((v) => v.estado === "En uso").length,
+    mantenimiento: vehicles.filter((v) => v.estado === "Mantenimiento").length,
   };
+
+  const badgeClass = (estado) =>
+    `vi-badge ${estado ? estado.toLowerCase().replace(/\s+/g, "-") : "disponible"}`;
 
   return (
     <div className="vi-page">
@@ -218,7 +218,6 @@ export default function VehicleInventory() {
 
             <p className="vi-results-count">{t("VehicleInventary.resultsCount", { count: filtered.length })}</p>
 
-            {/* SECCIÓN RESTAURADA: Renderizado de tarjetas (Grid) o Tabla */}
             {filtered.length === 0 ? (
               <div className="vi-empty">
                 <p>{t("VehicleInventary.noMatch")}</p>
@@ -228,16 +227,33 @@ export default function VehicleInventory() {
                 {filtered.map((v) => (
                   <div key={v.id || v.placa} className="vi-card">
                     <div className="vi-card-img-wrap">
-                      <img src={v.imagen || carro} alt={v.modelo || "Vehículo"} className="vi-card-img" />
-                      <span className={`vi-badge ${v.estado ? v.estado.toLowerCase().replace(/\s+/g, '-') : 'disponible'}`}>
-                        {v.estado}
-                      </span>
+                      <img
+                        src={v.imagen || carro}
+                        alt={v.modelo || "Vehículo"}
+                        className="vi-card-img"
+                      />
+                      <span className={badgeClass(v.estado)}>{v.estado}</span>
                     </div>
                     <div className="vi-card-body">
-                      <h3 className="vi-card-title">{v.marca} {v.modelo}</h3>
-                      <p className="vi-card-plate">Placa: <strong>{v.placa}</strong></p>
-                      <p className="vi-card-info">Sucursal: {v.sucursal || v.branch || "—"}</p>
-                      <p className="vi-card-info">Tipo: {v.tipo || v.type || "—"}</p>
+                      <h3 className="vi-card-title">
+                        {v.marca} {v.modelo}
+                      </h3>
+                      <p className="vi-card-plate">
+                        Placa: <strong>{v.placa}</strong>
+                      </p>
+                      <p className="vi-card-info">
+                        Sucursal: {v.sucursal || v.branch || "—"}
+                      </p>
+                      <p className="vi-card-info">
+                        Tipo: {v.tipo || v.type || "—"}
+                      </p>
+                      <button
+                        className="vi-btn-edit"
+                        aria-label={t("VehicleInventary.editAria", { name: `${v.marca} ${v.modelo}` })}
+                        onClick={() => setEditing(v)}
+                      >
+                        <FiEdit2 />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -252,20 +268,32 @@ export default function VehicleInventory() {
                       <th>{t("VehicleInventary.state")}</th>
                       <th>Sucursal</th>
                       <th>Tipo</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     {filtered.map((v) => (
                       <tr key={v.id || v.placa}>
-                        <td><strong>{v.placa}</strong></td>
-                        <td>{v.marca} {v.modelo}</td>
                         <td>
-                          <span className={`vi-badge ${v.estado ? v.estado.toLowerCase().replace(/\s+/g, '-') : 'disponible'}`}>
-                            {v.estado}
-                          </span>
+                          <strong>{v.placa}</strong>
+                        </td>
+                        <td>
+                          {v.marca} {v.modelo}
+                        </td>
+                        <td>
+                          <span className={badgeClass(v.estado)}>{v.estado}</span>
                         </td>
                         <td>{v.sucursal || v.branch || "—"}</td>
                         <td>{v.tipo || v.type || "—"}</td>
+                        <td>
+                          <button
+                            className="vi-btn-edit"
+                            aria-label={t("VehicleInventary.editAria", { name: `${v.marca} ${v.modelo}` })}
+                            onClick={() => setEditing(v)}
+                          >
+                            <FiEdit2 />
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -275,6 +303,16 @@ export default function VehicleInventory() {
           </>
         )}
       </div>
+
+      {editing && (
+        <VehicleEditModal
+          key={editing.id ?? editing.placa}
+          vehicle={editing}
+          onClose={() => setEditing(null)}
+          onSaved={refetch}
+        />
+      )}
+
       <FooterAdmin />
     </div>
   );

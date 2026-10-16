@@ -122,7 +122,20 @@
   border: none;
   background-color: transparent;
   margin: -8px 0 8px 0;
+  /* Sin esto, la apariencia nativa del <button> deja un inset propio y el texto
+     no queda a la misma altura que el label/input de arriba. */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: left;
+  display: block;
 }
+
+.register-link::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
 .button :hover{
   background-color: var(--accent);
 }
