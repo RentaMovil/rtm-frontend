@@ -247,6 +247,17 @@
     "ruleNumber": "Pelo menos um número",
     "genericError": "Não foi possível concluir a solicitação"
   },
+  "emailVerification": {
+    "title": "Verifique sua conta",
+    "intro": "Enviamos um código de 6 dígitos para {{email}} para confirmar sua conta.",
+    "codeLabel": "Código de verificação",
+    "verifyCode": "Verificar conta",
+    "invalidCode": "Código incorreto ou expirado. Tente novamente.",
+    "resendCode": "Reenviar código",
+    "resendIn": "Reenviar em {{seconds}}s",
+    "resent": "Enviamos um novo código para você",
+    "genericError": "Não foi possível concluir a solicitação"
+  },
   "changePassword": {
     "caracters": "Pelo menos 8 caracteres",
     "specialCaracters": "Pelo menos um caractere especial (#, @, etc)",
