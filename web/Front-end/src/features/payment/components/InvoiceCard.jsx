@@ -1,5 +1,5 @@
 import { useReservation } from "../../booking/context/ReservationContext";
-import { insurance } from "../../booking/data/mocks/insurance";
+import { useInsurance } from "../../admin/insuranceTypes/hooks/useInsurance";
 import { calculateRentalDays } from "../../../shared/utils/rental";
 import { calculateInvoiceTotal } from "../utils/calculateIvoiceTotal";
 import "./InvoiceCard.css";
@@ -16,6 +16,7 @@ export default function InvoiceCard({
   vehicle: propVehicle,
 }) {
   const { reservation } = useReservation();
+  const { insurance } = useInsurance();
 
   const vehicle = propVehicle || reservation?.vehicle;
 

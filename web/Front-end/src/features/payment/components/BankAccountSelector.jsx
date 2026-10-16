@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { usePayment } from "../context/PaymentContext";
-import { getActiveBankAccounts } from "../data/mocks/bankAccounts";
+import { bankAccountService } from "../../admin/bankAccounts/services/bankAccountService";
+import { toBankAccountViewModel } from "../../admin/bankAccounts/services/bankAccountMapper";
 import "./BankAccountSelector.css";
 
 
@@ -13,26 +14,24 @@ import "./BankAccountSelector.css";
  */
 export default function BankAccountSelector() {
     const { payment, updatePayment } = usePayment();
-    const [copiedId, setCopiedId] = useState(null);
     const [isExpanded, setIsExpanded] = useState(() => !payment?.bankAccountId);
+    const [activeAccounts, setActiveAccounts] = useState([]);
 
-    const activeAccounts = getActiveBankAccounts();
+    useEffect(() => {
+        bankAccountService.getAll()
+            .then((accounts) => setActiveAccounts(accounts.map(toBankAccountViewModel)))
+            .catch(() => setActiveAccounts([]));
+    }, []);
+
     const selectedAccount = activeAccounts.find(
-        (account) => account.bankAccountId === payment?.bankAccountId
+        (account) => account.id === payment?.bankAccountId
     );
 
     const handleSelect = (account) => {
         updatePayment({
-            bankAccountId: account.bankAccountId,
+            bankAccountId: account.id,
         });
         setIsExpanded(false);
-    };
-
-    const handleCopy = (e, accountNumber, accountId) => {
-        e.stopPropagation(); // Evita que se seleccione la tarjeta al hacer clic en copiar
-        navigator.clipboard.writeText(accountNumber);
-        setCopiedId(accountId);
-        setTimeout(() => setCopiedId(null), 2000);
     };
 
     return (
@@ -63,32 +62,20 @@ export default function BankAccountSelector() {
             {isExpanded && (
                 <div className="bank-account-grid">
             {activeAccounts.map((account) => {
-                const isSelected =
-                    payment?.bankAccountId === account.bankAccountId;
+                const isSelected = payment?.bankAccountId === account.id;
 
                 return (
                     <div
-                        key={account.bankAccountId}
+                        key={account.id}
                         onClick={() => handleSelect(account)}
                         className={`bank-account-card ${
                             isSelected ? "bank-account-selected" : ""
                         }`}
                     >
-                        {/* Insignia de Recomendado */}
-                        {account.isRecommended && (
-                            <div className="bank-account-badge-recommended">
-                                ✓ RECOMENDADO
-                            </div>
-                        )}
-
                         {/* Encabezado del Banco */}
                         <div className="bank-account-title">
                             <div className="bank-account-info">
-                                <div
-                                    className={`bank-account-logo ${
-                                        account.bankCode || "default"
-                                    }`}
-                                >
+                                <div className="bank-account-logo default">
                                     {account.bankName
                                         .substring(0, 2)
                                         .toUpperCase()}
@@ -96,9 +83,7 @@ export default function BankAccountSelector() {
 
                                 <div>
                                     <strong>{account.bankName}</strong>
-                                    <small>
-                                        {account.accountType || "Cuenta bancaria"}
-                                    </small>
+                                    <small>Cuenta bancaria</small>
                                 </div>
                             </div>
 
@@ -113,61 +98,11 @@ export default function BankAccountSelector() {
                             </div>
                         </div>
 
-                        {/* Datos del Titular y NIT */}
+                        {/* Datos del Titular */}
                         <div className="bank-account-holder">
                             <div>
-                                <strong>Titular:</strong> {account.accountHolder}
+                                <strong>Titular:</strong> {account.holderName}
                             </div>
-                            {account.nit && (
-                                <div>
-                                    <strong>NIT:</strong> {account.nit}
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Número de Cuenta y Botón Copiar */}
-                        <div className="bank-account-number-box">
-                            <div>
-                                <span className="bank-account-number-label">
-                                    NÚMERO DE CUENTA
-                                </span>
-                                <span className="bank-account-number-value">
-                                    {account.accountNumber}
-                                </span>
-                            </div>
-                            <button
-                                type="button"
-                                className="bank-account-copy-btn"
-                                onClick={(e) =>
-                                    handleCopy(
-                                        e,
-                                        account.accountNumber,
-                                        account.bankAccountId
-                                    )
-                                }
-                            >
-                                <svg
-                                    width="14"
-                                    height="14"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                >
-                                    <rect
-                                        x="9"
-                                        y="9"
-                                        width="13"
-                                        height="13"
-                                        rx="2"
-                                        ry="2"
-                                    ></rect>
-                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                </svg>
-                                {copiedId === account.bankAccountId
-                                    ? "Copiado!"
-                                    : "Copiar"}
-                            </button>
                         </div>
 
                         {/* Sección del Código QR */}
