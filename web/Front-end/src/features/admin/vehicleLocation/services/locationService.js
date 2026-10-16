@@ -7,13 +7,13 @@ import { inventoryService } from "../../VehicleInventory/services/inventoryServi
 export const locationService = {
     // Vehículos con rental IN_PROGRESS + su última posición conocida.
     // No existe un endpoint compuesto en el modelo, así que se arma
-    // cruzando 4 colecciones — mismo patrón que useReservationsAdmin.
+    // cruzando colecciones — mismo patrón que useReservationsAdmin. La posición de cada uno sale
+    // de GET /tracking/{rentalId}/live (telemetry-gps): no hay un "listar todas las posiciones",
+    // es por renta, porque un mismo gpsId se reusa entre rentas distintas.
     getTrackedVehicles: async () => {
-        const [rentals, gpsDevices, locations, reservations, vehicles] = await Promise.all([
+        const [rentals, gpsDevices, reservations, vehicles] = await Promise.all([
             rentalService.getAll(),
-            // /gps y /locations son de telemetry-gps, que todavía no existe
             httpClient.get('/gps'),
-            httpClient.get('/locations'),
             reservationService.getAllAdmin(),
             inventoryService.getAll(),
         ]);
@@ -24,13 +24,13 @@ export const locationService = {
 
         const activeRentals = rentals.filter((r) => r.status === 'IN_PROGRESS' && r.gps_id);
 
-        return activeRentals.map((rental) => {
+        return Promise.all(activeRentals.map(async (rental) => {
             const reservation = reservationsById[rental.reservation_id];
             const vehicle = reservation ? vehiclesById[reservation.vehicle_id] : null;
 
-            const lastLocation = locations
-                .filter((loc) => loc.gps_id === rental.gps_id)
-                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0];
+            // Todavía no hay ningún punto para esta renta (ej. el GPS no tiene señal aún): 404,
+            // no es un error real, solo "sin posición todavía".
+            const lastLocation = await httpClient.get(`/tracking/${rental.id}/live`).catch(() => null);
 
             return {
                 vehicle_id: vehicle?.id,
@@ -40,12 +40,12 @@ export const locationService = {
                 rental: { id: rental.id },
                 device: gpsById[rental.gps_id] ? {
                     model: gpsById[rental.gps_id].model,
-                    connected: gpsById[rental.gps_id].is_active,
+                    connected: gpsById[rental.gps_id].active,
                 } : null,
                 position: lastLocation ? toLocationViewModel(lastLocation) : null,
             };
-        });
+        }));
     },
 
-    getTrack: (vehicleId) => httpClient.get(`/vehicles/${vehicleId}/track`), //  no existe todavía, pendiente
+    getTrack: (rentalId) => httpClient.get(`/tracking/${rentalId}/history`),
 };

@@ -164,8 +164,8 @@ export default function VehicleLocation() {
 
                                                 <p className="vl-card-time">
                                                     <FiClock />
-                                                    {v.position?.recorded_at
-                                                        ? `${formatTime(v.position.recorded_at, lang)} · ${formatDate(v.position.recorded_at, lang)}`
+                                                    {v.position?.recordedAt
+                                                        ? `${formatTime(v.position.recordedAt, lang)} · ${formatDate(v.position.recordedAt, lang)}`
                                                         : "—"}
                                                 </p>
                                             </button>
@@ -230,8 +230,8 @@ export default function VehicleLocation() {
                                                             {t("vehicleLocation.recordedAt")}
                                                         </dt>
                                                         <dd>
-                                                            {pos?.recorded_at
-                                                                ? `${formatTime(pos.recorded_at, lang)} · ${formatDate(pos.recorded_at, lang)}`
+                                                            {pos?.recordedAt
+                                                                ? `${formatTime(pos.recordedAt, lang)} · ${formatDate(pos.recordedAt, lang)}`
                                                                 : "—"}
                                                         </dd>
                                                     </div>

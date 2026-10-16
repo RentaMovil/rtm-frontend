@@ -4,14 +4,15 @@ import { tokenStore } from './tokenStore.js';
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 const MOCK_API_URL = import.meta.env.VITE_MOCK_API_URL || '/mock';
 
-// Lo que ya tiene servicio real va al gateway; el resto (pagos, cuentas bancarias, GPS) sigue en
-// el mock hasta que su servicio exista. Al publicar uno nuevo se agrega aquí su prefijo.
+// Lo que ya tiene servicio real va al gateway; el resto sigue en el mock hasta que su servicio
+// exista. Al publicar uno nuevo se agrega aquí su prefijo.
 const REAL_BACKEND_PREFIXES = [
     '/auth', '/users',
     '/reservations', '/rentals', '/notifications',
     '/vehicles', '/branches', '/maintenances',
     '/brands', '/categories', '/engine-types', '/vehicle-models', '/maintenance-types',
     '/payments', '/invoices', '/bank-accounts',
+    '/gps', '/tracking',
 ];
 
 export function hasRealBackend(endpoint) {

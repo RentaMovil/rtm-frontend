@@ -214,14 +214,14 @@ function HistorialReservation() {
         onUpdateReturnBranch={handleUpdateReturnBranch}
       />
 
-      {/* MODAL PARA SUBIR COMPROBANTE (reservas en PENDING_PAYMENT) */}
+      {/* MODAL DE SUBIR COMPROBANTE */}
       {uploadReserva && (
         <UploadReceiptModal
           reservation={uploadReserva}
           onClose={() => setUploadReserva(null)}
           onSuccess={async () => {
-            setUploadReserva(null);
             await refetch();
+            setUploadReserva(null);
           }}
         />
       )}
