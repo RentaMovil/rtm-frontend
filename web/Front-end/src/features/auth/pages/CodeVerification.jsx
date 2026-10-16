@@ -5,12 +5,19 @@ import { AiOutlineLock, AiOutlineSafety, AiOutlineArrowRight } from 'react-icons
 import NavbarTwo from '../../../shared/components/layout/NavbarTwo';
 import Footer from '../../../shared/components/layout/Footer';
 import { authService } from '../services/authService';
+import { useAuth } from '../../../contexts/AuthContext';
 import style from "../../auth/pages/CodeVerification.module.css";
+
+const isAdminRole = (role) => role === "ADMIN" || role === "SUPER_ADMIN";
 
 function CodeVerification() {
   const { t } = useTranslation();
     const location = useLocation();
     const email = location.state?.email;
+    // "register": confirma el código del registro (HU-IAM-001). Cualquier otro valor (o ninguno)
+    // es el flujo de siempre, recuperar contraseña.
+    const isRegisterFlow = location.state?.mode === "register";
+    const { verifyEmail } = useAuth();
     const CODE_LENGTH = 6;
     const RESEND_SECONDS = 30;
     const [code, setCode] = useState(new Array(CODE_LENGTH).fill(''));
@@ -79,7 +86,11 @@ const handleResend = async () => {
     setInfo('');
     setIsResending(true);
     try {
-        await authService.forgotPassword(email);
+        if (isRegisterFlow) {
+            await authService.resendEmailVerification(email);
+        } else {
+            await authService.forgotPassword(email);
+        }
         setCode(new Array(CODE_LENGTH).fill(''));
         inputsRef.current[0]?.focus();
         setInfo('Te enviamos un nuevo código');
@@ -104,9 +115,14 @@ const handleVerify = async (e) => {
     setError('');
 
     try {
-        await authService.verifyCode(email, joined);
-        // Si llega aquí, el código es válido
-        navigate('/ChangePasswordLogin', { state: { email, code: joined } });
+        if (isRegisterFlow) {
+            // Código válido: la cuenta queda activa y con sesión iniciada de una vez
+            const { user } = await verifyEmail(email, joined);
+            navigate(isAdminRole(user.role) ? '/HomeAdmin' : '/home');
+        } else {
+            await authService.verifyCode(email, joined);
+            navigate('/ChangePasswordLogin', { state: { email, code: joined } });
+        }
     } catch (err) {
         setError(t("codeVerification.invalid"));
     } finally {
