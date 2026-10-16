@@ -1,0 +1,150 @@
+.downloads-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 20px;
+  background: var(--bg);
+  text-align: center;
+}
+
+.downloads-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  margin-bottom: 32px;
+}
+
+.downloads-logo-text {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-h);
+}
+
+.downloads-logo-text span {
+  color: var(--accent);
+}
+
+.downloads-logo-icon {
+  color: var(--accent);
+  font-size: 26px;
+}
+
+.downloads-title {
+  margin: 0 0 8px;
+  font-size: 32px;
+}
+
+.downloads-subtitle {
+  margin: 0 0 40px;
+  color: var(--text-h);
+  max-width: 480px;
+}
+
+.downloads-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  max-width: 760px;
+}
+
+.downloads-card {
+  flex: 1 1 320px;
+  max-width: 340px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 28px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.downloads-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--navbar);
+  color: var(--accent);
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.downloads-card h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.downloads-card p {
+  margin: 0 0 20px;
+  font-size: 14px;
+  color: var(--text-h);
+}
+
+.downloads-qr {
+  width: 160px;
+  height: 160px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+  background: #fff;
+}
+
+.downloads-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  background: var(--button);
+  color: var(--text-btn);
+  font-weight: 700;
+  text-decoration: none;
+  margin-bottom: 12px;
+}
+
+.downloads-hint {
+  font-size: 12px;
+  color: var(--placeholder);
+}
+
+.downloads-card-disabled {
+  opacity: 0.8;
+}
+
+.downloads-card-disabled .downloads-card-icon {
+  background: var(--input);
+  color: var(--placeholder);
+}
+
+.downloads-badge {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--input);
+  color: var(--text-h);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.downloads-back {
+  margin-top: 40px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.downloads-back:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .downloads-title {
+    font-size: 24px;
+  }
+}

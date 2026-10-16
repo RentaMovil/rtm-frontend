@@ -5,6 +5,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 // Auth
 import Login from './features/auth/pages/Login.jsx';
+
+// Descargas (app mobile)
+import Downloads from './features/downloads/pages/Downloads.jsx';
 // /account y /account/admin usan el mismo componente: el prop `admin` solo cambia
 // el Navbar y el Footer. Antes cada ruta tenía su propio perfil y divergían.
 import AccountView from './features/auth/components/AccountView';
@@ -79,6 +82,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/descargas" element={<Downloads />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/Register" element={<RegisterForm />} />
         <Route path="/EmailVerification" element={<EmailVerification />} />

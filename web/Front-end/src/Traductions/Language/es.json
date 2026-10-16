@@ -151,6 +151,19 @@
     "termsClose": "Cerrar",
     "termsBody": ["Al crear una cuenta en RentaMovil autorizas el tratamiento de tus datos personales (nombre, apellido, correo electrónico, teléfono y usuario) conforme a la Ley 1581 de 2012 (Habeas Data) de Colombia.", "Finalidad: gestionar tu cuenta, tus reservas, pagos y facturación, y comunicarnos contigo sobre el servicio.", "Tus derechos: conocer, actualizar, rectificar y suprimir tus datos, y revocar esta autorización en cualquier momento.", "Tus datos no se compartirán con terceros salvo obligación legal o para completar el servicio contratado (por ejemplo, el procesamiento de pagos).", "Las condiciones del alquiler de vehículos se presentarán y aceptarán de nuevo durante el proceso de reserva."]
   },
+  "downloads": {
+    "title": "Descarga RentaMovil",
+    "subtitle": "Lleva tus reservas, pagos y el estado de tu vehículo siempre a mano.",
+    "androidTitle": "Android",
+    "androidDesc": "Escanea el código o descarga el instalador directo.",
+    "androidButton": "Descargar RentaMovil.apk",
+    "androidHint": "Puede que tengas que habilitar \"Instalar apps desconocidas\" para este archivo.",
+    "qrAlt": "Código QR para descargar RentaMovil en Android",
+    "iosTitle": "iOS",
+    "iosDesc": "Estamos trabajando en la versión para iPhone.",
+    "comingSoon": "Próximamente",
+    "back": "Volver al inicio"
+  },
   "quotes": {
     "quote1": "Confía en tu viaje. Confía en Rentamovil.",
     "quote2": "Tu aventura comienza con un clic. Rentamovil, tu compañero de viaje.",
