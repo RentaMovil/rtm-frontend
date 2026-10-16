@@ -3,6 +3,7 @@ import "./HistorialReservation.css";
 import { RoleNavbar, RoleFooter } from "../../../shared/components/layout/RoleChrome.jsx";
 import ReservationDetailModal from "../components/HistoryReservationDetail.jsx";
 import { useTranslation } from "react-i18next";
+import { formatDisplayDate, formatDisplayTime } from "../../../shared/utils/apiDate.js";
 import { useReservationsList } from "../hooks/useReservationsList.js";
 import { useCancelReservation } from "../hooks/useCancelReservation.js";
 import { useUpdateReturnBranch } from "../hooks/useUpdateReturnBranch.js";
@@ -10,7 +11,8 @@ import { useBranches } from "../../admin/branches/hooks/useBranch.js";
 import PaymentCountdown from "../components/PaymentCountdown.jsx";
 import UploadReceiptModal from "../components/UploadReceiptModal.jsx";
 function HistorialReservation() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language?.startsWith("en") ? "en-US" : "es-CO";
 
   const { reservations: reservas, isLoading, error, refetch } = useReservationsList();
   const { cancelReservation } = useCancelReservation();
@@ -103,14 +105,14 @@ function HistorialReservation() {
                 <section className="reserva-tiempos">
                   <div className="tiempo-bloque">
                     <span className="tiempo-label">{t("historyReservation.pickup", "ENTREGA")}</span>
-                    <span className="tiempo-fecha">{r.tiempos.start_date.split(' ').slice(0, 3).join(' ')}</span>
-                    <span className="tiempo-hora">{r.tiempos.start_date.split(' ').slice(3).join(' ')}</span>
+                    <span className="tiempo-fecha">{formatDisplayDate(r.tiempos.start_date, locale)}</span>
+                    <span className="tiempo-hora">{formatDisplayTime(r.tiempos.start_date, locale)}</span>
                   </div>
 
                   <div className="tiempo-bloque">
                     <span className="tiempo-label">{t("historyReservation.return", "DEVOLUCIÓN")}</span>
-                    <span className="tiempo-fecha">{r.tiempos.end_date.split(' ').slice(0, 3).join(' ')}</span>
-                    <span className="tiempo-hora">{r.tiempos.end_date.split(' ').slice(3).join(' ')}</span>
+                    <span className="tiempo-fecha">{formatDisplayDate(r.tiempos.end_date, locale)}</span>
+                    <span className="tiempo-hora">{formatDisplayTime(r.tiempos.end_date, locale)}</span>
                   </div>
 
                   <div className="tiempo-duracion">

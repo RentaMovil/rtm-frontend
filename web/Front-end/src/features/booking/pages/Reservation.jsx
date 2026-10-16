@@ -88,6 +88,10 @@ function Reservation() {
         pickupBranch,
         pickupDate,
         returnDate,
+        pickupTime,
+        returnTime,
+        pickupDateTime,
+        returnDateTime,
         days,
         total,
         showFilters,
@@ -114,6 +118,8 @@ function Reservation() {
         branch: pickupBranch,
         startDate: pickupDate,
         endDate: returnDate,
+        startTime: pickupTime,
+        endTime: returnTime,
     };
 
     const handleTermsAcceptanceChange = (accepted) => {
@@ -158,8 +164,8 @@ function Reservation() {
             pickupBranch: finalPickupBranch,
             returnBranch: finalReturnBranch,
 
-            pickupDate,
-            returnDate,
+            pickupDate: pickupDateTime,
+            returnDate: returnDateTime,
 
             termsAcceptance: createTermsAcceptance(),
         });
@@ -187,12 +193,24 @@ function Reservation() {
                 ? nextState.endDate
                 : returnDate;
 
+        const updatedStartTime =
+            nextState.startTime !== undefined
+                ? nextState.startTime
+                : pickupTime;
+
+        const updatedEndTime =
+            nextState.endTime !== undefined
+                ? nextState.endTime
+                : returnTime;
+
         navigate("/Home", {
             state: {
                 rentalSearch: {
                     branch: updatedBranch,
                     startDate: updatedStartDate,
                     endDate: updatedEndDate,
+                    startTime: updatedStartTime,
+                    endTime: updatedEndTime,
                 },
                 triggerSearch: "true",
             },
@@ -379,8 +397,8 @@ function Reservation() {
                                     accepted={termsAccepted}
                                     onAcceptChange={handleTermsAcceptanceChange}
                                     vehicle={{ name }}
-                                    pickupDate={pickupDate}
-                                    returnDate={returnDate}
+                                    pickupDate={pickupDateTime}
+                                    returnDate={returnDateTime}
                                     pickupBranch={finalPickupBranch}
                                     returnBranch={finalReturnBranch}
                                     total={reservationTotal}
