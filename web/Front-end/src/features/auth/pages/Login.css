@@ -12,6 +12,12 @@
   display: flex;
   width: 100%;
   max-width: 1280px;
+  /* Alto fijo (no solo un tope): si no, el modal se encoge o se estira
+     según el formulario que esté adentro -- login es corto, registro es
+     largo -- y toda la tarjeta cambia de tamaño igual que pasaba con el
+     ancho. El login, más corto, queda centrado adentro por el
+     align-items: center de .auth-card-wrapper. */
+  height: 680px;
   max-height: calc(100vh - 70px - 48px);
   border-radius: 24px;
   overflow: hidden;
@@ -24,6 +30,7 @@
   }
 
   .auth-modal {
+    height: auto;
     max-height: none;
   }
 }
@@ -135,6 +142,7 @@
 
   .auth-modal {
     border-radius: 16px;
+    height: auto;
     max-height: none;
   }
 
