@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaHeadset } from "react-icons/fa";
 
 import LoginForm from "../components/LoginForm.jsx";
 import RegisterForm from "../components/RegisterForm.jsx";
 import AuthShowcase from "../components/AuthShowcase.jsx";
+import AuthTopbar from "../components/AuthTopbar.jsx";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 
@@ -14,7 +14,7 @@ import "./Login.css";
 // mandaba al SUPER_ADMIN a /home, que es el panel de cliente.
 const isAdminRole = (role) => role === "ADMIN" || role === "SUPER_ADMIN";
 
-function Login() {
+function Login({ theme, setTheme }) {
     const { t } = useTranslation();
     const [isLoginMode, setIsLoginMode] = useState(true);
     const navigate = useNavigate();
@@ -38,11 +38,18 @@ function Login() {
 
     return (
         <div className="auth-page">
+            <AuthTopbar
+                isLoginMode={isLoginMode}
+                onSelectMode={setIsLoginMode}
+                theme={theme}
+                setTheme={setTheme}
+            />
+
             <div className="auth-modal">
                 <AuthShowcase />
 
                 <div className="auth-card-wrapper">
-                    <div className="auth-card">
+                    <div className={`auth-card ${isLoginMode ? "" : "auth-card-wide"}`}>
                         <div className="auth-card-header">
                             <div className="auth-tabs" role="tablist">
                                 <button
@@ -64,10 +71,6 @@ function Login() {
                                     {t("register.submit")}
                                 </button>
                             </div>
-
-                            <a className="auth-help-link" href="mailto:soporte@rentamovil.tech">
-                                <FaHeadset /> {t("authShowcase.help")}
-                            </a>
                         </div>
 
                         {isLoginMode ? (

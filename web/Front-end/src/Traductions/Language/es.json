@@ -112,7 +112,9 @@
     "featureDesc": "Transferencia bancaria con comprobante, revisado por un administrador antes de confirmar tu reserva.",
     "footerNote": "Operación legal y asegurada en Bogotá, Medellín, Cali y Barranquilla.",
     "ssl": "Cifrado SSL 256-bit",
-    "help": "Ayuda en línea"
+    "help": "Ayuda en línea",
+    "lightMode": "Modo claro",
+    "darkMode": "Modo oscuro"
   },
   "loginForm": {
     "errorFields": "Rellena todos los campos",

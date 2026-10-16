@@ -112,7 +112,9 @@
     "featureDesc": "Virement bancaire avec reçu, vérifié par un administrateur avant la confirmation de votre réservation.",
     "footerNote": "Opération légale et assurée à Bogotá, Medellín, Cali et Barranquilla.",
     "ssl": "Chiffrement SSL 256 bits",
-    "help": "Aide en ligne"
+    "help": "Aide en ligne",
+    "lightMode": "Mode clair",
+    "darkMode": "Mode sombre"
   },
   "loginForm": {
     "errorFields": "Remplissez tous les champs",

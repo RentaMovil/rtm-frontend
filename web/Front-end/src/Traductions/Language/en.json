@@ -112,7 +112,9 @@
     "featureDesc": "Bank transfer with receipt, reviewed by an administrator before confirming your reservation.",
     "footerNote": "Legal and insured operation across Bogotá, Medellín, Cali and Barranquilla.",
     "ssl": "256-bit SSL encryption",
-    "help": "Help online"
+    "help": "Help online",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode"
   },
   "loginForm": {
     "errorFields": "Fill in all fields",
