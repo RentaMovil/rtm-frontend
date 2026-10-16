@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { locationService } from "../services/locationService";
+import { distanceMeters } from "../services/geoUtils";
+
+// Umbral para considerar "en movimiento" entre dos lecturas: por debajo de esto puede ser
+// solo ruido del GPS (el módulo oscila unos metros aunque el vehículo esté quieto).
+const MOVING_THRESHOLD_M = 15;
 
 /**
  * Cada cuanto se vuelve a pedir la posicion. El apartado es un mapa con la
@@ -26,6 +31,10 @@ export function useVehicleLocations() {
     // Evita que dos peticiones se pisen al tocar el siguiente tick.
     const enVuelo = useRef(false);
 
+    // No hay un campo "speed" real (el GPS solo manda lat/lon/timestamp): "en movimiento" se
+    // infiere comparando la posición nueva contra la última que vimos de ese vehículo.
+    const prevPositions = useRef({});
+
     const fetchVehicles = useCallback(async ({ silencioso = false } = {}) => {
         // Un refresco en segundo plano no debe ensuciar la pantalla: si falla se
         // conserva lo que ya habia y solo se registra la hora del ultimo ok.
@@ -42,7 +51,24 @@ export function useVehicleLocations() {
 
         try {
             const datos = await locationService.getTrackedVehicles();
-            setVehicles(datos);
+
+            const conMovimiento = datos.map((v) => {
+                const pos = v.position;
+                const anterior = prevPositions.current[v.vehicle_id];
+                let moving = false;
+
+                if (pos && anterior && pos.recordedAt !== anterior.recordedAt) {
+                    moving = distanceMeters(anterior.latitude, anterior.longitude,
+                        pos.latitude, pos.longitude) > MOVING_THRESHOLD_M;
+                }
+                if (pos) {
+                    prevPositions.current[v.vehicle_id] = pos;
+                }
+
+                return { ...v, moving };
+            });
+
+            setVehicles(conMovimiento);
             setLastUpdated(new Date());
             if (silencioso) setError(null);
         } catch (err) {
