@@ -33,22 +33,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px;
+  padding: 24px 40px;
   background: var(--card-bg);
   overflow-y: auto;
-  transition: padding 0.25s ease;
 }
 
-/* El formulario de registro es más largo: menos aire alrededor para que
-   quepa sin tener que scrollear dentro de la tarjeta. */
-.auth-card-wrapper:has(.auth-card-wide) {
-  padding: 24px 40px;
-}
-
+/* Ancho fijo siempre (el que necesita el registro con su grid de 2
+   columnas): así nunca hay que animar el ancho de la tarjeta al cambiar de
+   modo. El login, que es angosto, se centra adentro por su cuenta
+   (ver .login-form en LoginForm.css) en vez de que la tarjeta se achique. */
 .auth-card {
   width: 100%;
-  max-width: 420px;
-  transition: max-width 0.25s ease;
+  max-width: 640px;
 }
 
 /* Cambio de iniciar sesión <-> crear cuenta en dos tiempos: primero se
@@ -87,22 +83,11 @@
   }
 }
 
-/* En registro el grid de 2 columnas necesita más aire; la tarjeta usa casi
-   todo el ancho disponible del wrapper en vez de quedarse angosta. */
-.auth-card-wide {
-  max-width: 640px;
-}
-
 .auth-card-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 24px;
-  transition: margin-bottom 0.25s ease;
-}
-
-.auth-card-wide .auth-card-header {
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .auth-tabs {

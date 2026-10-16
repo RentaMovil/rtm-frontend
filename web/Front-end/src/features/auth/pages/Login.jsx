@@ -66,7 +66,7 @@ function Login({ theme, setTheme }) {
                 <AuthShowcase />
 
                 <div className="auth-card-wrapper">
-                    <div className={`auth-card ${displayedMode ? "" : "auth-card-wide"}`}>
+                    <div className="auth-card">
                         <div className="auth-card-header">
                             <div className="auth-tabs" role="tablist">
                                 <button
