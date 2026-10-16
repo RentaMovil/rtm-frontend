@@ -22,7 +22,9 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.rentamovil.app",
+      "versionCode": 2
     },
     "web": {
       "bundler": "metro",
@@ -38,12 +40,19 @@
         "expo-image-picker",
         {
           "photosPermission": "Se usa la camara para adjuntar el comprobante de pago.",
-          "cameraPermission": "Se usa la camara para adjuntar el comprobante de pago."
+          "cameraPermission": "Se usa la camara para adjuntar el comprobante de pago.",
+          "microphonePermission": false
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "2dfda2f2-81a2-45cf-840a-4604cb09aa2b"
+      }
     }
   }
 }
