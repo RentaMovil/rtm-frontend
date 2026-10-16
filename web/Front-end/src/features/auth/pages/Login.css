@@ -38,6 +38,12 @@
   overflow-y: auto;
 }
 
+/* El formulario de registro es más largo: menos aire alrededor para que
+   quepa sin tener que scrollear dentro de la tarjeta. */
+.auth-card-wrapper:has(.auth-card-wide) {
+  padding: 24px 40px;
+}
+
 .auth-card {
   width: 100%;
   max-width: 420px;
@@ -55,6 +61,10 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 24px;
+}
+
+.auth-card-wide .auth-card-header {
+  margin-bottom: 14px;
 }
 
 .auth-tabs {

@@ -1,14 +1,15 @@
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaMoon, FaSun, FaGlobe } from "react-icons/fa";
+import { FaMoon, FaSun, FaGlobe, FaCheck } from "react-icons/fa";
 
 import LogoCar from "../../../shared/components/layout/LogoCar.jsx";
 import "./AuthTopbar.css";
 
 const LANGUAGES = [
-  { code: "es", label: "ES" },
-  { code: "en", label: "EN" },
-  { code: "fr", label: "FR" },
-  { code: "pt", label: "PT" },
+  { code: "es", label: "Español" },
+  { code: "en", label: "English" },
+  { code: "fr", label: "Français" },
+  { code: "pt", label: "Português" },
 ];
 
 // Mismo estado de tema que maneja App.jsx (localStorage "theme", clase en
@@ -19,10 +20,25 @@ function AuthTopbar({ isLoginMode, onSelectMode, theme, setTheme }) {
   const isDark = theme === "dark";
   const toggleTheme = () => setTheme(isDark ? "skylight" : "dark");
 
-  const handleLangChange = (e) => {
-    const lang = e.target.value;
-    i18n.changeLanguage(lang);
-    localStorage.setItem("lang", lang);
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef(null);
+  const currentLang = i18n.language?.slice(0, 2) || "es";
+
+  useEffect(() => {
+    if (!langOpen) return;
+    const onClickOutside = (e) => {
+      if (langRef.current && !langRef.current.contains(e.target)) {
+        setLangOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, [langOpen]);
+
+  const selectLang = (code) => {
+    i18n.changeLanguage(code);
+    localStorage.setItem("lang", code);
+    setLangOpen(false);
   };
 
   return (
@@ -33,14 +49,37 @@ function AuthTopbar({ isLoginMode, onSelectMode, theme, setTheme }) {
       </div>
 
       <div className="auth-topbar-actions">
-        <label className="auth-topbar-lang">
-          <FaGlobe />
-          <select value={i18n.language?.slice(0, 2) || "es"} onChange={handleLangChange}>
-            {LANGUAGES.map((lang) => (
-              <option key={lang.code} value={lang.code}>{lang.label}</option>
-            ))}
-          </select>
-        </label>
+        <div className="auth-topbar-lang" ref={langRef}>
+          <button
+            type="button"
+            className="auth-topbar-lang-trigger"
+            onClick={() => setLangOpen((prev) => !prev)}
+            aria-haspopup="listbox"
+            aria-expanded={langOpen}
+          >
+            <FaGlobe />
+            <span>{currentLang.toUpperCase()}</span>
+          </button>
+
+          {langOpen && (
+            <ul className="auth-topbar-lang-menu" role="listbox">
+              {LANGUAGES.map((lang) => (
+                <li key={lang.code}>
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={currentLang === lang.code}
+                    className={`auth-topbar-lang-option ${currentLang === lang.code ? "selected" : ""}`}
+                    onClick={() => selectLang(lang.code)}
+                  >
+                    {lang.label}
+                    {currentLang === lang.code && <FaCheck />}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         <button
           type="button"
