@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaCheckCircle, FaKey } from "react-icons/fa";
+import { FaKey } from "react-icons/fa";
 
 import Quotes from "../../../shared/components/Quotes.jsx";
 import { branchService } from "../../admin/branches/services/branchService";
@@ -33,10 +33,6 @@ function AuthShowcase() {
   return (
     <aside className="auth-showcase">
       <div className="auth-showcase-top">
-        <span className="auth-showcase-badge">
-          <FaCheckCircle /> {t("authShowcase.badge")}
-        </span>
-
         <h1 className="auth-showcase-title">
           {t("authShowcase.titlePart1")}{" "}
           <span className="auth-showcase-highlight">
