@@ -32,7 +32,7 @@ function MonthlyChart({ records }) {
             <Bar
                 dataKey="total"
                 radius={[8,8,0,0]}
-                fill="#08f800"
+                fill="#F2C063"
             />
         </BarChart>
     </ResponsiveContainer>

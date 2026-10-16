@@ -25,33 +25,34 @@ function FleetChartMaintenance({ records }) {
     const total = records.length;
     return (
         <div className={style["fleet-chart-container"]}>
-                 <h3>{t("History.title2")}:</h3>
+            <h3>{t("History.title2")}</h3>
 
-            <div className={style["fleet-chart"]}>
-
-                <PieChart width={160} height={160}>
-                    <Pie data={data} cx={80} cy={80} innerRadius={45} outerRadius={70} dataKey="value">{
-                        data.map((entry) => (
-                            <Cell key={entry.name} fill={COLORS[entry.name]} />
-                        ))}
-                    </Pie>
-                    <Tooltip formatter={(value, name) => [value, t(`FleetChartMaintenance.${name}`)]} />
-                </PieChart>
-                <div className={style["fleet-chart-info"]}>
-                    <div className={style["fleet-chart-total"]}>{total}</div>
-                    <div className={style["fleet-chart-label"]}>{t("CartVehiculeStatus.veicle")}</div>
+            <div className={style["fleet-chart-body"]}>
+                <div className={style["fleet-chart"]}>
+                    <PieChart width={140} height={140}>
+                        <Pie data={data} cx={70} cy={70} innerRadius={40} outerRadius={62} dataKey="value">{
+                            data.map((entry) => (
+                                <Cell key={entry.name} fill={COLORS[entry.name]} />
+                            ))}
+                        </Pie>
+                        <Tooltip formatter={(value, name) => [value, t(`FleetChartMaintenance.${name}`)]} />
+                    </PieChart>
+                    <div className={style["fleet-chart-info"]}>
+                        <div className={style["fleet-chart-total"]}>{total}</div>
+                        <div className={style["fleet-chart-label"]}>{t("CartVehiculeStatus.veicle")}</div>
+                    </div>
                 </div>
-            </div>
-            <div className={style["fleet-chart-legend"]}>
-                {data.map((entry) => {
-                    const label = t(`FleetChartMaintenance.${entry.name}`);
-                    return (
-                        <div key={entry.name} className={style["legend-item"]}>
-                            <span className={style["legend-color"]} style={{ backgroundColor: COLORS[entry.name] }} />
-                            {label}: {entry.value}
-                        </div>
-                    )
-                })}
+                <div className={style["fleet-chart-legend"]}>
+                    {data.map((entry) => {
+                        const label = t(`FleetChartMaintenance.${entry.name}`);
+                        return (
+                            <div key={entry.name} className={style["legend-item"]}>
+                                <span className={style["legend-color"]} style={{ backgroundColor: COLORS[entry.name] }} />
+                                {label}: {entry.value}
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         </div>
     )

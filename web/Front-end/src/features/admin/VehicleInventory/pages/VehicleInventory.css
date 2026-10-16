@@ -466,6 +466,33 @@
   background: var(--navbar);
   color: #fff;
 }
+/* Mismo tamaño/forma de ícono cuadrado que Branches (.br-btn-edit) e InsuranceTypes
+   (.it-btn-edit), pero con el acento amarillo del botón "Agregar Vehículo" (var(--button))
+   para que resalte más en esta pantalla */
+.vi-btn-edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  width: 34px;
+  height: 34px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1.5px solid transparent;
+  background: var(--button);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 200, 83, 0.3);
+  transition: all 0.18s;
+}
+.vi-btn-edit svg {
+  width: 15px;
+  height: 15px;
+}
+.vi-btn-edit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 200, 83, 0.2);
+}
 .vi-empty {
   grid-column: 1 / -1;
   text-align: center;

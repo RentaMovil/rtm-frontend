@@ -549,7 +549,8 @@
     "model": "Modelo",
     "loading": "Carregando veículos...",
     "clearSearch": "Limpar pesquisa",
-    "noMatch": "Nenhum veículo corresponde aos filtros."
+    "noMatch": "Nenhum veículo corresponde aos filtros.",
+    "editAria": "Editar {{name}}"
   },
   "CheckStatus": {
     "checkStatus": "Consultar status",
@@ -610,7 +611,11 @@
       "description": "Descrição",
       "requiredDescriptionMinLength": "A descrição deve ter pelo menos 5 caracteres",
       "requiredDescriptionMaxLength": "A descrição não pode exceder 200 caracteres",
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "retire": "Retirar veículo",
+      "retireConfirm": "Retirar este veículo? Não é possível desfazer.",
+      "retireYes": "Sim, retirar",
+      "retiredNotice": "Este veículo foi retirado: não pode mais ser editado nem alugado."
     },
     "actions": {
       "save": "Salvar alterações",
@@ -723,6 +728,7 @@
   },
   "History": {
     "title": "Gestão de manutenções",
+    "subtitle": "Consulte e gerencie o histórico de manutenções da frota.",
     "detail": "Detalhes",
     "model": "Modelo",
     "modelPlaceHolder": "Exemplo: Volkswagen Gol, Corolla, Tesla Model 3...",

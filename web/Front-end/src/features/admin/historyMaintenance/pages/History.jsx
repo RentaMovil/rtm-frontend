@@ -109,19 +109,33 @@ function History() {
   return (
     <>
       <NavbarAdmin />
-      <div className={style["history-container"]}>
-        <h2 className={style["history-h2"]}>{t("History.title")}</h2>
-        <div className={style["card-container-setSearch"]}>
-          <FiltrerStatus query={query} setSearch={setSearch} filterState={filterState} setFilterState={setFilterState} />
-        </div>
-        <div className={style["card-container-fleetc"]}>
-          <FleetChartMaintenance records={filteredRecords} />
-        </div>
-        <MonthlyChart records={filteredRecords} />
-        <div className={style.list}>
-          {filteredRecords.map(r => (
-            <CartVehicleHistory key={r.id} record={r} onViewMore={setSelected} />
-          ))}
+      <div className={style["hm-page"]}>
+        <div className={style["hm-wrapper"]}>
+          <div className={style["hm-header"]}>
+            <div>
+              <h1 className={style["hm-title"]}>{t("History.title")}</h1>
+              <p className={style["hm-subtitle"]}>{t("History.subtitle")}</p>
+            </div>
+          </div>
+
+          <div className={style["hm-charts-grid"]}>
+            <FleetChartMaintenance records={filteredRecords} />
+            <MonthlyChart records={filteredRecords} />
+          </div>
+
+          <div className={style["hm-card"]}>
+            <div className={style["hm-card-toolbar"]}>
+              <FiltrerStatus query={query} setSearch={setSearch} filterState={filterState} setFilterState={setFilterState} />
+            </div>
+            <div className={style.list}>
+              {filteredRecords.map(r => (
+                <CartVehicleHistory key={r.id} record={r} onViewMore={setSelected} />
+              ))}
+              {filteredRecords.length === 0 && (
+                <p className={style["hm-empty"]}>{t("branches.emptyState", { defaultValue: "No hay resultados." })}</p>
+              )}
+            </div>
+          </div>
         </div>
 
         {selected && (

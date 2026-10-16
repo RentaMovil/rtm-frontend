@@ -11,24 +11,6 @@
   gap: 18px;
 }
 
-/* ── Breadcrumb ── */
-.rs-breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--placeholder);
-}
-.rs-breadcrumb svg {
-  width: 13px;
-  height: 13px;
-}
-.rs-breadcrumb .current {
-  color: var(--text-h);
-  font-weight: 700;
-}
-
 /* ── Header ── */
 .rs-header {
   display: flex;

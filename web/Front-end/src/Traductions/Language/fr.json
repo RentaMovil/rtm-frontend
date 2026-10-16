@@ -549,7 +549,8 @@
     "model": "Modèle",
     "loading": "Chargement des véhicules...",
     "clearSearch": "Effacer la recherche",
-    "noMatch": "Aucun véhicule ne correspond aux filtres."
+    "noMatch": "Aucun véhicule ne correspond aux filtres.",
+    "editAria": "Modifier {{name}}"
   },
   "FilterVehicle": {
     "placeholder": "Rechercher par plaque, marque ou modèle..."
@@ -613,7 +614,11 @@
       "description": "Description",
       "requiredDescriptionMinLength": "La description doit contenir au moins 5 caractères",
       "requiredDescriptionMaxLength": "La description ne peut pas dépasser 200 caractères",
-      "cancel": "Annuler"
+      "cancel": "Annuler",
+      "retire": "Retirer le véhicule",
+      "retireConfirm": "Retirer ce véhicule ? Cette action est irréversible.",
+      "retireYes": "Oui, retirer",
+      "retiredNotice": "Ce véhicule est retiré : il ne peut plus être modifié ni loué."
     },
     "actions": {
       "save": "Enregistrer les modifications",
@@ -723,6 +728,7 @@
   },
   "History": {
     "title": "Gestion des maintenances",
+    "subtitle": "Consultez et gérez l'historique de maintenance de la flotte.",
     "detail": "Détail",
     "model": "Modèle",
     "modelPlaceHolder": "Exemple : Volkswagen Golf, Corolla, Tesla Model 3...",
