@@ -1,4 +1,5 @@
 import '../../../vehicles/pages/Home.css';
+import { useTranslation } from "react-i18next";
 import NavbarAdmin from "../../../../shared/components/layout/NavBarAdmin.jsx";
 import FooterAdmin from "../../../../shared/components/layout/FooterAdmin.jsx";
 import CartVehicule from "../../../vehicles/components/CartVehicule";
@@ -22,6 +23,7 @@ import { filterAvailableVehicles } from "../../../vehicles/utils/filterAvilableC
 import { filterVehicles } from "../../../vehicles/utils/vehiclesFilters.js";
 
 function HomeAdmin() {
+  const { t } = useTranslation();
   const { cars, isLoading: loading, error } = useCars();
   const [hasSearchedCars, setHasSearchedCars] = useState(false);
   const [carsFiltered, setCarsFiltered] = useState([]);
@@ -112,7 +114,7 @@ function HomeAdmin() {
                   <span className="catalog-sidebar-dot" aria-hidden="true" />
                   Flota Disponible
                 </h3>
-                <p className="filters-subtitle">Encuentra el vehículo perfecto para tu viaje.</p>
+                <p className="filters-subtitle">{t("filtersHome.subtitle")}</p>
 
                 <FiltrerBrand cars={carsFiltered} onFilter={setBrandFilter} />
                 <FiltrerPrice cars={carsFiltered} onFilter={setPriceFilter} />
@@ -136,7 +138,7 @@ function HomeAdmin() {
             )}
 
             <div className="card-vehicule-container">
-              {loading && <p className="search-message">Buscando vehículos...</p>}
+              {loading && <p className="search-message">{t("filtersHome.searching")}</p>}
               {!loading && error && <p className="notFound">{error}</p>}
 
               {!loading && !error && visibleCars.length === 0 && (

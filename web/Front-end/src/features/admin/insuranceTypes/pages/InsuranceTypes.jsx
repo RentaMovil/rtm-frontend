@@ -131,7 +131,7 @@ export default function InsuranceTypes() {
                 </div>
 
                 <div className="it-card">
-                    {isLoading && <p className="it-empty">Cargando seguros...</p>}
+                    {isLoading && <p className="it-empty">{t("insuranceTypes.loading")}</p>}
                     {!isLoading && error && <p className="it-empty">{error}</p>}
 
                     {!isLoading && !error && (

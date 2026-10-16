@@ -46,7 +46,7 @@ export default function ReservationDetail() {
     return (
       <div className="rs-page">
         <NavBarAdmin />
-        <div className="rs-wrapper"><p className="rd-not-found">Cargando...</p></div>
+        <div className="rs-wrapper"><p className="rd-not-found">{t("reservations.loadingDetail")}</p></div>
         <FooterAdmin />
       </div>
     );

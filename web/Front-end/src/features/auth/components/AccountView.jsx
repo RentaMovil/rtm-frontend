@@ -146,7 +146,7 @@ export default function AccountView({ theme, setTheme }) {
     };
 
     if (isLoading) {
-        return <p className="route-loading">Cargando perfil...</p>;
+        return <p className="route-loading">{t("account.loadingProfile")}</p>;
     }
 
     if (!user) {
@@ -552,7 +552,7 @@ export default function AccountView({ theme, setTheme }) {
                 <div className="modal-overlay" onClick={() => setShowLogoutModal(false)}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <p>
-                            ¿Estás seguro de que deseas <strong>cerrar sesión</strong>?
+                            {t("account.logoutQuestion")}
                         </p>
                         <div className="modal-actions">
                             <button className="btn-negative" onClick={() => setShowLogoutModal(false)}>

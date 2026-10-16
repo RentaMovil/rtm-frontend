@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 // Componentes Web del proyecto
@@ -41,6 +42,7 @@ function PaySectionHeader({ title, subtitle, badge }) {
 }
 
 export default function PaymentPage() {
+  const { t } = useTranslation();
 
     const navigate = useNavigate();
 
@@ -169,13 +171,13 @@ export default function PaymentPage() {
                 <div className="pay-layout">
                     <div className="pay-main-column">
                         <section className="pay-card pay-vehicle-section">
-                            <PaySectionHeader title="Detalles del vehículo" />
+                            <PaySectionHeader title={t("payment.vehicleDetails")} />
                             <VehicleReservationCard vehicle={reservation.vehicle} />
                         </section>
 
                         <section className="pay-card">
                             <PaySectionHeader
-                                title="Selecciona tu cuenta bancaria destino"
+                                title={t("payment.selectBank")}
                                 subtitle="💡 Escanea el código QR directamente desde la app de tu banco."
                             />
                             <BankAccountSelector />

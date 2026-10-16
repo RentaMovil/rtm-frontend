@@ -54,11 +54,14 @@
     "apply": "Apply filters",
     "clear": "Clear filters",
     "min": "Minimum",
-    "max": "Maximum"
+    "max": "Maximum",
+    "category": "Category",
+    "subtitle": "Find the perfect vehicle for your trip.",
+    "searching": "Searching for vehicles..."
   },
   "reservation": {
     "ErrorDate": "Return date cannot be earlier than pickup date",
-    "ErrorAge:": "You must be of legal age",
+    "ErrorAge": "You must be of legal age",
     "selectDates": "You must select dates",
     "changeLocation": "Change location",
     "summary": "Summary",
@@ -178,7 +181,10 @@
     "usuario": "Username",
     "editar": "Edit profile",
     "guardar": "Save changes",
-    "guardando": "Saving..."
+    "guardando": "Saving...",
+    "confirmLogout": "Yes, log out",
+    "loadingProfile": "Loading profile...",
+    "logoutQuestion": "Are you sure you want to log out?"
   },
   "payment": {
     "payTitle": "Confirm Payment",
@@ -196,7 +202,9 @@
     "placeholderCity": "City of residence",
     "adrress": "Address",
     "placeholderAddress": "Delivery address",
-    "confirm": "Confirm and pay"
+    "confirm": "Confirm and pay",
+    "vehicleDetails": "Vehicle details",
+    "selectBank": "Select your destination bank account"
   },
   "buttonBack": {
     "label": "Back"
@@ -253,7 +261,9 @@
     "verifying": "Verifying...",
     "invalidCode": "Incorrect or expired code. Please try again.",
     "resendCode": "Resend code",
-    "resendIn": "Resend in {{seconds}}s"
+    "resendIn": "Resend in {{seconds}}s",
+    "togglePassword": "Show or hide password",
+    "toggleConfirm": "Show or hide confirmation"
   },
   "vehicleForm": {
     "title": "Register a new vehicle",
@@ -325,7 +335,11 @@
     "disabledModel": "Select a model...",
     "chooseBrandFirst": "Choose a brand first",
     "fromModel": "Filled in when you choose the model",
-    "plateExists": "A vehicle with this plate already exists"
+    "plateExists": "A vehicle with this plate already exists",
+    "branch": "Branch",
+    "disabledBranch": "Select a branch",
+    "requiredBranch": "The branch is required",
+    "requiredCapacity": "Capacity is required"
   },
   "contractHistory": {
     "title": "Contract history",
@@ -441,7 +455,8 @@
       "option13": "Painting",
       "option14": "Bodywork",
       "observations": "Observations"
-    }
+    },
+    "datePlaceholder": "Date"
   },
   "FilterVehicle": {
     "placeholder": "Search by plate, brand or model..."
@@ -470,7 +485,36 @@
     "sure": "Are you sure you want to cancel the reservation for",
     "yes": "Yes, cancel",
     "no": "No",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "billingDetail": "Billing details",
+    "cancelEdit": "Cancel",
+    "carRental": "Vehicle rental",
+    "close": "Close",
+    "closeConfirm": "Got it, close",
+    "code": "Reservation code:",
+    "created": "Created on",
+    "details": "View details",
+    "duration": "Duration:",
+    "editBranch": "Change branch",
+    "editBranchLocked": "It can no longer be changed: 3 days or fewer remain until the return.",
+    "emptyTitle": "No reservations match these filters.",
+    "inReview": "Receipt under review by an administrator.",
+    "insurance": "Insurance and full coverage",
+    "insuranceIncluded": "Coverage included",
+    "pickup": "PICK-UP",
+    "pickupBranch": "Pick-up branch",
+    "return": "RETURN",
+    "returnBranch": "Return branch",
+    "save": "Save",
+    "saving": "Saving...",
+    "seats": "Passengers",
+    "totalAmount": "AMOUNT BILLED",
+    "uploadReceipt": "Upload receipt",
+    "status": {
+      "activa": "Active",
+      "cancelada": "Cancelled",
+      "completada": "Completed"
+    }
   },
   "VehicleInventary": {
     "title": "Vehicle Inventory",
@@ -503,7 +547,12 @@
     "stateSee": "See status",
     "all_m": "All",
     "all_f": "All",
-    "retired": "Retired"
+    "retired": "Retired",
+    "brand": "Brand",
+    "model": "Model",
+    "loading": "Loading vehicles...",
+    "clearSearch": "Clear search",
+    "noMatch": "No vehicles match the filters."
   },
   "CheckStatus": {
     "checkStatus": "Check status",
@@ -649,7 +698,8 @@
       "option13": "Painting",
       "option14": "Bodywork"
     },
-    "startNow": "Start now (the vehicle goes into maintenance)"
+    "startNow": "Start now (the vehicle goes into maintenance)",
+    "selectVehicle": "Select a vehicle from the list"
   },
   "CartVehiculeMaintenance": {
     "veicle": "Vehicle",
@@ -749,7 +799,8 @@
       "text": "It will no longer appear as a payment option for new customers, but past payments that used it will remain recorded.",
       "cancel": "Cancel",
       "accept": "Deactivate account"
-    }
+    },
+    "loading": "Loading accounts..."
   },
   "userManagement": {
     "title": "Users & roles",
@@ -801,7 +852,8 @@
       "warningText": "This role has full access to the system, including bank account management, audits and other users' privileges.",
       "cancel": "Cancel",
       "confirm": "Confirm role change"
-    }
+    },
+    "loading": "Loading users..."
   },
   "insuranceTypes": {
     "title": "Insurance types",
@@ -840,7 +892,8 @@
       "costHint": "Changing the cost only affects new reservations — reservations already created keep the cost they were calculated with.",
       "cancel": "Cancel",
       "save": "Save"
-    }
+    },
+    "loading": "Loading insurance..."
   },
   "branches": {
     "title": "Branches",
@@ -909,8 +962,13 @@
       "timeSeparator": "to",
       "closedLabel": "Closed",
       "cancel": "Cancel",
-      "save": "Save branch"
-    }
+      "save": "Save branch",
+      "saveError": "The branch could not be saved.",
+      "saving": "Saving...",
+      "deleting": "Deleting..."
+    },
+    "loading": "Loading branches...",
+    "mapLabel": "Location on the map (click to mark the exact spot)"
   },
   "reservations": {
     "breadcrumbAdmin": "Administration Panel",
@@ -1051,7 +1109,9 @@
     "receiptModal": {
       "title": "Bank transfer receipt",
       "subtitle": "Reference: {{reference}}"
-    }
+    },
+    "loading": "Loading reservations...",
+    "loadingDetail": "Loading..."
   },
   "process": {
     "title": "4 steps to your next trip",
@@ -1168,5 +1228,19 @@
     "noSignal": "No signal",
     "noReport": "No GPS report",
     "updatedAt": "Updated {{time}} · {{date}}"
+  },
+  "emailVerification": {
+    "title": "Enter your email address",
+    "invalidFormat": "Invalid email format"
+  },
+  "codeVerification": {
+    "title": "Verification code",
+    "incomplete": "Please enter all 6 digits",
+    "invalid": "Incorrect or expired code. Try again."
+  },
+  "uploadReceipt": {
+    "loadError": "Bank accounts could not be loaded.",
+    "close": "Close",
+    "selectAccount": "Select an account"
   }
 }

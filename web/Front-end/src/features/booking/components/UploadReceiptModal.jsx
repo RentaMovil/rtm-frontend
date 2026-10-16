@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { bankAccountService } from "../../admin/bankAccounts/services/bankAccountService";
 import { toBankAccountViewModel } from "../../admin/bankAccounts/services/bankAccountMapper";
 import { paymentService } from "../../payment/services/paymentService";
@@ -11,6 +12,7 @@ import "./UploadReceiptModal.css";
  * sube el archivo a Cloudinary antes de crear el Payment (mismo patrón que Payment.jsx).
  */
 export default function UploadReceiptModal({ reservation, onClose, onSuccess }) {
+  const { t } = useTranslation();
     const [bankAccounts, setBankAccounts] = useState([]);
     const [bankAccountId, setBankAccountId] = useState("");
     const [referenceNumber, setReferenceNumber] = useState("");
@@ -21,7 +23,7 @@ export default function UploadReceiptModal({ reservation, onClose, onSuccess }) 
     useEffect(() => {
         bankAccountService.getAll()
             .then((accounts) => setBankAccounts(accounts.map(toBankAccountViewModel)))
-            .catch(() => setError("No se pudieron cargar las cuentas bancarias."));
+            .catch(() => setError(t("uploadReceipt.loadError")));
     }, []);
 
     const selectedAccount = bankAccounts.find((a) => String(a.id) === String(bankAccountId));
@@ -60,14 +62,14 @@ export default function UploadReceiptModal({ reservation, onClose, onSuccess }) 
             <div className="urm-modal" onClick={(e) => e.stopPropagation()}>
                 <div className="urm-header">
                     <h3>Subir comprobante — Reserva #{reservation.id}</h3>
-                    <button type="button" className="urm-close" onClick={onClose} aria-label="Cerrar">×</button>
+                    <button type="button" className="urm-close" onClick={onClose} aria-label={t("uploadReceipt.close")}>×</button>
                 </div>
 
                 <form className="urm-form" onSubmit={handleSubmit}>
                     <label className="urm-field">
                         Cuenta bancaria destino
                         <select value={bankAccountId} onChange={(e) => setBankAccountId(e.target.value)} required>
-                            <option value="">Selecciona una cuenta</option>
+                            <option value="">{t("uploadReceipt.selectAccount")}</option>
                             {bankAccounts.map((a) => (
                                 <option key={a.id} value={a.id}>{a.bankName} — {a.holderName}</option>
                             ))}

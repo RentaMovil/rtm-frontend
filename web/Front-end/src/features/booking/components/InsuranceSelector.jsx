@@ -1,10 +1,12 @@
 import "./InsureanceSelector.css";
+import { useTranslation } from "react-i18next";
 import { FaCheck, FaShieldAlt } from "react-icons/fa";
 
 import { useReservation } from "../context/ReservationContext";
 import { useInsurance } from "../../admin/insuranceTypes/hooks/useInsurance";
 
 export default function InsuranceSelector() {
+  const { t } = useTranslation();
   const { reservation, updateInsurance } = useReservation();
   const selectedInsurance = reservation?.insuranceId ?? null;
   const { insurance, isLoading, error } = useInsurance();
@@ -24,7 +26,7 @@ export default function InsuranceSelector() {
         </div>
       </div>
 
-      {isLoading && <p className="insurance-subtitle">Cargando seguros...</p>}
+      {isLoading && <p className="insurance-subtitle">{t("insuranceTypes.loading")}</p>}
       {!isLoading && error && <p className="insurance-subtitle">{error}</p>}
 
       {!isLoading && !error && (

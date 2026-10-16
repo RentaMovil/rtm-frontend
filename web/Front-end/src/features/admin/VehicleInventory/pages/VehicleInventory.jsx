@@ -182,7 +182,7 @@ export default function VehicleInventory() {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
-                {search && <button type="button" className="vi-search-clear" aria-label="Limpiar búsqueda" onClick={() => setSearch("")}><FiX /></button>}
+                {search && <button type="button" className="vi-search-clear" aria-label={t("VehicleInventary.clearSearch")} onClick={() => setSearch("")}><FiX /></button>}
               </div>
 
               <div className="vi-filters" ref={filtersRef}>
@@ -221,7 +221,7 @@ export default function VehicleInventory() {
             {/* SECCIÓN RESTAURADA: Renderizado de tarjetas (Grid) o Tabla */}
             {filtered.length === 0 ? (
               <div className="vi-empty">
-                <p>No se encontraron vehículos que coincidan con los filtros.</p>
+                <p>{t("VehicleInventary.noMatch")}</p>
               </div>
             ) : vista === "grid" ? (
               <div className="vi-grid">
@@ -249,7 +249,7 @@ export default function VehicleInventory() {
                     <tr>
                       <th>Placa</th>
                       <th>Marca / Modelo</th>
-                      <th>Estado</th>
+                      <th>{t("VehicleInventary.state")}</th>
                       <th>Sucursal</th>
                       <th>Tipo</th>
                     </tr>

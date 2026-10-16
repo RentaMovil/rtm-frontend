@@ -120,7 +120,7 @@ export default function ReservationsList() {
           </div>
         </div>
 
-        {isLoading && <p className="rs-empty">Cargando reservas...</p>}
+        {isLoading && <p className="rs-empty">{t("reservations.loading")}</p>}
         {!isLoading && error && <p className="rs-empty">{error}</p>}
 
         {!isLoading && !error && (

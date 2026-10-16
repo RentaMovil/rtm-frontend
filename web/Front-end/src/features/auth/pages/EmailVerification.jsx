@@ -42,7 +42,7 @@ function EmailVerification({ email }) {
             <div className={style["page-background"]}>
                 <div className={style["container-email"]}>
                     <form className={style['email-form']} onSubmit={handleSubmit(insert)}>
-                        <h2 className={style["title"]}>Ingrese su correo electrónico</h2>
+                        <h2 className={style["title"]}>{t("emailVerification.title")}</h2>
                         <p className={style["description"]}>
                             Le enviaremos un código de seguridad para verificar su identidad y continuar
                         </p>
@@ -60,7 +60,7 @@ function EmailVerification({ email }) {
                                     required: "El correo electrónico es necesario",
                                     pattern: {
                                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                        message: "Formato de correo electrónico es inválido"
+                                        message: t("emailVerification.invalidFormat")
                                     }
                                 })} />
                         </div>

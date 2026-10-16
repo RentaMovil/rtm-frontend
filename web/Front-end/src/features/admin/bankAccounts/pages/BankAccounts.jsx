@@ -154,7 +154,7 @@ export default function BankAccounts() {
           </button>
         </div>
 
-        {isLoading && <p className="ba-integrity-notice">Cargando cuentas...</p>}
+        {isLoading && <p className="ba-integrity-notice">{t("bankAccounts.loading")}</p>}
         {!isLoading && error && <p className="ba-integrity-notice">{error}</p>}
 
         {!isLoading && !error && (

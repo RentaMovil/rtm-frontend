@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineLock, AiOutlineSafety, AiOutlineArrowRight } from 'react-icons/ai';
 import NavbarTwo from '../../../shared/components/layout/NavbarTwo';
@@ -7,6 +8,7 @@ import { authService } from '../services/authService';
 import style from "../../auth/pages/CodeVerification.module.css";
 
 function CodeVerification() {
+  const { t } = useTranslation();
     const location = useLocation();
     const email = location.state?.email;
     const CODE_LENGTH = 6;
@@ -94,7 +96,7 @@ const handleVerify = async (e) => {
     e.preventDefault();
     const joined = code.join('');
     if (joined.length !== CODE_LENGTH || code.some((c) => c === '')) {
-        setError('Por favor completa los 6 dígitos');
+        setError(t("codeVerification.incomplete"));
         return;
     }
 
@@ -106,7 +108,7 @@ const handleVerify = async (e) => {
         // Si llega aquí, el código es válido
         navigate('/ChangePasswordLogin', { state: { email, code: joined } });
     } catch (err) {
-        setError('Código incorrecto o expirado. Intenta de nuevo.');
+        setError(t("codeVerification.invalid"));
     } finally {
         setIsVerifying(false);
     }
@@ -123,7 +125,7 @@ const handleVerify = async (e) => {
                         <AiOutlineLock />
                     </div>
                     
-                    <h2 className={style["title"]}>Código de Verificación</h2>
+                    <h2 className={style["title"]}>{t("codeVerification.title")}</h2>
                     <p className={style["description"]}>
                         Ingrese el código de 6 dígitos enviado a<br />
                         <strong>{email}</strong>

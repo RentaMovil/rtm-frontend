@@ -54,11 +54,14 @@
     "apply": "Aplicar filtros",
     "clear": "Limpar filtros",
     "min": "Mínimo",
-    "max": "Máximo"
+    "max": "Máximo",
+    "category": "Categoria",
+    "subtitle": "Encontre o veículo perfeito para sua viagem.",
+    "searching": "Buscando veículos..."
   },
   "reservation": {
     "ErrorDate": "A data de devolução não pode ser anterior à data de retirada",
-    "ErrorAge:": "Você deve ser maior de idade",
+    "ErrorAge": "Você deve ser maior de idade",
     "selectDates": "Você deve selecionar datas",
     "changeLocation": "Alterar localização",
     "summary": "Resumo",
@@ -178,7 +181,10 @@
     "usuario": "Usuário",
     "editar": "Editar perfil",
     "guardar": "Guardar alterações",
-    "guardando": "Salvando..."
+    "guardando": "Salvando...",
+    "confirmLogout": "Sim, sair",
+    "loadingProfile": "Carregando perfil...",
+    "logoutQuestion": "Tem certeza de que deseja sair?"
   },
   "payment": {
     "payTitle": "Confirmar pagamento",
@@ -196,7 +202,9 @@
     "placeholderCity": "Cidade de residência",
     "adrress": "Endereço",
     "placeholderAddress": "Endereço de entrega",
-    "confirm": "Confirmar e pagar"
+    "confirm": "Confirmar e pagar",
+    "vehicleDetails": "Detalhes do veículo",
+    "selectBank": "Selecione sua conta bancária de destino"
   },
   "buttonBack": {
     "label": "Voltar"
@@ -253,7 +261,9 @@
     "verifying": "Verificando...",
     "invalidCode": "Código incorreto ou expirado. Tente novamente.",
     "resendCode": "Reenviar código",
-    "resendIn": "Reenviar em {{seconds}}s"
+    "resendIn": "Reenviar em {{seconds}}s",
+    "togglePassword": "Mostrar ou ocultar senha",
+    "toggleConfirm": "Mostrar ou ocultar confirmação"
   },
   "vehicleForm": {
     "title": "Registrar um novo veículo",
@@ -325,7 +335,11 @@
     "disabledModel": "Selecione um modelo...",
     "chooseBrandFirst": "Escolha uma marca primeiro",
     "fromModel": "Preenchido ao escolher o modelo",
-    "plateExists": "Já existe um veículo com esta placa"
+    "plateExists": "Já existe um veículo com esta placa",
+    "branch": "Filial",
+    "disabledBranch": "Selecione uma filial",
+    "requiredBranch": "A filial é obrigatória",
+    "requiredCapacity": "A capacidade é obrigatória"
   },
   "contractHistory": {
     "title": "Histórico de contratos",
@@ -441,7 +455,8 @@
       "option13": "Pintura",
       "option14": "Funilaria",
       "observations": "Observações"
-    }
+    },
+    "datePlaceholder": "Data"
   },
   "notifications": {
     "unread": "Não lidas",
@@ -467,7 +482,36 @@
     "sure": "Tem certeza de que deseja cancelar a reserva de",
     "yes": "Sim, cancelar",
     "no": "Não",
-    "confirm": "Confirmar"
+    "confirm": "Confirmar",
+    "billingDetail": "Detalhes de faturamento",
+    "cancelEdit": "Cancelar",
+    "carRental": "Aluguel de veículo",
+    "close": "Fechar",
+    "closeConfirm": "Entendi, fechar",
+    "code": "Código da reserva:",
+    "created": "Criada em",
+    "details": "Ver detalhes",
+    "duration": "Duração:",
+    "editBranch": "Alterar filial",
+    "editBranchLocked": "Não é mais possível alterar: faltam 3 dias ou menos para a devolução.",
+    "emptyTitle": "Nenhuma reserva corresponde a estes filtros.",
+    "inReview": "Comprovante em análise por um administrador.",
+    "insurance": "Seguro e coberturas completas",
+    "insuranceIncluded": "Cobertura incluída",
+    "pickup": "RETIRADA",
+    "pickupBranch": "Filial de retirada",
+    "return": "DEVOLUÇÃO",
+    "returnBranch": "Filial de devolução",
+    "save": "Salvar",
+    "saving": "Salvando...",
+    "seats": "Passageiros",
+    "totalAmount": "VALOR FATURADO",
+    "uploadReceipt": "Enviar comprovante",
+    "status": {
+      "activa": "Ativa",
+      "cancelada": "Cancelada",
+      "completada": "Concluída"
+    }
   },
   "VehicleInventary": {
     "title": "Inventário de Veículos",
@@ -500,7 +544,12 @@
     "stateSee": "Ver estado",
     "all_m": "Todos",
     "all_f": "Todas",
-    "retired": "Retirado"
+    "retired": "Retirado",
+    "brand": "Marca",
+    "model": "Modelo",
+    "loading": "Carregando veículos...",
+    "clearSearch": "Limpar pesquisa",
+    "noMatch": "Nenhum veículo corresponde aos filtros."
   },
   "CheckStatus": {
     "checkStatus": "Consultar status",
@@ -649,7 +698,8 @@
       "option13": "Pintura",
       "option14": "Funilaria"
     },
-    "startNow": "Iniciar agora (o veículo entra em manutenção)"
+    "startNow": "Iniciar agora (o veículo entra em manutenção)",
+    "selectVehicle": "Selecione um veículo da lista"
   },
   "CartVehiculeMaintenance": {
     "veicle": "Veículo",
@@ -749,7 +799,8 @@
       "text": "Ela deixará de aparecer como opção de pagamento para novos clientes, mas os pagamentos anteriores que a usaram permanecerão registrados.",
       "cancel": "Cancelar",
       "accept": "Desativar conta"
-    }
+    },
+    "loading": "Carregando contas..."
   },
   "userManagement": {
     "title": "Usuários e funções",
@@ -801,7 +852,8 @@
       "warningText": "Esta função tem acesso total ao sistema, incluindo gestão de contas bancárias, auditoria e privilégios de outros usuários.",
       "cancel": "Cancelar",
       "confirm": "Confirmar alteração de função"
-    }
+    },
+    "loading": "Carregando usuários..."
   },
   "insuranceTypes": {
     "title": "Tipos de seguro",
@@ -840,7 +892,8 @@
       "costHint": "Alterar o custo afeta apenas as novas reservas — as reservas já criadas mantêm o custo com o qual foram calculadas.",
       "cancel": "Cancelar",
       "save": "Salvar"
-    }
+    },
+    "loading": "Carregando seguros..."
   },
   "branches": {
     "title": "Filiais",
@@ -909,8 +962,13 @@
       "timeSeparator": "às",
       "closedLabel": "Fechado",
       "cancel": "Cancelar",
-      "save": "Salvar filial"
-    }
+      "save": "Salvar filial",
+      "saveError": "Não foi possível salvar a filial.",
+      "saving": "Salvando...",
+      "deleting": "Excluindo..."
+    },
+    "loading": "Carregando filiais...",
+    "mapLabel": "Localização no mapa (clique para marcar o ponto exato)"
   },
   "reservations": {
     "breadcrumbAdmin": "Painel de Administração",
@@ -1049,7 +1107,10 @@
     "receiptModal": {
       "title": "Comprovante de transferência bancária",
       "subtitle": "Referência: {{reference}}"
-    }
+    },
+    "serviceUnavailable": "O serviço de localização ainda não está disponível. Não há rotas para mostrar.",
+    "loading": "Carregando reservas...",
+    "loadingDetail": "Carregando..."
   },
   "process": {
     "title": "4 passos para a sua próxima viagem",
@@ -1118,7 +1179,8 @@
     "selectVehicle": "Selecione um veículo",
     "autoRefresh": "Atualiza a cada {{seconds}} s",
     "deviceOffline": "{{model}} nao esta conectado: posicao do ultimo relatorio.",
-    "device": "Dispositivo: {{model}} · {{provider}}"
+    "device": "Dispositivo: {{model}} · {{provider}}",
+    "serviceUnavailable": "O serviço de localização ainda não está disponível. Não há rotas para mostrar."
   },
   "changeEmail": {
     "title": "Modificar E-mail",
@@ -1163,5 +1225,19 @@
     "noSignal": "Sem sinal",
     "noReport": "Sem relatório GPS",
     "updatedAt": "Atualizado {{time}} · {{date}}"
+  },
+  "emailVerification": {
+    "title": "Digite seu e-mail",
+    "invalidFormat": "Formato de e-mail inválido"
+  },
+  "codeVerification": {
+    "title": "Código de verificação",
+    "incomplete": "Preencha os 6 dígitos",
+    "invalid": "Código incorreto ou expirado. Tente novamente."
+  },
+  "uploadReceipt": {
+    "loadError": "Não foi possível carregar as contas bancárias.",
+    "close": "Fechar",
+    "selectAccount": "Selecione uma conta"
   }
 }

@@ -410,7 +410,7 @@ export default function Branches() {
 
               {/* NUEVO: selector de ubicación */}
               <div className="br-field">
-                <label>Ubicación en el mapa (haz clic para marcar el punto exacto)</label>
+                <label>{t("branches.mapLabel")}</label>
                 <MapComponent
                   mode="pick"
                   pickedLat={pickedLocation.lat}
@@ -512,7 +512,7 @@ export default function Branches() {
                 {t("branches.modal.cancel")}
               </button>
               <button type="button" className="br-btn-danger" onClick={handleConfirmDelete} disabled={isDeleting}>
-                {isDeleting ? t("branches.modal.saving", { defaultValue: "Eliminando..." }) : t("branches.deleteModal.confirm")}
+                {isDeleting ? t("branches.modal.deleting") : t("branches.deleteModal.confirm")}
               </button>
             </div>
           </div>

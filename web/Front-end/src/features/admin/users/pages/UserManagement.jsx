@@ -149,7 +149,7 @@ export default function UserManagement() {
           </div>
         </div>
 
-        {isLoading && <p className="um-empty">Cargando usuarios...</p>}
+        {isLoading && <p className="um-empty">{t("userManagement.loading")}</p>}
         {!isLoading && error && <p className="um-empty">{error}</p>}
         {statusError && (
           <div className="um-warning">

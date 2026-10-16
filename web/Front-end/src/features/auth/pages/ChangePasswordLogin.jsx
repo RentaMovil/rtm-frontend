@@ -59,7 +59,7 @@ function ChangePassword() {
                                     type="button"
                                     className="eyeIconP"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    aria-label="Mostrar u ocultar contraseña"
+                                    aria-label={t("changePassword.togglePassword")}
                                     aria-pressed={showPassword}
                                 >
                                     {showPassword ? <FaEyeSlash /> : <FaEye /> }
@@ -94,7 +94,7 @@ function ChangePassword() {
                                     type="button"
                                     className="eyeIconP"
                                     onClick={() => setShowConfirm(!showConfirm)}
-                                    aria-label="Mostrar u ocultar confirmación"
+                                    aria-label={t("changePassword.toggleConfirm")}
                                     aria-pressed={showConfirm}
                                 >
                                     {showConfirm ? <FaEye /> : <FaEyeSlash />}
