@@ -214,6 +214,18 @@ function HistorialReservation() {
         onUpdateReturnBranch={handleUpdateReturnBranch}
       />
 
+      {/* MODAL DE SUBIR COMPROBANTE */}
+      {uploadReserva && (
+        <UploadReceiptModal
+          reservation={uploadReserva}
+          onClose={() => setUploadReserva(null)}
+          onSuccess={async () => {
+            await refetch();
+            setUploadReserva(null);
+          }}
+        />
+      )}
+
       <RoleFooter />
     </>
   );
