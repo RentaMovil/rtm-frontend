@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 // Componentes Web del proyecto
 import VehicleReservationCard from "../../booking/components/VehicleReservationCard";
 import { RoleNavbar, RoleFooter } from "../../../shared/components/layout/RoleChrome";
-import { useAuth } from "../../../contexts/AuthContext";
 import InvoiceCard from "../components/InvoiceCard";
 import BankAccountSelector from "../components/BankAccountSelector";
 import ContinueButton from "../../../shared/components/continueButton";
@@ -44,11 +43,6 @@ function PaySectionHeader({ title, subtitle, badge }) {
 export default function PaymentPage() {
 
     const navigate = useNavigate();
-
-    const { user } = useAuth();
-    const isAdmin = ["ADMIN", "SUPER_ADMIN"].includes(user?.role);
-    const NavbarComponent = isAdmin ? NavbarAdmin : Navbar;
-    const FooterComponent = isAdmin ? FooterAdmin : Footer;
 
     const { reservation, clearReservation } = useReservation();
     const { clearPayment } = usePayment();
