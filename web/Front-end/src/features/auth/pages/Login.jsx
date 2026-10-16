@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { FaHeadset } from "react-icons/fa";
 
 import NavbarTwo from "../../../shared/components/layout/NavbarTwo.jsx";
-import FooterTwo from "../../../shared/components/layout/FooterTwo.jsx";
 import LoginForm from "../components/LoginForm.jsx";
 import RegisterForm from "../components/RegisterForm.jsx";
+import AuthShowcase from "../components/AuthShowcase.jsx";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 
@@ -14,6 +16,7 @@ import "./Login.css";
 const isAdminRole = (role) => role === "ADMIN" || role === "SUPER_ADMIN";
 
 function Login() {
+    const { t } = useTranslation();
     const [isLoginMode, setIsLoginMode] = useState(true);
     const navigate = useNavigate();
     const { login, register } = useAuth();
@@ -38,25 +41,46 @@ function Login() {
         <>
             <NavbarTwo />
 
-            <div className="login-container">
+            <div className="auth-page">
+                <AuthShowcase />
 
-                {/* Formularios */}
-                <div className="login-form-container">
-                    {isLoginMode ? (
-                        <LoginForm
-                            onSubmit={handleLogin}
-                            onSwitchToRegister={() => setIsLoginMode(false)}
-                        />
-                    ) : (
-                        <RegisterForm
-                            onSubmit={handleRegister}
-                            onSwitchToLogin={() => setIsLoginMode(true)}
-                        />
-                    )}
+                <div className="auth-card-wrapper">
+                    <div className="auth-card">
+                        <div className="auth-card-header">
+                            <div className="auth-tabs" role="tablist">
+                                <button
+                                    type="button"
+                                    role="tab"
+                                    aria-selected={isLoginMode}
+                                    className={`auth-tab ${isLoginMode ? "active" : ""}`}
+                                    onClick={() => setIsLoginMode(true)}
+                                >
+                                    {t("loginForm.submit")}
+                                </button>
+                                <button
+                                    type="button"
+                                    role="tab"
+                                    aria-selected={!isLoginMode}
+                                    className={`auth-tab ${!isLoginMode ? "active" : ""}`}
+                                    onClick={() => setIsLoginMode(false)}
+                                >
+                                    {t("register.submit")}
+                                </button>
+                            </div>
+
+                            <a className="auth-help-link" href="mailto:soporte@rentamovil.tech">
+                                <FaHeadset /> {t("authShowcase.help")}
+                            </a>
+                        </div>
+
+                        {isLoginMode ? (
+                            <LoginForm onSubmit={handleLogin} />
+                        ) : (
+                            <RegisterForm onSubmit={handleRegister} />
+                        )}
+                    </div>
                 </div>
-
             </div>
-
         </>
     );
 }

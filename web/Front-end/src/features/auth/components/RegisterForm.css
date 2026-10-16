@@ -1,14 +1,77 @@
 .register-form {
-    width: min(95vw, 900px);
+    width: 100%;
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 16px;
+}
 
-    background: var(--card-bg);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: var(--shadow);
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.register-form .input-with-icon input {
+  width: 100%;
+  padding-left: 38px;
+}
+
+.field-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--placeholder);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.register-form .password-field .field-icon {
+  position: absolute;
+  left: 12px;
+}
+
+.register-form .password-field input {
+  padding-left: 38px;
+}
+
+.field-error {
+  font-size: 12px;
+  color: #dc2626;
+}
+
+.field-success {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #16a34a;
+}
+
+.password-requirements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  margin: 2px 0 0;
+  padding: 0;
+}
+
+.password-requirements li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--placeholder);
+}
+
+.password-requirements li.met {
+  color: #16a34a;
 }
 
 /* Campo de contraseña con el botón de mostrar/ocultar superpuesto a la derecha.
@@ -101,8 +164,13 @@
     transition: 0.3s;
 }
 
-.register-btn:hover {
+.register-btn:hover:not(:disabled) {
   background: var(--primary);
+}
+
+.register-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 /* ERROR */
