@@ -1,16 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaMoon, FaSun, FaGlobe, FaCheck } from "react-icons/fa";
+import { FaMoon, FaSun, FaCheck } from "react-icons/fa";
 
 import LogoCar from "../../../shared/components/layout/LogoCar.jsx";
 import "./AuthTopbar.css";
 
+// flagcdn.com en vez de emoji de bandera: Windows/Chrome no trae fuente de
+// emoji compuesto para banderas y termina mostrando el código ("US") en
+// lugar del ícono.
 const LANGUAGES = [
-  { code: "es", label: "Español" },
-  { code: "en", label: "English" },
-  { code: "fr", label: "Français" },
-  { code: "pt", label: "Português" },
+  { code: "es", label: "Español", country: "es" },
+  { code: "en", label: "English", country: "us" },
+  { code: "fr", label: "Français", country: "fr" },
+  { code: "pt", label: "Português", country: "pt" },
 ];
+
+const flagUrl = (country) => `https://flagcdn.com/24x18/${country}.png`;
 
 // Mismo estado de tema que maneja App.jsx (localStorage "theme", clase en
 // <html>); aquí solo se alterna entre skylight (claro) y dark, el selector
@@ -23,6 +28,7 @@ function AuthTopbar({ isLoginMode, onSelectMode, theme, setTheme }) {
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef(null);
   const currentLang = i18n.language?.slice(0, 2) || "es";
+  const currentLangInfo = LANGUAGES.find((lang) => lang.code === currentLang) ?? LANGUAGES[0];
 
   useEffect(() => {
     if (!langOpen) return;
@@ -57,7 +63,13 @@ function AuthTopbar({ isLoginMode, onSelectMode, theme, setTheme }) {
             aria-haspopup="listbox"
             aria-expanded={langOpen}
           >
-            <FaGlobe />
+            <img
+              className="auth-topbar-lang-flag"
+              src={flagUrl(currentLangInfo.country)}
+              alt=""
+              width="20"
+              height="15"
+            />
             <span>{currentLang.toUpperCase()}</span>
           </button>
 
@@ -72,7 +84,14 @@ function AuthTopbar({ isLoginMode, onSelectMode, theme, setTheme }) {
                     className={`auth-topbar-lang-option ${currentLang === lang.code ? "selected" : ""}`}
                     onClick={() => selectLang(lang.code)}
                   >
-                    {lang.label}
+                    <span className="auth-topbar-lang-option-label">{lang.label}</span>
+                    <img
+                      className="auth-topbar-lang-flag"
+                      src={flagUrl(lang.country)}
+                      alt=""
+                      width="20"
+                      height="15"
+                    />
                     {currentLang === lang.code && <FaCheck />}
                   </button>
                 </li>
