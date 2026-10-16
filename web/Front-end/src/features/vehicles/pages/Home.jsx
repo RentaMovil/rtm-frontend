@@ -43,14 +43,16 @@ function Home() {
   const [searchData, setSearchData] = useState({
     branch: null,
     startDate: "",
-    endDate: ""
+    endDate: "",
+    startTime: "",
+    endTime: ""
   });
 
   useEffect(() => {
     if (location.state?.triggerSearch && location.state?.rentalSearch && cars.length > 0) {
-      const { branch, startDate, endDate } = location.state.rentalSearch;
+      const { branch, startDate, endDate, startTime, endTime } = location.state.rentalSearch;
 
-      setSearchData({ branch, startDate, endDate });
+      setSearchData({ branch, startDate, endDate, startTime, endTime });
 
       filterAvailableVehicles(cars, branch, startDate, endDate).then((disponibles) => {
         setCarsFiltered(disponibles);
@@ -61,8 +63,8 @@ function Home() {
     }
   }, [location.state, cars, navigate]);
 
-  const handleSearch = ({ branch, startDate, endDate }) => {
-    const newSearchData = { branch, startDate, endDate };
+  const handleSearch = ({ branch, startDate, endDate, startTime, endTime }) => {
+    const newSearchData = { branch, startDate, endDate, startTime, endTime };
     setSearchData(newSearchData);
 
     filterAvailableVehicles(cars, branch, startDate, endDate).then((disponibles) => {

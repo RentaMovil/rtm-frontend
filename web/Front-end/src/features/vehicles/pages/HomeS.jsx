@@ -62,8 +62,8 @@ function Home() {
 
   // 🟡 Interino: la disponibilidad real por rango de fechas requiere el feature de Reservations,
   // que todavía no existe como servicio. Por ahora solo filtra por estado + sucursal.
-  const handleSearch = ({ branch, startDate, endDate }) => {
-    setCalendarFilters((current) => ({ ...current, branch, startDate, endDate }));
+  const handleSearch = ({ branch, startDate, endDate, startTime, endTime }) => {
+    setCalendarFilters((current) => ({ ...current, branch, startDate, endDate, startTime, endTime }));
 
     filterAvailableVehicles(cars, branch, startDate, endDate).then(setCarsFiltered);
   };
