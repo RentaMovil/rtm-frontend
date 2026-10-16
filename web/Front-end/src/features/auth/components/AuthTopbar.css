@@ -1,23 +1,31 @@
+/* Mismo lenguaje visual que la navbar pública (Navbar.css): barra fija
+   arriba, fondo navy, 70px de alto, logo a la izquierda. */
 .auth-topbar {
   width: 100%;
-  max-width: 1280px;
+  margin: 0;
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  background: var(--navbar);
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin: 0 auto 20px;
-  padding: 0 4px;
+  align-items: center;
+  height: 70px;
+  padding: 0 30px;
+  box-sizing: border-box;
 }
 
 .auth-topbar-logo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .auth-topbar-logo-text {
-  font-size: 20px;
+  color: var(--textNavabar);
+  font-size: 1.7rem;
   font-weight: 700;
-  color: var(--text-h);
+  letter-spacing: -0.5px;
 }
 
 .auth-topbar-logo-text span {
@@ -25,35 +33,38 @@
 }
 
 .auth-topbar-logo-icon {
-  font-size: 22px;
   color: var(--accent);
+  font-size: 28px;
 }
 
 .auth-topbar-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .auth-topbar-lang {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 10px;
+  padding: 7px 10px;
   border-radius: 8px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  color: var(--text-h);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--textNavabar);
   font-size: 13px;
 }
 
 .auth-topbar-lang select {
   border: none;
   background: transparent;
-  color: var(--text-h);
+  color: var(--textNavabar);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+}
+
+.auth-topbar-lang select option {
+  color: #111827;
 }
 
 .auth-topbar-lang select:focus {
@@ -67,15 +78,15 @@
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
   color: var(--accent);
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 .auth-topbar-theme:hover {
-  background: var(--hover);
+  background: rgba(255, 255, 255, 0.16);
 }
 
 .auth-topbar-buttons {
@@ -86,13 +97,17 @@
 .auth-topbar-btn {
   padding: 9px 18px;
   border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--card-bg);
-  color: var(--text-h);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: var(--textNavabar);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+.auth-topbar-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .auth-topbar-btn.active {
@@ -103,8 +118,11 @@
 
 @media (max-width: 640px) {
   .auth-topbar {
+    height: auto;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
+    padding: 12px 16px;
     justify-content: center;
+    position: static;
   }
 }

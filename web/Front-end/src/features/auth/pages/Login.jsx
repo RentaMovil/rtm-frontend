@@ -37,7 +37,7 @@ function Login({ theme, setTheme }) {
     };
 
     return (
-        <div className="auth-page">
+        <>
             <AuthTopbar
                 isLoginMode={isLoginMode}
                 onSelectMode={setIsLoginMode}
@@ -45,6 +45,7 @@ function Login({ theme, setTheme }) {
                 setTheme={setTheme}
             />
 
+            <div className="auth-page">
             <div className="auth-modal">
                 <AuthShowcase />
 
@@ -81,7 +82,8 @@ function Login({ theme, setTheme }) {
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
+        </>
     );
 }
 
