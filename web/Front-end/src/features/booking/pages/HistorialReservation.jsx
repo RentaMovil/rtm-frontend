@@ -12,11 +12,6 @@ import UploadReceiptModal from "../components/UploadReceiptModal.jsx";
 function HistorialReservation() {
   const { t } = useTranslation();
 
-  const { user } = useAuth();
-  const isAdmin = ["ADMIN", "SUPER_ADMIN"].includes(user?.role);
-  const NavbarComponent = isAdmin ? NavbarAdmin : Navbar;
-  const FooterComponent = isAdmin ? FooterAdmin : Footer;
-
   const { reservations: reservas, isLoading, error, refetch } = useReservationsList();
   const { cancelReservation } = useCancelReservation();
   const { updateReturnBranch } = useUpdateReturnBranch();
@@ -218,6 +213,18 @@ function HistorialReservation() {
         onClose={() => setShowDetailsModal(false)}
         onUpdateReturnBranch={handleUpdateReturnBranch}
       />
+
+      {/* MODAL PARA SUBIR COMPROBANTE (reservas en PENDING_PAYMENT) */}
+      {uploadReserva && (
+        <UploadReceiptModal
+          reservation={uploadReserva}
+          onClose={() => setUploadReserva(null)}
+          onSuccess={async () => {
+            setUploadReserva(null);
+            await refetch();
+          }}
+        />
+      )}
 
       <RoleFooter />
     </>
