@@ -111,6 +111,58 @@
   gap: 16px;
 }
 
+.auth-showcase-app-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  color: #fff;
+  transition: background 0.2s ease;
+}
+
+.auth-showcase-app-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.auth-showcase-app-link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #111827;
+  flex-shrink: 0;
+  font-size: 15px;
+}
+
+.auth-showcase-app-link-text {
+  flex: 1;
+}
+
+.auth-showcase-app-link-text strong {
+  display: block;
+  font-size: 14px;
+  color: #fff;
+}
+
+.auth-showcase-app-link-text p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.auth-showcase-app-link > svg:last-child {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
 .auth-showcase-quote .quote {
   margin: 0;
   max-width: none;

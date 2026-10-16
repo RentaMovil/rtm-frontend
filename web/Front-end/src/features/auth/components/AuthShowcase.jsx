@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaKey } from "react-icons/fa";
+import { FaKey, FaMobileAlt, FaChevronRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 import Quotes from "../../../shared/components/Quotes.jsx";
 import { branchService } from "../../admin/branches/services/branchService";
@@ -65,6 +66,15 @@ function AuthShowcase() {
       </div>
 
       <div className="auth-showcase-bottom">
+        <Link to="/descargas" className="auth-showcase-app-link">
+          <span className="auth-showcase-app-link-icon"><FaMobileAlt /></span>
+          <div className="auth-showcase-app-link-text">
+            <strong>{t("authShowcase.getApp")}</strong>
+            <p>{t("authShowcase.getAppDesc")}</p>
+          </div>
+          <FaChevronRight />
+        </Link>
+
         <div className="auth-showcase-quote">
           <Quotes />
         </div>

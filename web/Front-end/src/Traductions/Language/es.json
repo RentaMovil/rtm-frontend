@@ -109,7 +109,9 @@
     "featureDesc": "Transferencia bancaria con comprobante, revisado por un administrador antes de confirmar tu reserva.",
     "help": "Ayuda en línea",
     "lightMode": "Modo claro",
-    "darkMode": "Modo oscuro"
+    "darkMode": "Modo oscuro",
+    "getApp": "Llévate RentaMovil contigo",
+    "getAppDesc": "Descarga la app para Android"
   },
   "loginForm": {
     "errorFields": "Rellena todos los campos",

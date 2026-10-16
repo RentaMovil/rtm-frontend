@@ -109,7 +109,9 @@
     "featureDesc": "Bank transfer with receipt, reviewed by an administrator before confirming your reservation.",
     "help": "Help online",
     "lightMode": "Light mode",
-    "darkMode": "Dark mode"
+    "darkMode": "Dark mode",
+    "getApp": "Take RentaMovil with you",
+    "getAppDesc": "Download the app for Android"
   },
   "loginForm": {
     "errorFields": "Fill in all fields",

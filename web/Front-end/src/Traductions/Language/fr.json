@@ -109,7 +109,9 @@
     "featureDesc": "Virement bancaire avec reçu, vérifié par un administrateur avant la confirmation de votre réservation.",
     "help": "Aide en ligne",
     "lightMode": "Mode clair",
-    "darkMode": "Mode sombre"
+    "darkMode": "Mode sombre",
+    "getApp": "Emportez RentaMovil avec vous",
+    "getAppDesc": "Téléchargez l'application pour Android"
   },
   "loginForm": {
     "errorFields": "Remplissez tous les champs",
