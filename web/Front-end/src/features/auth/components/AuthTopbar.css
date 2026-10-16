@@ -30,6 +30,7 @@
 
 .auth-topbar-logo-text span {
   color: var(--accent);
+  font-weight: 800;
 }
 
 .auth-topbar-logo-icon {
