@@ -3,28 +3,42 @@ import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 
 import {
-    RENTAL_TERMS_EFFECTIVE_DATE,
     RENTAL_TERMS_VERSION,
-    rentalTermsSections,
+    getRentalTermsEffectiveDate,
+    getRentalTermsSections,
 } from "../data/rentalTerms";
 
 import "./TermsAndConditions.css";
 
-function formatCurrency(value) {
+function getLocale(language) {
+    switch (language) {
+        case "es":
+            return "es-CO";
+        case "pt":
+            return "pt-BR";
+        case "fr":
+            return "fr-FR";
+        case "en":
+        default:
+            return "en-US";
+    }
+}
+
+function formatCurrency(value, language) {
     const amount = Number(value);
 
     if (!Number.isFinite(amount)) {
         return "—";
     }
 
-    return new Intl.NumberFormat("es-CO", {
+    return new Intl.NumberFormat(getLocale(language), {
         style: "currency",
         currency: "COP",
         maximumFractionDigits: 0,
     }).format(amount);
 }
 
-function formatDate(value) {
+function formatDate(value, language) {
     if (!value) {
         return "—";
     }
@@ -40,7 +54,7 @@ function formatDate(value) {
 
     const hasTime = typeof value === "string" && /T\d{2}:\d{2}/.test(value);
 
-    return new Intl.DateTimeFormat("es-CO", hasTime
+    return new Intl.DateTimeFormat(getLocale(language), hasTime
         ? { dateStyle: "medium", timeStyle: "short" }
         : { dateStyle: "medium" }).format(date);
 }
@@ -59,13 +73,16 @@ export default function TermsAndConditions({
     returnBranch,
     total,
 }) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const currentLanguage = i18n.language;
     const [isOpen, setIsOpen] = useState(false);
     const openerRef = useRef(null);
     const closeButtonRef = useRef(null);
     const titleId = useId();
     const descriptionId = useId();
     const dialogId = `${titleId}-dialog`;
+    const rentalTermsSections = getRentalTermsSections(currentLanguage);
+    const rentalTermsEffectiveDate = getRentalTermsEffectiveDate(currentLanguage);
 
     const openTerms = () => {
         setIsOpen(true);
@@ -183,7 +200,7 @@ export default function TermsAndConditions({
                                         {" · "}
                                         {t("terms.effectiveDate")}:{" "}
                                         <strong>
-                                            {RENTAL_TERMS_EFFECTIVE_DATE}
+                                            {rentalTermsEffectiveDate}
                                         </strong>
                                     </p>
                                 </div>
@@ -211,7 +228,7 @@ export default function TermsAndConditions({
                                         <div>
                                             <dt>{t("terms.pickup")}</dt>
                                             <dd>
-                                                {formatDate(pickupDate)}
+                                                {formatDate(pickupDate, currentLanguage)}
                                                 {" · "}
                                                 {branchName(pickupBranch)}
                                             </dd>
@@ -219,14 +236,14 @@ export default function TermsAndConditions({
                                         <div>
                                             <dt>{t("terms.return")}</dt>
                                             <dd>
-                                                {formatDate(returnDate)}
+                                                {formatDate(returnDate, currentLanguage)}
                                                 {" · "}
                                                 {branchName(returnBranch)}
                                             </dd>
                                         </div>
                                         <div>
                                             <dt>{t("terms.total")}</dt>
-                                            <dd>{formatCurrency(total)}</dd>
+                                            <dd>{formatCurrency(total, currentLanguage)}</dd>
                                         </div>
                                     </dl>
                                 </div>

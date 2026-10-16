@@ -120,7 +120,7 @@ export default function PaymentPage() {
                         {!reservation?.vehicle
                             ? "No hay reserva disponible."
                             : !hasValidTermsAcceptance
-                                ? "Debes aceptar los términos y condiciones antes de continuar al pago."
+                                ? t("terms.acceptError")
                                 : "La reserva está incompleta. Regresa y completa los datos antes de pagar."}
                     </p>
                 </div>
