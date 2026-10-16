@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "mock-api": "node --watch mock-server.cjs"
+    "preview": "vite preview"
   },
   "dependencies": {
     "gsap": "^3.15.0",

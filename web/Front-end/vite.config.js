@@ -1,10 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// En local el gateway y el mock están en este PC; en Docker se pasan sus nombres en la red
-// (docker-compose.yml). preview usa el mismo proxy que dev.
+// En local el gateway está en este PC; en Docker se pasa su nombre en la red (docker-compose.yml).
+// preview usa el mismo proxy que dev.
 const GATEWAY_URL = process.env.GATEWAY_URL || 'http://localhost:8080'
-const MOCK_URL = process.env.MOCK_URL || 'http://localhost:3100'
 
 // Sin el header Origin, para el gateway es una llamada de servidor a servidor: no aplica CORS
 // (así también funciona abriendo la app por un túnel con otro dominio)
@@ -24,18 +23,12 @@ export default defineConfig({
     allowedHosts: ['rentamovil.tech', 'www.rentamovil.tech'],
   },
   server: {
-    // El navegador llama a /api y /mock en su mismo origen y Vite lo reenvía desde este PC
+    // El navegador llama a /api en su mismo origen y Vite lo reenvía desde este PC
     proxy: {
       '/api': {
         target: GATEWAY_URL,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
-        configure: stripOrigin,
-      },
-      '/mock': {
-        target: MOCK_URL,
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/mock/, ''),
         configure: stripOrigin,
       },
     },

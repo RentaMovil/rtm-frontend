@@ -1,28 +1,17 @@
-# Frontend + mock en la red compartida "rentamovil" (la crean los repos del backend).
-# Antes hay que tener arriba sqlserver, iam, booking-reservation, fleet-maintenance y api-gateway.
+# Frontend en la red compartida "rentamovil" (la crean los repos del backend).
+# Antes hay que tener arriba sqlserver, iam, fleet-maintenance, booking-reservation,
+# payment-billing, telemetry-gps y api-gateway.
 #   docker compose up -d --build      ->  http://localhost:4173
 services:
   web:
     build: .
     container_name: rentamovil-web
     environment:
-      # El proxy /api y /mock de vite.config.js apunta a los contenedores por su nombre en la red
+      # El proxy /api de vite.config.js apunta al gateway por su nombre en la red
       GATEWAY_URL: http://api-gateway:8080
-      MOCK_URL: http://mock-api:3100
     ports:
       - "4173:4173"
-    depends_on: [mock-api]
     networks: [rentamovil]
-    restart: unless-stopped
-
-  # Lo que todavía no tiene servicio real (pagos, cuentas bancarias, GPS)
-  mock-api:
-    build: .
-    container_name: rentamovil-mock-api
-    command: ["node", "mock-server.cjs"]
-    networks:
-      rentamovil:
-        aliases: [mock-api]
     restart: unless-stopped
 
 networks:

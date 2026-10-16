@@ -1,5 +1,5 @@
 import { useReservation } from "../../booking/context/ReservationContext";
-import { insurance } from "../../booking/data/mocks/insurance";
+import { useInsurance } from "../../admin/insuranceTypes/hooks/useInsurance";
 import { calculateRentalDays } from "../../../shared/utils/rental";
 import { calculateInvoiceTotal } from "../utils/calculateIvoiceTotal";
 import { usePayment } from "../context/PaymentContext";
@@ -13,6 +13,7 @@ import "./TransferDetails.css";
 export default function TransferDetails() {
     const { reservation } = useReservation();
     const { payment, updatePayment } = usePayment();
+    const { insurance } = useInsurance();
 
     const vehicle = reservation?.vehicle;
 

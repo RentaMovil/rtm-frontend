@@ -1,31 +1,12 @@
 import { tokenStore } from './tokenStore.js';
 
-// /api y /mock son rutas del proxy de Vite (vite.config.js): el gateway (:8080) y el mock (:3100).
+// /api es la ruta del proxy de Vite (vite.config.js) hacia el api-gateway.
 const API_URL = import.meta.env.VITE_API_URL || '/api';
-const MOCK_API_URL = import.meta.env.VITE_MOCK_API_URL || '/mock';
-
-// Lo que ya tiene servicio real va al gateway; el resto sigue en el mock hasta que su servicio
-// exista. Al publicar uno nuevo se agrega aquí su prefijo.
-const REAL_BACKEND_PREFIXES = [
-    '/auth', '/users',
-    '/reservations', '/rentals', '/notifications',
-    '/vehicles', '/branches', '/maintenances',
-    '/brands', '/categories', '/engine-types', '/vehicle-models', '/maintenance-types',
-    '/payments', '/invoices', '/bank-accounts',
-    '/gps', '/tracking',
-];
-
-export function hasRealBackend(endpoint) {
-    return REAL_BACKEND_PREFIXES.some((prefix) =>
-        endpoint === prefix || endpoint.startsWith(`${prefix}/`) || endpoint.startsWith(`${prefix}?`));
-}
-
-const baseUrlFor = (endpoint) => (hasRealBackend(endpoint) ? API_URL : MOCK_API_URL);
 
 let refreshPromise = null;
 async function rawRequest(endpoint, { method = 'GET', body, headers = {} } = {}) {
     const token = tokenStore.getAccessToken();
-    return fetch(`${baseUrlFor(endpoint)}${endpoint}`, {
+    return fetch(`${API_URL}${endpoint}`, {
         method,
         headers: {
             'Content-Type': 'application/json',
