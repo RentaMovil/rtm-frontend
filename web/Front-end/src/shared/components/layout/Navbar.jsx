@@ -1,6 +1,7 @@
 import "./Navbar.css";
 import { Link } from "react-router-dom";
-import { FaCar, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
+import LogoCar from "./LogoCar";
 import { MdPerson } from "react-icons/md";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,7 +15,7 @@ import { useTranslation } from "react-i18next";
         <div className="navbar-content">
 
             <Link to="/Home" className="logo-container">
-            <FaCar className="logo-icon" />
+            <LogoCar className="logo-icon" />
             <span className="logo-text">Renta<span className="logo-container2">Movil</span></span>
             </Link>
 

@@ -1,6 +1,7 @@
 import "./NavBarAdmin.css";
 import { Link } from "react-router-dom";
-import { FaCar, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
+import LogoCar from "./LogoCar";
 import { MdPerson } from "react-icons/md";
 import { useState } from "react";
 import AdminPanel from "../../../features/admin/HomeAdmin/Components/AdminPanel.jsx";
@@ -32,7 +33,7 @@ function NavbarAdmin() {
         <div className="navbar-admin-content">
           <Link to="/HomeAdmin" className="navbar-admin-logo" onClick={closeAll}>
             <span className="logo-text">Renta<span className="logo-container2">Movil</span></span>
-            <FaCar className="navbar-admin-logo-icon" />
+            <LogoCar className="navbar-admin-logo-icon" />
           </Link>
 
           <nav className={`navbar-admin-links ${open ? "active" : ""}`}>

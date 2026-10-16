@@ -160,7 +160,7 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
               aria-label={t(showPassword ? 'loginForm.hidePassword' : 'loginForm.showPassword')}
               title={t(showPassword ? 'loginForm.hidePassword' : 'loginForm.showPassword')}
             >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+              {showPassword ? <FaEye /> : <FaEyeSlash />}
             </button>
           </div>
         </div>

@@ -173,14 +173,12 @@ export default function AccountView({ theme, setTheme }) {
                     </div>
                 </div>
                 <RoleFooter />
-                <RoleFooter />
             </>
         );
     }
 
     return (
         <>
-            <RoleNavbar />
             <RoleNavbar />
             <div className="containerC">
                 <div className="cardC">

@@ -1,4 +1,5 @@
-import { FaCar } from "react-icons/fa";
+import LogoCar from "./LogoCar";
+import './Navbar.css';
 import './NavbarTwo.css';
 
 
@@ -7,7 +8,7 @@ function NavbarTwo(){
     <nav className="nav-navbarCard">
         <div className="logo-container">
             <h2 className="Title">Renta<span className="subName">Movil</span></h2>
-            <FaCar className='icon'/>
+            <LogoCar className="logo-icon" />
         </div>
     </nav>
     
