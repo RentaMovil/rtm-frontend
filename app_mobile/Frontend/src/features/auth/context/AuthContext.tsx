@@ -18,8 +18,10 @@ import {
   logout as logoutService,
   refresh as refreshService,
   register as registerService,
+  resendEmailVerification as resendEmailVerificationService,
   resetPassword,
   verifyCode,
+  verifyEmail as verifyEmailService,
   updateProfile as updateProfileService,
 } from "../services/authService";
 
@@ -34,7 +36,11 @@ type AuthContextType = {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (data: LoginRequest) => Promise<void>;
-  register: (data: RegisterRequest) => Promise<void>;
+  /** La cuenta queda PENDING_VERIFICATION: devuelve el email para ir a confirmarlo. */
+  register: (data: RegisterRequest) => Promise<{ email: string }>;
+  /** Confirma el codigo del registro. Si es valido, activa la cuenta y deja la sesion iniciada. */
+  verifyEmail: (email: string, code: string) => Promise<void>;
+  resendEmailVerification: (email: string) => Promise<void>;
   logout: () => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
   verifyCode: (email: string, code: string) => Promise<void>;
@@ -124,13 +130,25 @@ export function AuthProvider({ children }: Props) {
     setUser(response.user);
   }, []);
 
+  // No deja logueado: la cuenta queda PENDING_VERIFICATION hasta confirmar el
+  // codigo (ver verifyEmail).
   const register = useCallback(async (data: RegisterRequest) => {
     const response = await registerService(data);
+
+    return { email: response.email };
+  }, []);
+
+  const verifyEmailFlow = useCallback(async (email: string, code: string) => {
+    const response = await verifyEmailService(email, code);
 
     tokenStore.setAccessToken(response.accessToken);
     await tokenStore.setRefreshToken(response.refreshToken);
 
     setUser(response.user);
+  }, []);
+
+  const resendEmailVerificationFlow = useCallback((email: string) => {
+    return resendEmailVerificationService(email);
   }, []);
 
   const logout = useCallback(async () => {
@@ -186,6 +204,8 @@ const updateProfile = useCallback(
       isLoading,
       login,
       register,
+      verifyEmail: verifyEmailFlow,
+      resendEmailVerification: resendEmailVerificationFlow,
       logout,
       forgotPassword: handleForgotPassword,
       verifyCode: handleVerifyCode,
@@ -199,6 +219,8 @@ const updateProfile = useCallback(
       isLoading,
       login,
       register,
+      verifyEmailFlow,
+      resendEmailVerificationFlow,
       logout,
       refreshUser,
       handleForgotPassword,
