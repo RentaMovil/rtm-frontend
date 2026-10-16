@@ -36,6 +36,7 @@
   padding: 40px;
   background: var(--card-bg);
   overflow-y: auto;
+  transition: padding 0.25s ease;
 }
 
 /* El formulario de registro es más largo: menos aire alrededor para que
@@ -47,7 +48,30 @@
 .auth-card {
   width: 100%;
   max-width: 420px;
-  transition: max-width 0.2s ease;
+  transition: max-width 0.25s ease;
+}
+
+/* Fade + leve deslizamiento al cambiar entre iniciar sesión y crear cuenta,
+   en vez del salto brusco de reemplazar el formulario de golpe. */
+.auth-form-transition {
+  animation: auth-form-fade-in 0.25s ease;
+}
+
+@keyframes auth-form-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-form-transition {
+    animation: none;
+  }
 }
 
 /* En registro el grid de 2 columnas necesita más aire; la tarjeta usa casi
@@ -61,6 +85,7 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 24px;
+  transition: margin-bottom 0.25s ease;
 }
 
 .auth-card-wide .auth-card-header {

@@ -74,11 +74,13 @@ function Login({ theme, setTheme }) {
                             </div>
                         </div>
 
-                        {isLoginMode ? (
-                            <LoginForm onSubmit={handleLogin} />
-                        ) : (
-                            <RegisterForm onSubmit={handleRegister} />
-                        )}
+                        <div className="auth-form-transition" key={isLoginMode ? "login" : "register"}>
+                            {isLoginMode ? (
+                                <LoginForm onSubmit={handleLogin} />
+                            ) : (
+                                <RegisterForm onSubmit={handleRegister} />
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
