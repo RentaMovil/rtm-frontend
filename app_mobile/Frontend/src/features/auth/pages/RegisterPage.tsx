@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
 import BrandLogo from "../../../shared/components/Brand/BrandLogo";
 
@@ -73,6 +73,7 @@ export default function RegisterPage() {
   const { t } = useTranslation();
 
   const { register } = useAuth();
+  const router = useRouter();
 
   const { themeName } = useTheme();
   const colors = themes[themeName];
@@ -120,9 +121,8 @@ export default function RegisterPage() {
   }
 
   /**
-   * Tras registrarse no se navega aqui: `register` deja al usuario
-   * autenticado y el guard de `app/_layout.tsx` lo lleva al menu, igual que
-   * en el login.
+   * La cuenta queda PENDING_VERIFICATION (HU-IAM-001): `register` ya no deja
+   * logueado, hay que confirmar el codigo que llega al correo primero.
    */
   async function handleRegister() {
     if (isSubmitting) {
@@ -140,7 +140,7 @@ export default function RegisterPage() {
     setIsSubmitting(true);
 
     try {
-      await register({
+      const { email } = await register({
         first_name: fields.firstName,
         last_name: fields.lastName,
         email: fields.email,
@@ -148,6 +148,8 @@ export default function RegisterPage() {
         username: fields.username,
         password: fields.password,
       });
+
+      router.push({ pathname: "/auth/verify-email", params: { email } });
     } catch (err) {
       setError(readableError(err));
       setIsSubmitting(false);

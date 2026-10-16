@@ -62,6 +62,10 @@ export const API_ROUTES = {
     verifyCode: "/auth/password/verify-code",
     resetPassword: "/auth/password/reset",
     changePassword: "/users/me/password",
+    // El registro ya no deja logueado (queda PENDING_VERIFICATION, HU-IAM-001):
+    // hay que confirmar este codigo antes de poder entrar.
+    verifyEmail: "/auth/email/verify",
+    resendEmailVerification: "/auth/email/resend",
   },
   vehicles: "/vehicles",
   branches: "/branches",

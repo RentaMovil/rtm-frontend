@@ -92,10 +92,24 @@ export type AuthTokens = {
   expiresIn: number;
 };
 
-/** Respuesta completa de login y registro. */
+/** Respuesta completa de login y de verificar el correo tras registrarse. */
 export type AuthResponse = AuthTokens & {
   user: User;
 };
+
+/**
+ * Respuesta de `POST /auth/register`.
+ *
+ * Ya no trae tokens: la cuenta queda PENDING_VERIFICATION hasta confirmar el
+ * codigo que llega al correo (ver `POST /auth/email/verify`).
+ */
+export type RegisterResponse = {
+  email: string;
+  message: string;
+};
+
+/** `POST /auth/email/verify`: mismo cuerpo que `VerifyCodeRequest`. */
+export type VerifyEmailRequest = VerifyCodeRequest;
 
 /**
  * Respuesta de `POST /auth/refresh`.
