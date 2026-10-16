@@ -52,6 +52,12 @@
         try {
         await onSubmit({ email, password });
         } catch (err) {
+        // La cuenta existe y la contraseña es correcta, solo falta confirmar el correo
+        // (HU-IAM-001): se manda directo a esa pantalla en vez de mostrar un error genérico.
+        if (err?.code === "EMAIL_NOT_VERIFIED") {
+            navigate("/CodeVerification", { state: { email, mode: "register" } });
+            return;
+        }
         setError(loginErrorFor(err));
         } finally {
         setLoading(false);

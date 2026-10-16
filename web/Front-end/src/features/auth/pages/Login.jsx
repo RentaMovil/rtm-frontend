@@ -29,8 +29,9 @@ function Login() {
     };
 
     const handleRegister = async (formData) => {
-        const session = await register(formData);
-        navigate(isAdminRole(session.user.role) ? "/HomeAdmin" : "/home");
+        const { email } = await register(formData);
+        // Queda PENDING_VERIFICATION: confirma el código antes de poder entrar
+        navigate("/CodeVerification", { state: { email, mode: "register" } });
     };
 
     return (

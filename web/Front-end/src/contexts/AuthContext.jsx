@@ -93,9 +93,18 @@ export function AuthProvider({ children }) {
     return session;
   }, []);
 
+  // La cuenta queda PENDING_VERIFICATION: todavía no hay sesión (ver verifyEmail), así que acá
+  // no se toca `user`.
   const register = useCallback(async (formData) => {
     setError(null);
-    const session = await authService.register(formData);
+    return authService.register(formData);
+  }, []);
+
+  // Confirma el código que llega al registrarse. Si es válido, activa la cuenta y ya deja la
+  // sesión iniciada -- mismo patrón que login.
+  const verifyEmail = useCallback(async (email, code) => {
+    setError(null);
+    const session = await authService.verifyEmail(email, code);
     setUser(session.user);
     return session;
   }, []);
@@ -166,6 +175,7 @@ export function AuthProvider({ children }) {
       error,
       login,
       register,
+      verifyEmail,
       logout,
       restoreSession,
       refreshProfile,
@@ -180,6 +190,7 @@ export function AuthProvider({ children }) {
       error,
       login,
       register,
+      verifyEmail,
       logout,
       restoreSession,
       refreshProfile,
