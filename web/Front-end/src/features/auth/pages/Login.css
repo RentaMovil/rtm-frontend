@@ -51,16 +51,28 @@
   transition: max-width 0.25s ease;
 }
 
-/* Fade + leve deslizamiento al cambiar entre iniciar sesión y crear cuenta,
-   en vez del salto brusco de reemplazar el formulario de golpe. */
+/* Cambio de iniciar sesión <-> crear cuenta en dos tiempos: primero se
+   desvanece el formulario viejo (auth-form-leaving, transition normal),
+   recién ahí cambian juntos el ancho de la tarjeta y el contenido, y el
+   nuevo formulario entra con su propia animación. Si los tres pasan a la
+   vez (ancho + fade-out + fade-in) se siente brusco/caótico. */
 .auth-form-transition {
-  animation: auth-form-fade-in 0.25s ease;
+  animation: auth-form-fade-in 0.2s ease;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.auth-form-transition.auth-form-leaving {
+  animation: none;
+  opacity: 0;
+  transform: translateY(-6px);
 }
 
 @keyframes auth-form-fade-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -71,6 +83,7 @@
 @media (prefers-reduced-motion: reduce) {
   .auth-form-transition {
     animation: none;
+    transition: none;
   }
 }
 

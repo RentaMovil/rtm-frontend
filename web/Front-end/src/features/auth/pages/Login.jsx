@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import LoginForm from "../components/LoginForm.jsx";
@@ -17,8 +17,24 @@ const isAdminRole = (role) => role === "ADMIN" || role === "SUPER_ADMIN";
 function Login({ theme, setTheme }) {
     const { t } = useTranslation();
     const [isLoginMode, setIsLoginMode] = useState(true);
+    // El contenido va un paso atrás del tab que se ve activo: primero se
+    // desvanece lo viejo, LUEGO cambian ancho/contenido juntos y entra lo
+    // nuevo. Cambiar el ancho de la tarjeta a la vez que aparecen los campos
+    // es lo que se sentía brusco.
+    const [displayedMode, setDisplayedMode] = useState(true);
+    const [isLeaving, setIsLeaving] = useState(false);
     const navigate = useNavigate();
     const { login, register } = useAuth();
+
+    useEffect(() => {
+        if (isLoginMode === displayedMode) return;
+        setIsLeaving(true);
+        const timer = setTimeout(() => {
+            setDisplayedMode(isLoginMode);
+            setIsLeaving(false);
+        }, 150);
+        return () => clearTimeout(timer);
+    }, [isLoginMode, displayedMode]);
 
     const handleLogin = async (credentials) => {
         const session = await login(credentials);
@@ -50,7 +66,7 @@ function Login({ theme, setTheme }) {
                 <AuthShowcase />
 
                 <div className="auth-card-wrapper">
-                    <div className={`auth-card ${isLoginMode ? "" : "auth-card-wide"}`}>
+                    <div className={`auth-card ${displayedMode ? "" : "auth-card-wide"}`}>
                         <div className="auth-card-header">
                             <div className="auth-tabs" role="tablist">
                                 <button
@@ -74,8 +90,11 @@ function Login({ theme, setTheme }) {
                             </div>
                         </div>
 
-                        <div className="auth-form-transition" key={isLoginMode ? "login" : "register"}>
-                            {isLoginMode ? (
+                        <div
+                            className={`auth-form-transition ${isLeaving ? "auth-form-leaving" : ""}`}
+                            key={displayedMode ? "login" : "register"}
+                        >
+                            {displayedMode ? (
                                 <LoginForm onSubmit={handleLogin} />
                             ) : (
                                 <RegisterForm onSubmit={handleRegister} />
