@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import BrandLogo from "../../../shared/components/Brand/BrandLogo";
@@ -50,6 +50,7 @@ export default function LoginPage() {
   const { t } = useTranslation();
 
   const { login } = useAuth();
+  const router = useRouter();
 
   const { themeName } = useTheme();
   const colors = themes[themeName];
@@ -83,6 +84,20 @@ export default function LoginPage() {
     try {
       await login({ email, password });
     } catch (err) {
+      // La cuenta existe y la contrasena es correcta, solo falta confirmar
+      // el correo (HU-IAM-001): se manda directo a esa pantalla en vez de
+      // mostrar un error generico.
+      if (
+        err instanceof ApiError &&
+        (err.body as { error?: string } | null)?.error === "EMAIL_NOT_VERIFIED"
+      ) {
+        router.push({
+          pathname: "/auth/verify-email",
+          params: { email: email.trim().toLowerCase() },
+        });
+        return;
+      }
+
       setError(readableError(err));
       setIsSubmitting(false);
     }

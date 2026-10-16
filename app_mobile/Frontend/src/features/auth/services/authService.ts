@@ -7,6 +7,7 @@ import type {
   LoginRequest,
   RefreshResponse,
   RegisterRequest,
+  RegisterResponse,
   ResetPasswordRequest,
   User,
   VerifyCodeRequest,
@@ -32,16 +33,38 @@ export async function login(data: LoginRequest): Promise<AuthResponse> {
   });
 }
 
+/**
+ * La cuenta queda PENDING_VERIFICATION, sin sesion todavia: hay que confirmar
+ * el codigo que llega al correo (ver `verifyEmail`) antes de poder entrar.
+ */
 export async function register(
   data: RegisterRequest,
-): Promise<AuthResponse> {
-  return httpClient.post<AuthResponse>(API_ROUTES.auth.register, {
+): Promise<RegisterResponse> {
+  return httpClient.post<RegisterResponse>(API_ROUTES.auth.register, {
     firstName: data.first_name.trim(),
     lastName: data.last_name.trim(),
     email: data.email.trim().toLowerCase(),
     phone: data.phone.trim(),
     username: data.username.trim(),
     password: data.password,
+  });
+}
+
+/** Confirma el codigo del registro. Si es valido, activa la cuenta y devuelve sesion. */
+export async function verifyEmail(
+  email: string,
+  code: string,
+): Promise<AuthResponse> {
+  return httpClient.post<AuthResponse>(API_ROUTES.auth.verifyEmail, {
+    email: email.trim().toLowerCase(),
+    code: code.trim(),
+  });
+}
+
+/** Reenvia el codigo de verificacion de cuenta (si vencio o no llego). Siempre responde 202. */
+export async function resendEmailVerification(email: string): Promise<void> {
+  await httpClient.post<void>(API_ROUTES.auth.resendEmailVerification, {
+    email: email.trim().toLowerCase(),
   });
 }
 

@@ -241,6 +241,17 @@
     "ruleNumber": "At least one number",
     "genericError": "The request could not be completed"
   },
+  "emailVerification": {
+    "title": "Verify your account",
+    "intro": "We sent a 6-digit code to {{email}} to confirm your account.",
+    "codeLabel": "Verification code",
+    "verifyCode": "Verify account",
+    "invalidCode": "Incorrect or expired code. Please try again.",
+    "resendCode": "Resend code",
+    "resendIn": "Resend in {{seconds}}s",
+    "resent": "We sent you a new code",
+    "genericError": "The request could not be completed"
+  },
   "changePassword": {
     "caracters": "At least 8 characters",
     "specialCaracters": "At least one special character (#, @, etc)",
