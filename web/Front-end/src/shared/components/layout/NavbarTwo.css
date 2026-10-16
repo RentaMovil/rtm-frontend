@@ -1,6 +1,5 @@
 .nav-navbarCard {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   background: var(--navbar);
   color: var(--icon);
@@ -10,7 +9,7 @@
   height: 70px;
   padding: 15px 30px;
   margin: 0;
-  position: sticky;
+  justify-content: center;
   top: 0;
   z-index: 2000;
 }
@@ -27,12 +26,15 @@
 }
 
 .Title{
+  margin: 0;
+  line-height: 1;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: 1.8rem;
   color:  var( --textNavabar);
 }
 
 .subName{
+  line-height: 1;
   font-weight: bold;
   font-family: Arial, sans-serif;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
