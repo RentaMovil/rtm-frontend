@@ -841,7 +841,8 @@
     "statusLabel": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
-      "BLOCKED": "Blocked"
+      "BLOCKED": "Blocked",
+      "PENDING_VERIFICATION": "Pending verification"
     },
     "modal": {
       "title": "Change user role",
