@@ -10,6 +10,7 @@
 }
 
 .search-box {
+  box-sizing: border-box;
   position: relative;
   display: flex;
   align-items: center;
@@ -18,7 +19,7 @@
   border-radius: 8px;
   padding: 8px 12px;
   width: 100%;
-  max-width: 280px;
+  max-width: 400px;
   transition: border-color 0.2s ease-in-out;
 }
 .search-box:focus-within {
