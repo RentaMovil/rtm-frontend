@@ -549,7 +549,8 @@
     "model": "Modèle",
     "loading": "Chargement des véhicules...",
     "clearSearch": "Effacer la recherche",
-    "noMatch": "Aucun véhicule ne correspond aux filtres."
+    "noMatch": "Aucun véhicule ne correspond aux filtres.",
+    "editAria": "Modifier {{name}}"
   },
   "FilterVehicle": {
     "placeholder": "Rechercher par plaque, marque ou modèle..."
@@ -727,6 +728,7 @@
   },
   "History": {
     "title": "Gestion des maintenances",
+    "subtitle": "Consultez et gérez l'historique de maintenance de la flotte.",
     "detail": "Détail",
     "model": "Modèle",
     "modelPlaceHolder": "Exemple : Volkswagen Golf, Corolla, Tesla Model 3...",

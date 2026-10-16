@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useInventory } from "../hooks/useInventory";
 import carro from "../../../../assets/carro.png";
 import { TfiLayoutGrid2Alt, TfiMenu } from "react-icons/tfi";
-import { FiSearch, FiX } from "react-icons/fi";
+import { FiSearch, FiX, FiEdit2 } from "react-icons/fi";
 import VehicleEditModal from "../components/VehicleEditModal";
 
 export default function VehicleInventory() {
@@ -249,9 +249,10 @@ export default function VehicleInventory() {
                       </p>
                       <button
                         className="vi-btn-edit"
+                        aria-label={t("VehicleInventary.editAria", { name: `${v.marca} ${v.modelo}` })}
                         onClick={() => setEditing(v)}
                       >
-                        {t("CheckStatus.modal.edit")}
+                        <FiEdit2 />
                       </button>
                     </div>
                   </div>
@@ -287,9 +288,10 @@ export default function VehicleInventory() {
                         <td>
                           <button
                             className="vi-btn-edit"
+                            aria-label={t("VehicleInventary.editAria", { name: `${v.marca} ${v.modelo}` })}
                             onClick={() => setEditing(v)}
                           >
-                            {t("CheckStatus.modal.edit")}
+                            <FiEdit2 />
                           </button>
                         </td>
                       </tr>

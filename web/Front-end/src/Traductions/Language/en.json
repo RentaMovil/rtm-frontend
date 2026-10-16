@@ -552,7 +552,8 @@
     "model": "Model",
     "loading": "Loading vehicles...",
     "clearSearch": "Clear search",
-    "noMatch": "No vehicles match the filters."
+    "noMatch": "No vehicles match the filters.",
+    "editAria": "Edit {{name}}"
   },
   "CheckStatus": {
     "checkStatus": "Check status",
@@ -727,6 +728,7 @@
   },
   "History": {
     "title": "Maintenance management",
+    "subtitle": "Review and manage the fleet's maintenance history.",
     "detail": "Details",
     "model": "Model",
     "modelPlaceHolder": "Example: Volkswagen Golf, Corolla, Tesla Model 3...",

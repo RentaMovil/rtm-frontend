@@ -280,13 +280,16 @@
 }
 
 .modal-submitButton {
-    border-color: var(--modal-button, var(--primary));
-    background-color: var(--modal-button, var(--primary));
+    border-color: var(--button);
+    background-color: var(--button);
     color: #fff;
+    box-shadow: 0 3px 10px rgba(0, 200, 83, 0.3);
+    transition: all 0.18s;
 }
 
 .modal-submitButton:hover {
-    filter: brightness(1.08);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 200, 83, 0.2);
 }
 
 .modal-submitButton:disabled {

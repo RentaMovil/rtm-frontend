@@ -549,7 +549,8 @@
     "model": "Modelo",
     "loading": "Carregando veículos...",
     "clearSearch": "Limpar pesquisa",
-    "noMatch": "Nenhum veículo corresponde aos filtros."
+    "noMatch": "Nenhum veículo corresponde aos filtros.",
+    "editAria": "Editar {{name}}"
   },
   "CheckStatus": {
     "checkStatus": "Consultar status",
@@ -727,6 +728,7 @@
   },
   "History": {
     "title": "Gestão de manutenções",
+    "subtitle": "Consulte e gerencie o histórico de manutenções da frota.",
     "detail": "Detalhes",
     "model": "Modelo",
     "modelPlaceHolder": "Exemplo: Volkswagen Gol, Corolla, Tesla Model 3...",
