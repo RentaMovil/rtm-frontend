@@ -38,9 +38,11 @@ function formatDate(value) {
         return "—";
     }
 
-    return new Intl.DateTimeFormat("es-CO", {
-        dateStyle: "medium",
-    }).format(date);
+    const hasTime = typeof value === "string" && /T\d{2}:\d{2}/.test(value);
+
+    return new Intl.DateTimeFormat("es-CO", hasTime
+        ? { dateStyle: "medium", timeStyle: "short" }
+        : { dateStyle: "medium" }).format(date);
 }
 
 function branchName(branch) {
