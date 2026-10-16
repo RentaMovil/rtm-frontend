@@ -2,11 +2,7 @@
   width: 100%;
 }
 .login-form {
-  /* La tarjeta ahora siempre mide lo que necesita el registro (640px); el
-     login, que es angosto, se centra en vez de estirarse a lo ancho. */
   width: 100%;
-  max-width: 380px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 18px;
