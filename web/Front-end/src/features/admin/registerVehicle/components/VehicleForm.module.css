@@ -1,47 +1,48 @@
- 
+/* ===== Registrar vehículo =====
+   Todos los colores salen de las variables de index.css, así el formulario
+   sigue el tema elegido (skylight, light, dark, darkPurple). */
+
 .vehicle-form {
     display: flex;
     justify-content: center;
     width: 100%;
-    padding: 64px 24px 80px;
+    padding: 56px 24px 80px;
     box-sizing: border-box;
     background: var(--bg);
     min-height: calc(100vh - 140px);
+    /* Borde de campos y zona de imagen: sale del texto del tema para verse en claro y oscuro */
+    --field-border: color-mix(in srgb, var(--text) 16%, var(--card-bg));
 }
- 
+
 .form-container {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 28px;
     width: 100%;
     max-width: 1200px;
 }
- 
+
+/* Dos columnas del mismo alto: datos a la izquierda, imagen a la derecha */
 .container-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: start;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 32px;
+    align-items: stretch;
 }
- 
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-}
- 
+
+/* ---------- Tarjeta del formulario ---------- */
 .vechicle-containerfor {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 40px 32px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    position: relative;
     display: flex;
     flex-direction: column;
-    position: relative;
     overflow: hidden;
+    padding: 36px 32px 32px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-filter);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
 }
- 
+
 .vechicle-containerfor::before {
     content: '';
     position: absolute;
@@ -50,269 +51,256 @@
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, var(--primary), var(--accent));
-    border-radius: 24px 24px 0 0;
 }
- 
+
 .vechicle-containerfor h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 28px;
+    padding-bottom: 18px;
     font-family: var(--heading);
     font-size: 22px;
     font-weight: 700;
     color: var(--text-h);
-    margin: 0 0 32px 0;
-    padding-bottom: 18px;
-    border-bottom: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    border-bottom: 1px solid var(--border-filter);
 }
- 
+
 .vechicle-containerfor h2::before {
     content: '';
-    display: inline-block;
+    flex-shrink: 0;
     width: 12px;
     height: 12px;
     border-radius: 50%;
     background: var(--accent);
-    flex-shrink: 0;
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
 }
- 
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 24px;
+    margin-bottom: 20px;
+}
+
 .vehicle-form-input {
-    font-family: var(--sans);
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 24px;
+    min-width: 0;
+    font-family: var(--sans);
 }
- 
+
 .vehicle-form-input label {
     font-size: 13px;
     font-weight: 600;
     color: var(--text-h);
-    text-transform: none;
-    letter-spacing: 0;
-    margin-bottom: 8px;
-    display: block;
 }
- 
-.vehicle-form input,
-.vehicle-form select {
+
+/* ---------- Campos ---------- */
+.vehicle-form-input input,
+.vehicle-form-input select {
+    width: 100%;
+    height: 48px;
+    box-sizing: border-box;
+    padding: 0 14px;
     font-family: var(--sans);
     font-size: 15px;
     color: var(--text);
-    background: var(--card-bg);
-    border: 2px solid var(--border);
+    background-color: var(--input);
+    border: 1px solid var(--field-border);
     border-radius: 12px;
-    height: 50px;
-    padding: 0 16px;
-    width: 100%;
-    box-sizing: border-box;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     outline: none;
-    margin-bottom: 0;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
- 
-.vehicle-form input::placeholder {
+
+.vehicle-form-input input::placeholder {
     color: var(--placeholder);
     font-size: 14px;
-    opacity: 0.7;
 }
- 
-.vehicle-form input:focus,
-.vehicle-form select:focus {
+
+.vehicle-form-input input:hover:not([readonly]):not(:disabled),
+.vehicle-form-input select:hover:not(:disabled) {
+    border-color: color-mix(in srgb, var(--primary) 50%, var(--field-border));
+}
+
+.vehicle-form-input input:focus,
+.vehicle-form-input select:focus {
     border-color: var(--primary);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    background: var(--card-bg);
-    transform: translateY(-2px);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
 }
- 
-.vehicle-form select {
+
+/* Flecha del select dibujada con --icon (así cambia con el tema) */
+.vehicle-form-input select {
     appearance: none;
     -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    background-size: 14px;
     padding-right: 40px;
     cursor: pointer;
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--icon) 50%),
+        linear-gradient(135deg, var(--icon) 50%, transparent 50%);
+    background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
 }
- 
-.vehicle-form input[readonly],
-.vehicle-form select[readonly] {
-    background: color-mix(in srgb, var(--card-bg) 80%, #f0f0f0);
+
+.vehicle-form-input select option {
+    color: var(--text);
+    background: var(--card-bg);
+}
+
+.vehicle-form-input select:disabled {
+    opacity: 0.6;
     cursor: not-allowed;
-    opacity: 0.8;
 }
- 
+
+/* Campos que se completan solos (tipo de vehículo, combustible) */
+.vehicle-form-input input[readonly] {
+    color: var(--text-h);
+    background-color: transparent;
+    border-style: dashed;
+    cursor: not-allowed;
+}
+
+.vehicle-form-input input[readonly]:focus {
+    border-color: var(--field-border);
+    box-shadow: none;
+}
+
+/* ---------- Errores ---------- */
 .error-message {
-    font-family: var(--sans);
-    color: #dc2626;
-    font-size: 13px;
-    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 6px;
-    margin-top: 8px;
-    padding: 10px 12px;
-    background: rgba(220, 38, 38, 0.08);
+    margin: 0;
+    padding: 8px 12px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--danger, #dc2626);
+    background: color-mix(in srgb, var(--danger, #dc2626) 10%, transparent);
+    border-left: 3px solid var(--danger, #dc2626);
     border-radius: 10px;
-    border-left: 3px solid #dc2626;
-    animation: slideIn 0.3s ease;
+    animation: slideIn 0.25s ease;
 }
- 
+
 @keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateY(-8px);
+        transform: translateY(-6px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
- 
+
+/* ---------- Columna de la imagen ---------- */
 .fileDialogs {
-    position: static;
-    left: unset;
-    width: 100%;
-    min-width: unset;
-    max-width: unset;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    background: var(--card-bg);
-    padding: 24px;
-    border-radius: 24px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    min-width: 0;
 }
- 
-.fileDialogs p {
-    margin: 0;
+
+/* ---------- Botón: dentro de la tarjeta, al ancho de los campos ---------- */
+.form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 28px;
 }
- 
+
+.save {
+    width: 100%;
+    height: 52px;
+    padding: 0 24px;
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-btn);
+    background: var(--button);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.save:hover:not(:disabled) {
+    filter: brightness(0.95);
+    transform: translateY(-1px);
+}
+
+.save:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.save:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+.save:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
 .vehicule-animation {
     display: flex;
     justify-content: center;
 }
- 
-.save {
-    height: 56px;
-    font-size: 16px;
-    font-weight: 600;
-    border: none;
-    padding: 0 40px;
-    border-radius: 14px;
-    font-family: var(--sans);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background: linear-gradient(135deg, var(--button), var(--primary));
-    color: var(--text-btn);
-    margin-left: auto;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-    position: relative;
-    overflow: hidden;
-    white-space: nowrap;
-}
- 
-.save::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-}
- 
-.save:hover::before {
-    left: 100%;
-}
- 
-.save:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
-}
- 
-.save:active:not(:disabled) {
-    transform: translateY(-1px);
-}
- 
-.save:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
 
+/* ---------- Responsive ---------- */
 @media (max-width: 980px) {
+    .vehicle-form {
+        padding: 40px 16px 56px;
+    }
+
     .container-container {
         grid-template-columns: 1fr;
+        gap: 24px;
     }
-    
+
+    /* En móvil la imagen va primero para que el botón quede al final */
     .fileDialogs {
-        margin-top: 0;
-        order: -0;
+        order: -1;
     }
-    
-    .vehicle-form {
-        padding: 48px 16px 64px;
-    }
-    
-    .save {
-        width: 100%;
-        margin-left: 0;
-        margin-top: 16px;
-    }
-    
+
     .vechicle-containerfor {
-        padding: 32px 24px;
+        padding: 32px 24px 24px;
     }
-    
+
     .vechicle-containerfor h2 {
         font-size: 20px;
         margin-bottom: 24px;
         padding-bottom: 14px;
     }
-    
-    .vehicle-form-input {
-        margin-bottom: 18px;
-    }
-    
-    .vehicle-form input,
-    .vehicle-form select {
-        height: 48px;
-        font-size: 14px;
-    }
 }
- 
+
 @media (max-width: 640px) {
     .vehicle-form {
-        padding: 32px 12px 48px;
+        padding: 28px 12px 44px;
     }
-    
-    .form-container {
-        gap: 32px;
+
+    .form-row {
+        grid-template-columns: 1fr;
+        margin-bottom: 16px;
     }
-    
-    .container-container {
-        gap: 24px;
-    }
-    
+
     .vechicle-containerfor {
-        padding: 24px 20px;
-        border-radius: 20px;
+        padding: 28px 20px 20px;
+        border-radius: 16px;
     }
-    
+
     .vechicle-containerfor h2 {
         font-size: 18px;
-        margin-bottom: 20px;
-        padding-bottom: 12px;
     }
-    
+
     .save {
-        height: 52px;
+        height: 50px;
         font-size: 15px;
-        padding: 0 32px;
     }
 }

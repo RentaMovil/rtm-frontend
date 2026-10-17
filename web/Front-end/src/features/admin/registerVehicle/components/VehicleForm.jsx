@@ -22,12 +22,12 @@ function VehicleForm() {
     const brandModels = models.filter((model) => String(model.brand.id) === String(selectedBrandId));
     const [mos, setmos] = useState(false);
     const [vehicleFile, setVehicleFile] = useState(null); // esto verificará el estado del fileDialog
-    const [isLoading, setIsLoading] = useState(false);// agrega un estado de carga 
     const { minYear, maxYear, currentYear } = getValidVehicleYearRange(1); // optiene el rango de los vehiclos permitidos
 
 
     const { createVehicle, isLoading: isCreating } = useCreateVehicle();
     const { uploadImage, isUploading } = useImageUpload();
+    const isSaving = isCreating || isUploading; // bloquea el botón mientras se sube la imagen o se guarda
 
 
     const handleFileChange = (file) => {
@@ -273,15 +273,20 @@ function VehicleForm() {
                                     )}
                                 </div>
                             </div>
+                            {/* Botón dentro de la tarjeta: queda alineado al ancho de los campos */}
+                            <div className={style['form-actions']}>
+                                {submitError && <p className={style['error-message']}><AiOutlineDashboard /> {submitError}</p>}
+                                <button className={style.save} type="submit" disabled={isSaving}>
+                                    {isSaving ? t('vehicleForm.saving') : t('vehicleForm.saveVehicle')}
+                                </button>
+                            </div>
+                        </div>
+                        
                         <div className={style.fileDialogs}>
-                            <FileDialog onFileChange={handleFileChange} file={vehicleFile} />
+                            <FileDialog variant="card" invalid={Boolean(errors.vehicleImage)} onFileChange={handleFileChange} file={vehicleFile} />
                             {errors.vehicleImage && (<p className={style['error-message']}><AiOutlineDashboard />{errors.vehicleImage?.message}</p>)}
                         </div>
                     </div>
-                    {submitError && <p className={style['error-message']}><AiOutlineDashboard /> {submitError}</p>}
-                    <button className={style.save} type="submit" disabled={isLoading}>
-                        {isLoading ? t('vehicleForm.saving') : t('vehicleForm.saveVehicle')}
-                    </button>
                     <span className={style["vehicule-animation"]}>
                         {mos && <Animation />}
                     </span>

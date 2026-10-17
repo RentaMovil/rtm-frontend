@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useCallback } from 'react'
 import './FileDialog.css'
 import { useDropzone } from 'react-dropzone'
 import { BiImageAdd } from "react-icons/bi";
-import { AiOutlineDashboard } from "react-icons/ai";
+import { AiOutlineDashboard, AiOutlineInfoCircle } from "react-icons/ai";
 import { useTranslation } from 'react-i18next';
 
 /* 
@@ -15,7 +15,7 @@ para verificar que se esta capturando correctamente el archivo seleccionado por 
 lo que se hace acontinuacion es considerado como una mala practica :v
 */
 
-function FileDialog({ onFileChange, file }) {
+function FileDialog({ onFileChange, file, variant = 'default', invalid = false }) {
     const { t } = useTranslation();
     /*  const [file, setFile] = useState() */ // estado para almacenar el archivo seleccionado
     const [preview, setPreview] = useState(null) // estado para almacenar la url de la imagen seleccionada
@@ -46,7 +46,14 @@ function FileDialog({ onFileChange, file }) {
         }
     }, [onFileChange])
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: { 'image/*': [] } });
+    const isCard = variant === 'card';
+    const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
+        onDrop,
+        accept: { 'image/*': [] },
+        // variante "card": con foto cargada se puede soltar otra encima, pero el clic en la foto no abre el selector
+        noClick: isCard && Boolean(preview),
+        noKeyboard: isCard && Boolean(preview),
+    });
 
     const handleChangeImage = () => {
         setPreview(null); // se limpia la url de la imagen seleccionada por el usuario
@@ -54,6 +61,40 @@ function FileDialog({ onFileChange, file }) {
     }
 
 
+
+    if (isCard) {
+        const zoneClass = [
+            'fd-zone',
+            preview && 'fd-zone--filled',
+            isDragActive && 'fd-zone--active',
+            invalid && !preview && 'fd-zone--invalid',
+        ].filter(Boolean).join(' ');
+
+        return (
+            <div {...getRootProps({ className: zoneClass })}>
+                <input {...getInputProps()} />
+                {preview ? (
+                    <div className="fd-preview">
+                        <div className="fd-preview-img">
+                            <img src={preview} alt="preview" />
+                        </div>
+                        <div className="fd-preview-bar">
+                            <p className="fd-hint"><AiOutlineInfoCircle /> {t('vehicleForm.imgp')}</p>
+                            <button type="button" className="fd-change" onClick={open}>
+                                {t('vehicleForm.changeImage')}
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="fd-empty">
+                        <span className="fd-icon"><BiImageAdd /></span>
+                        <p className="fd-text">{isDragActive ? t('vehicleForm.imgp2') : t('vehicleForm.imgp3')}</p>
+                        <p className="fd-hint"><AiOutlineInfoCircle /> {t('vehicleForm.imgp')}</p>
+                    </div>
+                )}
+            </div>
+        );
+    }
 
     return (
         <>

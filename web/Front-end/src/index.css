@@ -2,6 +2,12 @@
   --sans: 'Inter', system-ui, -apple-system, sans-serif;
   --heading: 'Poppins', system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
+  --danger: #dc2626;
+}
+
+:root.dark,
+:root.darkPurple {
+  --danger: #f87171;
 }
 
 :root.skylight {
