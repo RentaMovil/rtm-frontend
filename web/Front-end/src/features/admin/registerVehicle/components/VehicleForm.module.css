@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    padding: 48px 24px 64px;
+    padding: 64px 24px 80px;
     box-sizing: border-box;
     background: var(--bg);
     min-height: calc(100vh - 140px);
@@ -12,95 +12,118 @@
 .form-container {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 40px;
     width: 100%;
-    max-width: 980px;
+    max-width: 1200px;
 }
  
 .container-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 28px;
+    gap: 40px;
     align-items: start;
+}
+ 
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
 }
  
 .vechicle-containerfor {
     background: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px 28px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    border-radius: 24px;
+    padding: 40px 32px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+ 
+.vechicle-containerfor::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 24px 24px 0 0;
 }
  
 .vechicle-containerfor h2 {
     font-family: var(--heading);
-    font-size: 19px;
+    font-size: 22px;
     font-weight: 700;
-    color: var(--primary, #2D7FF9);
-    margin: 0 0 28px 0;
-    padding-bottom: 16px;
-    border-bottom: 2px solid var(--accent, #00C853);
+    color: var(--text-h);
+    margin: 0 0 32px 0;
+    padding-bottom: 18px;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
  
 .vechicle-containerfor h2::before {
     content: '';
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background: var(--accent, #00C853);
+    background: var(--accent);
     flex-shrink: 0;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
 }
  
 .vehicle-form-input {
     font-family: var(--sans);
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 24px;
 }
  
 .vehicle-form-input label {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--text-h);
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    opacity: 0.75;
+    text-transform: none;
+    letter-spacing: 0;
+    margin-bottom: 8px;
+    display: block;
 }
  
 .vehicle-form input,
 .vehicle-form select {
     font-family: var(--sans);
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text);
-    background: var(--input, #f4f4f4);
-    border: 1.5px solid var(--border);
+    background: var(--card-bg);
+    border: 2px solid var(--border);
     border-radius: 12px;
-    height: 44px;
+    height: 50px;
     padding: 0 16px;
     width: 100%;
     box-sizing: border-box;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     outline: none;
     margin-bottom: 0;
 }
  
 .vehicle-form input::placeholder {
-    color: var(--placeholder, #9ca3af);
-    font-size: 13px;
+    color: var(--placeholder);
+    font-size: 14px;
+    opacity: 0.7;
 }
  
 .vehicle-form input:focus,
 .vehicle-form select:focus {
-    border-color: var(--primary, #2D7FF9);
-    box-shadow: 0 0 0 3px rgba(45,127,249,0.12);
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     background: var(--card-bg);
+    transform: translateY(-2px);
 }
  
 .vehicle-form select {
@@ -114,19 +137,38 @@
     cursor: pointer;
 }
  
+.vehicle-form input[readonly],
+.vehicle-form select[readonly] {
+    background: color-mix(in srgb, var(--card-bg) 80%, #f0f0f0);
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+ 
 .error-message {
     font-family: var(--sans);
-    color: #ef4444;
-    font-size: 12px;
+    color: #dc2626;
+    font-size: 13px;
     font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-top: 2px;
-    padding: 6px 10px;
-    background: rgba(239,68,68,0.08);
-    border-radius: 8px;
-    border-left: 3px solid #ef4444;
+    gap: 6px;
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: rgba(220, 38, 38, 0.08);
+    border-radius: 10px;
+    border-left: 3px solid #dc2626;
+    animation: slideIn 0.3s ease;
+}
+ 
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
  
 .fileDialogs {
@@ -137,69 +179,140 @@
     max-width: unset;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+    background: var(--card-bg);
+    padding: 24px;
+    border-radius: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+ 
+.fileDialogs p {
+    margin: 0;
 }
  
 .vehicule-animation {
     display: flex;
     justify-content: center;
 }
+ 
 .save {
-    height: 50px;
-    font-size: 15px;
+    height: 56px;
+    font-size: 16px;
     font-weight: 600;
-   border: none;
-  padding: 8px 10px;
-  border-radius: 6px;
-  font-family: var(--sans);
-  transition: 0.2s, color 0.2s;
-  background-color: var(--button);
-  margin-left: 10px;
-  margin-top: auto;
-  cursor: pointer;
+    border: none;
+    padding: 0 40px;
+    border-radius: 14px;
+    font-family: var(--sans);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(135deg, var(--button), var(--primary));
+    color: var(--text-btn);
+    margin-left: auto;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
 }
-
-
+ 
+.save::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+ 
+.save:hover::before {
+    left: 100%;
+}
+ 
 .save:hover {
-    transform: translateY(-2px);
-    opacity: 0.95;
-
-
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
 }
  
-.vehicule-animation {
-    display: flex;
-    justify-content: center;
-    position: sticky;
-    margin: auto;
-
+.save:active:not(:disabled) {
+    transform: translateY(-1px);
 }
  
-@media (max-width: 860px) {
+.save:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+@media (max-width: 980px) {
     .container-container {
         grid-template-columns: 1fr;
     }
+    
     .fileDialogs {
-        margin-top: -12px;
+        margin-top: 0;
         order: -0;
     }
+    
     .vehicle-form {
-        padding: 28px 16px 48px;
+        padding: 48px 16px 64px;
     }
+    
     .save {
-    height: 50px;
-    font-size: 15px;
-    font-weight: 600;
-   border: none;
-  padding: 8px 10px;
-  border-radius: 6px;
-  font-family: var(--sans);
-  transition: 0.2s, color 0.2s;
-  background-color: var(--button);
-  margin-left: 10px;
-  margin-top: auto;
-  cursor: pointer;
-    margin-top: 13%;
+        width: 100%;
+        margin-left: 0;
+        margin-top: 16px;
+    }
+    
+    .vechicle-containerfor {
+        padding: 32px 24px;
+    }
+    
+    .vechicle-containerfor h2 {
+        font-size: 20px;
+        margin-bottom: 24px;
+        padding-bottom: 14px;
+    }
+    
+    .vehicle-form-input {
+        margin-bottom: 18px;
+    }
+    
+    .vehicle-form input,
+    .vehicle-form select {
+        height: 48px;
+        font-size: 14px;
+    }
 }
-
+ 
+@media (max-width: 640px) {
+    .vehicle-form {
+        padding: 32px 12px 48px;
+    }
+    
+    .form-container {
+        gap: 32px;
+    }
+    
+    .container-container {
+        gap: 24px;
+    }
+    
+    .vechicle-containerfor {
+        padding: 24px 20px;
+        border-radius: 20px;
+    }
+    
+    .vechicle-containerfor h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+    }
+    
+    .save {
+        height: 52px;
+        font-size: 15px;
+        padding: 0 32px;
+    }
 }
