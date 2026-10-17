@@ -338,6 +338,18 @@
 }
 
 
+.filters-modal-title {
+  margin: 0;
+
+  font-family: var(--heading);
+  font-size: 17px;
+  font-weight: 700;
+
+  color: var(--text-h);
+  line-height: 1.2;
+}
+
+
 .btn-close-modal {
   background: transparent;
 
@@ -394,6 +406,12 @@
   background: var(--card-bg);
 
   box-sizing: border-box;
+}
+
+/* Ambos botones reparten el ancho del pie por igual. */
+.filters-modal-footer .btn-clear-filters {
+  flex: 1;
+  margin: 0;
 }
 
 
@@ -534,7 +552,14 @@
     margin-bottom: 20px;
   }
 
+  /* Solo se oculta el banner: el calendario en modo
+     desplegable debe seguir visible en pantallas pequeñas. */
   .banner-container {
+    min-height: 0;
+    height: auto;
+  }
+
+  .banner-container .container-banner {
     display: none;
   }
 

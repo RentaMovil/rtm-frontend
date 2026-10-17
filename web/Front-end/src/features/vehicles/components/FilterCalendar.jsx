@@ -9,6 +9,8 @@ import {
 import "./FilterCalendar.css";
 import { useTranslation } from "react-i18next";
 import { useBranches } from "../../admin/branches/hooks/useBranch.js";
+import { useIsMobile } from "../../../shared/hooks/useIsMobile.js";
+import { FaSearch, FaChevronDown } from "react-icons/fa";
 const FilterCalendar = forwardRef(
   (
     {
@@ -35,7 +37,16 @@ const FilterCalendar = forwardRef(
       return tomorrow.toISOString().split("T")[0];
     };
 
-    const [showFilters, setShowFilters] = useState(false);
+    const isMobileView = useIsMobile(1024);
+
+    /*
+     * En pantallas pequeñas (≤1024px) el overlay tradicional
+     * no cabe sobre el banner, así que se convierte en un
+     * desplegable (dropdown) anclado bajo un botón.
+     */
+    const isDropdownMode = variant === "overlay" && isMobileView;
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const [query, setQuery] = useState("");
     const [sugerencias, setSugerencias] = useState([]);
@@ -132,6 +143,32 @@ const FilterCalendar = forwardRef(
         );
 
     }, []);
+
+
+    /*
+     * ============================================================
+     * CERRAR EL CALENDARIO DESPLEGABLE
+     * ============================================================
+     */
+    useEffect(() => {
+
+      if (!isDropdownOpen) return;
+
+      const handleEscape = (e) => {
+        if (e.key === "Escape") setIsDropdownOpen(false);
+      };
+
+      document.addEventListener("keydown", handleEscape);
+
+      return () =>
+        document.removeEventListener("keydown", handleEscape);
+
+    }, [isDropdownOpen]);
+
+    // Al volver a escritorio se cierra el desplegable.
+    useEffect(() => {
+      if (!isMobileView) setIsDropdownOpen(false);
+    }, [isMobileView]);
 
 
     /*
@@ -299,6 +336,9 @@ const FilterCalendar = forwardRef(
         t("filterCalendar.success")
       );
 
+      // En modo desplegable, la búsqueda exitosa cierra el panel.
+      setIsDropdownOpen(false);
+
       return true;
     };
 
@@ -347,20 +387,22 @@ const FilterCalendar = forwardRef(
     }));
 
 
-    return (
-      <div className="filter-wrapper">
+    const formClassName = isDropdownMode
+      ? "filter overlay dropdown-panel"
+      : `filter ${variant}`;
 
-        <form
-          className={`filter ${variant} ${showFilters ? "open" : ""
-            }`}
-          onSubmit={(e) => {
+    const calendarForm = (
 
-            e.preventDefault();
+      <form
+        className={formClassName}
+        onSubmit={(e) => {
 
-            handleSubmit();
+          e.preventDefault();
 
-          }}
-        >
+          handleSubmit();
+
+        }}
+      >
 
 
           <div
@@ -540,6 +582,51 @@ const FilterCalendar = forwardRef(
           )}
 
         </form>
+
+    );
+
+    return (
+      <div className="filter-wrapper">
+
+        {isDropdownMode ? (
+          <>
+            <div className="filter-dropdown">
+
+              <button
+                type="button"
+                className="filter-dropdown-toggle"
+                aria-expanded={isDropdownOpen}
+                aria-haspopup="dialog"
+                onClick={() =>
+                  setIsDropdownOpen((prev) => !prev)
+                }
+              >
+                <FaSearch aria-hidden="true" />
+
+                <span>
+                  {t("filterCalendar.dropdownTitle")}
+                </span>
+
+                <FaChevronDown
+                  className="filter-dropdown-chevron"
+                  aria-hidden="true"
+                />
+              </button>
+
+              {isDropdownOpen && calendarForm}
+
+            </div>
+
+            {isDropdownOpen && (
+              <div
+                className="filter-dropdown-backdrop"
+                onClick={() => setIsDropdownOpen(false)}
+              />
+            )}
+          </>
+        ) : (
+          calendarForm
+        )}
 
       </div>
     );

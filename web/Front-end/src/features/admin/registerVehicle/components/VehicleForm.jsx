@@ -52,7 +52,7 @@ function VehicleForm() {
                 setmos(false);
                 setVehicleFile(null);
                 reset();
-            }, 2200);
+            }, 2800); // la animación final dura ~2.6 s
         } catch (err) {
             // 409 PLATE_ALREADY_EXISTS va junto a la placa; cualquier otro error, junto al botón
             if (err.code === 'PLATE_ALREADY_EXISTS') {
@@ -279,6 +279,12 @@ function VehicleForm() {
                                 <button className={style.save} type="submit" disabled={isSaving}>
                                     {isSaving ? t('vehicleForm.saving') : t('vehicleForm.saveVehicle')}
                                 </button>
+                                {/* mientras se sube/guarda corre en bucle; al terminar, una pasada final */}
+                                {(isSaving || mos) && (
+                                    <span className={style['vehicule-animation']}>
+                                        <Animation key={isSaving ? 'saving' : 'done'} loop={isSaving} />
+                                    </span>
+                                )}
                             </div>
                         </div>
                         
@@ -287,9 +293,6 @@ function VehicleForm() {
                             {errors.vehicleImage && (<p className={style['error-message']}><AiOutlineDashboard />{errors.vehicleImage?.message}</p>)}
                         </div>
                     </div>
-                    <span className={style["vehicule-animation"]}>
-                        {mos && <Animation />}
-                    </span>
                 </form>
             </div>
         </>

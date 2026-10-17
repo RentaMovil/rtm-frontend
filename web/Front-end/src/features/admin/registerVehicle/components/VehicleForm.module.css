@@ -249,8 +249,22 @@
 }
 
 .vehicule-animation {
-    display: flex;
-    justify-content: center;
+    display: block;
+    width: 100%;
+}
+
+.vehicule-animation :global(.animation-cc) {
+    height: 32px;
+}
+
+.vehicule-animation :global(.animation-line) {
+    width: 100%;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
+.vehicule-animation :global(.animation-car) {
+    color: var(--primary);
 }
 
 /* ---------- Responsive ---------- */

@@ -18,7 +18,7 @@ import { useState, useEffect, useRef } from "react";
 import { useCars } from "../../../vehicles/hooks/useCars.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useIsMobile } from "../../../../shared/hooks/useIsMobile.js";
-import { FaSearch, FaTimes } from "react-icons/fa";
+import { FaSearch, FaTimes, FaBars } from "react-icons/fa";
 import { filterAvailableVehicles } from "../../../vehicles/utils/filterAvilableCars.js";
 import { filterVehicles } from "../../../vehicles/utils/vehiclesFilters.js";
 
@@ -62,6 +62,23 @@ function HomeAdmin() {
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, [location.state, cars, navigate]);
+
+  // El modal de filtros móvil se cierra con Escape y bloquea el scroll de fondo.
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape") setShowFiltersModal(false);
+    };
+
+    if (showFiltersModal) {
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
+    };
+  }, [showFiltersModal]);
 
   const handleSearch = ({ branch, startDate, endDate, startTime, endTime }) => {
     const newSearchData = { branch, startDate, endDate, startTime, endTime };
@@ -137,6 +154,50 @@ function HomeAdmin() {
                   <FaBars /> <span>Filtrar Flota</span>
                 </button>
               </div>
+            )}
+
+            {isMobile && showFiltersModal && (
+              <>
+                <div
+                  className="filters-modal-backdrop"
+                  onClick={() => setShowFiltersModal(false)}
+                />
+
+                <div className="filters-modal">
+                  <div className="filters-modal-header">
+                    <h3 className="filters-modal-title">Filtrar Flota</h3>
+
+                    <button
+                      className="btn-close-modal"
+                      onClick={() => setShowFiltersModal(false)}
+                      aria-label="Cerrar filtros"
+                    >
+                      <FaTimes />
+                    </button>
+                  </div>
+
+                  <div className="filters-modal-content">
+                    <FiltrerBrand cars={carsFiltered} onFilter={setBrandFilter} />
+                    <FiltrerPrice cars={carsFiltered} onFilter={setPriceFilter} />
+                    <FiltrerModel cars={carsFiltered} onFilter={setModelFilter} />
+                    <FiltrerType cars={carsFiltered} onFilter={setTypeFilter} />
+                    <FiltreCategory cars={carsFiltered} onFilter={setCategoryFilter} />
+                  </div>
+
+                  <div className="filters-modal-footer">
+                    <button className="btn-clear-filters" onClick={handleClearFilters}>
+                      Limpiar filtros
+                    </button>
+
+                    <button
+                      className="btn-apply-filters"
+                      onClick={() => setShowFiltersModal(false)}
+                    >
+                      Ver resultados ({visibleCars.length})
+                    </button>
+                  </div>
+                </div>
+              </>
             )}
 
             <div className="card-vehicule-container">

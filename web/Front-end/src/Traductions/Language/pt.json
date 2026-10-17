@@ -30,7 +30,8 @@
     "deliveryHour": "Hora de retirada",
     "returnDate": "Data de devolução",
     "returnHour": "Hora de devolução",
-    "search": "Buscar"
+    "search": "Buscar",
+    "dropdownTitle": "Buscar veículos"
   },
   "cartVehicule": {
     "gasoline": "Gasolina",

@@ -30,7 +30,8 @@
     "deliveryHour": "Pickup time",
     "returnDate": "Return date",
     "returnHour": "Return time",
-    "search": "Search"
+    "search": "Search",
+    "dropdownTitle": "Search vehicles"
   },
   "cartVehicule": {
     "gasoline": "Gasoline",
