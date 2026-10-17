@@ -154,6 +154,68 @@ select {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
+
+/* Fechas, horas y tarifa de la reserva (solo lectura, sin adornos) */
+.summary-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+.summary-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.summary-row-label {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    opacity: 0.7;
+}
+
+.summary-row-value {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-h);
+    text-align: right;
+}
+
+.summary-row-unit {
+    font-weight: 500;
+    opacity: 0.7;
+}
+
+.summary-total {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.summary-total-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-h);
+}
+
+.summary-total-value {
+    font-family: var(--heading);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-h);
+    white-space: nowrap;
+}
 .info-location {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -217,6 +279,29 @@ select {
     opacity: 0.8;
     margin: 0;
     line-height: 1.4;
+}
+
+/* Instrucción breve sobre cómo elegir la sucursal de devolución en el mapa */
+.map-hint {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 4px 0 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--accent-border);
+    border-radius: 10px;
+    background: var(--accent-bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.45;
+    box-sizing: border-box;
+}
+
+.map-hint svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--button);
+    font-size: 15px;
 }
 
 @media (max-width: 768px) {
@@ -361,6 +446,10 @@ select {
     .card-summary .btn-booking {
         min-height: 48px;
         font-size: 14px;
+    }
+
+    .summary-total-value {
+        font-size: 22px;
     }
 
     .error2 {

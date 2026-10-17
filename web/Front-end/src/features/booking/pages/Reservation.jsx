@@ -9,6 +9,7 @@ import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
 import { RoleNavbar, RoleFooter } from "../../../shared/components/layout/RoleChrome";
 import { useIsMobile } from "../../../shared/hooks/useIsMobile";
+import { formatDisplayDate, formatDisplayTime } from "../../../shared/utils/apiDate";
 import { useBranches } from "../../admin/branches/hooks/useBranch";
 import FilterCalendar from "../../vehicles/components/FilterCalendar";
 import MapComponent from "../components/MapComponents";
@@ -24,6 +25,21 @@ import {
     createTermsAcceptance,
     isValidTermsAcceptance,
 } from "../data/rentalTerms";
+
+// Los montos de la reserva se muestran en pesos colombianos, sin decimales.
+function formatCurrency(value) {
+    const amount = Number(value);
+
+    if (!Number.isFinite(amount)) {
+        return "—";
+    }
+
+    return new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+        maximumFractionDigits: 0,
+    }).format(amount);
+}
 
 const DefaultIcon = L.icon({
     iconUrl: markerIcon,
@@ -120,6 +136,19 @@ function Reservation() {
         endDate: returnDate,
         startTime: pickupTime,
         endTime: returnTime,
+    };
+
+    // Fechas y horas elegidas por el cliente en el calendario. En el resumen se
+    // muestran solo como información: se cambian desde el calendario de arriba.
+    const formatDateTime = (value) => {
+        if (!value) {
+            return t("reservation.notDefined");
+        }
+
+        const date = formatDisplayDate(value);
+        const time = formatDisplayTime(value);
+
+        return time ? `${date} · ${time}` : date;
     };
 
     const handleTermsAcceptanceChange = (accepted) => {
@@ -345,6 +374,12 @@ function Reservation() {
 
                             </div>
 
+                            <p className="map-hint">
+                                <FaMapMarkerAlt className="map-hint-icon" aria-hidden="true" />
+
+                                <span>{t("reservation.mapHint")}</span>
+                            </p>
+
                             <MapComponent
                                 mode="select"
                                 branches={branches}
@@ -375,21 +410,64 @@ function Reservation() {
                                     </h3>
                                 </div>
 
-                                <p>
-                                    {days} {t("reservation.days")} × ${price}
-                                </p>
+                                {/* Fechas, horas y tarifa de la reserva (solo lectura) */}
+                                <dl className="summary-details">
+                                    <div className="summary-row">
+                                        <dt className="summary-row-label">
+                                            {t("reservation.pickup")}
+                                        </dt>
 
-                                <p>
-                                    {selectedInsurance
-                                        ? `Seguro: ${selectedInsurance.name} — $${Number(
-                                            selectedInsurance.price
-                                        ).toLocaleString("es-CO")}`
-                                        : t("reservation.sure")}
-                                </p>
+                                        <dd className="summary-row-value">
+                                            {formatDateTime(pickupDateTime)}
+                                        </dd>
+                                    </div>
 
-                                <h4>
-                                    {t("reservation.total")} ${reservationTotal}
-                                </h4>
+                                    <div className="summary-row">
+                                        <dt className="summary-row-label">
+                                            {t("reservation.return")}
+                                        </dt>
+
+                                        <dd className="summary-row-value">
+                                            {formatDateTime(returnDateTime)}
+                                        </dd>
+                                    </div>
+
+                                    <div className="summary-row">
+                                        <dt className="summary-row-label">
+                                            {t("reservation.duration")}
+                                        </dt>
+
+                                        <dd className="summary-row-value">
+                                            {days}{" "}
+                                            {Number(days) === 1
+                                                ? t("reservation.daySingular")
+                                                : t("reservation.dayPlural")}
+                                        </dd>
+                                    </div>
+
+                                    <div className="summary-row">
+                                        <dt className="summary-row-label">
+                                            {t("reservation.rate")}
+                                        </dt>
+
+                                        <dd className="summary-row-value">
+                                            {formatCurrency(price)}
+                                            <span className="summary-row-unit">
+                                                {` / ${t("reservation.dayUnit")}`}
+                                            </span>
+                                        </dd>
+                                    </div>
+                                </dl>
+
+                                <div className="summary-total">
+                                    <span className="summary-total-label">
+                                        {t("reservation.totalLabel")}
+                                    </span>
+
+                                    <span className="summary-total-value">
+                                        {formatCurrency(reservationTotal)}
+                                    </span>
+                                </div>
 
                                 <InsuranceSelector />
 
