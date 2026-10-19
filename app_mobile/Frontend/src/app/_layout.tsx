@@ -42,6 +42,8 @@ import { NotificationProvider } from "../features/notification/context/Notificat
 
 import { PaymentProvider } from "../features/payment/context/PaymentContext";
 
+import UpdateBanner from "../shared/components/UpdateBanner/UpdateBanner";
+
 
 export { ErrorBoundary } from "expo-router";
 
@@ -319,6 +321,8 @@ function InnerNav() {
 
 
             </Stack>
+
+            <UpdateBanner />
 
         </NavigationThemeProvider>
 

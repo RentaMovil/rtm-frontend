@@ -241,6 +241,10 @@
     "ruleNumber": "Al menos un número",
     "genericError": "No se pudo completar la solicitud"
   },
+  "otaUpdate": {
+    "available": "Hay una actualización disponible",
+    "updateNow": "Actualizar"
+  },
   "emailVerification": {
     "title": "Verifica tu cuenta",
     "intro": "Enviamos un código de 6 dígitos a {{email}} para confirmar tu cuenta.",
