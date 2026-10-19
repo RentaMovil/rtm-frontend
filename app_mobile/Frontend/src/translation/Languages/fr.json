@@ -247,6 +247,10 @@
     "ruleNumber": "Au moins un chiffre",
     "genericError": "La demande n’a pas pu aboutir"
   },
+  "otaUpdate": {
+    "available": "Une mise à jour est disponible",
+    "updateNow": "Mettre à jour"
+  },
   "emailVerification": {
     "title": "Vérifiez votre compte",
     "intro": "Nous avons envoyé un code à 6 chiffres à {{email}} pour confirmer votre compte.",
