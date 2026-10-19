@@ -17,3 +17,21 @@ export function toApiDateTime(value) {
     if (!value) return value;
     return new Date(value).toISOString().slice(0, 19);
 }
+
+// Formato legible para el usuario, en su zona horaria local.
+// Ej: "sáb, 1 nov 2026" y "10:00 a. m."
+export function formatDisplayDate(value, locale = "es-CO") {
+    if (!value) return "";
+    const d = new Date(value);
+    if (isNaN(d)) return "";
+    return d.toLocaleDateString(locale, {
+        weekday: "short", day: "numeric", month: "short", year: "numeric",
+    });
+}
+
+export function formatDisplayTime(value, locale = "es-CO") {
+    if (!value) return "";
+    const d = new Date(value);
+    if (isNaN(d)) return "";
+    return d.toLocaleTimeString(locale, { hour: "numeric", minute: "2-digit", hour12: true });
+}

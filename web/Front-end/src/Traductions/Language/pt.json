@@ -847,7 +847,8 @@
     "statusLabel": {
       "ACTIVE": "Ativa",
       "INACTIVE": "Inativa",
-      "BLOCKED": "Bloqueada"
+      "BLOCKED": "Bloqueada",
+      "PENDING_VERIFICATION": "Pendente de verificação"
     },
     "modal": {
       "title": "Alterar função do usuário",

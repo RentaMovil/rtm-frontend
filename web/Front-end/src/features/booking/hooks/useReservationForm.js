@@ -13,12 +13,19 @@ export const useReservationForm = (price, navigate, t, initialBranch = null, ini
   const [birthDate, setBirthDate] = useState("");
   const [pickupDate, setPickupDate] = useState(initialSearch.startDate ?? "");
   const [returnDate, setReturnDate] = useState(initialSearch.endDate ?? "");
+  const [pickupTime, setPickupTime] = useState(initialSearch.startTime ?? "");
+  const [returnTime, setReturnTime] = useState(initialSearch.endTime ?? "");
   const [errorFecha, setErrorFecha] = useState("");
   const [errorEdad, setErrorEdad] = useState("");
   const [showFilters, setShowFilters] = useState(false);
 
-  const days = calculateRentalDays(pickupDate, returnDate);
-  const total = calculateTotal(pickupDate, returnDate, price);
+  // Fecha + hora elegidas por el cliente (hora local) -> "YYYY-MM-DDTHH:mm"
+  const combine = (d, t) => (d ? (t ? `${d}T${t}` : d) : "");
+  const pickupDateTime = combine(pickupDate, pickupTime);
+  const returnDateTime = combine(returnDate, returnTime);
+
+  const days = calculateRentalDays(pickupDateTime, returnDateTime);
+  const total = calculateTotal(pickupDateTime, returnDateTime, price);
 
   useEffect(() => {
     const invalid = hasInvalidDateRange(pickupDate, returnDate);
@@ -74,6 +81,10 @@ export const useReservationForm = (price, navigate, t, initialBranch = null, ini
     setPickupDate,
     returnDate,
     setReturnDate,
+    pickupTime,
+    returnTime,
+    pickupDateTime,
+    returnDateTime,
     errorFecha,
     errorEdad,
     days,

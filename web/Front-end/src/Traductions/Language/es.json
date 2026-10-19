@@ -848,7 +848,8 @@
     "statusLabel": {
       "ACTIVE": "Activa",
       "INACTIVE": "Inactiva",
-      "BLOCKED": "Bloqueada"
+      "BLOCKED": "Bloqueada",
+      "PENDING_VERIFICATION": "Pendiente de verificación"
     },
     "modal": {
       "title": "Modificar rol de usuario",
