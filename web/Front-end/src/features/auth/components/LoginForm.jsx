@@ -1,10 +1,8 @@
     import React, { useState } from "react";
-    import Quotes from "../../../shared/components/Quotes.jsx";
     import "./LoginForm.css";
     import { useTranslation } from "react-i18next";
-    import "./RegisterForm.jsx";
     import { useNavigate } from "react-router-dom";
-    import { FaEye, FaEyeSlash } from "react-icons/fa";
+    import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from "react-icons/fa";
 
     // "90 segundos" -> "2 minutos": el rate limit del login es de 5 minutos
     function formatWait(seconds) {
@@ -27,7 +25,7 @@
     }
     }
 
-    function LoginForm({ onSubmit, onSwitchToRegister }) {
+    function LoginForm({ onSubmit }) {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
@@ -77,20 +75,24 @@
         >
             <div className="form-group">
             <label htmlFor="email">{t("loginForm.email")}</label>
-            <input
-                id="email"
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete="username"
-                placeholder={t("loginForm.emailPlaceholder")}
-                required
-            />
+            <div className="input-with-icon">
+                <FaEnvelope className="field-icon" />
+                <input
+                    id="email"
+                    type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="username"
+                    placeholder={t("loginForm.emailPlaceholder")}
+                    required
+                />
+            </div>
             </div>
 
             <div className="form-group">
             <label htmlFor="password">{t("loginForm.password")}</label>
             <div className="password-field">
+                <FaLock className="field-icon" />
                 <input
                     id="password"
                     type={showPassword ? "text" : "password"}
@@ -129,14 +131,6 @@
             <button
             type="button"
             className="register-link"
-            onClick={onSwitchToRegister}
-            >
-            {t("loginForm.noAccount")}
-            </button>
-
-            <button
-            type="button"
-            className="register-link"
             onClick={handleForgotPassword}
             >
             {t("loginForm.forgotPassword")}
@@ -152,8 +146,6 @@
                 : t("loginForm.submit")}
             </button>
         </form>
-
-        <Quotes />
         </section>
     );
     }

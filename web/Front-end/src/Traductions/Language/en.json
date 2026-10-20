@@ -99,6 +99,20 @@
     "createAccount": "Create account",
     "iniciarSesion": "Log in"
   },
+  "authShowcase": {
+    "titlePart1": "Rent vehicles with",
+    "titleHighlight": "RentaMovil",
+    "description": "Book online, pick up your vehicle at the branch you choose, and enjoy your trip.",
+    "stat1Label": "Branches in Colombia",
+    "stat2Label": "Vehicles available now",
+    "feature": "Simple, secure payment",
+    "featureDesc": "Bank transfer with receipt, reviewed by an administrator before confirming your reservation.",
+    "help": "Help online",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode",
+    "getApp": "Take RentaMovil with you",
+    "getAppDesc": "Download the app for Android"
+  },
   "loginForm": {
     "errorFields": "Fill in all fields",
     "emailInvalid": "Enter a valid email",
@@ -143,6 +157,12 @@
     "passwordShort": "Password must be at least 8 characters",
     "passwordWeak": "Password must have at least one uppercase letter and one number",
     "passwordMatch": "Passwords do not match",
+    "passwordsMatchOk": "Passwords match",
+    "usernameInvalid": "Only letters, numbers, dot and underscore",
+    "usernameShort": "Minimum 3 characters",
+    "requirementLength": "8+ characters",
+    "requirementUppercase": "One uppercase letter",
+    "requirementNumber": "One number",
     "errorCreate": "Error creating account",
     "termsAccept": "I accept the",
     "termsLink": "terms and conditions and the personal data processing policy",

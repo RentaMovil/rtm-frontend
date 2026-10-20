@@ -1,0 +1,184 @@
+/* Mismo lenguaje visual que la navbar pública (Navbar.css): barra fija
+   arriba, fondo navy, 70px de alto, logo a la izquierda. */
+.auth-topbar {
+  width: 100%;
+  margin: 0;
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  background: var(--navbar);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  padding: 0 30px;
+  box-sizing: border-box;
+}
+
+.auth-topbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-topbar-logo-text {
+  color: var(--textNavabar);
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.auth-topbar-logo-text span {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.auth-topbar-logo-icon {
+  color: var(--accent);
+  font-size: 28px;
+}
+
+.auth-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.auth-topbar-lang {
+  position: relative;
+}
+
+.auth-topbar-lang-trigger {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: var(--textNavabar);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.auth-topbar-lang-trigger:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.auth-topbar-lang-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 170px;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border);
+  z-index: 2100;
+}
+
+.auth-topbar-lang-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.auth-topbar-lang-option:hover {
+  background: var(--hover);
+}
+
+.auth-topbar-lang-option.selected {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.auth-topbar-lang-option svg {
+  font-size: 12px;
+  color: var(--primary);
+}
+
+.auth-topbar-lang-option-label {
+  flex: 1;
+}
+
+.auth-topbar-lang-flag {
+  display: block;
+  width: 20px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.auth-topbar-theme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.auth-topbar-theme:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.auth-topbar-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.auth-topbar-btn {
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: var(--textNavabar);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auth-topbar-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.auth-topbar-btn.active {
+  background: var(--button);
+  color: var(--text-btn);
+  border-color: var(--button);
+}
+
+@media (max-width: 640px) {
+  .auth-topbar {
+    height: auto;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 16px;
+    justify-content: center;
+    position: static;
+  }
+}

@@ -99,6 +99,20 @@
     "createAccount": "Créer un compte",
     "iniciarSesion": "Se connecter"
   },
+  "authShowcase": {
+    "titlePart1": "Louez des véhicules avec",
+    "titleHighlight": "RentaMovil",
+    "description": "Réservez en ligne, récupérez votre véhicule dans l'agence de votre choix et profitez de votre trajet.",
+    "stat1Label": "Agences en Colombie",
+    "stat2Label": "Véhicules disponibles",
+    "feature": "Paiement simple et sécurisé",
+    "featureDesc": "Virement bancaire avec reçu, vérifié par un administrateur avant la confirmation de votre réservation.",
+    "help": "Aide en ligne",
+    "lightMode": "Mode clair",
+    "darkMode": "Mode sombre",
+    "getApp": "Emportez RentaMovil avec vous",
+    "getAppDesc": "Téléchargez l'application pour Android"
+  },
   "loginForm": {
     "errorFields": "Remplissez tous les champs",
     "emailInvalid": "Entrez un email valide",
@@ -143,6 +157,12 @@
     "passwordShort": "Le mot de passe doit contenir au moins 8 caractères",
     "passwordWeak": "Le mot de passe doit contenir au moins une majuscule et un chiffre",
     "passwordMatch": "Les mots de passe ne correspondent pas",
+    "passwordsMatchOk": "Les mots de passe correspondent",
+    "usernameInvalid": "Lettres, chiffres, point et tiret bas uniquement",
+    "usernameShort": "Minimum 3 caractères",
+    "requirementLength": "8+ caractères",
+    "requirementUppercase": "Une majuscule",
+    "requirementNumber": "Un chiffre",
     "errorCreate": "Erreur lors de la création du compte",
     "termsAccept": "J'accepte les",
     "termsLink": "conditions générales et la politique de traitement des données personnelles",
