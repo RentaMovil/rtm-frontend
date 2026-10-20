@@ -186,6 +186,12 @@ select {
     flex-shrink: 0;
 }
 
+.map-hint {
+    font-size: 13px;
+    color: var(--placeholder, #6b7280);
+    margin: 4px 0 8px;
+}
+
 .card-address-box {
     background-color: var(--card-bg) ;
     border-radius: 12px;

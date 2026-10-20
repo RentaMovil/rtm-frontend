@@ -275,7 +275,7 @@ function Reservation() {
                             <div className="reservation-section-header">
                                 <span className="reservation-section-dot" aria-hidden="true" />
                                 <h3 className="reservation-section-title">
-                                    Cambie la sucursal de recogida:
+                                    Elige la sucursal de entrega:
                                 </h3>
                             </div>
 
@@ -345,6 +345,10 @@ function Reservation() {
 
                             </div>
 
+                            <p className="map-hint">
+                                Toca un punto del mapa para devolver el vehículo en esa sucursal.
+                            </p>
+
                             <MapComponent
                                 mode="select"
                                 branches={branches}
@@ -376,7 +380,7 @@ function Reservation() {
                                 </div>
 
                                 <p>
-                                    {days} {t("reservation.days")} × ${price}
+                                    {days} {t("reservation.days")} × ${Number(price).toLocaleString("es-CO")}
                                 </p>
 
                                 <p>
@@ -388,7 +392,7 @@ function Reservation() {
                                 </p>
 
                                 <h4>
-                                    {t("reservation.total")} ${reservationTotal}
+                                    {t("reservation.total")} ${reservationTotal.toLocaleString("es-CO")}
                                 </h4>
 
                                 <InsuranceSelector />

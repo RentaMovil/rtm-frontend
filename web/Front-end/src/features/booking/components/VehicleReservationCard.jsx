@@ -1,7 +1,6 @@
     import React from "react";
     import "./VehicleReservationCard.css";
     import {
-    FiMail,
     FiUser,
     FiBriefcase,
     FiWind,
@@ -49,10 +48,6 @@
                 <h2 className="reservation-vehicle-title">{name}</h2>
                 {type && <p className="reservation-vehicle-subtitle">o {type} similar</p>}
             </div>
-
-            <button type="button" className="reservation-vehicle-mail" aria-label="Enviar por correo">
-                <FiMail />
-            </button>
             </div>
 
             {/* Tags / Pills con Íconos */}
