@@ -5,6 +5,7 @@ import LogoCar from "./LogoCar";
 import { MdPerson } from "react-icons/md";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import AuthLink from "../AuthLink.jsx";
 
     function Navbar() {
     const { t } = useTranslation();
@@ -28,27 +29,27 @@ import { useTranslation } from "react-i18next";
                 {t("navbar.linkInit")}
             </Link>
 
-            <Link
+            <AuthLink
                 to="/Notification"
                 onClick={() => setOpen(false)}
             >
                 {t("navbar.linkNotifications")}
-            </Link>
+            </AuthLink>
 
-            <Link
+            <AuthLink
                 to="/HistorialReservation"
                 onClick={() => setOpen(false)}
             >
                 {t("navbar.linkReservation")}
-            </Link>
+            </AuthLink>
 
-            <Link
+            <AuthLink
                 to="/account"
                 className="profile-link"
                 onClick={() => setOpen(false)}
             >
                 <MdPerson />
-            </Link>
+            </AuthLink>
             </nav>
 
             <button
