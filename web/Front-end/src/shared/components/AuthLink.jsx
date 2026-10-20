@@ -13,7 +13,7 @@ export default function AuthLink({ to, onClick, children, ...props }) {
   const handleClick = (e) => {
     if (!isAuthenticated) {
       e.preventDefault();
-      navigate("/");
+      navigate("/login");
       return;
     }
     onClick?.(e);

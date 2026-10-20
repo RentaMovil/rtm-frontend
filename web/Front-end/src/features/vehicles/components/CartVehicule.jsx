@@ -22,7 +22,7 @@ function CartVehicule({ vehicle, rentalSearch, showActions = true }) {
 
         // Catálogo público; reservar sí exige sesión.
         if (!isAuthenticated) {
-            navigate("/");
+            navigate("/login");
             return;
         }
 
