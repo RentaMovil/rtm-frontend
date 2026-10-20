@@ -78,7 +78,7 @@ function App() {
     <BrowserRouter>
 
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login theme={theme} setTheme={setTheme} />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/Register" element={<RegisterForm />} />
         <Route path="/EmailVerification" element={<EmailVerification />} />
