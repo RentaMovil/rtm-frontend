@@ -109,14 +109,11 @@ function App() {
             </RequireAuth>
           }
         />
-        {/* El home de cliente es solo para CLIENT: los admins tienen el mismo home en /HomeAdmin */}
+        {/* Público: cualquiera puede navegar el catálogo sin sesión. Reservar
+            (botón "Continuar") y el resto de la navbar sí la exigen. */}
         <Route
           path="/home"
-          element={
-            <RequireRole roles={["CLIENT"]}>
-              <Home />
-            </RequireRole>
-          }
+          element={<Home />}
         />
         <Route
           path="/homeS"
