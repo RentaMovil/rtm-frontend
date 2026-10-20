@@ -8,7 +8,12 @@ function CartVehicule({ vehicle, rentalSearch, showActions = true }) {
 
     if (!vehicle) return null;
 
-    const price = vehicle.dailyPrice.toLocaleString("es-CO");
+    // Número crudo para los cálculos (reserva, total); el formateo con
+    // separador de miles es solo cosmético, se aplica al mostrarlo, no antes.
+    // Pasar la versión ya formateada rompía Number(price) río abajo: "4.700"
+    // se interpreta como 4.7 (el punto se lee como decimal, no como millar).
+    const price = vehicle.dailyPrice;
+    const formattedPrice = price.toLocaleString("es-CO");
 
     const handleContinue = () => {
         if (!showActions) return;
@@ -60,7 +65,7 @@ function CartVehicule({ vehicle, rentalSearch, showActions = true }) {
                 )}
             </div>
             <div className="car-price">
-                <p className="price">${price}</p>
+                <p className="price">${formattedPrice}</p>
                 <span className="free">{t('cartVehicule.cancellation')}</span>
                 {showActions && (
                     <button type="button" onClick={handleContinue}>{t('cartVehicule.continue')}</button>
