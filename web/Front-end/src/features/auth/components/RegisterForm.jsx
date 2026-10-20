@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import "./RegisterForm.css";
-import Quotes from '../../../shared/components/Quotes';
-import { useTranslation } from 'react-i18next'; 
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
+import { FaEye, FaEyeSlash, FaUser, FaEnvelope, FaLock, FaPhone, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
+// Mismas reglas que RegisterRequest.java (iam), para que el frontend nunca
+// deje pasar algo que el backend va a rechazar.
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const USERNAME_REGEX = /^[a-zA-Z0-9._]+$/;
+const PHONE_REGEX = /^[0-9+ ]*$/;
 
-function RegisterForm({ onSubmit, onSwitchToLogin }) {
+function RegisterForm({ onSubmit }) {
   const { t } = useTranslation();
 
   const [firstName, setFirstName] = useState('');
@@ -23,6 +27,29 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Validación por campo, calculada en cada render: así el error/acierto se
+  // ve en tiempo real mientras la persona escribe, igual que valida el backend.
+  const emailError = email && !EMAIL_REGEX.test(email) ? t('register.emailInvalid') : null;
+  const usernameError = username && username.length < 3
+    ? t('register.usernameShort')
+    : username && !USERNAME_REGEX.test(username)
+      ? t('register.usernameInvalid')
+      : null;
+  const phoneError = phone && !PHONE_REGEX.test(phone) ? t('register.phoneInvalid') : null;
+
+  const passwordRequirements = [
+    { met: password.length >= 8, label: t('register.requirementLength') },
+    { met: /[A-Z]/.test(password), label: t('register.requirementUppercase') },
+    { met: /\d/.test(password), label: t('register.requirementNumber') },
+  ];
+  const isPasswordValid = passwordRequirements.every((r) => r.met);
+  const confirmMatches = confirmPassword.length > 0 && confirmPassword === password;
+  const confirmError = confirmPassword && confirmPassword !== password ? t('register.passwordMatch') : null;
+
+  const hasBlockingErrors = Boolean(emailError || usernameError || phoneError)
+    || (password.length > 0 && !isPasswordValid)
+    || (confirmPassword.length > 0 && !confirmMatches);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -31,34 +58,18 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
       return setError(t('register.errorFields'));
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return setError(t('register.emailInvalid'));
-    }
-
-    // Opcional. Si se escribe, lo mismo que acepta el backend: dígitos, espacios y "+" (hasta 20)
-    if (phone && !/^[0-9+ ]{7,20}$/.test(phone)) {
-      return setError(t('register.phoneInvalid'));
-    }
-
-    // RegisterRequest exige 8+ caracteres, una mayúscula y un número.
-    if (password.length < 8) {
-      return setError(t('register.passwordShort'));
-    }
-
-    if (!/[A-Z]/.test(password) || !/\d/.test(password)) {
-      return setError(t('register.passwordWeak'));
-    }
-
-    if (password !== confirmPassword) {
-      return setError(t('register.passwordMatch'));
-    }
+    if (emailError) return setError(emailError);
+    if (usernameError) return setError(usernameError);
+    if (phoneError) return setError(phoneError);
+    if (!isPasswordValid) return setError(t('register.passwordWeak'));
+    if (!confirmMatches) return setError(t('register.passwordMatch'));
 
     // Validación solo en frontend (Ley 1581 de 2012 - Habeas Data)
     if (!acceptedTerms) {
       return setError(t('register.termsRequired'));
     }
 
+    setError(null);
     setLoading(true);
 
     try {
@@ -91,6 +102,7 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             placeholder={t('register.firstNamePlaceholder')}
+            maxLength={100}
             required
           />
         </div>
@@ -103,6 +115,7 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             placeholder={t('register.lastNamePlaceholder')}
+            maxLength={100}
             required
           />
         </div>
@@ -110,47 +123,64 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
         {/* Teléfono */}
         <div className="form-group">
           <label>{t('register.phone')}</label>
-          <input
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder={t('register.phonePlaceholder')}
-          />
+          <div className="input-with-icon">
+            <FaPhone className="field-icon" />
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder={t('register.phonePlaceholder')}
+              maxLength={20}
+            />
+          </div>
+          {phoneError && <span className="field-error">{phoneError}</span>}
         </div>
 
         {/* Usuario */}
         <div className="form-group">
           <label>{t('register.username')}</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder={t('register.usernamePlaceholder')}
-            required
-          />
+          <div className="input-with-icon">
+            <FaUser className="field-icon" />
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder={t('register.usernamePlaceholder')}
+              maxLength={50}
+              required
+            />
+          </div>
+          {usernameError && <span className="field-error">{usernameError}</span>}
         </div>
 
         {/* Email */}
         <div className="form-group full">
           <label>{t('register.email')}</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={t('register.emailPlaceholder')}
-            required
-          />
+          <div className="input-with-icon">
+            <FaEnvelope className="field-icon" />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={t('register.emailPlaceholder')}
+              maxLength={150}
+              required
+            />
+          </div>
+          {emailError && <span className="field-error">{emailError}</span>}
         </div>
 
         {/* Contraseña */}
         <div className="form-group full">
           <label>{t('register.password')}</label>
           <div className="password-field">
+            <FaLock className="field-icon" />
             <input
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder={t('register.passwordPlaceholder')}
+              maxLength={100}
               required
             />
             <button
@@ -163,6 +193,17 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
               {showPassword ? <FaEye /> : <FaEyeSlash />}
             </button>
           </div>
+
+          {/* Checklist en vivo: mismas reglas que valida iam en RegisterRequest */}
+          {password.length > 0 && (
+            <ul className="password-requirements">
+              {passwordRequirements.map((req) => (
+                <li key={req.label} className={req.met ? 'met' : ''}>
+                  {req.met ? <FaCheckCircle /> : <FaTimesCircle />} {req.label}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         {/* Confirmar contraseña */}
@@ -170,6 +211,7 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
           <label>{t('register.confirmPassword')}</label>
           {/* Comparte el toggle: es la misma contraseña que se está confirmando */}
           <div className="password-field">
+            <FaLock className="field-icon" />
             <input
               type={showPassword ? 'text' : 'password'}
               value={confirmPassword}
@@ -178,6 +220,8 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
               required
             />
           </div>
+          {confirmError && <span className="field-error">{confirmError}</span>}
+          {confirmMatches && <span className="field-success"><FaCheckCircle /> {t('register.passwordsMatchOk')}</span>}
         </div>
 
         {/* Términos y condiciones / tratamiento de datos */}
@@ -200,12 +244,7 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
         {/* Error */}
         {error && <div className="register-error">{error}</div>}
 
-        {/* Link */}
-        <button type="button" className="register-link" onClick={onSwitchToLogin}>
-          {t('register.haveAccount')}
-        </button>
-        
-        <button className="register-btn" type="submit" disabled={loading}>
+        <button className="register-btn" type="submit" disabled={loading || hasBlockingErrors}>
           {loading ? t('register.submitting') : t('register.submit')}
         </button>
 
@@ -224,11 +263,7 @@ function RegisterForm({ onSubmit, onSwitchToLogin }) {
         </div>
       </div>
     )}
-    <div>
-    <Quotes />
-    </div>
-      </>
-    
+    </>
   );
 }
 

@@ -99,6 +99,20 @@
     "createAccount": "Crear cuenta",
     "iniciarSesion": "Iniciar sesión"
   },
+  "authShowcase": {
+    "titlePart1": "Alquila vehículos con",
+    "titleHighlight": "RentaMovil",
+    "description": "Reserva en línea, recoge tu vehículo en la sucursal que elijas y disfruta tu viaje.",
+    "stat1Label": "Sucursales en Colombia",
+    "stat2Label": "Vehículos disponibles ahora",
+    "feature": "Pago simple y seguro",
+    "featureDesc": "Transferencia bancaria con comprobante, revisado por un administrador antes de confirmar tu reserva.",
+    "help": "Ayuda en línea",
+    "lightMode": "Modo claro",
+    "darkMode": "Modo oscuro",
+    "getApp": "Llévate RentaMovil contigo",
+    "getAppDesc": "Descarga la app para Android"
+  },
   "loginForm": {
     "errorFields": "Rellena todos los campos",
     "emailInvalid": "Introduce un email válido",
@@ -143,6 +157,12 @@
     "passwordShort": "La contraseña debe tener al menos 8 caracteres",
     "passwordWeak": "La contraseña debe tener al menos una mayúscula y un número",
     "passwordMatch": "Las contraseñas no coinciden",
+    "passwordsMatchOk": "Las contraseñas coinciden",
+    "usernameInvalid": "Solo letras, números, punto y guion bajo",
+    "usernameShort": "Mínimo 3 caracteres",
+    "requirementLength": "8+ caracteres",
+    "requirementUppercase": "Una mayúscula",
+    "requirementNumber": "Un número",
     "errorCreate": "Error al crear la cuenta",
     "termsAccept": "Acepto los",
     "termsLink": "términos y condiciones y la política de tratamiento de datos personales",
