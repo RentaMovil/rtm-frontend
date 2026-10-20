@@ -152,7 +152,7 @@ function RegisterForm({ onSubmit }) {
         {error && <div className="register-error">{error}</div>}
 
         {/* Link */}
-        <Link to="/" className="register-link">
+        <Link to="/login" className="register-link">
           ¿Ya tienes cuenta? Inicia sesión
         </Link>
 

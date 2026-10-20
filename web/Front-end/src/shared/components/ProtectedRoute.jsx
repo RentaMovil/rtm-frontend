@@ -1,9 +1,11 @@
 import { Navigate, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useAuth } from "../../contexts/AuthContext";
 
 function SessionLoading() {
-    return <p className="route-loading">Cargando sesión...</p>;
+    const { t } = useTranslation();
+    return <p className="route-loading">{t("common.loadingSession")}</p>;
 }
 
 export function RequireAuth({ children }) {
@@ -17,7 +19,7 @@ export function RequireAuth({ children }) {
     if (!isAuthenticated) {
         return (
             <Navigate
-                to="/"
+                to="/login"
                 replace
                 state={{ from: location.pathname }}
             />
@@ -45,7 +47,7 @@ export function RequireRole({ children, roles = [], permission }) {
     if (!isAuthenticated) {
         return (
             <Navigate
-                to="/"
+                to="/login"
                 replace
                 state={{ from: location.pathname }}
             />

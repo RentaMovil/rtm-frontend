@@ -141,7 +141,7 @@ export default function AccountView({ theme, setTheme }) {
 
     const handleLogout = async () => {
         await logout();
-        navigate("/");
+        navigate("/login");
         setShowLogoutModal(false);
     };
 
@@ -156,7 +156,7 @@ export default function AccountView({ theme, setTheme }) {
                 <div className="containerC">
                     <div className="cardC">
                         <p className="account-error" role="alert">
-                            {error || "No hay una sesión disponible."}
+                            {error || t("account.noSession")}
                         </p>
                         <div className="actions account-actions-fallback">
                             <button
@@ -166,7 +166,7 @@ export default function AccountView({ theme, setTheme }) {
                             >
                                 {t("account.retry")}
                             </button>
-                            <Link className="linkC" to="/">
+                            <Link className="linkC" to="/login">
                                 {t("account.signIn")}
                             </Link>
                         </div>
@@ -294,23 +294,23 @@ export default function AccountView({ theme, setTheme }) {
                             {[
                                 {
                                     id: "skylight",
-                                    label: "Modo claro",
-                                    desc: "Fondo blanco, barra azul marino",
+                                    label: t("account.themes.skylight.label"),
+                                    desc: t("account.themes.skylight.desc"),
                                 },
                                 {
                                     id: "light",
-                                    label: "Modo claro neutro",
-                                    desc: "Fondo blanco, acentos ámbar",
+                                    label: t("account.themes.light.label"),
+                                    desc: t("account.themes.light.desc"),
                                 },
                                 {
                                     id: "dark",
-                                    label: "Modo oscuro neutro",
-                                    desc: "Fondo gris muy oscuro, acento dorado",
+                                    label: t("account.themes.dark.label"),
+                                    desc: t("account.themes.dark.desc"),
                                 },
                                 {
                                     id: "darkPurple",
-                                    label: "Modo oscuro azul",
-                                    desc: "Fondo azul noche, acento dorado",
+                                    label: t("account.themes.darkPurple.label"),
+                                    desc: t("account.themes.darkPurple.desc"),
                                 },
                             ].map(({ id, label, desc }) => (
                                 <button
@@ -500,25 +500,25 @@ export default function AccountView({ theme, setTheme }) {
                                     id: "es",
                                     label: "Español",
                                     flag: espanish,
-                                    desc: "Spanish",
+                                    desc: t("account.languages.es"),
                                 },
                                 {
                                     id: "en",
                                     label: "English",
                                     flag: english,
-                                    desc: "Inglés",
+                                    desc: t("account.languages.en"),
                                 },
                                 {
                                     id: "fr",
                                     label: "Français",
                                     flag: french,
-                                    desc: "Francés",
+                                    desc: t("account.languages.fr"),
                                 },
                                 {
                                     id: "pt",
                                     label: "Português",
                                     flag: portuguese,
-                                    desc: "Portugués",
+                                    desc: t("account.languages.pt"),
                                 },
                             ].map(({ id, label, flag, desc }) => (
                                 <button
