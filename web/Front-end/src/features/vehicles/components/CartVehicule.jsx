@@ -1,10 +1,12 @@
 import './CartVehicule.css';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function CartVehicule({ vehicle, rentalSearch, showActions = true }) {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
 
     if (!vehicle) return null;
 
@@ -17,6 +19,13 @@ function CartVehicule({ vehicle, rentalSearch, showActions = true }) {
 
     const handleContinue = () => {
         if (!showActions) return;
+
+        // Catálogo público; reservar sí exige sesión.
+        if (!isAuthenticated) {
+            navigate("/");
+            return;
+        }
+
         navigate("/Reservation", {
             state: {
                 vehicle,

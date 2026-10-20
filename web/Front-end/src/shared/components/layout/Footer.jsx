@@ -2,6 +2,7 @@ import "./Footer.css";
 import { FaCar, FaInstagram, FaWhatsapp, FaTiktok } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import AuthLink from "../AuthLink.jsx";
 
 
 function Footer() {
@@ -13,8 +14,8 @@ return (
         <h3>{t("footer.links")}</h3>
         <div className="links">
         <Link to="/home">{t("footer.linkInit")}</Link>
-        <Link to="/notification">{t("footer.linkNotifications")}</Link>
-        <Link to="/account">{t("footer.linkAccount")}</Link>
+        <AuthLink to="/notification">{t("footer.linkNotifications")}</AuthLink>
+        <AuthLink to="/account">{t("footer.linkAccount")}</AuthLink>
 
     </div>
         </div>
