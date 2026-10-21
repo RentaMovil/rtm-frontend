@@ -229,6 +229,14 @@
     border-color: var(--button);
     }
 
+    /* El usuario nunca se puede editar: se ve distinto a propósito incluso en
+       modo edición, para que no parezca un campo editable más. */
+    .inputC--locked {
+    background-color: var(--border);
+    color: var(--placeholder);
+    cursor: not-allowed;
+    }
+
     .accountLink {
     margin-top: 8px;
     }

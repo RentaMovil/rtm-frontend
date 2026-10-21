@@ -141,10 +141,11 @@ export default function ProfileIdentity({
                 </label>
                 <input
                     id="profile-username"
-                    className="inputC"
+                    className="inputC inputC--locked"
                     type="text"
                     value={user.username || EMPTY}
                     readOnly
+                    title={t("account.usernameLocked")}
                 />
             </div>
 
