@@ -270,6 +270,8 @@
     "selectBank": "Select your destination bank account",
     "registerError": "The payment could not be registered. Try again.",
     "createReservationError": "The reservation could not be created. Try again.",
+    "confirmCreateReservation": "Do you confirm you want to create this reservation?",
+    "reservationCreatedSuccess": "Your reservation was created.",
     "noReservation": "No reservation is available.",
     "reservationIncomplete": "The reservation is incomplete. Go back and complete the details before paying.",
     "sentTitle": "Payment sent!",
@@ -1232,6 +1234,7 @@
       "Status"
     ],
     "csvFilename": "reservations.csv",
+    "confirmApprove": "Do you confirm you want to approve this payment?",
     "approveError": "The payment could not be approved.",
     "rejectError": "The payment could not be rejected.",
     "operationError": "The operation could not be registered."

@@ -270,6 +270,8 @@
     "selectBank": "Selecione sua conta bancária de destino",
     "registerError": "Não foi possível registrar o pagamento. Tente novamente.",
     "createReservationError": "Não foi possível criar a reserva. Tente novamente.",
+    "confirmCreateReservation": "Confirma que deseja criar esta reserva?",
+    "reservationCreatedSuccess": "Sua reserva foi criada.",
     "noReservation": "Nenhuma reserva disponível.",
     "reservationIncomplete": "A reserva está incompleta. Volte e complete os dados antes de pagar.",
     "sentTitle": "Pagamento enviado!",
@@ -1232,6 +1234,7 @@
       "Status"
     ],
     "csvFilename": "reservas.csv",
+    "confirmApprove": "Confirma que deseja aprovar este pagamento?",
     "approveError": "Não foi possível aprovar o pagamento.",
     "rejectError": "Não foi possível rejeitar o pagamento.",
     "operationError": "Não foi possível registrar a operação."

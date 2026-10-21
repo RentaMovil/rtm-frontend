@@ -16,6 +16,7 @@ import { usePaymentForm } from "../hooks/usePaymentForm";
 import { useReservation } from "../../booking/context/ReservationContext";
 import { isValidTermsAcceptance } from "../../booking/data/rentalTerms";
 import { usePayment } from "../context/PaymentContext";
+import { useDialog } from "../../../shared/components/dialog/dialogContext";
 
 import "./Payment.css";
 
@@ -48,6 +49,7 @@ export default function PaymentPage() {
 
     const { reservation, clearReservation } = useReservation();
     const { clearPayment } = usePayment();
+    const { confirm, alert } = useDialog();
 
     const {
         canSubmit,
@@ -67,6 +69,9 @@ export default function PaymentPage() {
     const handleSubmit = async () => {
         setSubmitError(null);
 
+        const confirmed = await confirm({ message: t("payment.confirmCreateReservation") });
+        if (!confirmed) return;
+
         try {
             await handlePayment();
             setSubmitted(true);
@@ -84,8 +89,12 @@ export default function PaymentPage() {
     const handleReserveOnly = async () => {
         setSubmitError(null);
 
+        const confirmed = await confirm({ message: t("payment.confirmCreateReservation") });
+        if (!confirmed) return;
+
         try {
             await createPendingReservation();
+            await alert({ message: t("payment.reservationCreatedSuccess"), tone: "success" });
             clearReservation();
             clearPayment();
             navigate("/HistorialReservation");
@@ -137,6 +146,10 @@ export default function PaymentPage() {
                 <div className="pay-page-container">
                     <section className="pay-card pay-success">
                         <span className="pay-success-icon">✓</span>
+
+                        <p className="pay-success-subtitle">
+                            {t("payment.reservationCreatedSuccess")}
+                        </p>
 
                         <h2 className="pay-success-title">
                             {t("payment.sentTitle")}
