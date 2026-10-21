@@ -93,11 +93,11 @@ const handleResend = async () => {
         }
         setCode(new Array(CODE_LENGTH).fill(''));
         inputsRef.current[0]?.focus();
-        setInfo('Te enviamos un nuevo código');
+        setInfo(t("codeVerification.newCodeSent"));
         setCooldown(RESEND_SECONDS);
     } catch (err) {
         // ej. 429 si se pidieron demasiados códigos
-        setError(err.message || 'No se pudo reenviar el código');
+        setError(err.message || t("codeVerification.resendError"));
     } finally {
         setIsResending(false);
     }
@@ -143,7 +143,7 @@ const handleVerify = async (e) => {
                     
                     <h2 className={style["title"]}>{t("codeVerification.title")}</h2>
                     <p className={style["description"]}>
-                        Ingrese el código de 6 dígitos enviado a<br />
+                        {t("codeVerification.description")}<br />
                         <strong>{email}</strong>
                     </p>
 
@@ -178,17 +178,17 @@ const handleVerify = async (e) => {
                             className={style["confirm-button"]}
                             disabled={isVerifying}
                         >
-                            {isVerifying ? 'Verificando...' : 'Verificar Código'}
+                            {isVerifying ? t("codeVerification.verifying") : t("codeVerification.verify")}
                             {!isVerifying && <AiOutlineArrowRight className={style["button-icon"]} />}
                         </button>
 
                         <div className={style["resend-link"]}>
-                            ¿No recibiste el código? <button
+                            {t("codeVerification.noCodeReceived")} <button
                                 type="button"
                                 onClick={handleResend}
                                 disabled={isResending || cooldown > 0}
                             >
-                                {cooldown > 0 ? `Reenviar (${cooldown}s)` : 'Reenviar'}
+                                {cooldown > 0 ? t("codeVerification.resendCountdown", { seconds: cooldown }) : t("codeVerification.resend")}
                             </button>
                         </div>
                     </form>
@@ -196,11 +196,11 @@ const handleVerify = async (e) => {
                     <div className={style["security-footer"]}>
                         <div className={style["security-item"]}>
                             <AiOutlineLock />
-                            <span>Código expira en 15 min</span>
+                            <span>{t("codeVerification.codeExpires")}</span>
                         </div>
                         <div className={style["security-item"]}>
                             <AiOutlineSafety />
-                            <span>Datos Encriptados</span>
+                            <span>{t("codeVerification.dataEncrypted")}</span>
                         </div>
                     </div>
                 </div>

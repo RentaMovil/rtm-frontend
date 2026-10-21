@@ -295,13 +295,13 @@ function CheckStatus() {
                                             defaultValue="">
                                             <option value="" disabled>{t('vehicleForm.disabledType')}</option>
                                             <optgroup label={t('vehicleForm.labelType1')}>
-                                                <option value="Sedán">Sedán</option>
+                                                <option value="Sedán">{t('vehicleForm.carTypeSedan')}</option>
                                                 <option value="Hatchback">Hatchback</option>
                                                 <option value="SUV">SUVs</option>
-                                                <option value="Camioneta">Camioneta</option>
+                                                <option value="Camioneta">{t('vehicleForm.carTypeSuv')}</option>
                                                 <option value="Pickup">Pickup</option>
                                                 <option value="Van">Van</option>
-                                                <option value="Coupé">Coupé</option>
+                                                <option value="Coupé">{t('vehicleForm.carTypeCoupe')}</option>
                                             </optgroup>
                                             <optgroup label={t('vehicleForm.labelType2')}>
                                                 <option value="Camión">{t('vehicleForm.cargaType1')}</option>

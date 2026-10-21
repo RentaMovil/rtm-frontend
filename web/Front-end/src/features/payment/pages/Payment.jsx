@@ -75,7 +75,7 @@ export default function PaymentPage() {
 
             setSubmitError(
                 error?.message ??
-                    "No fue posible registrar el pago. Intenta de nuevo."
+                    t("payment.registerError")
             );
         }
     };
@@ -90,7 +90,7 @@ export default function PaymentPage() {
             clearPayment();
             navigate("/HistorialReservation");
         } catch (error) {
-            setSubmitError(error?.message ?? "No fue posible crear la reserva. Intenta de nuevo.");
+            setSubmitError(error?.message ?? t("payment.createReservationError"));
         }
     };
 
@@ -118,10 +118,10 @@ export default function PaymentPage() {
                 <div className="pay-page-container">
                     <p className="pay-empty-state">
                         {!reservation?.vehicle
-                            ? "No hay reserva disponible."
+                            ? t("payment.noReservation")
                             : !hasValidTermsAcceptance
-                                ? "Debes aceptar los términos y condiciones antes de continuar al pago."
-                                : "La reserva está incompleta. Regresa y completa los datos antes de pagar."}
+                                ? t("terms.acceptError")
+                                : t("payment.reservationIncomplete")}
                     </p>
                 </div>
                 <RoleFooter />
@@ -139,18 +139,17 @@ export default function PaymentPage() {
                         <span className="pay-success-icon">✓</span>
 
                         <h2 className="pay-success-title">
-                            ¡Pago enviado!
+                            {t("payment.sentTitle")}
                         </h2>
 
                         <p className="pay-success-text">
-                            Registramos tu comprobante y tu reserva quedó
-                            <strong> pendiente de revisión</strong>. Un
-                            administrador validará la transferencia y te
-                            notificaremos cuando quede confirmada.
+                            {t("payment.sentTextBefore")}
+                            <strong> {t("payment.sentTextStrong")}</strong>
+                            {t("payment.sentTextAfter")}
                         </p>
 
                         <ContinueButton
-                            title="Volver al inicio"
+                            title={t("payment.backToHome")}
                             onPress={handleBackToHome}
                         />
                     </section>
@@ -178,24 +177,24 @@ export default function PaymentPage() {
                         <section className="pay-card">
                             <PaySectionHeader
                                 title={t("payment.selectBank")}
-                                subtitle="💡 Escanea el código QR directamente desde la app de tu banco."
+                                subtitle={t("payment.selectBankSubtitle")}
                             />
                             <BankAccountSelector />
                         </section>
 
                         <section className="pay-card">
                             <PaySectionHeader
-                                title="Registrar transferencia"
-                                subtitle="Ingresa los datos correspondientes a la transferencia realizada."
+                                title={t("payment.registerTransfer")}
+                                subtitle={t("payment.registerTransferSubtitle")}
                             />
                             <TransferDetails />
                         </section>
 
                         <section className="pay-card">
                             <PaySectionHeader
-                                title="Comprobante de pago"
-                                subtitle="Adjunta el comprobante correspondiente a la transferencia realizada."
-                                badge="Para pagar ahora"
+                                title={t("payment.receiptTitle")}
+                                subtitle={t("payment.receiptSubtitle")}
+                                badge={t("payment.payNowBadge")}
                             />
                             <PaymentReceiptUpload />
                         </section>
@@ -203,7 +202,7 @@ export default function PaymentPage() {
 
                     <aside className="pay-side-column">
                         <section className="pay-card pay-invoice-card">
-                            <PaySectionHeader title="Resumen de factura" />
+                            <PaySectionHeader title={t("payment.invoiceSummary")} />
                             <InvoiceCard
                                 days={days}
                                 total={total}
@@ -221,24 +220,23 @@ export default function PaymentPage() {
                             {isProcessing ? (
                                 <div className="pay-loading">
                                     <span className="pay-spinner" aria-hidden="true" />
-                                    Procesando tu pago...
+                                    {t("payment.processing")}
                                 </div>
                             ) : (
                                 <>
                                     <ContinueButton
-                                        title="Reservar y enviar comprobante"
+                                        title={t("payment.reserveAndSendReceipt")}
                                         onPress={handleSubmit}
                                         disabled={!canSubmit}
                                     />
                                     {/* INV-015: la reserva espera el pago 24 h en PENDING_PAYMENT */}
                                     <ContinueButton
-                                        title="Reservar y pagar después"
+                                        title={t("payment.reserveAndPayLater")}
                                         onPress={handleReserveOnly}
                                         disabled={!canCreateReservation}
                                     />
                                     <p className="pay-later-note">
-                                        Si reservas sin pagar, tienes 24 horas para subir el comprobante
-                                        desde "Mis reservas". Pasado ese plazo la reserva se cancela sola.
+                                        {t("payment.payLaterNote")}
                                     </p>
                                 </>
                             )}

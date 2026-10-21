@@ -11,11 +11,13 @@ import img2 from "../../../assets/img/img2.jpg";
 import img3 from "../../../assets/img/img3.webp";
 import FilterCalendar from "../components/FilterCalendar.jsx";
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useCars } from "../hooks/useCars.js";
 import { filterAvailableVehicles } from "../utils/filterAvilableCars.js";
 import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
 
 function Home() {
+  const { t } = useTranslation();
   const { cars, isLoading: loading, error } = useCars();
   const [carsFiltered, setCarsFiltered] = useState([]);
 
@@ -115,18 +117,18 @@ function Home() {
             <div className="filters-mobile-header">
               <button className="filters-toggle-btn" onClick={() => setShowFiltersModal(true)}>
                 <FaBars />
-                <span>Filtros</span>
+                <span>{t("filtersHome.filters")}</span>
               </button>
             </div>
           )}
 
           <div className="card-vehicule-container">
-            {loading && <p className="search-message">Buscando vehículos...</p>}
+            {loading && <p className="search-message">{t("filtersHome.searching")}</p>}
             {!loading && error && <p className="notFound">{error}</p>}
 
             {!loading && !error && visibleCars.length === 0 && (
               <p className="notFound">
-                No hay vehículos disponibles
+                {t("filtersHome.noVehicles")}
                 <FaSearch />
               </p>
             )}
@@ -154,7 +156,7 @@ function Home() {
 
             <h3 className="filters-title">
               <span className="catalog-sidebar-dot" aria-hidden="true" />
-              Filtros
+              {t("filtersHome.filters")}
             </h3>
 
             <FiltrerBrand cars={cars} onFilter={setBrandFilter} />
@@ -162,7 +164,7 @@ function Home() {
             <FiltrerType cars={cars} onFilter={setTypeFilter} />
 
             <button className="btn-clear-filters" onClick={handleClearFilters}>
-              Limpiar filtros
+              {t("filtersHome.clear")}
             </button>
           </aside>
         )}

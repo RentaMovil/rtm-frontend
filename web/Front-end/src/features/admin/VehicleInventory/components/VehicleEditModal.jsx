@@ -86,7 +86,7 @@ export default function VehicleEditModal({ vehicle, onClose, onSaved }) {
             onSaved?.();
             onClose();
         } catch (err) {
-            setSubmitError(err.message || "No se pudo guardar el vehículo.");
+            setSubmitError(err.message || t("CheckStatus.modal.saveError"));
         } finally {
             setIsSaving(false);
         }
@@ -100,7 +100,7 @@ export default function VehicleEditModal({ vehicle, onClose, onSaved }) {
             onSaved?.();
             onClose();
         } catch (err) {
-            setSubmitError(err.message || "No se pudo retirar el vehículo.");
+            setSubmitError(err.message || t("CheckStatus.modal.retireError"));
             setConfirmRetire(false);
         } finally {
             setIsSaving(false);

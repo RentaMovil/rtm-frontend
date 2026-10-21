@@ -1,5 +1,8 @@
 {
-  "dialog": { "accept": "OK", "cancel": "Cancel" },
+  "dialog": {
+    "accept": "OK",
+    "cancel": "Cancel"
+  },
   "navbar": {
     "linkInit": "Home",
     "linkNotifications": "Notifications",
@@ -30,7 +33,9 @@
     "deliveryHour": "Pickup time",
     "returnDate": "Return date",
     "returnHour": "Return time",
-    "search": "Search"
+    "search": "Search",
+    "branchPlaceholder": "E.g.: Bogotá...",
+    "change": "Change "
   },
   "cartVehicule": {
     "gasoline": "Gasoline",
@@ -57,7 +62,12 @@
     "max": "Maximum",
     "category": "Category",
     "subtitle": "Find the perfect vehicle for your trip.",
-    "searching": "Searching for vehicles..."
+    "searching": "Searching for vehicles...",
+    "availableFleet": "Available Fleet",
+    "filterFleet": "Filter Fleet",
+    "noVehiclesFiltered": "No vehicles available with those filters",
+    "filters": "Filters",
+    "noVehicles": "No vehicles available"
   },
   "reservation": {
     "ErrorDate": "Return date cannot be earlier than pickup date",
@@ -86,7 +96,8 @@
     "dateOfBirth": "Date of birth",
     "document": "ID Document No.",
     "phone": "Phone",
-    "submit": "Rent"
+    "submit": "Rent",
+    "incomplete": "The reservation is incomplete"
   },
   "terms": {
     "acceptLabel": "I have read and accept the terms and conditions",
@@ -181,7 +192,13 @@
     "termsRequired": "You must accept the terms and conditions and the personal data processing policy to register",
     "termsTitle": "Terms and conditions and personal data processing",
     "termsClose": "Close",
-    "termsBody": ["By creating an account on RentaMovil you authorize the processing of your personal data (first name, last name, email, phone and username) in accordance with Colombian Law 1581 of 2012 (Habeas Data).", "Purpose: managing your account, reservations, payments and invoicing, and contacting you about the service.", "Your rights: to access, update, rectify and delete your data, and to revoke this authorization at any time.", "Your data will not be shared with third parties except where legally required or to complete the contracted service (e.g. payment processing).", "Vehicle rental conditions will be presented and accepted again during the reservation process."]
+    "termsBody": [
+      "By creating an account on RentaMovil you authorize the processing of your personal data (first name, last name, email, phone and username) in accordance with Colombian Law 1581 of 2012 (Habeas Data).",
+      "Purpose: managing your account, reservations, payments and invoicing, and contacting you about the service.",
+      "Your rights: to access, update, rectify and delete your data, and to revoke this authorization at any time.",
+      "Your data will not be shared with third parties except where legally required or to complete the contracted service (e.g. payment processing).",
+      "Vehicle rental conditions will be presented and accepted again during the reservation process."
+    ]
   },
   "quotes": {
     "quote1": "Trust your journey. Trust Rentamovil.",
@@ -216,7 +233,32 @@
     "guardando": "Saving...",
     "confirmLogout": "Yes, log out",
     "loadingProfile": "Loading profile...",
-    "logoutQuestion": "Are you sure you want to log out?"
+    "logoutQuestion": "Are you sure you want to log out?",
+    "noSession": "No session is available.",
+    "themes": {
+      "skylight": {
+        "label": "Light mode",
+        "desc": "White background, navy blue bar"
+      },
+      "light": {
+        "label": "Neutral light mode",
+        "desc": "White background, amber accents"
+      },
+      "dark": {
+        "label": "Neutral dark mode",
+        "desc": "Very dark grey background, gold accent"
+      },
+      "darkPurple": {
+        "label": "Dark blue mode",
+        "desc": "Night blue background, gold accent"
+      }
+    },
+    "languages": {
+      "es": "Spanish",
+      "en": "English",
+      "fr": "French",
+      "pt": "Portuguese"
+    }
   },
   "payment": {
     "payTitle": "Confirm Payment",
@@ -236,7 +278,28 @@
     "placeholderAddress": "Delivery address",
     "confirm": "Confirm and pay",
     "vehicleDetails": "Vehicle details",
-    "selectBank": "Select your destination bank account"
+    "selectBank": "Select your destination bank account",
+    "registerError": "The payment could not be registered. Try again.",
+    "createReservationError": "The reservation could not be created. Try again.",
+    "noReservation": "No reservation is available.",
+    "reservationIncomplete": "The reservation is incomplete. Go back and complete the details before paying.",
+    "sentTitle": "Payment sent!",
+    "sentTextBefore": "We registered your receipt and your reservation is now",
+    "sentTextStrong": "pending review",
+    "sentTextAfter": ". An administrator will validate the transfer and we will notify you once it is confirmed.",
+    "backToHome": "Back to home",
+    "selectBankSubtitle": "💡 Scan the QR code directly from your bank's app.",
+    "registerTransfer": "Register transfer",
+    "registerTransferSubtitle": "Enter the details of the transfer you made.",
+    "receiptTitle": "Payment receipt",
+    "receiptSubtitle": "Attach the receipt for the transfer you made.",
+    "payNowBadge": "To pay now",
+    "invoiceSummary": "Invoice summary",
+    "processing": "Processing your payment...",
+    "reserveAndSendReceipt": "Reserve and send receipt",
+    "reserveAndPayLater": "Reserve and pay later",
+    "payLaterNote": "If you reserve without paying, you have 24 hours to upload the receipt from \"My Reservations\". After that period, the reservation is cancelled automatically.",
+    "missingReservationId": "The reservation ID was not received."
   },
   "buttonBack": {
     "label": "Back"
@@ -371,7 +434,12 @@
     "branch": "Branch",
     "disabledBranch": "Select a branch",
     "requiredBranch": "The branch is required",
-    "requiredCapacity": "Capacity is required"
+    "requiredCapacity": "Capacity is required",
+    "catalogError": "The vehicle catalog could not be loaded",
+    "createError": "Error creating the vehicle",
+    "carTypeSedan": "Sedan",
+    "carTypeSuv": "SUV",
+    "carTypeCoupe": "Coupe"
   },
   "contractHistory": {
     "title": "Contract history",
@@ -506,7 +574,9 @@
     "date": "Date",
     "state": "Status",
     "vehicle": "Vehicle",
-    "close": "Close"
+    "close": "Close",
+    "loading": "Loading notifications...",
+    "emptyFilter": "There are no notifications for this filter."
   },
   "historyReservation": {
     "myReservations": "My Reservations",
@@ -546,7 +616,8 @@
       "activa": "Active",
       "cancelada": "Cancelled",
       "completada": "Completed"
-    }
+    },
+    "updateBranchError": "The return branch could not be updated."
   },
   "VehicleInventary": {
     "title": "Vehicle Inventory",
@@ -650,7 +721,9 @@
       "retire": "Retire vehicle",
       "retireConfirm": "Retire this vehicle? This cannot be undone.",
       "retireYes": "Yes, retire",
-      "retiredNotice": "This vehicle is retired: it can no longer be edited or rented."
+      "retiredNotice": "This vehicle is retired: it can no longer be edited or rented.",
+      "saveError": "The vehicle could not be saved.",
+      "retireError": "The vehicle could not be retired."
     },
     "actions": {
       "save": "Save changes",
@@ -736,7 +809,10 @@
       "option14": "Bodywork"
     },
     "startNow": "Start now (the vehicle goes into maintenance)",
-    "selectVehicle": "Select a vehicle from the list"
+    "selectVehicle": "Select a vehicle from the list",
+    "invalidDate": "Invalid date",
+    "dateBeforeToday": "The date cannot be earlier than today",
+    "dateAfterTwoMonths": "The date cannot be later than two months from today"
   },
   "CartVehiculeMaintenance": {
     "veicle": "Vehicle",
@@ -747,7 +823,8 @@
     "completed": "Completed",
     "cancel": "Cancelled",
     "offObservations": "No observations",
-    "seeMore": "See more"
+    "seeMore": "See more",
+    "noDate": "No date"
   },
   "FiltrerHistory": {
     "placeholder": "Search by license plate, brand or model...",
@@ -932,7 +1009,10 @@
       "cancel": "Cancel",
       "save": "Save"
     },
-    "loading": "Loading insurance..."
+    "loading": "Loading insurance...",
+    "selectorTitle": "Insurance",
+    "selectorSubtitle": "Select the coverage you want for your reservation.",
+    "selectorAriaLabel": "Insurance coverage"
   },
   "branches": {
     "title": "Branches",
@@ -1007,7 +1087,8 @@
       "deleting": "Deleting..."
     },
     "loading": "Loading branches...",
-    "mapLabel": "Location on the map (click to mark the exact spot)"
+    "mapLabel": "Location on the map (click to mark the exact spot)",
+    "mapAriaLabel": "Branch map"
   },
   "reservations": {
     "breadcrumbAdmin": "Administration Panel",
@@ -1043,7 +1124,6 @@
     "sameBranch": "Same return branch",
     "dropoffLabel": "Drop-off",
     "emptyTitle": "No reservations match these filters.",
-
     "serviceUnavailable": "The location service is not available yet. There are no routes to show.",
     "clearFilters": "Clear filters",
     "showingRange": "Showing {{from}} to {{to}} of {{total}} results",
@@ -1150,7 +1230,22 @@
       "subtitle": "Reference: {{reference}}"
     },
     "loading": "Loading reservations...",
-    "loadingDetail": "Loading..."
+    "loadingDetail": "Loading...",
+    "csvHeaders": [
+      "ID",
+      "Customer",
+      "Vehicle",
+      "Plate",
+      "Pickup",
+      "Return",
+      "Branch",
+      "Total",
+      "Status"
+    ],
+    "csvFilename": "reservations.csv",
+    "approveError": "The payment could not be approved.",
+    "rejectError": "The payment could not be rejected.",
+    "operationError": "The operation could not be registered."
   },
   "process": {
     "title": "4 steps to your next trip",
@@ -1200,7 +1295,6 @@
     "kpiLastUpdate": "Last signal",
     "loading": "Loading the fleet...",
     "emptyTitle": "No vehicles on rental",
-
     "serviceUnavailable": "The location service is not available yet. There are no routes to show.",
     "emptyHint": "Location is only available for vehicles with an in-progress reservation and an active GPS.",
     "listTitle": "Vehicles",
@@ -1257,7 +1351,6 @@
     "pendingWarn_other": "Also, {{count}} have not reported a position for over 2 hours.",
     "openFleet": "View on the map",
     "emptyTitle": "No active reservations to track",
-
     "serviceUnavailable": "The location service is not available yet. There are no routes to show.",
     "emptyHint": "There are no rentals in progress, so there are no routes to follow today.",
     "listTitle": "Active reservations",
@@ -1270,16 +1363,212 @@
   },
   "emailVerification": {
     "title": "Enter your email address",
-    "invalidFormat": "Invalid email format"
+    "invalidFormat": "Invalid email format",
+    "sendError": "The code could not be sent",
+    "description": "We will send you a security code to verify your identity and continue",
+    "required": "Email is required",
+    "sending": "Sending code...",
+    "confirm": "Confirm",
+    "sslVerified": "SSL Verified",
+    "dataProtected": "Protected Data"
   },
   "codeVerification": {
     "title": "Verification code",
     "incomplete": "Please enter all 6 digits",
-    "invalid": "Incorrect or expired code. Try again."
+    "invalid": "Incorrect or expired code. Try again.",
+    "newCodeSent": "We sent you a new code",
+    "resendError": "The code could not be resent",
+    "description": "Enter the 6-digit code sent to",
+    "verifying": "Verifying...",
+    "verify": "Verify Code",
+    "noCodeReceived": "Didn't receive the code?",
+    "resendCountdown": "Resend ({{seconds}}s)",
+    "resend": "Resend",
+    "codeExpires": "Code expires in 15 min",
+    "dataEncrypted": "Encrypted Data"
   },
   "uploadReceipt": {
     "loadError": "Bank accounts could not be loaded.",
     "close": "Close",
-    "selectAccount": "Select an account"
+    "selectAccount": "Select an account",
+    "missingFields": "Complete the bank account, the reference and the receipt.",
+    "uploadError": "The receipt could not be uploaded.",
+    "modalTitle": "Upload receipt — Reservation #{{id}}",
+    "destinationAccount": "Destination bank account",
+    "downloadQr": "Download QR",
+    "referencePlaceholder": "As shown on the receipt",
+    "receiptFileLabel": "Receipt (image or PDF)",
+    "totalToTransfer": "Total to transfer:",
+    "uploading": "Uploading..."
+  },
+  "common": {
+    "loadingSession": "Loading session...",
+    "httpErrors": {
+      "noRefreshToken": "No refresh token available",
+      "refreshFailed": "Could not refresh the session",
+      "notFound": "We couldn't find what you were looking for.",
+      "sessionExpired": "Your session expired. Please log in again.",
+      "forbidden": "You don't have permission to view this.",
+      "conflict": "The operation could not be completed due to a conflict with existing data.",
+      "tooManyAttempts": "Too many attempts. Wait a moment and try again.",
+      "serviceUnavailable": "The service is unavailable right now. Try again later.",
+      "generic": "The operation could not be completed. Try again."
+    },
+    "noLocationAvailable": "No location available"
+  },
+  "rentalTerms": {
+    "effectiveDate": "September 24, 2026",
+    "sections": {
+      "objeto": {
+        "title": "1. Purpose and acceptance",
+        "paragraphs": [
+          "These terms and conditions govern access to the RentaMóvil platform and the reservation and rental of vehicles through it. Checking the authorization box, together with the date, version and data of the selected reservation, constitutes digital evidence of acceptance of this document.",
+          "The customer declares that they have read and fully understood them. If they disagree with any of its provisions, they must not continue with the reservation or make the payment."
+        ]
+      },
+      "requisitos": {
+        "title": "2. Customer and driver requirements",
+        "paragraphs": [
+          "The customer declares that they meet the minimum age required by applicable regulations, that they hold a valid driving licence covering the entire rental period, and that they have the authorization and capacity to enter into this contract.",
+          "At the time of handover, the customer must present identification documents, driving licence and any other requirements stated in the reservation or at the branch. Any additional driver must be authorized in advance by RentaMóvil. Providing false, expired or insufficient information may lead to suspension or cancellation of the service, without prejudice to the customer's rights."
+        ]
+      },
+      "reserva": {
+        "title": "3. Selection, availability and price",
+        "paragraphs": [
+          "The reservation represents a request subject to verification of availability, data, chosen coverage and payment. RentaMóvil may offer an equivalent vehicle of the same category when necessary, disclosing any price difference and obtaining the customer's approval when the change substantially affects what was contracted.",
+          "The total shown on the platform corresponds to the products, dates, branches, coverage and services selected. Included taxes are expressly identified on the payment screen. Tolls, parking, fines, consumption and other third-party charges will be paid by the customer when required by law or by the service provided."
+        ]
+      },
+      "pago": {
+        "title": "4. Payment, receipt and reservation activation",
+        "paragraphs": [
+          "Payment must be made exclusively through the enabled and current channels and bank accounts shown on the platform. The customer must transfer the stated amount and submit a legible receipt that can be linked to the reservation.",
+          "Submitting the receipt does not equal payment approval nor does it confirm the reservation by itself. The status remains pending review until an administrator validates the transfer. A rejected payment, an incorrect reference, an amount mismatch or an illegible receipt will not activate the service. The receipt must not be shared with third parties outside the authorized channels."
+        ]
+      },
+      "cambios": {
+        "title": "5. Changes, cancellation and refunds",
+        "paragraphs": [
+          "Change or cancellation requests must be submitted through official channels before the pickup date and time. The conditions, deadlines, costs and penalties expressly shown in the offer and accepted by the customer when confirming the reservation will apply. If no special condition is visible, RentaMóvil will disclose the applicable cost before processing the request.",
+          "No refund will be issued for services already rendered, third-party expenses, damages attributable to the customer, or cases set out in applicable regulations, without prejudice to the consumer's non-waivable rights and the specific rules of the chosen coverage."
+        ]
+      },
+      "entrega": {
+        "title": "6. Vehicle handover",
+        "paragraphs": [
+          "Handover takes place at the confirmed branch, date and time slot, subject to availability and timely presentation of the required documents. The customer must receive and inspect the vehicle before leaving the branch.",
+          "The handover includes a check of appearance, mileage, fuel, accessories and basic operation, the result of which is recorded in the handover document. Any damage, missing item or defect not recorded must be reported before driving off."
+        ]
+      },
+      "deposito": {
+        "title": "7. Security deposit and third-party payments",
+        "paragraphs": [
+          "When applicable, the customer must place a deposit or provide a guarantee according to the amount and mechanism stated in the reservation or rental contract. This deposit is a performance guarantee and not a payment for the reservation, unless expressly stated otherwise.",
+          "The deposit will be released once the vehicle is returned and its condition, documentation, fuel, mileage and absence of outstanding obligations are verified. If there are damages, fines or other pending amounts, the verified amount may be deducted, respecting the required notifications, process and the customer's rights."
+        ]
+      },
+      "uso": {
+        "title": "8. Permitted use and prohibitions",
+        "paragraphs": [
+          "The vehicle may only be used for lawful travel by the authorized driver. Prohibited uses include, among others, driving under the influence of alcohol or drugs, racing, competitions, speed trials, off-road driving, overloading, unauthorized commercial use, subletting, abandoning the vehicle, removing or tampering with the GPS device, and any unlawful activity.",
+          "The driver must comply with traffic regulations, signage, circulation restrictions and legitimate orders from the authorities. The customer will be liable for the consequences of improper use, without prejudice to the contracted coverage."
+        ]
+      },
+      "responsabilidad": {
+        "title": "9. Liability, incidents and insurance",
+        "paragraphs": [
+          "The customer must drive carefully and immediately notify RentaMóvil, the competent authority and, where applicable, their insurer of any accident, theft, damage or incident. They must not carry out repairs or move the vehicle without authorization, except for an urgent measure to prevent further damage.",
+          "The customer will be liable for fines, tolls, parking fees, and damages or losses to third parties to the extent legally applicable. The chosen insurance coverage operates only within its scope, limits and deductible; it does not replace uncovered liabilities. The summary of the selected coverage is part of the reservation."
+        ]
+      },
+      "devolucion": {
+        "title": "10. Return and extension",
+        "paragraphs": [
+          "The vehicle must be returned to the stated branch, date and time, with the same fuel level, mileage, accessories, documents and quality condition, except for permitted ordinary wear. The return will be documented through an inspection and handover record.",
+          "Any extension must be requested before the return time and is subject to availability and the current rate. A delay in returning the vehicle does not create an automatic extension. A late return or one made outside the agreed branch may result in additional charges and, where applicable, the application of the deposit."
+        ]
+      },
+      "disponibilidad": {
+        "title": "11. Availability and force majeure events",
+        "paragraphs": [
+          "RentaMóvil may modify or cancel a reservation for reasons of safety, maintenance, lack of availability or other justified cause, notifying the customer. In that case, the refund of amounts corresponding to services not rendered will be handled in accordance with the law and what the customer has already used.",
+          "Force majeure events, civil unrest, traffic restrictions, emergencies or other circumstances beyond reasonable control may alter dates, routes or conditions. The customer must use the official channels to receive instructions and options."
+        ]
+      },
+      "datos": {
+        "title": "12. Personal data and communications",
+        "paragraphs": [
+          "The data provided will be used to manage the reservation, verify the payment, provide support, comply with legal obligations, prevent fraud and maintain the security of the platform. Processing will be carried out in accordance with data protection regulations and the privacy notices and purposes that RentaMóvil will disclose to the customer.",
+          "Operational communications — for example, reminders, payment status and delivery instructions — may be sent through the registered channels. Commercial use of the data or marketing communications require the separate authorization required by law."
+        ]
+      },
+      "derechos": {
+        "title": "13. Intellectual property and limits of liability",
+        "paragraphs": [
+          "The platform, its design, texts, logos, photographs and other components are used exclusively to facilitate the service. The customer may not reproduce, modify or commercially exploit them without prior authorization.",
+          "To the extent permitted by law, RentaMóvil is not liable for indirect damages or loss of profit arising from the use of the platform. This limitation does not exclude liabilities that cannot be excluded, nor the consumer's rights. The customer must use the service lawfully and responsibly."
+        ]
+      },
+      "vigencia": {
+        "title": "14. Validity, applicable law and contact",
+        "paragraphs": [
+          "This version applies to reservations initiated from its publication date. Changes will be published with a new version and date; the version accepted by each customer will be kept together with the evidence of acceptance. Modifications affecting vested rights will not be applied to an already accepted reservation without express authorization or legal basis.",
+          "This relationship is governed by Colombian law. Any dispute will be resolved through the applicable dispute resolution mechanisms and by the competent courts and tribunals, without prejudice to consumer protection rules. For inquiries, the customer may use the official channels published on the platform or go to the branch related to the reservation."
+        ]
+      }
+    }
+  },
+  "paymentValidator": {
+    "bankAccountRequired": "You must select a destination bank account.",
+    "referenceRequired": "You must enter the transfer's reference number.",
+    "receiptRequired": "You must attach the payment receipt.",
+    "invalidFormat": "The receipt must be in PNG, JPG, JPEG or PDF format.",
+    "maxSize": "The receipt cannot exceed 10 MB.",
+    "totalUnknown": "The reservation total could not be determined."
+  },
+  "bankAccountSelector": {
+    "selectedAccount": "Selected account: {{bankName}}",
+    "hideAccounts": "Hide bank accounts",
+    "selectAccount": "Select bank account",
+    "chooseAccountHint": "Choose the account you will transfer to.",
+    "toggleHint": "Tap to view or change the available accounts.",
+    "bankAccount": "Bank account",
+    "holder": "Holder:",
+    "qrFor": "QR CODE FOR {{bankName}}",
+    "qrAlt": "QR code for {{bankName}}",
+    "scanToTransfer": "Scan to transfer directly from your",
+    "noFeeTag": "Zero fees"
+  },
+  "invoiceCard": {
+    "rentalLine": "Rental ({{count}} Day × ${{price}} COP)",
+    "rentalLine_other": "Rental ({{count}} Days × ${{price}} COP)",
+    "fullCoverage": "Full Coverage Insurance",
+    "selected": "Selected",
+    "totalToTransferLabel": "TOTAL TO TRANSFER",
+    "exactAmountRequired": "Exact amount required",
+    "warningTitle": "Important notice (INV-001):",
+    "warningText": "The transferred amount must exactly match the total ({{amount}}). Split transfers or partial payments are not accepted."
+  },
+  "paymentReceiptUpload": {
+    "selectReceipt": "Select your receipt",
+    "dropHint": "Click to browse the file or drag it here",
+    "formatHint": "PNG, JPG, JPEG or PDF · Maximum 10 MB",
+    "remove": "Remove",
+    "preview": "Preview",
+    "previewAlt": "Receipt preview"
+  },
+  "transferDetails": {
+    "warning": "The transferred amount must exactly match the reservation total. Partial payments are not accepted.",
+    "referencePlaceholder": "Enter the reference number",
+    "referenceHint": "You can find this number on the transfer receipt."
+  },
+  "vehicles": {
+    "loadError": "The vehicles could not be loaded.",
+    "categoryUnavailable": "Category not available",
+    "model": "Model:",
+    "capacity": "Capacity:",
+    "engine": "Engine:",
+    "notAvailable": "Not available"
   }
 }

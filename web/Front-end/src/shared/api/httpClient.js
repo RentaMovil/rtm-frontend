@@ -1,3 +1,4 @@
+import i18n from '../../Traductions/index.js';
 import { tokenStore } from './tokenStore.js';
 
 // /api es la ruta del proxy de Vite (vite.config.js) hacia el api-gateway.
@@ -19,7 +20,7 @@ async function rawRequest(endpoint, { method = 'GET', body, headers = {} } = {})
 
 async function refreshAccessToken() {
     const refreshToken = localStorage.getItem('rentamovil_refresh_token');
-    if (!refreshToken) throw new Error('No hay refresh token');
+    if (!refreshToken) throw new Error(i18n.t('common.httpErrors.noRefreshToken'));
 
     const res = await fetch(`${API_URL}/auth/refresh`, {
         method: 'POST',
@@ -27,7 +28,7 @@ async function refreshAccessToken() {
         body: JSON.stringify({ refreshToken }),
     });
 
-    if (!res.ok) throw new Error('No se pudo refrescar la sesión');
+    if (!res.ok) throw new Error(i18n.t('common.httpErrors.refreshFailed'));
 
     const data = await res.json();
     tokenStore.setAccessToken(data.accessToken);
@@ -50,20 +51,22 @@ export function refreshSession() {
 
 // Mensajes pensados para leerse en pantalla: el status y el endpoint no significan nada
 // para quien está usando la app.
-const FRIENDLY_MESSAGES = {
-    404: 'No encontramos lo que buscabas.',
-    401: 'Tu sesión expiró. Vuelve a iniciar sesión.',
-    403: 'No tienes permisos para ver esto.',
-    409: 'No se pudo completar la operación por un conflicto con datos existentes.',
-    429: 'Demasiados intentos. Espera un momento e inténtalo de nuevo.',
-    503: 'El servicio no está disponible en este momento. Inténtalo más tarde.',
-};
+function friendlyMessages() {
+    return {
+        404: i18n.t('common.httpErrors.notFound'),
+        401: i18n.t('common.httpErrors.sessionExpired'),
+        403: i18n.t('common.httpErrors.forbidden'),
+        409: i18n.t('common.httpErrors.conflict'),
+        429: i18n.t('common.httpErrors.tooManyAttempts'),
+        503: i18n.t('common.httpErrors.serviceUnavailable'),
+    };
+}
 
 function friendlyError(res, endpoint, body) {
     const status = res.status;
     // Si el backend manda un mensaje en español, tiene prioridad sobre el genérico.
-    const message = body?.message || FRIENDLY_MESSAGES[status]
-        || 'No se pudo completar la operación. Inténtalo de nuevo.';
+    const message = body?.message || friendlyMessages()[status]
+        || i18n.t('common.httpErrors.generic');
     const error = new Error(message);
     // Se conserva lo técnico para la consola, pero no se muestra en pantalla.
     error.status = status;
@@ -98,7 +101,7 @@ async function request(endpoint, options = {}) {
         } catch {
             tokenStore.clear();
             tokenStore.triggerRefreshFail(); // el authService decide qué hacer (ej. redirigir a /Login)
-            throw new Error('Tu sesión expiró. Vuelve a iniciar sesión.');
+            throw new Error(i18n.t('common.httpErrors.sessionExpired'));
         }
     }
 

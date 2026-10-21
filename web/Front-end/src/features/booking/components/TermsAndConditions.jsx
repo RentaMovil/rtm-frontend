@@ -3,9 +3,9 @@ import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 
 import {
-    RENTAL_TERMS_EFFECTIVE_DATE,
     RENTAL_TERMS_VERSION,
-    rentalTermsSections,
+    getRentalTermsEffectiveDate,
+    getRentalTermsSections,
 } from "../data/rentalTerms";
 
 import "./TermsAndConditions.css";
@@ -66,6 +66,8 @@ export default function TermsAndConditions({
     const titleId = useId();
     const descriptionId = useId();
     const dialogId = `${titleId}-dialog`;
+    const rentalTermsSections = getRentalTermsSections(t);
+    const RENTAL_TERMS_EFFECTIVE_DATE = getRentalTermsEffectiveDate(t);
 
     const openTerms = () => {
         setIsOpen(true);

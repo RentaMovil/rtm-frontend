@@ -1,5 +1,6 @@
 import { isValidTermsAcceptance } from "../data/rentalTerms";
 import { fromApiDateTime, toApiDateTime } from "../../../shared/utils/apiDate";
+import i18n from "../../../Traductions/index.js";
 
 // Estados de booking -> estados que ya usa la interfaz del cliente (estilos estado-*).
 // Las tres primeras son reservas vigentes: se pueden cancelar o modificar dentro de su plazo.
@@ -52,7 +53,7 @@ export function toCreateReservationPayload(reservation) {
         !reservation?.returnDate ||
         !isValidTermsAcceptance(reservation?.termsAcceptance)
     ) {
-        throw new Error("La reserva está incompleta");
+        throw new Error(i18n.t("reservation.incomplete"));
     }
 
     return {

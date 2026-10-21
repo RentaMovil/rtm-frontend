@@ -114,7 +114,7 @@ function Home() {
               <div className="sidebar-sticky-content">
                 <h3 className="filters-title">
                   <span className="catalog-sidebar-dot" aria-hidden="true" />
-                  Flota Disponible
+                  {t("filtersHome.availableFleet")}
                 </h3>
                 <p className="filters-subtitle">{t("filtersHome.subtitle")}</p>
 
@@ -124,7 +124,7 @@ function Home() {
                 <FiltrerType cars={carsFiltered} onFilter={setTypeFilter} />
                 <FiltreCategory cars={carsFiltered} onFilter={setCategoryFilter} />
                 <button className="btn-clear-filters" onClick={handleClearFilters}>
-                  Limpiar filtros
+                  {t("filtersHome.clear")}
                 </button>
               </div>
             </aside>
@@ -134,7 +134,7 @@ function Home() {
             {isMobile && (
               <div className="filters-mobile-header">
                 <button className="filters-toggle-btn" onClick={() => setShowFiltersModal(true)}>
-                  <FaBars /> <span>Filtrar Flota</span>
+                  <FaBars /> <span>{t("filtersHome.filterFleet")}</span>
                 </button>
               </div>
             )}
@@ -145,7 +145,7 @@ function Home() {
 
               {!loading && !error && visibleCars.length === 0 && (
                 <p className="notFound">
-                  No hay vehículos disponibles con esos filtros <FaSearch />
+                  {t("filtersHome.noVehiclesFiltered")} <FaSearch />
                 </p>
               )}
 

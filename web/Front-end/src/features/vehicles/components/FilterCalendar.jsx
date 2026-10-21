@@ -379,7 +379,7 @@ const FilterCalendar = forwardRef(
                 }`}
               value={query}
               onChange={handleChange}
-              placeholder="Ej: Bogotá..."
+              placeholder={t("filterCalendar.branchPlaceholder")}
               autoComplete="off"
               required
             />
@@ -529,7 +529,7 @@ const FilterCalendar = forwardRef(
             type="submit"
             className="btn-search"
           >
-            {variant == "normal" ? "Cambiar " : "Buscar"}
+            {variant == "normal" ? t("filterCalendar.change") : t("filterCalendar.search")}
           </button>
 
 
