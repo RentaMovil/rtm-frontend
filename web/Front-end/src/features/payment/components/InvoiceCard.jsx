@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useReservation } from "../../booking/context/ReservationContext";
 import { useInsurance } from "../../admin/insuranceTypes/hooks/useInsurance";
 import { calculateRentalDays } from "../../../shared/utils/rental";
@@ -15,6 +16,7 @@ export default function InvoiceCard({
   days: propDays,
   vehicle: propVehicle,
 }) {
+  const { t } = useTranslation();
   const { reservation } = useReservation();
   const { insurance } = useInsurance();
 
@@ -50,8 +52,10 @@ export default function InvoiceCard({
       {/* Desglose: Alquiler */}
       <div className="pay-resumen-row">
         <span className="pay-resumen-label">
-          Alquiler ({days} Día{days !== 1 ? "s" : ""} × $
-          {Number(vehicle.price).toLocaleString("es-CO")} COP)
+          {t("invoiceCard.rentalLine", {
+            count: days,
+            price: Number(vehicle.price).toLocaleString("es-CO"),
+          })}
         </span>
         <span className="pay-resumen-value">
           ${vehicleSubtotal.toLocaleString("es-CO")} COP
@@ -61,8 +65,8 @@ export default function InvoiceCard({
       {/* Desglose: Seguro */}
       <div className="pay-resumen-row">
         <div className="pay-insurance-label-group">
-          <span className="pay-resumen-label">Seguro Todo Riesgo</span>
-          <span className="pay-badge-selected">Seleccionado</span>
+          <span className="pay-resumen-label">{t("invoiceCard.fullCoverage")}</span>
+          <span className="pay-badge-selected">{t("invoiceCard.selected")}</span>
         </div>
         <span className="pay-resumen-value">
           ${insuranceSubtotal.toLocaleString("es-CO")} COP
@@ -75,7 +79,7 @@ export default function InvoiceCard({
       {/* Total y Status Badge */}
       <div className="pay-total-row">
         <div className="pay-total-info">
-          <span className="pay-total-label">TOTAL A TRANSFERIR</span>
+          <span className="pay-total-label">{t("invoiceCard.totalToTransferLabel")}</span>
           <div className="pay-total-amount">
             ${totalAmount.toLocaleString("es-CO")}{" "}
             <span className="pay-currency">COP</span>
@@ -84,7 +88,7 @@ export default function InvoiceCard({
 
         <div className="pay-status-badge">
           <span className="pay-status-dot" />
-          Monto exacto requerido
+          {t("invoiceCard.exactAmountRequired")}
         </div>
       </div>
 
@@ -92,10 +96,10 @@ export default function InvoiceCard({
       <div className="pay-warning-box">
         <span className="pay-warning-icon">⚠️</span>
         <p className="pay-warning-text">
-          <strong>Aviso importante (INV-001):</strong> El monto transferido
-          debe coincidir exactamente con el total (
-          <u>${totalAmount.toLocaleString("es-CO")} COP</u>). No se aceptan
-          transferencias fraccionadas ni pagos parciales.
+          <strong>{t("invoiceCard.warningTitle")}</strong>{" "}
+          {t("invoiceCard.warningText", {
+            amount: `$${totalAmount.toLocaleString("es-CO")} COP`,
+          })}
         </p>
       </div>
     </div>

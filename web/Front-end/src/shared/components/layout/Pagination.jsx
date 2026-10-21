@@ -1,7 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import styles from './Pagination.module.css';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 function Pagination({ currentPage, totalPages, onPageChange }) {
+  const { t } = useTranslation();
   const pages = Array.from(
     { length: totalPages },
     (_, index) => index + 1
@@ -16,7 +18,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         className={styles.navButton}
       >
         <FiChevronLeft />
-        Anterior
+        {t('reservations.previous')}
       </button>
 
       {/* Números */}
@@ -38,7 +40,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         disabled={currentPage === totalPages}
         className={styles.navButton}
       >
-        Siguiente
+        {t('reservations.next')}
         <FiChevronRight />
       </button>
     </div>

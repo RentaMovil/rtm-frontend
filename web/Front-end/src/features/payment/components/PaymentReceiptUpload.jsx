@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { usePayment } from "../context/PaymentContext";
 import "./PaymentReceiptUpload.css";
 
@@ -17,6 +18,7 @@ const ALLOWED_TYPES = [
  * tarjetas de la página de pago.
  */
 export default function PaymentReceiptUpload() {
+    const { t } = useTranslation();
     const {
         payment,
         setReceiptFile,
@@ -69,7 +71,7 @@ export default function PaymentReceiptUpload() {
 
         if (!ALLOWED_TYPES.includes(file.type)) {
             setError(
-                "El comprobante debe estar en formato PNG, JPG, JPEG o PDF."
+                t("paymentValidator.invalidFormat")
             );
 
             event.target.value = "";
@@ -78,7 +80,7 @@ export default function PaymentReceiptUpload() {
 
         if (file.size > MAX_FILE_SIZE) {
             setError(
-                "El comprobante no puede superar los 10 MB."
+                t("paymentValidator.maxSize")
             );
 
             event.target.value = "";
@@ -123,14 +125,14 @@ export default function PaymentReceiptUpload() {
 
         if (!ALLOWED_TYPES.includes(file.type)) {
             setError(
-                "El comprobante debe estar en formato PNG, JPG, JPEG o PDF."
+                t("paymentValidator.invalidFormat")
             );
             return;
         }
 
         if (file.size > MAX_FILE_SIZE) {
             setError(
-                "El comprobante no puede superar los 10 MB."
+                t("paymentValidator.maxSize")
             );
             return;
         }
@@ -180,16 +182,15 @@ export default function PaymentReceiptUpload() {
                     </span>
 
                     <strong>
-                        Selecciona tu comprobante
+                        {t("paymentReceiptUpload.selectReceipt")}
                     </strong>
 
                     <span>
-                        Haz clic para buscar el archivo
-                        o arrástralo aquí
+                        {t("paymentReceiptUpload.dropHint")}
                     </span>
 
                     <small>
-                        PNG, JPG, JPEG o PDF · Máximo 10 MB
+                        {t("paymentReceiptUpload.formatHint")}
                     </small>
                 </button>
             ) : (
@@ -217,18 +218,18 @@ export default function PaymentReceiptUpload() {
                         className="payment-receipt-remove"
                         onClick={handleRemoveFile}
                     >
-                        Eliminar
+                        {t("paymentReceiptUpload.remove")}
                     </button>
                 </div>
             )}
 
             {previewUrl && (
                 <div className="payment-receipt-preview">
-                    <span>Vista previa</span>
+                    <span>{t("paymentReceiptUpload.preview")}</span>
 
                     <img
                         src={previewUrl}
-                        alt="Vista previa del comprobante"
+                        alt={t("paymentReceiptUpload.previewAlt")}
                     />
                 </div>
             )}

@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { usePayment } from "../context/PaymentContext";
 import { useReservation } from "../../booking/context/ReservationContext";
@@ -16,6 +17,7 @@ import { reservationService } from "../../booking/services/reservationService";
 import { paymentService } from "../services/paymentService";
 
 export function usePaymentForm() {
+    const { t } = useTranslation();
     const { payment, markAsPendingReview } = usePayment();
     const { reservation } = useReservation();
     const { insurance } = useInsurance();
@@ -206,7 +208,7 @@ export function usePaymentForm() {
         const reservationId = reservationResponse.id; // el backend/mock devuelve `id`, no `reservationId`
 
         if (!reservationId) {
-            throw new Error("No se recibió el ID de la reserva.");
+            throw new Error(t("payment.missingReservationId"));
         }
 
         const paymentData = {

@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { carsService } from "../Services/carsService";
 import { toClientVehicleViewModel } from "../Services/carsMapper";
 import { branchService } from "../../admin/branches/services/branchService";
 
 // allStatuses: true = flota completa (pantallas de admin); por defecto, solo el catálogo AVAILABLE
 export  function useCars({ allStatuses = false } = {}) {
+    const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [cars, setCars] = useState([]);
@@ -28,7 +30,7 @@ export  function useCars({ allStatuses = false } = {}) {
             setCars(safeVehicles.map((v) => toClientVehicleViewModel(v, branchesById)));
 
         } catch (err) {
-            setError(err.message || "No fue posible cargar los vehículos.");
+            setError(err.message || t("vehicles.loadError"));
         } finally {
             setIsLoading(false);
         }

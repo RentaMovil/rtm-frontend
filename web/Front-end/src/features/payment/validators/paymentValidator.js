@@ -1,3 +1,5 @@
+import i18n from '../../../Traductions/index.js';
+
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
 const ALLOWED_FILE_TYPES = [
@@ -34,7 +36,7 @@ export function validatePayment({
      */
     if (!bankAccountId) {
         errors.bankAccountId =
-            "Debes seleccionar una cuenta bancaria destino.";
+            i18n.t("paymentValidator.bankAccountRequired");
     }
 
     /*
@@ -42,7 +44,7 @@ export function validatePayment({
      */
     if (!referenceNumber?.trim()) {
         errors.referenceNumber =
-            "Debes ingresar el número de referencia de la transferencia.";
+            i18n.t("paymentValidator.referenceRequired");
     }
 
     /*
@@ -50,14 +52,14 @@ export function validatePayment({
      */
     if (!receiptFile) {
         errors.receiptFile =
-            "Debes adjuntar el comprobante de pago.";
+            i18n.t("paymentValidator.receiptRequired");
     } else {
         /*
          * Formato del archivo
          */
         if (!ALLOWED_FILE_TYPES.includes(receiptFile.type)) {
             errors.receiptFile =
-                "El comprobante debe estar en formato PNG, JPG, JPEG o PDF.";
+                i18n.t("paymentValidator.invalidFormat");
         }
 
         /*
@@ -65,7 +67,7 @@ export function validatePayment({
          */
         if (receiptFile.size > MAX_FILE_SIZE) {
             errors.receiptFile =
-                "El comprobante no puede superar los 10 MB.";
+                i18n.t("paymentValidator.maxSize");
         }
     }
 
@@ -84,7 +86,7 @@ export function validatePayment({
         Number(reservationTotal) <= 0
     ) {
         errors.amount =
-            "No fue posible determinar el total de la reserva.";
+            i18n.t("paymentValidator.totalUnknown");
     }
 
     return {

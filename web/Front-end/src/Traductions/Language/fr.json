@@ -1,5 +1,8 @@
 {
-  "dialog": { "accept": "Accepter", "cancel": "Annuler" },
+  "dialog": {
+    "accept": "Accepter",
+    "cancel": "Annuler"
+  },
   "navbar": {
     "linkInit": "Accueil",
     "linkNotifications": "Notifications",
@@ -30,7 +33,9 @@
     "deliveryHour": "Heure de prise en charge",
     "returnDate": "Date de retour",
     "returnHour": "Heure de retour",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "branchPlaceholder": "Ex. : Bogotá...",
+    "change": "Changer "
   },
   "cartVehicule": {
     "gasoline": "Essence",
@@ -57,7 +62,12 @@
     "max": "Maximum",
     "category": "Catégorie",
     "subtitle": "Trouvez le véhicule parfait pour votre voyage.",
-    "searching": "Recherche de véhicules..."
+    "searching": "Recherche de véhicules...",
+    "availableFleet": "Flotte disponible",
+    "filterFleet": "Filtrer la flotte",
+    "noVehiclesFiltered": "Aucun véhicule disponible avec ces filtres",
+    "filters": "Filtres",
+    "noVehicles": "Aucun véhicule disponible"
   },
   "reservation": {
     "ErrorDate": "La date de retour ne peut pas être antérieure à la date de prise en charge",
@@ -86,7 +96,8 @@
     "dateOfBirth": "Date de naissance",
     "document": "Nº de pièce d'identité",
     "phone": "Téléphone",
-    "submit": "Louer"
+    "submit": "Louer",
+    "incomplete": "La réservation est incomplète"
   },
   "terms": {
     "acceptLabel": "J'ai lu et j'accepte les conditions générales",
@@ -181,7 +192,13 @@
     "termsRequired": "Vous devez accepter les conditions générales et la politique de traitement des données personnelles pour vous inscrire",
     "termsTitle": "Conditions générales et traitement des données personnelles",
     "termsClose": "Fermer",
-    "termsBody": ["En créant un compte sur RentaMovil, vous autorisez le traitement de vos données personnelles (prénom, nom, e-mail, téléphone et nom d'utilisateur) conformément à la loi colombienne 1581 de 2012 (Habeas Data).", "Finalité : gérer votre compte, vos réservations, paiements et facturation, et vous contacter au sujet du service.", "Vos droits : consulter, mettre à jour, rectifier et supprimer vos données, et révoquer cette autorisation à tout moment.", "Vos données ne seront pas partagées avec des tiers, sauf obligation légale ou pour réaliser le service contracté (par exemple le traitement des paiements).", "Les conditions de location de véhicules seront de nouveau présentées et acceptées lors de la réservation."]
+    "termsBody": [
+      "En créant un compte sur RentaMovil, vous autorisez le traitement de vos données personnelles (prénom, nom, e-mail, téléphone et nom d'utilisateur) conformément à la loi colombienne 1581 de 2012 (Habeas Data).",
+      "Finalité : gérer votre compte, vos réservations, paiements et facturation, et vous contacter au sujet du service.",
+      "Vos droits : consulter, mettre à jour, rectifier et supprimer vos données, et révoquer cette autorisation à tout moment.",
+      "Vos données ne seront pas partagées avec des tiers, sauf obligation légale ou pour réaliser le service contracté (par exemple le traitement des paiements).",
+      "Les conditions de location de véhicules seront de nouveau présentées et acceptées lors de la réservation."
+    ]
   },
   "quotes": {
     "quote1": "Faites confiance à votre voyage. Faites confiance à Rentamovil.",
@@ -216,7 +233,32 @@
     "guardando": "Enregistrement...",
     "confirmLogout": "Oui, me déconnecter",
     "loadingProfile": "Chargement du profil...",
-    "logoutQuestion": "Voulez-vous vraiment vous déconnecter ?"
+    "logoutQuestion": "Voulez-vous vraiment vous déconnecter ?",
+    "noSession": "Aucune session disponible.",
+    "themes": {
+      "skylight": {
+        "label": "Mode clair",
+        "desc": "Fond blanc, barre bleu marine"
+      },
+      "light": {
+        "label": "Mode clair neutre",
+        "desc": "Fond blanc, accents ambrés"
+      },
+      "dark": {
+        "label": "Mode sombre neutre",
+        "desc": "Fond gris très sombre, accent doré"
+      },
+      "darkPurple": {
+        "label": "Mode sombre bleu",
+        "desc": "Fond bleu nuit, accent doré"
+      }
+    },
+    "languages": {
+      "es": "Espagnol",
+      "en": "Anglais",
+      "fr": "Français",
+      "pt": "Portugais"
+    }
   },
   "payment": {
     "payTitle": "Confirmer le paiement",
@@ -236,7 +278,28 @@
     "placeholderAddress": "Adresse de livraison",
     "confirm": "Confirmer et payer",
     "vehicleDetails": "Détails du véhicule",
-    "selectBank": "Sélectionnez votre compte bancaire de destination"
+    "selectBank": "Sélectionnez votre compte bancaire de destination",
+    "registerError": "Le paiement n'a pas pu être enregistré. Réessayez.",
+    "createReservationError": "La réservation n'a pas pu être créée. Réessayez.",
+    "noReservation": "Aucune réservation disponible.",
+    "reservationIncomplete": "La réservation est incomplète. Revenez en arrière et complétez les informations avant de payer.",
+    "sentTitle": "Paiement envoyé !",
+    "sentTextBefore": "Nous avons enregistré votre justificatif et votre réservation est désormais",
+    "sentTextStrong": "en attente d'examen",
+    "sentTextAfter": ". Un administrateur validera le virement et nous vous informerons dès qu'il sera confirmé.",
+    "backToHome": "Retour à l'accueil",
+    "selectBankSubtitle": "💡 Scannez le code QR directement depuis l'application de votre banque.",
+    "registerTransfer": "Enregistrer le virement",
+    "registerTransferSubtitle": "Saisissez les informations relatives au virement effectué.",
+    "receiptTitle": "Justificatif de paiement",
+    "receiptSubtitle": "Joignez le justificatif correspondant au virement effectué.",
+    "payNowBadge": "À payer maintenant",
+    "invoiceSummary": "Résumé de la facture",
+    "processing": "Traitement de votre paiement...",
+    "reserveAndSendReceipt": "Réserver et envoyer le justificatif",
+    "reserveAndPayLater": "Réserver et payer plus tard",
+    "payLaterNote": "Si vous réservez sans payer, vous avez 24 heures pour téléverser le justificatif depuis « Mes réservations ». Passé ce délai, la réservation est annulée automatiquement.",
+    "missingReservationId": "L'identifiant de la réservation n'a pas été reçu."
   },
   "buttonBack": {
     "label": "Retour"
@@ -371,7 +434,12 @@
     "branch": "Succursale",
     "disabledBranch": "Sélectionnez une succursale",
     "requiredBranch": "La succursale est obligatoire",
-    "requiredCapacity": "La capacité est obligatoire"
+    "requiredCapacity": "La capacité est obligatoire",
+    "catalogError": "Le catalogue de véhicules n'a pas pu être chargé",
+    "createError": "Erreur lors de la création du véhicule",
+    "carTypeSedan": "Berline",
+    "carTypeSuv": "SUV",
+    "carTypeCoupe": "Coupé"
   },
   "contractHistory": {
     "title": "Historique des contrats",
@@ -503,7 +571,9 @@
     "date": "Date",
     "state": "Statut",
     "vehicle": "Véhicule",
-    "close": "Fermer"
+    "close": "Fermer",
+    "loading": "Chargement des notifications...",
+    "emptyFilter": "Aucune notification pour ce filtre."
   },
   "historyReservation": {
     "myReservations": "Mes réservations",
@@ -543,7 +613,8 @@
       "activa": "Active",
       "cancelada": "Annulée",
       "completada": "Terminée"
-    }
+    },
+    "updateBranchError": "L'agence de restitution n'a pas pu être mise à jour."
   },
   "VehicleInventary": {
     "title": "Inventaire des Véhicules",
@@ -650,7 +721,9 @@
       "retire": "Retirer le véhicule",
       "retireConfirm": "Retirer ce véhicule ? Cette action est irréversible.",
       "retireYes": "Oui, retirer",
-      "retiredNotice": "Ce véhicule est retiré : il ne peut plus être modifié ni loué."
+      "retiredNotice": "Ce véhicule est retiré : il ne peut plus être modifié ni loué.",
+      "saveError": "Le véhicule n'a pas pu être enregistré.",
+      "retireError": "Le véhicule n'a pas pu être retiré."
     },
     "actions": {
       "save": "Enregistrer les modifications",
@@ -736,7 +809,10 @@
       "option14": "Carrosserie"
     },
     "startNow": "Démarrer maintenant (le véhicule passe en entretien)",
-    "selectVehicle": "Sélectionnez un véhicule dans la liste"
+    "selectVehicle": "Sélectionnez un véhicule dans la liste",
+    "invalidDate": "Date invalide",
+    "dateBeforeToday": "La date ne peut pas être antérieure à aujourd'hui",
+    "dateAfterTwoMonths": "La date ne peut pas être postérieure à deux mois à partir d'aujourd'hui"
   },
   "CartVehiculeMaintenance": {
     "veicle": "Véhicule",
@@ -747,7 +823,8 @@
     "completed": "Terminé",
     "cancel": "Annulé",
     "offObservations": "Aucune observation",
-    "seeMore": "Voir plus"
+    "seeMore": "Voir plus",
+    "noDate": "Pas de date"
   },
   "FiltrerHistory": {
     "placeholder": "Rechercher par immatriculation, marque ou modèle...",
@@ -932,7 +1009,10 @@
       "cancel": "Annuler",
       "save": "Enregistrer"
     },
-    "loading": "Chargement des assurances..."
+    "loading": "Chargement des assurances...",
+    "selectorTitle": "Assurance",
+    "selectorSubtitle": "Sélectionnez la couverture souhaitée pour votre réservation.",
+    "selectorAriaLabel": "Couverture d'assurance"
   },
   "branches": {
     "title": "Succursales",
@@ -1007,7 +1087,8 @@
       "deleting": "Suppression..."
     },
     "loading": "Chargement des succursales...",
-    "mapLabel": "Emplacement sur la carte (cliquez pour marquer le point exact)"
+    "mapLabel": "Emplacement sur la carte (cliquez pour marquer le point exact)",
+    "mapAriaLabel": "Carte des agences"
   },
   "reservations": {
     "breadcrumbAdmin": "Panneau d'administration",
@@ -1149,7 +1230,22 @@
     },
     "serviceUnavailable": "Le service de localisation n'est pas encore disponible. Aucun trajet à afficher.",
     "loading": "Chargement des réservations...",
-    "loadingDetail": "Chargement..."
+    "loadingDetail": "Chargement...",
+    "csvHeaders": [
+      "ID",
+      "Client",
+      "Véhicule",
+      "Plaque",
+      "Retrait",
+      "Retour",
+      "Agence",
+      "Total",
+      "Statut"
+    ],
+    "csvFilename": "reservations.csv",
+    "approveError": "Le paiement n'a pas pu être approuvé.",
+    "rejectError": "Le paiement n'a pas pu être refusé.",
+    "operationError": "L'opération n'a pas pu être enregistrée."
   },
   "process": {
     "title": "4 étapes pour votre prochain voyage",
@@ -1255,7 +1351,7 @@
     "pendingWarn_other": "De plus, {{count}} n'ont pas signalé de position depuis plus de 2 heures.",
     "openFleet": "Voir sur la carte",
     "emptyTitle": "Aucune réservation active à suivre",
-      "serviceUnavailable": "Le service de localisation n'est pas encore disponible. Aucun trajet à afficher.",
+    "serviceUnavailable": "Le service de localisation n'est pas encore disponible. Aucun trajet à afficher.",
     "emptyHint": "Aucune location n'est en cours, il n'y a donc aucun trajet à suivre aujourd'hui.",
     "listTitle": "Réservations actives",
     "rental": "Réservation",
@@ -1267,16 +1363,212 @@
   },
   "emailVerification": {
     "title": "Saisissez votre adresse e-mail",
-    "invalidFormat": "Format d'e-mail invalide"
+    "invalidFormat": "Format d'e-mail invalide",
+    "sendError": "Le code n'a pas pu être envoyé",
+    "description": "Nous vous enverrons un code de sécurité pour vérifier votre identité et continuer",
+    "required": "L'adresse e-mail est requise",
+    "sending": "Envoi du code...",
+    "confirm": "Confirmer",
+    "sslVerified": "SSL vérifié",
+    "dataProtected": "Données protégées"
   },
   "codeVerification": {
     "title": "Code de vérification",
     "incomplete": "Veuillez saisir les 6 chiffres",
-    "invalid": "Code incorrect ou expiré. Réessayez."
+    "invalid": "Code incorrect ou expiré. Réessayez.",
+    "newCodeSent": "Nous vous avons envoyé un nouveau code",
+    "resendError": "Le code n'a pas pu être renvoyé",
+    "description": "Entrez le code à 6 chiffres envoyé à",
+    "verifying": "Vérification...",
+    "verify": "Vérifier le code",
+    "noCodeReceived": "Vous n'avez pas reçu le code ?",
+    "resendCountdown": "Renvoyer ({{seconds}}s)",
+    "resend": "Renvoyer",
+    "codeExpires": "Le code expire dans 15 min",
+    "dataEncrypted": "Données chiffrées"
   },
   "uploadReceipt": {
     "loadError": "Impossible de charger les comptes bancaires.",
     "close": "Fermer",
-    "selectAccount": "Sélectionnez un compte"
+    "selectAccount": "Sélectionnez un compte",
+    "missingFields": "Complétez le compte bancaire, la référence et le justificatif.",
+    "uploadError": "Le justificatif n'a pas pu être téléchargé.",
+    "modalTitle": "Téléverser le justificatif — Réservation #{{id}}",
+    "destinationAccount": "Compte bancaire de destination",
+    "downloadQr": "Télécharger le QR",
+    "referencePlaceholder": "Comme indiqué sur le justificatif",
+    "receiptFileLabel": "Justificatif (image ou PDF)",
+    "totalToTransfer": "Total à virer :",
+    "uploading": "Téléversement..."
+  },
+  "common": {
+    "loadingSession": "Chargement de la session...",
+    "httpErrors": {
+      "noRefreshToken": "Aucun jeton de rafraîchissement disponible",
+      "refreshFailed": "Impossible de rafraîchir la session",
+      "notFound": "Nous n'avons pas trouvé ce que vous cherchiez.",
+      "sessionExpired": "Votre session a expiré. Veuillez vous reconnecter.",
+      "forbidden": "Vous n'avez pas la permission de voir ceci.",
+      "conflict": "L'opération n'a pas pu être terminée en raison d'un conflit avec des données existantes.",
+      "tooManyAttempts": "Trop de tentatives. Attendez un instant et réessayez.",
+      "serviceUnavailable": "Le service n'est pas disponible pour le moment. Réessayez plus tard.",
+      "generic": "L'opération n'a pas pu être terminée. Réessayez."
+    },
+    "noLocationAvailable": "Aucune position disponible"
+  },
+  "rentalTerms": {
+    "effectiveDate": "24 septembre 2026",
+    "sections": {
+      "objeto": {
+        "title": "1. Objet et acceptation",
+        "paragraphs": [
+          "Les présentes conditions générales régissent l'accès à la plateforme RentaMóvil ainsi que la réservation et la location de véhicules par son intermédiaire. L'acceptation de la case d'autorisation, la date, la version et les données de la réservation sélectionnée constituent une preuve numérique d'acceptation de ce document.",
+          "Le client déclare les avoir lues et comprises intégralement. S'il n'est pas d'accord avec l'une de leurs dispositions, il ne doit pas poursuivre la réservation ni effectuer le paiement."
+        ]
+      },
+      "requisitos": {
+        "title": "2. Exigences relatives au client et au conducteur",
+        "paragraphs": [
+          "Le client déclare avoir l'âge minimum requis par la réglementation applicable, posséder un permis de conduire valide pendant toute la durée de la location, et disposer de l'autorisation et de la capacité nécessaires pour conclure ce contrat.",
+          "Au moment de la remise du véhicule, le client devra présenter les documents d'identité, le permis de conduire et les autres exigences indiquées dans la réservation ou à l'agence. Tout conducteur supplémentaire doit être autorisé au préalable par RentaMóvil. La fourniture d'informations fausses, expirées ou insuffisantes pourra entraîner la suspension ou l'annulation du service, sans préjudice des droits du client."
+        ]
+      },
+      "reserva": {
+        "title": "3. Sélection, disponibilité et prix",
+        "paragraphs": [
+          "La réservation constitue une demande soumise à la vérification de la disponibilité, des données, de la couverture choisie et du paiement. RentaMóvil pourra proposer un véhicule équivalent de la même catégorie si nécessaire, en indiquant la différence de prix éventuelle et en obtenant l'approbation du client lorsque ce changement affecte substantiellement ce qui a été contracté.",
+          "Le total affiché sur la plateforme correspond aux produits, dates, agences, couverture et services sélectionnés. Les taxes incluses sont expressément indiquées sur l'écran de paiement. Les péages, stationnements, amendes, consommations et autres frais de tiers seront payés par le client lorsque la loi ou le service fourni l'exige."
+        ]
+      },
+      "pago": {
+        "title": "4. Paiement, justificatif et activation de la réservation",
+        "paragraphs": [
+          "Le paiement doit être effectué exclusivement par les canaux et comptes bancaires actifs et à jour indiqués sur la plateforme. Le client doit transférer le montant indiqué et enregistrer un justificatif lisible permettant de le relier à la réservation.",
+          "L'envoi du justificatif n'équivaut pas à l'approbation du paiement et ne confirme pas à lui seul la réservation. Le statut reste en attente d'examen jusqu'à ce qu'un administrateur valide le virement. Un paiement rejeté, une référence incorrecte, un écart de montant ou un justificatif illisible n'activeront pas le service. Le justificatif ne doit pas être partagé avec des tiers hors des canaux autorisés."
+        ]
+      },
+      "cambios": {
+        "title": "5. Modifications, annulation et remboursements",
+        "paragraphs": [
+          "Les demandes de modification ou d'annulation doivent être présentées par les canaux officiels avant la date et l'heure de prise en charge. S'appliqueront les conditions, délais, coûts et pénalités expressément indiqués dans l'offre et acceptés par le client lors de la confirmation de la réservation. En l'absence de condition particulière visible, RentaMóvil indiquera le coût applicable avant de traiter la demande.",
+          "Aucun remboursement ne sera accordé pour des services déjà rendus, des frais envers des tiers, des dommages imputables au client ou des cas prévus par la réglementation applicable, sans préjudice des droits non renonçables du consommateur et des règles spécifiques de la couverture choisie."
+        ]
+      },
+      "entrega": {
+        "title": "6. Remise du véhicule",
+        "paragraphs": [
+          "La remise du véhicule s'effectue à l'agence, à la date et sur le créneau horaire confirmés, sous réserve de disponibilité et de la présentation en temps voulu des documents requis. Le client doit recevoir et inspecter le véhicule avant de quitter l'agence.",
+          "La remise comprend une vérification de l'apparence, du kilométrage, du carburant, des accessoires et du fonctionnement de base, dont le résultat est consigné dans le document de remise. Tout dommage, élément manquant ou défaut non consigné doit être signalé avant de démarrer."
+        ]
+      },
+      "deposito": {
+        "title": "7. Dépôt de garantie et paiements à des tiers",
+        "paragraphs": [
+          "Le cas échéant, le client devra constituer un dépôt ou fournir une garantie selon le montant et le mécanisme indiqués dans la réservation ou le contrat de location. Ce dépôt constitue une garantie d'exécution et non un paiement de la réservation, sauf indication expresse contraire.",
+          "Le dépôt sera libéré une fois le véhicule restitué et après vérification de son état, de la documentation, du carburant, du kilométrage et de l'absence d'obligations en cours. En cas de dommages, d'amendes ou d'autres sommes dues, le montant vérifié pourra être déduit, dans le respect des notifications, de la procédure et des droits du client."
+        ]
+      },
+      "uso": {
+        "title": "8. Utilisation autorisée et interdictions",
+        "paragraphs": [
+          "Le véhicule ne peut être utilisé que pour des déplacements licites par le conducteur autorisé. Sont notamment interdits l'utilisation sous l'effet de l'alcool ou de drogues, les courses, compétitions, essais de vitesse, la conduite hors route, la surcharge, l'usage commercial non autorisé, la sous-location, l'abandon du véhicule, le retrait ou la manipulation du dispositif GPS, ainsi que toute activité illicite.",
+          "Le conducteur doit respecter le code de la route, la signalisation, les restrictions de circulation et les ordres légitimes de l'autorité. Le client sera responsable des conséquences d'une utilisation inappropriée, sans préjudice des couvertures contractées."
+        ]
+      },
+      "responsabilidad": {
+        "title": "9. Responsabilité, incidents et assurances",
+        "paragraphs": [
+          "Le client doit conduire prudemment et informer immédiatement RentaMóvil, l'autorité compétente et, le cas échéant, son assureur de tout accident, vol, dommage ou incident. Il ne doit effectuer aucune réparation ni déplacer le véhicule sans autorisation, sauf mesure urgente visant à éviter un dommage plus important.",
+          "Le client sera responsable des amendes, péages, stationnements, dommages et pertes envers des tiers dans la proportion qui lui incombe légalement. La couverture d'assurance choisie s'applique uniquement dans la limite de sa portée, de ses plafonds et de sa franchise ; elle ne remplace pas les responsabilités non couvertes. Le résumé de la couverture sélectionnée fait partie de la réservation."
+        ]
+      },
+      "devolucion": {
+        "title": "10. Restitution et prolongation",
+        "paragraphs": [
+          "Le véhicule doit être restitué à l'agence, à la date et à l'heure indiquées, avec le même niveau de carburant, kilométrage, accessoires, documents et état de qualité, sous réserve de l'usure ordinaire admise. La restitution sera documentée au moyen d'une inspection et d'un procès-verbal de remise.",
+          "Toute prolongation doit être demandée avant l'heure de restitution et est soumise à disponibilité et au tarif en vigueur. Un retard dans la restitution ne produit pas de prolongation automatique. Une restitution tardive ou effectuée hors de l'agence convenue peut entraîner des frais supplémentaires et, le cas échéant, l'application de la garantie."
+        ]
+      },
+      "disponibilidad": {
+        "title": "11. Disponibilité et cas de force majeure",
+        "paragraphs": [
+          "RentaMóvil pourra modifier ou annuler une réservation pour des raisons de sécurité, de maintenance, de manque de disponibilité ou pour toute autre cause justifiée, en en informant le client. Dans ce cas, le remboursement des montants correspondant aux services non rendus sera géré conformément à la loi et à ce qui a déjà été consommé par le client.",
+          "Les cas de force majeure, troubles, restrictions de circulation, urgences ou autres circonstances échappant à un contrôle raisonnable peuvent modifier les dates, itinéraires ou conditions. Le client devra utiliser les canaux officiels pour recevoir les instructions et options."
+        ]
+      },
+      "datos": {
+        "title": "12. Données personnelles et communications",
+        "paragraphs": [
+          "Les données fournies seront utilisées pour gérer la réservation, vérifier le paiement, fournir une assistance, respecter les obligations légales, prévenir la fraude et maintenir la sécurité de la plateforme. Le traitement sera effectué conformément à la réglementation sur la protection des données et aux avis de confidentialité et finalités que RentaMóvil communiquera au client.",
+          "Les communications opérationnelles — par exemple, rappels, statut de paiement et instructions de remise — pourront être effectuées via les canaux enregistrés. L'utilisation commerciale des données ou les communications marketing nécessitent l'autorisation distincte exigée par la loi."
+        ]
+      },
+      "derechos": {
+        "title": "13. Propriété intellectuelle et limites de responsabilité",
+        "paragraphs": [
+          "La plateforme, sa conception, ses textes, logos, photographies et autres composants sont utilisés exclusivement pour faciliter le service. Le client ne pourra les reproduire, les modifier ni les exploiter commercialement sans autorisation préalable.",
+          "Dans la mesure permise par la loi, RentaMóvil n'est pas responsable des dommages indirects ou du manque à gagner découlant de l'utilisation de la plateforme. Cette limitation n'exclut pas les responsabilités qui ne peuvent être exclues, ni les droits du consommateur. Le client doit utiliser le service de manière licite et responsable."
+        ]
+      },
+      "vigencia": {
+        "title": "14. Validité, loi applicable et contact",
+        "paragraphs": [
+          "Cette version s'applique aux réservations initiées à compter de sa publication. Les modifications seront publiées avec une nouvelle version et une nouvelle date ; la version acceptée par chaque client sera conservée avec la preuve d'acceptation. Les modifications affectant des droits acquis ne seront pas appliquées à une réservation déjà acceptée sans autorisation expresse ou fondement légal.",
+          "La relation est régie par la législation colombienne. Tout litige sera résolu par les mécanismes de règlement applicables et par les juridictions compétentes, sans préjudice des règles de protection des consommateurs. Pour toute question, le client peut utiliser les canaux officiels publiés sur la plateforme ou se rendre à l'agence liée à la réservation."
+        ]
+      }
+    }
+  },
+  "paymentValidator": {
+    "bankAccountRequired": "Vous devez sélectionner un compte bancaire de destination.",
+    "referenceRequired": "Vous devez saisir le numéro de référence du virement.",
+    "receiptRequired": "Vous devez joindre le justificatif de paiement.",
+    "invalidFormat": "Le justificatif doit être au format PNG, JPG, JPEG ou PDF.",
+    "maxSize": "Le justificatif ne peut pas dépasser 10 Mo.",
+    "totalUnknown": "Le total de la réservation n'a pas pu être déterminé."
+  },
+  "bankAccountSelector": {
+    "selectedAccount": "Compte sélectionné : {{bankName}}",
+    "hideAccounts": "Masquer les comptes bancaires",
+    "selectAccount": "Sélectionner un compte bancaire",
+    "chooseAccountHint": "Choisissez le compte vers lequel vous allez virer.",
+    "toggleHint": "Appuyez pour voir ou changer les comptes disponibles.",
+    "bankAccount": "Compte bancaire",
+    "holder": "Titulaire :",
+    "qrFor": "CODE QR POUR {{bankName}}",
+    "qrAlt": "Code QR de {{bankName}}",
+    "scanToTransfer": "Scannez pour virer directement depuis votre",
+    "noFeeTag": "Aucuns frais"
+  },
+  "invoiceCard": {
+    "rentalLine": "Location ({{count}} jour × {{price}} $ COP)",
+    "rentalLine_other": "Location ({{count}} jours × {{price}} $ COP)",
+    "fullCoverage": "Assurance tous risques",
+    "selected": "Sélectionné",
+    "totalToTransferLabel": "TOTAL À VIRER",
+    "exactAmountRequired": "Montant exact requis",
+    "warningTitle": "Avis important (INV-001) :",
+    "warningText": "Le montant viré doit correspondre exactement au total ({{amount}}). Les virements fractionnés ou les paiements partiels ne sont pas acceptés."
+  },
+  "paymentReceiptUpload": {
+    "selectReceipt": "Sélectionnez votre justificatif",
+    "dropHint": "Cliquez pour parcourir le fichier ou glissez-le ici",
+    "formatHint": "PNG, JPG, JPEG ou PDF · Maximum 10 Mo",
+    "remove": "Supprimer",
+    "preview": "Aperçu",
+    "previewAlt": "Aperçu du justificatif"
+  },
+  "transferDetails": {
+    "warning": "Le montant viré doit correspondre exactement au total de la réservation. Les paiements partiels ne sont pas acceptés.",
+    "referencePlaceholder": "Saisissez le numéro de référence",
+    "referenceHint": "Vous pouvez trouver ce numéro sur le justificatif du virement."
+  },
+  "vehicles": {
+    "loadError": "Les véhicules n'ont pas pu être chargés.",
+    "categoryUnavailable": "Catégorie non disponible",
+    "model": "Modèle :",
+    "capacity": "Capacité :",
+    "engine": "Moteur :",
+    "notAvailable": "Non disponible"
   }
 }

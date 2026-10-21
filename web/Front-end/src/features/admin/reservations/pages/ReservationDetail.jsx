@@ -92,7 +92,7 @@ export default function ReservationDetail() {
       await paymentService.approve(reservation.payment.id);
       await refetch();
     } catch (err) {
-      setActionError(err.message || "No se pudo aprobar el pago.");
+      setActionError(err.message || t("reservations.approveError"));
     }
   };
 
@@ -113,7 +113,7 @@ export default function ReservationDetail() {
       await refetch();
       closeReject();
     } catch (err) {
-      setActionError(err.message || "No se pudo rechazar el pago.");
+      setActionError(err.message || t("reservations.rejectError"));
     }
   };
 
@@ -137,7 +137,7 @@ export default function ReservationDetail() {
       await refetch();
       closeOperation();
     } catch (err) {
-      setActionError(err.message || "No se pudo registrar la operación.");
+      setActionError(err.message || t("reservations.operationError"));
     }
   };
 

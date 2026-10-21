@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import {
     MapContainer,
     TileLayer,
@@ -61,6 +62,7 @@ function MapComponent({
     pickedLng,
     onPick,
 }) {
+    const { t } = useTranslation();
 
     const isValidCoordinates = (location) => {
         // null también se descarta: Number(null) es 0 y la sucursal saldría en el punto (0, 0)
@@ -100,7 +102,7 @@ function MapComponent({
                 display: "flex", alignItems: "center", justifyContent: "center",
                 background: "#f5f5f5"
             }}>
-                No hay ubicación disponible
+                {t("common.noLocationAvailable")}
             </div>
         );
     }

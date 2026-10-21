@@ -52,12 +52,12 @@ function CartVehicule({ vehicle, rentalSearch, showActions = true }) {
             </div>
             <div className="car-info">
                 <h3>{vehicle.name}</h3>
-                <p className="car-type">{vehicle.categoryName || "Categoría no disponible"}</p>
+                <p className="car-type">{vehicle.categoryName || t("vehicles.categoryUnavailable")}</p>
 
                 <div className="features">
-                    <p><span className='text-box'>Modelo: </span>{vehicle.modelName}</p>
-                    <p><span className='text-box'>Capacidad: </span>{vehicle.capacity}</p>
-                    <p><span className='text-box'>Motor: </span>{vehicle.engineTypeName || "No disponible"}</p>
+                    <p><span className='text-box'>{t("vehicles.model")} </span>{vehicle.modelName}</p>
+                    <p><span className='text-box'>{t("vehicles.capacity")} </span>{vehicle.capacity}</p>
+                    <p><span className='text-box'>{t("vehicles.engine")} </span>{vehicle.engineTypeName || t("vehicles.notAvailable")}</p>
                 </div>
 
                 <div className="benefits">

@@ -20,18 +20,19 @@ function CartVehicleHistory({ record = {}, onViewMore }) {
         : status;
 
     // startDate es solo fecha (yyyy-mm-dd): formatDate evita que se corra un día por la zona horaria
-    const formattedDate = date ? formatDate(date) : 'Sin fecha';
+    const formattedDate = date ? formatDate(date) : t("CartVehiculeMaintenance.noDate");
     const imgSrc = recordImg || carImg;
+    const fallbackVehicleName = t("CartVehiculeMaintenance.veicle");
 
     return (
         <div className={statusStyle['card-vehicule']}>
             <div className={statusStyle['img-car-vehicule']}>
-                <img src={imgSrc} alt={`${modelName || 'Vehículo'}`} />
+                <img src={imgSrc} alt={`${modelName || fallbackVehicleName}`} />
             </div>
 
             <div className={statusStyle['text-vehicule']}>
                 <h3 className={statusStyle['name-car-vehicule']}>
-                    {modelName || 'Vehículo'}
+                    {modelName || fallbackVehicleName}
                     {<span className={statusStyle['model-vehicule']}>{plate}</span>}
                 </h3>
 
