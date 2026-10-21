@@ -270,6 +270,8 @@
     "selectBank": "Sélectionnez votre compte bancaire de destination",
     "registerError": "Le paiement n'a pas pu être enregistré. Réessayez.",
     "createReservationError": "La réservation n'a pas pu être créée. Réessayez.",
+    "confirmCreateReservation": "Confirmez-vous vouloir créer cette réservation ?",
+    "reservationCreatedSuccess": "Votre réservation a été créée.",
     "noReservation": "Aucune réservation disponible.",
     "reservationIncomplete": "La réservation est incomplète. Revenez en arrière et complétez les informations avant de payer.",
     "sentTitle": "Paiement envoyé !",
@@ -1232,6 +1234,7 @@
       "Statut"
     ],
     "csvFilename": "reservations.csv",
+    "confirmApprove": "Confirmez-vous vouloir approuver ce paiement ?",
     "approveError": "Le paiement n'a pas pu être approuvé.",
     "rejectError": "Le paiement n'a pas pu être refusé.",
     "operationError": "L'opération n'a pas pu être enregistrée."

@@ -14,6 +14,7 @@ import { paymentService } from "../../../payment/services/paymentService";
 import { toRejectOutcome } from "../../../payment/services/paymentMapper";
 import { rentalService } from "../../../booking/services/rentalService";
 import { useGps } from "../../vehicleLocation/hooks/useGps";
+import { useDialog } from "../../../../shared/components/dialog/dialogContext";
 import { getTotal, getDisplayStatus, statusMeta, formatDate, formatTime, formatMoney } from "../services/reservationHelpers";
 import "./Reservations.css";
 import "./ReservationDetail.css";
@@ -24,6 +25,7 @@ export default function ReservationDetail() {
 
   const { reservations, isLoading, error, refetch } = useReservationsAdmin();
   const { gpsDevices } = useGps();
+  const { confirm } = useDialog();
 
   // El id de la URL es texto y el de booking es número
   const reservation = reservations.find((r) => String(r.id) === id);
@@ -85,6 +87,9 @@ export default function ReservationDetail() {
   const closeReject = () => setRejectOpen(false);
 
   const confirmApprove = async () => {
+    const confirmed = await confirm({ message: t("reservations.confirmApprove") });
+    if (!confirmed) return;
+
     setActionError(null);
     try {
       // El revisor sale del JWT en payment-billing, no se manda en el cuerpo. Aprobar genera

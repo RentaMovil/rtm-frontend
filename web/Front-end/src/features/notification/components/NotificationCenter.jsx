@@ -3,6 +3,7 @@ import { FaEnvelopeOpen } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import ButtonBack from "../../../shared/components/buttonBack.jsx";
 import { useNotifications } from "../hooks/useNotifications.js";
+import { useNotificationRealtime } from "../context/NotificationRealtimeContext.jsx";
 import { getNotificationStatus, NOTIFICATION_TYPES } from "../utils/notificationsUtils.js";
 
 const filterTranslationKeys = {
@@ -25,6 +26,7 @@ function NotificationCenter({ onBack }) {
     setSelectedNotification,
     openNotification,
   } = useNotifications();
+  const { refreshUnreadCount } = useNotificationRealtime();
 
   const filters = ["todos", ...NOTIFICATION_TYPES];
 
@@ -89,7 +91,10 @@ function NotificationCenter({ onBack }) {
                   className={`notification ${
                     !notification.is_read ? "unread" : ""
                   }`}
-                  onClick={() => openNotification(notification)}
+                  onClick={async () => {
+                    await openNotification(notification);
+                    refreshUnreadCount();
+                  }}
                 >
                   <span className="icon-btn">
                     <FaEnvelopeOpen />
