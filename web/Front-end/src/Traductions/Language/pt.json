@@ -85,7 +85,19 @@
     "document": "Nº do documento de identidade",
     "phone": "Telefone",
     "submit": "Alugar",
-    "incomplete": "A reserva está incompleta"
+    "incomplete": "A reserva está incompleta",
+    "selectDropoffBranch": "Você deve escolher a filial de devolução",
+    "noVehicleSelected": "Nenhum veículo está selecionado",
+    "showFilters": "Mostrar filtros",
+    "hideFilters": "Ocultar filtros",
+    "chooseDropoff": "Escolha a filial de devolução",
+    "pickupBranchLabel": "Filial de retirada",
+    "dropoffBranchLabel": "Filial de devolução",
+    "branchFallback": "Filial sem nome",
+    "addressUnavailable": "Endereço indisponível",
+    "tapBranchOnMap": "Toque em uma filial no mapa",
+    "mapHint": "Toque em um marcador no mapa para escolher a filial de devolução.",
+    "insuranceLabel": "Seguro"
   },
   "terms": {
     "acceptLabel": "Li e aceito os termos e condições",

@@ -85,7 +85,19 @@
     "document": "Nº Documento de identidad",
     "phone": "Teléfono",
     "submit": "Alquilar",
-    "incomplete": "La reserva está incompleta"
+    "incomplete": "La reserva está incompleta",
+    "selectDropoffBranch": "Debes elegir la sucursal de entrega",
+    "noVehicleSelected": "No hay ningún vehículo seleccionado",
+    "showFilters": "Mostrar filtros",
+    "hideFilters": "Ocultar filtros",
+    "chooseDropoff": "Elige la sucursal de entrega",
+    "pickupBranchLabel": "Sucursal de recogida",
+    "dropoffBranchLabel": "Sucursal de entrega",
+    "branchFallback": "Sucursal sin nombre",
+    "addressUnavailable": "Dirección no disponible",
+    "tapBranchOnMap": "Toca una sucursal en el mapa",
+    "mapHint": "Toca un marcador en el mapa para elegir la sucursal de entrega.",
+    "insuranceLabel": "Seguro"
   },
   "terms": {
     "acceptLabel": "He leído y acepto los términos y condiciones",
