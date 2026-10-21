@@ -133,6 +133,7 @@
     "help": "Ayuda en línea",
     "lightMode": "Modo claro",
     "darkMode": "Modo oscuro",
+    "downloadingApp": "Descargando la app...",
     "getApp": "Llévate RentaMovil contigo",
     "getAppDesc": "Descarga la app para Android"
   },
