@@ -85,7 +85,19 @@
     "document": "ID Document No.",
     "phone": "Phone",
     "submit": "Rent",
-    "incomplete": "The reservation is incomplete"
+    "incomplete": "The reservation is incomplete",
+    "selectDropoffBranch": "You must choose the drop-off branch",
+    "noVehicleSelected": "No vehicle is selected",
+    "showFilters": "Show filters",
+    "hideFilters": "Hide filters",
+    "chooseDropoff": "Choose the drop-off branch",
+    "pickupBranchLabel": "Pickup branch",
+    "dropoffBranchLabel": "Drop-off branch",
+    "branchFallback": "Unnamed branch",
+    "addressUnavailable": "Address unavailable",
+    "tapBranchOnMap": "Tap a branch on the map",
+    "mapHint": "Tap a marker on the map to choose the drop-off branch.",
+    "insuranceLabel": "Insurance"
   },
   "terms": {
     "acceptLabel": "I have read and accept the terms and conditions",

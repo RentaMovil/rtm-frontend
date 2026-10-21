@@ -85,7 +85,19 @@
     "document": "Nº de pièce d'identité",
     "phone": "Téléphone",
     "submit": "Louer",
-    "incomplete": "La réservation est incomplète"
+    "incomplete": "La réservation est incomplète",
+    "selectDropoffBranch": "Vous devez choisir l'agence de restitution",
+    "noVehicleSelected": "Aucun véhicule n'est sélectionné",
+    "showFilters": "Afficher les filtres",
+    "hideFilters": "Masquer les filtres",
+    "chooseDropoff": "Choisissez l'agence de restitution",
+    "pickupBranchLabel": "Agence de prise en charge",
+    "dropoffBranchLabel": "Agence de restitution",
+    "branchFallback": "Agence sans nom",
+    "addressUnavailable": "Adresse indisponible",
+    "tapBranchOnMap": "Touchez une agence sur la carte",
+    "mapHint": "Touchez un marqueur sur la carte pour choisir l'agence de restitution.",
+    "insuranceLabel": "Assurance"
   },
   "terms": {
     "acceptLabel": "J'ai lu et j'accepte les conditions générales",
