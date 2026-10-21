@@ -122,6 +122,7 @@
     "help": "Help online",
     "lightMode": "Light mode",
     "darkMode": "Dark mode",
+    "downloadingApp": "Downloading the app...",
     "getApp": "Take RentaMovil with you",
     "getAppDesc": "Download the app for Android"
   },

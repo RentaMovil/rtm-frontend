@@ -7,18 +7,13 @@ import { branchService } from "../../admin/branches/services/branchService";
 import { carsService } from "../../vehicles/Services/carsService";
 import "./AuthShowcase.css";
 
-// Sin página propia de descargas: va directo a GitHub Pages. Cambiar esta
-// URL cuando esa página quede publicada.
-const APP_DOWNLOAD_URL = "https://github.com/RentaMovil";
+const APP_DOWNLOAD_URL = "https://github.com/RentaMovil/rtm-frontend/releases/download/v1.0.5/application-19cfacab-b35a-4c91-b9d1-045108996c86.apk";
 
-// Panel de marca a la izquierda del login/registro. El logo ya va en
-// AuthTopbar, arriba de todo, así que este panel arranca en el badge.
 function AuthShowcase() {
   const { t } = useTranslation();
-  // Sucursales y vehículos disponibles: datos reales, no inventados. Ambos
-  // endpoints son públicos (no requieren sesión), igual que el catálogo.
   const [branchCount, setBranchCount] = useState(null);
   const [availableCount, setAvailableCount] = useState(null);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -33,6 +28,35 @@ function AuthShowcase() {
 
     return () => { active = false; };
   }, []);
+
+  const handleDownload = async (e) => {
+    e.preventDefault(); 
+    if (isDownloading) return;
+
+    try {
+      setIsDownloading(true);
+      
+      const response = await fetch(APP_DOWNLOAD_URL);
+      if (!response.ok) throw new Error("Failed to download the file");
+
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = "RentaMovil.apk"; 
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Error downloading the APK:", error);
+      window.location.href = APP_DOWNLOAD_URL;
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <aside className="auth-showcase">
@@ -71,13 +95,17 @@ function AuthShowcase() {
       <div className="auth-showcase-bottom">
         <a
           href={APP_DOWNLOAD_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="auth-showcase-app-link"
+          onClick={handleDownload}
+          className={`auth-showcase-app-link ${isDownloading ? "downloading" : ""}`}
+          style={{ cursor: isDownloading ? "wait" : "pointer" }}
         >
           <span className="auth-showcase-app-link-icon"><FaMobileAlt /></span>
           <div className="auth-showcase-app-link-text">
-            <strong>{t("authShowcase.getApp")}</strong>
+            <strong>
+              {isDownloading
+                ? t("authShowcase.downloadingApp")
+                : t("authShowcase.getApp")}
+            </strong>
             <p>{t("authShowcase.getAppDesc")}</p>
           </div>
           <FaChevronRight />
