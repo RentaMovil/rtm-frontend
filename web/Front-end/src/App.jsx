@@ -16,6 +16,7 @@ import VehicleInventory from './features/admin/VehicleInventory/pages/VehicleInv
 // Vehicles
 import Home from './features/vehicles/pages/Home.jsx';
 import HomeS from './features/vehicles/pages/HomeS.jsx';
+import { useAuth } from './contexts/AuthContext.jsx';
 
 // Booking
 import Reservation from './features/booking//pages/Reservation.jsx';
@@ -65,6 +66,15 @@ import BankAccounts from './features/admin/bankAccounts/pages/BankAccounts.jsx';
 
 
 
+// Admin con sesión ya restaurada: lleva directo a HomeAdmin, sin esperar a que
+// entre a /account para que la navbar refleje el rol real.
+const ROLES_ADMIN = ["ADMIN", "SUPER_ADMIN"];
+
+function HomeGate() {
+  const { user } = useAuth();
+  return ROLES_ADMIN.includes(user?.role) ? <HomeAdmin /> : <Home />;
+}
+
 function App() {
   const [theme, setTheme] = useState(
     () => localStorage.getItem("theme") || "skylight"
@@ -78,7 +88,7 @@ function App() {
     <BrowserRouter>
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomeGate />} />
         <Route path="/login" element={<Login theme={theme} setTheme={setTheme} />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/Register" element={<RegisterForm />} />
@@ -114,7 +124,7 @@ function App() {
             (botón "Continuar") y el resto de la navbar sí la exigen. */}
         <Route
           path="/home"
-          element={<Home />}
+          element={<HomeGate />}
         />
         <Route
           path="/homeS"
