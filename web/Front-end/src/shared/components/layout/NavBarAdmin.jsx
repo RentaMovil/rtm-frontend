@@ -6,15 +6,23 @@ import { MdPerson } from "react-icons/md";
 import { useState } from "react";
 import AdminPanel from "../../../features/admin/HomeAdmin/Components/AdminPanel.jsx";
 import { useTranslation } from "react-i18next";
+import NotificationBadge from "../notifications/NotificationBadge.jsx";
+import { useNotificationRealtime } from "../../../features/notification/context/NotificationRealtimeContext.jsx";
 
 function NavbarAdmin() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
+  const { unreadCount, adminUnseenCount, clearAdminUnseen } = useNotificationRealtime();
 
   const closeAll = () => {
     setOpen(false);
     setAdminOpen(false);
+  };
+
+  const goToNotifications = () => {
+    closeAll();
+    clearAdminUnseen();
   };
 
   const toggleMenu = () => {
@@ -41,8 +49,9 @@ function NavbarAdmin() {
               {t("navbar.linkInit")}
             </Link>
 
-            <Link to="/NotificationAdmin" onClick={closeAll}>
+            <Link to="/NotificationAdmin" onClick={goToNotifications}>
               {t("navbar.linkNotifications")}
+              <NotificationBadge count={unreadCount + adminUnseenCount} />
             </Link>
 
               <Link
