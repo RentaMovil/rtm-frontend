@@ -38,6 +38,13 @@ export default function AccountView({ theme, setTheme }) {
     const [isChangingEmail, setIsChangingEmail] = useState(false);
     const [emailChanged, setEmailChanged] = useState(false);
 
+    // Con un modal abierto, el fondo no debe poder scrollearse detrás de él.
+    useEffect(() => {
+        const anyModalOpen = showThemeModal || showLangModal || showLogoutModal || showEmailModal;
+        document.body.style.overflow = anyModalOpen ? "hidden" : "";
+        return () => { document.body.style.overflow = ""; };
+    }, [showThemeModal, showLangModal, showLogoutModal, showEmailModal]);
+
     // Modo edicion del perfil. El boton de la lapiz lo alterna; mientras esta
     // activo los campos pasan de solo lectura a editables y aparece Guardar.
     const [isEditing, setIsEditing] = useState(false);
@@ -485,7 +492,7 @@ export default function AccountView({ theme, setTheme }) {
                         <button
                             className="btn-times btn-times--corner"
                             type="button"
-                            onClick={() => setShowThemeModal(false)}
+                            onClick={() => setShowLangModal(false)}
                             aria-label={t("account.cancelar")}
                         >
                             <FaTimes />
