@@ -67,7 +67,7 @@ export default function ReservationsList() {
   };
 
   const handleExport = () => {
-    const header = ["ID", "Cliente", "Vehiculo", "Placa", "Retiro", "Devolucion", "Sucursal", "Total", "Estado"];
+    const header = t("reservations.csvHeaders", { returnObjects: true });
     const rows = filtered.map((r) => [
       r.id, r.customer.name, r.vehicle.name, r.vehicle.plate,
       r.pickup.date, r.dropoff.date, r.pickup.branchName, getTotal(r), r.status,
@@ -77,7 +77,7 @@ export default function ReservationsList() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = "reservas.csv";
+    link.download = t("reservations.csvFilename");
     link.click();
     URL.revokeObjectURL(url);
   };
@@ -120,7 +120,7 @@ export default function ReservationsList() {
           </div>
         </div>
 
-        {isLoading && <p className="rs-empty">Cargando reservas...</p>}
+        {isLoading && <p className="rs-empty">{t("reservations.loading")}</p>}
         {!isLoading && error && <p className="rs-empty">{error}</p>}
 
         {!isLoading && !error && (

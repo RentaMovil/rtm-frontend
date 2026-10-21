@@ -1,6 +1,7 @@
+import i18n from '../../../../Traductions/index.js';
 
 function ValidateDate(value) {  //esta funcionn toma una gecha elgida por el usuario  y valida que no sea anterior a la fecha actual ni posterior a dos meses desde hoy
-    if (!value) return 'Fecha inválida';
+    if (!value) return i18n.t('MaintenanceForm.invalidDate');
 
     const selectDate = new Date(value);//crea un bjeto a partir de el vvalor recibido
     const today = new Date();  // crea un objeto con la fecha actual
@@ -13,10 +14,10 @@ function ValidateDate(value) {  //esta funcionn toma una gecha elgida por el usu
     limitDate.setMonth(limitDate.getMonth() + 2);// esto solo suna dos meses a la fecha actual
 
     if (selectDate < today) {
-        return 'La fecha no puede ser anterior a hoy';
+        return i18n.t('MaintenanceForm.dateBeforeToday');
     }
     if (selectDate > limitDate) {
-        return 'La fecha no puede ser posterior a dos meses desde hoy';
+        return i18n.t('MaintenanceForm.dateAfterTwoMonths');
     }
 
     return true;

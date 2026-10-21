@@ -51,7 +51,7 @@ function HistorialReservation() {
             {t("historyReservation.myReservations", "Mis Reservas")}
           </h2>
 
-          {isLoading && <p className="title">Cargando reservas...</p>}
+          {isLoading && <p className="title">{t("reservations.loading")}</p>}
           {!isLoading && error && <p className="title">{error}</p>}
 
           {/* Estado vacío: un array vacío no renderiza nada y deja la página en blanco */}

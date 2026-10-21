@@ -67,7 +67,7 @@ function NotificationCenter({ onBack }) {
             <h3>{t("notifications.recibed")}</h3>
 
             {isLoading && (
-              <p className="notification-feedback">Cargando notificaciones...</p>
+              <p className="notification-feedback">{t("notifications.loading")}</p>
             )}
 
             {error && (
@@ -76,7 +76,7 @@ function NotificationCenter({ onBack }) {
 
             {!isLoading && !error && notifications.length === 0 && (
               <p className="notification-feedback">
-                No hay notificaciones para este filtro.
+                {t("notifications.emptyFilter")}
               </p>
             )}
 

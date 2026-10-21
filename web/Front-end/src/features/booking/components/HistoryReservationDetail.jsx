@@ -62,7 +62,7 @@ function ReservationDetailModal({ isOpen, reserva, onClose, onUpdateReturnBranch
         } catch (error) {
             setSaveError(
                 error?.message ||
-                "No fue posible actualizar la sucursal de devolución."
+                t("historyReservation.updateBranchError")
             );
         } finally {
             setIsSaving(false);
