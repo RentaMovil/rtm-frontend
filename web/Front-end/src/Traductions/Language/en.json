@@ -339,7 +339,15 @@
     "branch": "Branch",
     "disabledBranch": "Select a branch",
     "requiredBranch": "The branch is required",
-    "requiredCapacity": "Capacity is required"
+    "requiredCapacity": "Capacity is required",
+    "subtitle": "Enter the technical data, branch assignment and specifications of the new vehicle to add it to the active fleet.",
+    "infoNote": "The vehicle will be added to the centralized inventory immediately.",
+    "initialState": "Assigned initial status:",
+    "pricePerDay": "Price per day (COP)",
+    "mileageInitial": "Initial mileage (km)",
+    "modelAndSpec": "Model and Specification",
+    "modelSpecHint": "Includes official body segment and engine type.",
+    "photoLabel": "Vehicle photo"
   },
   "contractHistory": {
     "title": "Contract history",

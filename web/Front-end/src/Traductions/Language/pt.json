@@ -339,7 +339,15 @@
     "branch": "Filial",
     "disabledBranch": "Selecione uma filial",
     "requiredBranch": "A filial é obrigatória",
-    "requiredCapacity": "A capacidade é obrigatória"
+    "requiredCapacity": "A capacidade é obrigatória",
+    "subtitle": "Insira os dados técnicos, a atribuição de filial e as especificações do novo veículo para adicioná-lo à frota ativa.",
+    "infoNote": "O veículo será adicionado imediatamente ao inventário centralizado.",
+    "initialState": "Status inicial atribuído:",
+    "pricePerDay": "Preço por dia (COP)",
+    "mileageInitial": "Quilometragem inicial (km)",
+    "modelAndSpec": "Modelo e especificação",
+    "modelSpecHint": "Inclui segmento de carroceria e motorização oficial.",
+    "photoLabel": "Fotografia do veículo"
   },
   "contractHistory": {
     "title": "Histórico de contratos",

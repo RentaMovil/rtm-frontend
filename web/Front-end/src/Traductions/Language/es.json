@@ -339,7 +339,15 @@
     "branch": "Sucursal",
     "disabledBranch": "Selecciona una sucursal",
     "requiredBranch": "La sucursal es obligatoria",
-    "requiredCapacity": "La capacidad es obligatoria"
+    "requiredCapacity": "La capacidad es obligatoria",
+    "subtitle": "Ingresa los datos técnicos, asignación de sucursal y especificaciones del nuevo vehículo para agregarlo a la flota activa.",
+    "infoNote": "El vehículo se dará de alta inmediatamente en el inventario centralizado.",
+    "initialState": "Estado inicial asignado:",
+    "pricePerDay": "Precio por día (COP)",
+    "mileageInitial": "Kilometraje inicial (km)",
+    "modelAndSpec": "Modelo y Especificación",
+    "modelSpecHint": "Incluye segmento de carrocería y motorización oficial.",
+    "photoLabel": "Fotografía del vehículo"
   },
   "contractHistory": {
     "title": "Historial de contratos",
@@ -714,6 +722,13 @@
     "Type": "Tipo de mantenimiento",
     "requiredType": "El tipo de mantenimiento es obligatorio",
     "placeholderType": "Ej: Cambio de aceite, Revisión de frenos...",
+    "types": {
+      "Oil change": "Cambio de aceite",
+      "Tire replacement": "Cambio de llantas",
+      "Brake service": "Servicio de frenos",
+      "General inspection": "Revisión general",
+      "Bodywork": "Latonería y pintura"
+    },
     "minLenghtType": "El tipo de mantenimiento debe tener al menos 3 caracteres",
     "maxLenghtType": "El tipo de mantenimiento no puede tener más de 60 caracteres",
     "invalidType": "El tipo de mantenimiento solo puede contener letras, números, guiones y comas.",

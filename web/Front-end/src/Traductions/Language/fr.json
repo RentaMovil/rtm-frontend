@@ -339,7 +339,15 @@
     "branch": "Succursale",
     "disabledBranch": "Sélectionnez une succursale",
     "requiredBranch": "La succursale est obligatoire",
-    "requiredCapacity": "La capacité est obligatoire"
+    "requiredCapacity": "La capacité est obligatoire",
+    "subtitle": "Saisissez les données techniques, l'affectation de succursale et les spécifications du nouveau véhicule pour l'ajouter à la flotte active.",
+    "infoNote": "Le véhicule sera ajouté immédiatement à l'inventaire centralisé.",
+    "initialState": "Statut initial attribué :",
+    "pricePerDay": "Prix par jour (COP)",
+    "mileageInitial": "Kilométrage initial (km)",
+    "modelAndSpec": "Modèle et spécification",
+    "modelSpecHint": "Inclut le segment de carrosserie et la motorisation officielle.",
+    "photoLabel": "Photo du véhicule"
   },
   "contractHistory": {
     "title": "Historique des contrats",
