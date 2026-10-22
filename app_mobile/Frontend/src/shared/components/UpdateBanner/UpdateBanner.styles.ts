@@ -1,6 +1,7 @@
 import { Platform, StatusBar, StyleSheet } from "react-native";
 
 import { createSoftShadow } from "../../../theme/constants/shadows";
+import { Radius } from "../../../theme/constants/radius";
 
 export const createStyles = (colors: any) => {
   const topOffset =
@@ -38,10 +39,10 @@ export const createStyles = (colors: any) => {
     },
 
     button: {
-      backgroundColor: colors.primary,
+      backgroundColor: colors.button,
       paddingVertical: 8,
       paddingHorizontal: 14,
-      borderRadius: 10,
+      borderRadius: Radius.md,
       minWidth: 70,
       alignItems: "center",
     },

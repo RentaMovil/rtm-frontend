@@ -66,7 +66,7 @@ export const createStyles = (colors: any) => {
 
     placeholderText: {
       ...text.bodyMedium,
-      color: colors.primary,
+      color: colors.button,
     },
 
     preview: {

@@ -2,7 +2,9 @@ export const Radius = {
 
     sm: 8,
 
-    md: 12,
+    /** Radio de inputs y botones primarios, segun el web (10px). */
+
+    md: 10,
 
     lg: 16,
 

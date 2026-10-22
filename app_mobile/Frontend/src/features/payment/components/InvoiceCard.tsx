@@ -89,7 +89,7 @@ export default function InvoiceCard() {
         <FontAwesome
           name={isOpen ? "chevron-up" : "chevron-down"}
           size={16}
-          color={colors.primary}
+          color={colors.button}
         />
       </TouchableOpacity>
 

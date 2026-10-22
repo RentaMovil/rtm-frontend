@@ -90,7 +90,7 @@ export default function FilterModal({
       <FontAwesome
         name={selected ? "check-square" : "square-o"}
         size={17}
-        color={selected ? colors.primary : colors.secondaryText}
+        color={selected ? colors.button : colors.secondaryText}
         style={styles.checkbox}
       />
 
