@@ -87,7 +87,7 @@ export default function HomePage() {
     });
 
     // Sucursal elegida en el buscador: por branchId si la API lo dio, y por
-    // nombre como respaldo (location es el unico dato que trae el mock).
+    // nombre como respaldo (no todos los vehiculos traen branchId).
     const byBranch = byGenericFilters.filter((vehicle) =>
       vehicle.branchId
         ? vehicle.branchId === currentSearchData.branch.id
