@@ -4,6 +4,8 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import * as ImagePicker from "expo-image-picker";
 
 import {
+    ActivityIndicator,
+    Modal,
     ScrollView,
     Text,
     TextInput,
@@ -20,6 +22,7 @@ import SelectLanguage from "../../../shared/components/Select/SelectLanguage";
 import ThemeSelector from "../../../shared/components/Select/SelectTheme";
 import AppCard from "../../../shared/components/AppCard/AppCard";
 
+import { ApiError } from "../../../shared/api/httpClient";
 import { useAuth } from "../../auth/context/AuthContext";
 import { uploadProfileImage } from "../services/profileImageService";
 
@@ -38,10 +41,21 @@ export default function Account() {
         logout,
         refreshUser,
         updateProfile,
+        changeEmail,
     } = useAuth();
 
     const [saveError, setSaveError] = useState<string | null>(null);
     const [isSaving, setIsSaving] = useState(false);
+
+    // Cambio de correo: vive en su propio modal, no en el modo edicion del
+    // perfil (la confirmacion es la contrasena actual, no un guardado mas).
+    // Sigue el mismo flujo que el web: sin paso de verificacion por codigo.
+    const [showEmailModal, setShowEmailModal] = useState(false);
+    const [newEmail, setNewEmail] = useState("");
+    const [emailPassword, setEmailPassword] = useState("");
+    const [emailError, setEmailError] = useState<string | null>(null);
+    const [emailSuccess, setEmailSuccess] = useState(false);
+    const [isChangingEmail, setIsChangingEmail] = useState(false);
 
     // Login/registro no traen el telefono (UserResponse no lo incluye); se
     // completa pidiendo el perfil completo (GET /users/me, con phone).
@@ -68,11 +82,15 @@ export default function Account() {
         useState(false);
 
 
+    // Arranca con la foto real del usuario (si ya subio una) en vez de
+    // forzar siempre el placeholder: antes `image` solo se llenaba cuando el
+    // usuario elegia una nueva foto en la sesion actual, asi que la foto ya
+    // guardada en el backend (GET /users/me -> imageUrl) nunca se mostraba.
     const [
         image,
         setImage,
     ] =
-        useState<string | null>(null);
+        useState<string | null>(user?.imageUrl ?? null);
 
 
     const [
@@ -109,6 +127,7 @@ export default function Account() {
 
         setName(`${user.firstName} ${user.lastName}`);
         setPhone(user.phone ?? "");
+        setImage(user.imageUrl ?? null);
     }, [user, editing]);
 
 
@@ -178,6 +197,79 @@ export default function Account() {
 
         router.replace("/auth/login");
 
+    }
+
+
+    function openEmailModal() {
+        setNewEmail("");
+        setEmailPassword("");
+        setEmailError(null);
+        setEmailSuccess(false);
+        setShowEmailModal(true);
+    }
+
+
+    function closeEmailModal() {
+        // A mitad de la peticion el modal se queda abierto: cerrarlo dejaria
+        // al usuario sin saber si el cambio se aplico.
+        if (isChangingEmail) return;
+
+        setShowEmailModal(false);
+    }
+
+
+    function validateNewEmail(correo: string): string | null {
+        if (!correo) {
+            return "El correo nuevo es obligatorio.";
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+            return "Ingresa un correo válido.";
+        }
+
+        if (correo.toLowerCase() === (user?.email ?? "").toLowerCase()) {
+            return "El correo nuevo debe ser distinto al actual.";
+        }
+
+        if (!emailPassword) {
+            return "Ingresa tu contraseña actual para confirmar el cambio.";
+        }
+
+        return null;
+    }
+
+
+    async function handleChangeEmail() {
+        const correo = newEmail.trim();
+        const problem = validateNewEmail(correo);
+
+        if (problem) {
+            setEmailError(problem);
+            return;
+        }
+
+        setEmailError(null);
+        setIsChangingEmail(true);
+
+        try {
+            await changeEmail(correo, emailPassword);
+
+            setShowEmailModal(false);
+            setNewEmail("");
+            setEmailPassword("");
+            setEmailSuccess(true);
+        } catch (err) {
+            // Contraseña incorrecta, correo ya registrado o backend caido: se
+            // muestra el mensaje real del servidor, nunca se afirma que el
+            // cambio se completo si la peticion fallo.
+            setEmailError(
+                err instanceof ApiError || err instanceof Error
+                    ? err.message
+                    : "No se pudo cambiar el correo.",
+            );
+        } finally {
+            setIsChangingEmail(false);
+        }
     }
 
 
@@ -409,6 +501,36 @@ export default function Account() {
                         style={styles.label}
                     >
 
+                        Usuario
+
+                    </Text>
+
+
+                    <TextInput
+
+                        style={styles.input}
+
+                        value={
+                            user?.username ?? ""
+                        }
+
+                        editable={false}
+
+                    />
+
+                </View>
+
+
+                <View
+                    style={
+                        styles.inputContainer
+                    }
+                >
+
+                    <Text
+                        style={styles.label}
+                    >
+
                         Correo
 
                     </Text>
@@ -427,6 +549,32 @@ export default function Account() {
                     />
 
                 </View>
+
+
+                {/* CAMBIAR CORREO */}
+
+                <TouchableOpacity
+
+                    style={styles.emailActionButton}
+
+                    onPress={openEmailModal}
+
+                >
+
+                    <Text style={styles.emailActionText}>
+
+                        Cambiar correo
+
+                    </Text>
+
+                </TouchableOpacity>
+
+
+                {emailSuccess ? (
+                    <Text style={[styles.label, { color: colors.success, marginBottom: 16 }]}>
+                        Correo actualizado correctamente.
+                    </Text>
+                ) : null}
 
 
                 {/* CAMBIAR CONTRASEÑA */}
@@ -516,6 +664,96 @@ export default function Account() {
                 </TouchableOpacity>
 
             </View>
+
+
+            {/* MODAL CAMBIAR CORREO */}
+
+            <Modal
+                visible={showEmailModal}
+                animationType="fade"
+                transparent
+                onRequestClose={closeEmailModal}
+            >
+
+                <View style={styles.modalOverlay}>
+
+                    <View style={styles.modalCard}>
+
+                        <Text style={styles.modalTitle}>
+                            Cambiar correo
+                        </Text>
+
+                        <View style={styles.inputContainer}>
+                            <Text style={styles.label}>Correo actual</Text>
+                            <TextInput
+                                style={styles.input}
+                                value={user?.email ?? ""}
+                                editable={false}
+                            />
+                        </View>
+
+                        <View style={styles.inputContainer}>
+                            <Text style={styles.label}>Correo nuevo</Text>
+                            <TextInput
+                                style={[styles.input, styles.inputEditing]}
+                                value={newEmail}
+                                onChangeText={setNewEmail}
+                                editable={!isChangingEmail}
+                                autoCapitalize="none"
+                                keyboardType="email-address"
+                                placeholder="nuevo@correo.com"
+                                placeholderTextColor={colors.secondaryText}
+                            />
+                        </View>
+
+                        <View style={styles.inputContainer}>
+                            <Text style={styles.label}>Contraseña actual</Text>
+                            <TextInput
+                                style={[styles.input, styles.inputEditing]}
+                                value={emailPassword}
+                                onChangeText={setEmailPassword}
+                                editable={!isChangingEmail}
+                                secureTextEntry
+                                autoCapitalize="none"
+                                placeholder="Tu contraseña"
+                                placeholderTextColor={colors.secondaryText}
+                            />
+                        </View>
+
+                        {emailError ? (
+                            <Text style={styles.modalError}>{emailError}</Text>
+                        ) : null}
+
+                        <View style={styles.modalActions}>
+                            <TouchableOpacity
+                                style={styles.modalCancelButton}
+                                onPress={closeEmailModal}
+                                disabled={isChangingEmail}
+                            >
+                                <Text style={styles.modalCancelText}>Cancelar</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={[
+                                    styles.modalConfirmButton,
+                                    isChangingEmail && styles.modalConfirmButtonDisabled,
+                                ]}
+                                onPress={handleChangeEmail}
+                                disabled={isChangingEmail}
+                            >
+                                {isChangingEmail ? (
+                                    <ActivityIndicator color={colors.buttonText} />
+                                ) : (
+                                    <Text style={styles.modalConfirmText}>Confirmar</Text>
+                                )}
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
+
+                </View>
+
+            </Modal>
 
         </ScrollView>
 
