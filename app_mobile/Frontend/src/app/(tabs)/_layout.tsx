@@ -88,7 +88,7 @@ function TabIcon({ name, focused, color }: TabBarIconProps) {
     <View
       style={[
         styles.tabIconWrap,
-        focused && { backgroundColor: colors.primarySurface },
+        focused && { backgroundColor: colors.accentBg },
       ]}
     >
       <FontAwesome
@@ -117,7 +117,7 @@ function HeaderRightButton() {
               <FontAwesome
                 name="bell"
                 size={22}
-                color={colors.primary}
+                color={colors.button}
                 style={{ opacity: pressed ? 0.5 : 1 }}
               />
 
@@ -146,7 +146,7 @@ function HeaderRightButton() {
             <FontAwesome
               name="user"
               size={25}
-              color={colors.primary}
+              color={colors.button}
               style={{ opacity: pressed ? 0.5 : 1 }}
             />
           )}
@@ -165,7 +165,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: colors.primary,
+        tabBarActiveTintColor: colors.button,
         tabBarInactiveTintColor: colors.secondaryText,
 
         tabBarStyle: {
@@ -198,6 +198,20 @@ export default function TabLayout() {
 
         headerTintColor: colors.text,
 
+        /**
+         * Igual que en el Stack raiz: `headerTitle` queda vacio y la marca se
+         * pinta en `headerLeft` para que quede pegada al extremo izquierdo
+         * (texto "RentaMovil" -> icono) en vez de centrada por el
+         * comportamiento default de `headerTitle`. Estas tres pantallas son
+         * raiz de cada tab, asi que no llevan boton de volver.
+         */
+        headerTitle: () => null,
+        headerLeft: () => (
+          <View style={{ marginLeft: 15 }}>
+            <BrandLogo order="text-first" />
+          </View>
+        ),
+
         // El header solo se ve en web; en nativo se oculta y no hace falta.
         headerShown: useClientOnlyValue(false, true),
       }}
@@ -206,7 +220,6 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "RentaMóvil",
-          headerTitle: () => <BrandLogo />,
           tabBarLabel: t("tabs.home"),
           tabBarIcon: ({ focused, color }) => (
             <TabIcon name="car" focused={focused} color={color} />
@@ -219,7 +232,6 @@ export default function TabLayout() {
         name="menu"
         options={{
           title: "RentaMóvil",
-          headerTitle: () => <BrandLogo />,
           tabBarLabel: t("tabs.menu"),
           tabBarIcon: ({ focused, color }) => (
             <TabIcon name="bars" focused={focused} color={color} />
@@ -231,7 +243,6 @@ export default function TabLayout() {
         name="reservations"
         options={{
           title: "RentaMóvil",
-          headerTitle: () => <BrandLogo />,
           tabBarLabel: t("tabs.reservations"),
           tabBarIcon: ({ focused, color }) => (
             <TabIcon name="bookmark" focused={focused} color={color} />
