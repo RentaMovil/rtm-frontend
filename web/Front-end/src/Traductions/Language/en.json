@@ -1364,7 +1364,15 @@
     "live": "Reporting",
     "noSignal": "No signal",
     "noReport": "No GPS report",
-    "updatedAt": "Updated {{time}} · {{date}}"
+    "updatedAt": "Updated {{time}} · {{date}}",
+    "selectVehicle": "Choose a vehicle from the list to see its route",
+    "fromLabel": "From",
+    "toLabel": "To",
+    "viewRoute": "View route",
+    "routeError": "Could not load the route",
+    "noRoutePoints": "No reports for that vehicle in the chosen range",
+    "routePointsCount_one": "{{count}} point reported in the chosen range",
+    "routePointsCount_other": "{{count}} points reported in the chosen range"
   },
   "emailVerification": {
     "title": "Enter your email address",

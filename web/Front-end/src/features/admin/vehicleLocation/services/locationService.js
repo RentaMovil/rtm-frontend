@@ -47,5 +47,9 @@ export const locationService = {
         }));
     },
 
-    getTrack: (rentalId) => httpClient.get(`/tracking/${rentalId}/history`),
+    // Historial completo de la renta (HU-GPS-002): un punto por cada reporte del GPS.
+    getTrack: async (rentalId) => {
+        const points = await httpClient.get(`/tracking/${rentalId}/history`);
+        return points.map(toLocationViewModel);
+    },
 };

@@ -1364,7 +1364,15 @@
     "live": "Signale",
     "noSignal": "Sans signal",
     "noReport": "Aucun rapport GPS",
-    "updatedAt": "Mis à jour {{time}} · {{date}}"
+    "updatedAt": "Mis à jour {{time}} · {{date}}",
+    "selectVehicle": "Choisissez un véhicule dans la liste pour voir son trajet",
+    "fromLabel": "Du",
+    "toLabel": "Au",
+    "viewRoute": "Voir le trajet",
+    "routeError": "Impossible de charger le trajet",
+    "noRoutePoints": "Aucun rapport pour ce véhicule dans la période choisie",
+    "routePointsCount_one": "{{count}} point signalé dans la période choisie",
+    "routePointsCount_other": "{{count}} points signalés dans la période choisie"
   },
   "emailVerification": {
     "title": "Saisissez votre adresse e-mail",
