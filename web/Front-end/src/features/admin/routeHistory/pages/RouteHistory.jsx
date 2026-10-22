@@ -106,6 +106,11 @@ export default function RouteHistory() {
 
             const filtered = allPoints
                 .filter((p) => {
+                    // "Null Island": el placeholder que manda el GPS mientras todavía no tiene
+                    // fix. El backend ya lo rechaza a partir de ahora, pero reportes viejos
+                    // pueden seguir teniendo uno guardado.
+                    if (Number(p.latitude) === 0 && Number(p.longitude) === 0) return false;
+
                     const recorded = new Date(fromApiDateTime(p.recordedAt)).getTime();
                     if (fromDate && recorded < fromDate.getTime()) return false;
                     if (toDate && recorded > toDate.getTime()) return false;
