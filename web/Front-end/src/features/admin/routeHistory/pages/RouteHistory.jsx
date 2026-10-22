@@ -106,10 +106,15 @@ export default function RouteHistory() {
 
             const filtered = allPoints
                 .filter((p) => {
-                    // "Null Island": el placeholder que manda el GPS mientras todavía no tiene
-                    // fix. El backend ya lo rechaza a partir de ahora, pero reportes viejos
-                    // pueden seguir teniendo uno guardado.
-                    if (Number(p.latitude) === 0 && Number(p.longitude) === 0) return false;
+                    // Ruido del GPS: la flota opera solo en Colombia, así que cualquier punto
+                    // claramente fuera de ese rango (incluido "Null Island", el 0,0 que mandan
+                    // algunos módulos sin fix) es un reporte basura, no una posición real.
+                    // El backend ya rechaza (0,0) desde ahora, pero reportes viejos -con esa u
+                    // otra coordenada rara- pueden seguir guardados.
+                    const lat = Number(p.latitude);
+                    const lng = Number(p.longitude);
+                    const dentroDeColombia = lat >= -4.5 && lat <= 13.5 && lng >= -82 && lng <= -66;
+                    if (!dentroDeColombia) return false;
 
                     const recorded = new Date(fromApiDateTime(p.recordedAt)).getTime();
                     if (fromDate && recorded < fromDate.getTime()) return false;
