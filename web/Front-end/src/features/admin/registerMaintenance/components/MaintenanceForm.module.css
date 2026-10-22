@@ -71,10 +71,24 @@ width: 100%;
 }
 /* Casilla "Iniciar ahora" bajo la fecha */
 .maintenance-start-now {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-size: 14px;
+    line-height: 1.4;
+    cursor: pointer;
+}
+.maintenance-start-now-row {
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+.maintenance-start-now input {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    margin: 0;
+    accent-color: var(--primary, #2D7FF9);
 }
 .maintenance-form textarea {
     border-radius: 12px;        /* menos redondo, más natural para textarea */
@@ -207,15 +221,97 @@ width: 90%;
   font-weight: 700;
 }
 
-
+.it-cost-input {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  overflow: hidden;
+}
+.it-cost-input span {
+  padding: 0 10px;
+  font: 600 13px inherit;
+  color: var(--placeholder);
+  text-transform: none;
+  letter-spacing: normal;
+  border-right: 1px solid var(--border);
+}
+.it-cost-input input {
+  border: none;
+  background: none;
+  padding: 10px 12px;
+  margin: 0;
+  font: 600 14px inherit;
+  color: var(--text-h);
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.it-cost-input input:focus {
+  outline: none;
+}
+.it-cost-input:focus-within {
+  border-color: var(--button);
+}
 @media (max-width: 768px) {
-    .maintenance-form {
-        grid-template-columns: 1fr;
+    .maintenance-container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
     }
 
-    .maintenance-form-observations,
+    .maintenance-sidebar {
+        order: 0;
+        margin: 0;
+        min-width: 0;
+    }
+
+    .maintenance-form {
+        width: 100%;
+        margin: 0;
+        padding: 16px 12px 28px;
+    }
+
+    .maintenance-continerfor {
+        padding: 22px 16px;
+        min-width: 0;
+    }
+
+    .maintenance-form-input {
+        width: 100%;
+        padding: 8px 0;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+    .maintenance-form-right {
+        min-width: 0;
+    }
+
+    .maintenance-form textarea {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .maintenance-start-now-row {
+        padding: 4px 0;
+    }
+
+    .maintenance-start-now {
+        align-items: flex-start;
+        font-size: 14px;
+    }
+
     .maintenance-form-buttons {
-        grid-column: span 1;
+        grid-column: auto;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: flex-start;
+        padding: 8px 0;
+    }
+
+    .maintenance-form-buttons button {
+        margin: 0;
     }
 }
 /* {
