@@ -29,24 +29,20 @@ export type ReservationStatus =
 /**
  * Entity: Reservation (Aggregate Root).
  *
- * NO esta en la API mock: se resuelve con un mock local en la app.
+ * Viene de la API real: rtm-booking-reservation expone `GET /reservations`
+ * (y `/mine`) y el gateway los enruta sin cambiar la ruta.
  *
- * Forma: se replica el mock del frontend web
- * (`web/Front-end/src/features/booking/data/mocks/reservationsMocks.js`) con
- * dos ajustes queestableciste:
+ * La API responde en camelCase y con las relaciones como ids sueltos
+ * (`vehicleId`, `pickupBranchId`, `returnBranchId`); el `reservationMapper`
+ * la aplana a esta forma snake_case y calcula los campos que la API no
+ * manda (`days`, `price_per_day`, `insurance_per_day`).
  *
- *  1. **Normalizada.** El mock trae `vehicle` anidado completo y las
- *     relaciones como ids sueltos; aqui `vehicle` desaparece y solo queda
- *     `vehicleId`. La UI resuelve vehiculo y sucursales por id contra sus
- *     catalogos, igual que haria un backend de verdad.
- *  2. **Aplanada.** `tiempos{}` y `billing{}` se promotes al nivel raiz,
- *     conservando los nombres exactos del mock.
- *
- * `status` llega como texto en espanol minusculo ("activa", "completada",
- * "cancelada"). Se deja como `string`: la API no garantiza el conjunto.
+ * `status` llega con el enum de la API (`PENDING_PAYMENT`, `PENDING_REVIEW`,
+ * `CONFIRMED`, `CANCELLED`, `COMPLETED`). Se deja como `string`: es la API la
+ * que define el conjunto.
  */
 export type Reservation = {
-  /** Identificador de negocio legible, ej. "RES-9428". */
+  /** Identificador de la reserva (UUID que genera la API). */
   id: string;
   created_at: ISODateTime;
   status: string;

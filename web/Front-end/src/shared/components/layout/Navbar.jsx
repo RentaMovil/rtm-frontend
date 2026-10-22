@@ -5,10 +5,14 @@ import LogoCar from "./LogoCar";
 import { MdPerson } from "react-icons/md";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import AuthLink from "../AuthLink.jsx";
+import NotificationBadge from "../notifications/NotificationBadge.jsx";
+import { useNotificationRealtime } from "../../../features/notification/context/NotificationRealtimeContext.jsx";
 
     function Navbar() {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
+    const { unreadCount } = useNotificationRealtime();
 
     return (
         <header className="navbar">
@@ -28,27 +32,28 @@ import { useTranslation } from "react-i18next";
                 {t("navbar.linkInit")}
             </Link>
 
-            <Link
+            <AuthLink
                 to="/Notification"
                 onClick={() => setOpen(false)}
             >
                 {t("navbar.linkNotifications")}
-            </Link>
+                <NotificationBadge count={unreadCount} />
+            </AuthLink>
 
-            <Link
+            <AuthLink
                 to="/HistorialReservation"
                 onClick={() => setOpen(false)}
             >
                 {t("navbar.linkReservation")}
-            </Link>
+            </AuthLink>
 
-            <Link
+            <AuthLink
                 to="/account"
                 className="profile-link"
                 onClick={() => setOpen(false)}
             >
                 <MdPerson />
-            </Link>
+            </AuthLink>
             </nav>
 
             <button

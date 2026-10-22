@@ -1,17 +1,31 @@
 import './CartVehicule.css';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function CartVehicule({ vehicle, rentalSearch, showActions = true }) {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
 
     if (!vehicle) return null;
 
-    const price = vehicle.dailyPrice.toLocaleString("es-CO");
+    // Número crudo para los cálculos (reserva, total); el formateo con
+    // separador de miles es solo cosmético, se aplica al mostrarlo, no antes.
+    // Pasar la versión ya formateada rompía Number(price) río abajo: "4.700"
+    // se interpreta como 4.7 (el punto se lee como decimal, no como millar).
+    const price = vehicle.dailyPrice;
+    const formattedPrice = price.toLocaleString("es-CO");
 
     const handleContinue = () => {
         if (!showActions) return;
+
+        // Catálogo público; reservar sí exige sesión.
+        if (!isAuthenticated) {
+            navigate("/login");
+            return;
+        }
+
         navigate("/Reservation", {
             state: {
                 vehicle,
@@ -38,12 +52,12 @@ function CartVehicule({ vehicle, rentalSearch, showActions = true }) {
             </div>
             <div className="car-info">
                 <h3>{vehicle.name}</h3>
-                <p className="car-type">{vehicle.categoryName || "Categoría no disponible"}</p>
+                <p className="car-type">{vehicle.categoryName || t("vehicles.categoryUnavailable")}</p>
 
                 <div className="features">
-                    <p><span className='text-box'>Modelo: </span>{vehicle.modelName}</p>
-                    <p><span className='text-box'>Capacidad: </span>{vehicle.capacity}</p>
-                    <p><span className='text-box'>Motor: </span>{vehicle.engineTypeName || "No disponible"}</p>
+                    <p><span className='text-box'>{t("vehicles.model")} </span>{vehicle.modelName}</p>
+                    <p><span className='text-box'>{t("vehicles.capacity")} </span>{vehicle.capacity}</p>
+                    <p><span className='text-box'>{t("vehicles.engine")} </span>{vehicle.engineTypeName || t("vehicles.notAvailable")}</p>
                 </div>
 
                 <div className="benefits">
@@ -60,7 +74,7 @@ function CartVehicule({ vehicle, rentalSearch, showActions = true }) {
                 )}
             </div>
             <div className="car-price">
-                <p className="price">${price}</p>
+                <p className="price">${formattedPrice}</p>
                 <span className="free">{t('cartVehicule.cancellation')}</span>
                 {showActions && (
                     <button type="button" onClick={handleContinue}>{t('cartVehicule.continue')}</button>

@@ -29,7 +29,7 @@ function EmailVerification({ email }) {
             navigate('/CodeVerification', { state: { email: data.email } });
         } catch (err) {
             // ej. 429 si se pidieron demasiados códigos
-            setSendError(err.message || 'No se pudo enviar el código');
+            setSendError(err.message || t("emailVerification.sendError"));
         } finally {
             setIsSending(false);
         }
@@ -44,7 +44,7 @@ function EmailVerification({ email }) {
                     <form className={style['email-form']} onSubmit={handleSubmit(insert)}>
                         <h2 className={style["title"]}>{t("emailVerification.title")}</h2>
                         <p className={style["description"]}>
-                            Le enviaremos un código de seguridad para verificar su identidad y continuar
+                            {t("emailVerification.description")}
                         </p>
 
                         <div className={style["input-wrapper"]}>
@@ -57,7 +57,7 @@ function EmailVerification({ email }) {
                                 autoComplete='username'
                                 placeholder={t('loginForm.emailPlaceholder')}
                                 {...register("email", {
-                                    required: "El correo electrónico es necesario",
+                                    required: t("emailVerification.required"),
                                     pattern: {
                                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                                         message: t("emailVerification.invalidFormat")
@@ -85,11 +85,11 @@ function EmailVerification({ email }) {
                             {isSending ? (
                                 <>
                                     <span className={style["spinner"]}></span>
-                                    Enviando código...
+                                    {t("emailVerification.sending")}
                                 </>
                             ) : (
                                 <>
-                                    Confirmar
+                                    {t("emailVerification.confirm")}
                                     <AiOutlineArrowRight className={style["button-icon"]} />
                                 </>
                             )}
@@ -100,11 +100,11 @@ function EmailVerification({ email }) {
                     <div className={style["security-footer"]}>
                         <div className={style["security-item"]}>
                             <AiOutlineLock />
-                            <span>SSL Verificado</span>
+                            <span>{t("emailVerification.sslVerified")}</span>
                         </div>
                         <div className={style["security-item"]}>
                             <AiOutlineSafety />
-                            <span>Datos Protegidos</span>
+                            <span>{t("emailVerification.dataProtected")}</span>
                         </div>
                     </div>
                 </div>

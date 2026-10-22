@@ -1,4 +1,13 @@
+import { fromApiDateTime } from "../../../../shared/utils/apiDate";
+
 export const STATUS_ORDER = ["PENDING_REVIEW", "PENDING_PAYMENT", "CONFIRMED", "COMPLETED", "CANCELLED"];
+
+// El backend manda LocalDateTime en UTC sin zona ("2026-11-01T15:00:00"); sin la "Z",
+// new Date(...) la toma como si ya fuera hora local y la corre el offset del navegador. Un
+// Date ya construido (ej. "ahora mismo" del lado del cliente) se usa tal cual.
+function toLocalDate(value) {
+  return value instanceof Date ? value : new Date(fromApiDateTime(value));
+}
 
 export function getTotal(r) {
   return r.rentalSubtotal + r.insurance.amount;
@@ -24,11 +33,11 @@ export function statusMeta(status, t) {
 }
 
 export function formatDate(iso, lang) {
-  return new Date(iso).toLocaleDateString(lang, { day: "numeric", month: "short", year: "numeric" });
+  return toLocalDate(iso).toLocaleDateString(lang, { day: "numeric", month: "short", year: "numeric" });
 }
 
 export function formatTime(iso, lang) {
-  return new Date(iso).toLocaleTimeString(lang, { hour: "numeric", minute: "2-digit", hour12: true });
+  return toLocalDate(iso).toLocaleTimeString(lang, { hour: "numeric", minute: "2-digit", hour12: true });
 }
 
 export function formatMoney(n) {

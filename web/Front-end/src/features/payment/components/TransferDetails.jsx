@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useReservation } from "../../booking/context/ReservationContext";
 import { useInsurance } from "../../admin/insuranceTypes/hooks/useInsurance";
 import { calculateRentalDays } from "../../../shared/utils/rental";
@@ -11,6 +12,7 @@ import "./TransferDetails.css";
  * el resto de tarjetas de la página de pago.
  */
 export default function TransferDetails() {
+    const { t } = useTranslation();
     const { reservation } = useReservation();
     const { payment, updatePayment } = usePayment();
     const { insurance } = useInsurance();
@@ -46,7 +48,7 @@ export default function TransferDetails() {
         <div className="transfer-details-body">
             <div className="transfer-details-amount">
                 <span className="transfer-details-amount-label">
-                    TOTAL A TRANSFERIR
+                    {t("invoiceCard.totalToTransferLabel")}
                 </span>
 
                 <strong>
@@ -58,14 +60,13 @@ export default function TransferDetails() {
                 <span>⚠️</span>
 
                 <p>
-                    El monto transferido debe coincidir exactamente con
-                    el total de la reserva. No se aceptan pagos parciales.
+                    {t("transferDetails.warning")}
                 </p>
             </div>
 
             <div className="transfer-details-field">
                 <label htmlFor="referenceNumber">
-                    Número de referencia
+                    {t("reservations.reference")}
                 </label>
 
                 <input
@@ -74,13 +75,12 @@ export default function TransferDetails() {
                     type="text"
                     value={payment?.referenceNumber || ""}
                     onChange={handleReferenceChange}
-                    placeholder="Ingresa el número de referencia"
+                    placeholder={t("transferDetails.referencePlaceholder")}
                     autoComplete="off"
                 />
 
                 <small>
-                    Puedes encontrar este número en el comprobante de
-                    la transferencia.
+                    {t("transferDetails.referenceHint")}
                 </small>
             </div>
         </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { usePayment } from "../context/PaymentContext";
 import { bankAccountService } from "../../admin/bankAccounts/services/bankAccountService";
@@ -13,6 +14,7 @@ import "./BankAccountSelector.css";
  * título/subtítulo se vea igual en todas las secciones de la página.
  */
 export default function BankAccountSelector() {
+    const { t } = useTranslation();
     const { payment, updatePayment } = usePayment();
     const [isExpanded, setIsExpanded] = useState(() => !payment?.bankAccountId);
     const [activeAccounts, setActiveAccounts] = useState([]);
@@ -45,15 +47,15 @@ export default function BankAccountSelector() {
                 <span className="bank-account-toggle-copy">
                     <strong>
                         {selectedAccount && !isExpanded
-                            ? `Cuenta seleccionada: ${selectedAccount.bankName}`
+                            ? t("bankAccountSelector.selectedAccount", { bankName: selectedAccount.bankName })
                             : isExpanded
-                              ? "Ocultar cuentas bancarias"
-                              : "Seleccionar cuenta bancaria"}
+                              ? t("bankAccountSelector.hideAccounts")
+                              : t("bankAccountSelector.selectAccount")}
                     </strong>
                     <small>
                         {isExpanded
-                            ? "Elige la cuenta a la que realizarás la transferencia."
-                            : "Pulsa para ver o cambiar las cuentas disponibles."}
+                            ? t("bankAccountSelector.chooseAccountHint")
+                            : t("bankAccountSelector.toggleHint")}
                     </small>
                 </span>
                 {isExpanded ? <FiChevronUp aria-hidden="true" /> : <FiChevronDown aria-hidden="true" />}
@@ -83,7 +85,7 @@ export default function BankAccountSelector() {
 
                                 <div>
                                     <strong>{account.bankName}</strong>
-                                    <small>Cuenta bancaria</small>
+                                    <small>{t("bankAccountSelector.bankAccount")}</small>
                                 </div>
                             </div>
 
@@ -101,7 +103,7 @@ export default function BankAccountSelector() {
                         {/* Datos del Titular */}
                         <div className="bank-account-holder">
                             <div>
-                                <strong>Titular:</strong> {account.holderName}
+                                <strong>{t("bankAccountSelector.holder")}</strong> {account.holderName}
                             </div>
                         </div>
 
@@ -109,18 +111,18 @@ export default function BankAccountSelector() {
                         <div className="bank-account-qr">
                             <p className="bank-account-qr-title">
                                 <span className="bank-account-qr-icon">📱</span>
-                                CÓDIGO QR PARA {account.bankName.toUpperCase()}
+                                {t("bankAccountSelector.qrFor", { bankName: account.bankName.toUpperCase() })}
                             </p>
 
                             <div className="bank-account-qr-frame">
                                 <img
                                     src={account.qrImageUrl}
-                                    alt={`Código QR de ${account.bankName}`}
+                                    alt={t("bankAccountSelector.qrAlt", { bankName: account.bankName })}
                                 />
                             </div>
 
                             <small className="bank-account-qr-subtitle">
-                                Escanea para transferir directamente desde tu{" "}
+                                {t("bankAccountSelector.scanToTransfer")}{" "}
                                 <strong>App {account.bankName}</strong>
                             </small>
 
@@ -132,13 +134,13 @@ export default function BankAccountSelector() {
                                     className="bank-account-download-link"
                                     onClick={(e) => e.stopPropagation()}
                                 >
-                                    📥 Descargar QR
+                                    📥 {t("uploadReceipt.downloadQr")}
                                 </a>
                                 <span className="bank-account-dot-separator">
                                     •
                                 </span>
                                 <span className="bank-account-tag-badge">
-                                    {account.tagLabel || "Cero comisión"}
+                                    {account.tagLabel || t("bankAccountSelector.noFeeTag")}
                                 </span>
                             </div>
                         </div>

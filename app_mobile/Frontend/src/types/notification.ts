@@ -5,11 +5,10 @@
  *
  * El web declara un tipo formal (`web/Front-end/src/types/notification.ts`) en
  * camelCase, con `notificationId` como UUID y `personId` obligatorio. Ese tipo
- * no es lo que sirve la API: `mock-server.cjs` expone la coleccion
- * `notifications` de `db.json`, que es snake_case, con `notification_id`
- * numerico.
+ * no es lo que sirve la API: rtm-booking-reservation expone la coleccion
+ * `notifications` en snake_case, con `notification_id` numerico.
  *
- * Decision: la API mock es la fuente de verdad del proyecto, asi que aqui se
+ * Decision: la API real es la fuente de verdad del proyecto, asi que aqui se
  * replica la forma que llega. Es el mismo criterio que ya se aplica con
  * `users` (snake_case) frente a `vehicles` (camelCase): los nombres se
  * replican tal cual, no se "normalizan" por cuenta propia. Si algun dia hace

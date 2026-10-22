@@ -93,7 +93,7 @@ export const ProcessSteps = () => {
 
                         <p className='driver-description'>{t('description.info-branches')}</p>
 
-                        {isLoading && <p>Cargando sucursales...</p>}
+                        {isLoading && <p>{t("branches.loading")}</p>}
                         {!isLoading && error && <p>{error}</p>}
 
                         {!isLoading && !error && (
@@ -122,7 +122,7 @@ export const ProcessSteps = () => {
                                 </div>
 
                                 {selectedBranch?.latitude != null && selectedBranch?.longitude != null && (
-                                    <div className="branches-map" aria-label="Mapa de sucursales">
+                                    <div className="branches-map" aria-label={t("branches.mapAriaLabel")}>
                                         <MapComponent
                                             mode="select"
                                             branches={branches.filter(b => b.latitude != null && b.longitude != null)}

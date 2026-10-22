@@ -187,7 +187,7 @@ export default function PasswordCodeFlow({ fixedEmail, onDone }: Props) {
                 <FontAwesome
                   name={flow.showPassword ? "eye-slash" : "eye"}
                   size={18}
-                  color={colors.primary}
+                  color={colors.button}
                 />
               </TouchableOpacity>
             </View>

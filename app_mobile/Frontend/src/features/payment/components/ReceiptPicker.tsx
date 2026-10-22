@@ -142,13 +142,13 @@ export default function ReceiptPicker({ receiptFile, onChange }: Props) {
           disabled={isPicking}
         >
           {isPicking ? (
-            <ActivityIndicator color={colors.primary} />
+            <ActivityIndicator color={colors.button} />
           ) : (
             <>
               <FontAwesome
                 name="paperclip"
                 size={22}
-                color={colors.primary}
+                color={colors.button}
               />
 
               <Text style={styles.placeholderText}>{PICK_LABEL}</Text>

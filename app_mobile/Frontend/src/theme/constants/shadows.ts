@@ -11,10 +11,10 @@ import { ViewStyle } from "react-native";
  */
 export const createCardShadow = (colors: any): ViewStyle => ({
     shadowColor: colors.shadow,
-    shadowOffset: { width: 0, height: 3 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 1,
-    shadowRadius: 8,
-    elevation: 4,
+    shadowRadius: 12,
+    elevation: 5,
 });
 
 /** Sombra discreta, para superficies internas (filas, campos). */

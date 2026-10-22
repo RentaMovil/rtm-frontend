@@ -24,9 +24,24 @@ export const CountStyles = (colors: any) => StyleSheet.create({
     inputEditing: { borderColor: colors.primary, backgroundColor: colors.card },
     passwordButton: { marginTop: 4, paddingTop: 14, borderTopWidth: 1, borderTopColor: colors.border },
     passwordText: { color: colors.primary, fontWeight: "700", fontSize: 15 },
+    emailActionButton: { marginTop: -4, marginBottom: 16, alignSelf: "flex-start" },
+    emailActionText: { color: colors.primary, fontWeight: "700", fontSize: 13 },
     buttonsRow: { flexDirection: "row", marginTop: 16, gap: 12 },
     editButton: { flex: 1, backgroundColor: colors.primary, paddingVertical: 14, borderRadius: 12, alignItems: "center" },
     buttonEditar: { color: colors.buttonText, fontWeight: "700", fontSize: 15 },
     outCesionButton: { flex: 1, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.error, paddingVertical: 14, borderRadius: 12, alignItems: "center" },
     outCesionButtonText: { color: colors.error, fontWeight: "700", fontSize: 15 },
+
+    // Modal de cambio de correo (HU-IAM-004 en mobile): correo actual
+    // solo lectura + correo nuevo + contrasena actual como confirmacion.
+    modalOverlay: { flex: 1, backgroundColor: colors.overlay, justifyContent: "center", padding: 20 },
+    modalCard: { backgroundColor: colors.card, borderRadius: 16, padding: 20, borderWidth: 1, borderColor: colors.border },
+    modalTitle: { fontSize: 18, fontWeight: "800", color: colors.text, marginBottom: 14 },
+    modalError: { color: colors.error, fontSize: 13, marginBottom: 12 },
+    modalActions: { flexDirection: "row", gap: 12, marginTop: 8 },
+    modalCancelButton: { flex: 1, paddingVertical: 13, borderRadius: 12, borderWidth: 1, borderColor: colors.border, alignItems: "center" },
+    modalCancelText: { color: colors.secondaryText, fontWeight: "700", fontSize: 15 },
+    modalConfirmButton: { flex: 1, backgroundColor: colors.primary, paddingVertical: 13, borderRadius: 12, alignItems: "center" },
+    modalConfirmButtonDisabled: { opacity: 0.6 },
+    modalConfirmText: { color: colors.buttonText, fontWeight: "700", fontSize: 15 },
 });

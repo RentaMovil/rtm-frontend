@@ -6,12 +6,19 @@
  *
  * Tipos con dos caras:
  *  - `common.ts`   primitivas y value objects
- *  - `vehicle.ts`, `user.ts`, `maintenance.ts`  -> entidad en la API mock
- *  - `branch.ts`, `insuranceType.ts`, `bankAccount.ts`,
- *    `reservation.ts`, `payment.ts`            -> entidad sin API, mock local
+ *  - `vehicle.ts`, `branch.ts`, `maintenance.ts`  -> fleet-maintenance
+ *    (/vehicles, /branches, /maintenances)
+ *  - `user.ts`     -> iam (/users, /auth)
+ *  - `reservation.ts`, `insuranceType.ts`, `notification.ts`
+ *                   -> booking-reservation (/reservations, /notifications)
+ *  - `bankAccount.ts`, `payment.ts` -> payment-billing
+ *    (/bank-accounts, /payments)
+ *
+ * Todos tienen API real: la app habla con el gateway (puerto 8080), que
+ * enruta cada prefijo al servicio que le corresponde.
  *
  * Excepcion documentada: `notification.ts` NO es espejo del web. Sigue la
- * forma que sirve la API mock, que es la fuente de verdad. Ver el propio
+ * forma que sirve la API real, que es la fuente de verdad. Ver el propio
  * archivo para el detalle.
  */
 

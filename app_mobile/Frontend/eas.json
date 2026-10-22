@@ -9,7 +9,8 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk"
-      }
+      },
+      "channel": "development"
     },
     "preview": {
       "distribution": "internal",
@@ -18,13 +19,18 @@
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://rentamovil.tech/api"
-      }
+      },
+      "channel": "preview"
     },
     "production": {
       "autoIncrement": true,
       "android": {
         "buildType": "apk"
-      }
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://rentamovil.tech/api"
+      },
+      "channel": "production"
     }
   },
   "submit": {

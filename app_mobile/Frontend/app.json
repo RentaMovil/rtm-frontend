@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "rentaMovil",
+    "name": "RentaMovil",
     "slug": "rentaMovil",
     "version": "1.0.1",
     "orientation": "portrait",
@@ -19,12 +19,12 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#0A192F"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.rentamovil.app",
-      "versionCode": 2
+      "versionCode": 4
     },
     "web": {
       "bundler": "metro",
@@ -53,6 +53,12 @@
       "eas": {
         "projectId": "2dfda2f2-81a2-45cf-840a-4604cb09aa2b"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/2dfda2f2-81a2-45cf-840a-4604cb09aa2b"
     }
   }
 }

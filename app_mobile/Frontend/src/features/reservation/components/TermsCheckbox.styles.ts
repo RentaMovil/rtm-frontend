@@ -27,8 +27,8 @@ export const createStyles = (colors: any) => {
     },
 
     boxChecked: {
-      backgroundColor: colors.primary,
-      borderColor: colors.primary,
+      backgroundColor: colors.button,
+      borderColor: colors.button,
     },
 
     checkMark: {

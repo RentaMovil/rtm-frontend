@@ -253,8 +253,11 @@ const createStyles = (colors: any) =>
     tab: {
       flex: 1,
       alignItems: "center",
+      justifyContent: "center",
+      minHeight: 44,
       paddingVertical: 10,
-      borderRadius: 999,
+      paddingHorizontal: 8,
+      borderRadius: 16,
       borderWidth: 1,
       borderColor: colors.border,
     },
@@ -265,9 +268,11 @@ const createStyles = (colors: any) =>
     },
 
     tabText: {
-      fontSize: 13,
+      fontSize: 12,
+      lineHeight: 15,
       fontWeight: "700",
       color: colors.secondaryText,
+      textAlign: "center",
     },
 
     tabTextActive: {

@@ -142,6 +142,11 @@ function Reservation() {
             return;
         }
 
+        if (!selectedBranch) {
+            alert({ message: t("reservation.selectDropoffBranch"), tone: "warning" });
+            return;
+        }
+
         if (!termsAccepted) {
             alert({ message: t("terms.acceptError"), tone: "warning" });
             return;
@@ -218,7 +223,7 @@ function Reservation() {
     };
 
     if (!name) {
-        return <p>No hay vehículo seleccionado</p>;
+        return <p>{t("reservation.noVehicleSelected")}</p>;
     }
 
     return (
@@ -236,8 +241,8 @@ function Reservation() {
                             onClick={toggleShowFilters}
                         >
                             {showFilters
-                                ? "Ocultar filtros ▲"
-                                : "Mostrar filtros ▼"}
+                                ? t("reservation.hideFilters")
+                                : t("reservation.showFilters")}
                         </button>
                     )}
 
@@ -275,7 +280,7 @@ function Reservation() {
                             <div className="reservation-section-header">
                                 <span className="reservation-section-dot" aria-hidden="true" />
                                 <h3 className="reservation-section-title">
-                                    Cambie la sucursal de recogida:
+                                    {t("reservation.chooseDropoff")}
                                 </h3>
                             </div>
 
@@ -286,7 +291,7 @@ function Reservation() {
 
                                     <p className="info-brand">
                                         <FaMapMarkerAlt className="icon-location" />
-                                        Sucursal de recogida:
+                                        {t("reservation.pickupBranchLabel")}
                                     </p>
 
                                     <div className="card-address-box">
@@ -294,7 +299,7 @@ function Reservation() {
                                         <strong className="branch-name">
                                             {pickupBranch?.name ??
                                                 branch?.name ??
-                                                "Sucursal"}
+                                                t("reservation.branchFallback")}
                                         </strong>
 
                                         <p className="branch-street">
@@ -302,7 +307,7 @@ function Reservation() {
                                                 pickupBranch?.direccion ??
                                                 branch?.address ??
                                                 branch?.direccion ??
-                                                "Dirección no disponible"}
+                                                t("reservation.addressUnavailable")}
                                         </p>
 
                                     </div>
@@ -314,7 +319,7 @@ function Reservation() {
 
                                     <p className="info-brand">
                                         <FaMapMarkerAlt className="icon-location" />
-                                        Sucursal de entrega:
+                                        {t("reservation.dropoffBranchLabel")}
                                     </p>
 
                                     {selectedBranch ? (
@@ -327,7 +332,7 @@ function Reservation() {
                                             <p className="branch-street">
                                                 {selectedBranch.address ??
                                                     selectedBranch.direccion ??
-                                                    "Dirección no disponible"}
+                                                    t("reservation.addressUnavailable")}
                                             </p>
 
                                         </div>
@@ -335,7 +340,7 @@ function Reservation() {
                                         <div className="card-address-box empty">
 
                                             <p className="branch-street">
-                                                Misma sucursal de recogida
+                                                {t("reservation.tapBranchOnMap")}
                                             </p>
 
                                         </div>
@@ -344,6 +349,10 @@ function Reservation() {
                                 </div>
 
                             </div>
+
+                            <p className="map-hint">
+                                {t("reservation.mapHint")}
+                            </p>
 
                             <MapComponent
                                 mode="select"
@@ -376,19 +385,19 @@ function Reservation() {
                                 </div>
 
                                 <p>
-                                    {days} {t("reservation.days")} × ${price}
+                                    {days} {t("reservation.days")} × ${Number(price).toLocaleString("es-CO")}
                                 </p>
 
                                 <p>
                                     {selectedInsurance
-                                        ? `Seguro: ${selectedInsurance.name} — $${Number(
+                                        ? `${t("reservation.insuranceLabel")}: ${selectedInsurance.name} — $${Number(
                                             selectedInsurance.price
                                         ).toLocaleString("es-CO")}`
                                         : t("reservation.sure")}
                                 </p>
 
                                 <h4>
-                                    {t("reservation.total")} ${reservationTotal}
+                                    {t("reservation.total")} ${reservationTotal.toLocaleString("es-CO")}
                                 </h4>
 
                                 <InsuranceSelector />

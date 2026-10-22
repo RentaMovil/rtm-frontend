@@ -157,7 +157,7 @@ export const createStyles = (colors: any) => {
       alignItems: "center",
       paddingVertical: 14,
       borderRadius: Radius.md,
-      backgroundColor: colors.primary,
+      backgroundColor: colors.button,
       ...createSoftShadow(colors),
     },
 

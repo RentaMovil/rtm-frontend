@@ -6,7 +6,12 @@ type IconName = ComponentProps<typeof FontAwesome>["name"];
 /**
  * Los 4 pasos del proceso de alquiler.
  *
- * Espejo de `web/Front-end/src/features/vehicles/data/mocks/stepsMocks.js`.
+ * Contenido editorial estatico del home: no viene de la API ni de un mock.
+ * Antes vivia en `features/home/mocks/` y era un espejo de
+ * `web/Front-end/src/features/vehicles/data/mocks/stepsMocks.js`, archivo que
+ * ya no existe en el repo web. Se movio aqui para que "mocks" siga
+ * significando "datos falsos" y no contenido de la pantalla.
+ *
  * Alli cada paso traia un componente de icono imported de `react-icons/fa6`
  * (Fa1, Fa2, Fa3, Fa4, que son los numeros dibujados). Aqui se usan
  * iconos con nombre de FontAwesome, que es la unica libreria de iconos que

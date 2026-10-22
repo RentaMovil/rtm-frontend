@@ -19,9 +19,9 @@ export default function InsuranceSelector() {
         </span>
 
         <div>
-          <h3 id="insurance-title" className="insurance-title">Seguro</h3>
+          <h3 id="insurance-title" className="insurance-title">{t("insuranceTypes.selectorTitle")}</h3>
           <p className="insurance-subtitle">
-            Selecciona la cobertura que deseas para tu reserva.
+            {t("insuranceTypes.selectorSubtitle")}
           </p>
         </div>
       </div>
@@ -30,7 +30,7 @@ export default function InsuranceSelector() {
       {!isLoading && error && <p className="insurance-subtitle">{error}</p>}
 
       {!isLoading && !error && (
-        <div className="insurance-options" role="radiogroup" aria-label="Cobertura de seguro">
+        <div className="insurance-options" role="radiogroup" aria-label={t("insuranceTypes.selectorAriaLabel")}>
           {insurance.map((option) => {
             const selected = selectedInsurance === option.id;
 
