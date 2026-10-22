@@ -1,12 +1,12 @@
 /**
  * Entity: Branch.
  *
- * NO esta en la API mock (se resuelve con un mock local de la app) y la
- * forma se toma del frontend web: `web/Front-end/src/shared/mocks/branches.js`.
+ * Viene de la API real: rtm-fleet-maintenance expone `GET /branches` y el
+ * gateway lo enruta sin cambiar la ruta.
  *
- * El tipo de dominio del web (`src/types/branch.ts`) usa `branchId`, pero su
- * propio mock usa `id` y el web lo dejo asi a proposito para no romper a sus
- * consumidores. Aqui se replica el mock (`id`), que es lo que estableciste.
+ * El `id` es el que devuelve la API (numerico); `branchMapper` lo normaliza a
+ * string para que las comparaciones contra `pickupBranchId` / `returnBranchId`
+ * de la reserva sean directas.
  */
 // types/branch.ts (o donde vivan tus types)
 export interface Branch {
