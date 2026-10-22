@@ -29,9 +29,14 @@ export default function VehicleLocation() {
         refetch,
     } = useVehicleLocations();
 
-    const stats = useMemo(() => ({
-        conectados: vehicles.filter((v) => v.device?.connected).length,
-    }), [vehicles]);
+    const stats = useMemo(() => {
+        const moving = vehicles.filter((v) => (v.position?.speed ?? 0) > 0).length;
+        return {
+            conectados: vehicles.filter((v) => v.device?.connected).length,
+            moving,
+            stopped: vehicles.length - moving,
+        };
+    }, [vehicles]);
 
     const pos = selected?.position ?? null;
 
