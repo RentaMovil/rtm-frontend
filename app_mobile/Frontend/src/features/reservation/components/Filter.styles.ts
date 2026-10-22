@@ -31,8 +31,8 @@ export const createStyles = (colors: any) => {
     },
 
     activeButton: {
-      backgroundColor: colors.primary,
-      borderColor: colors.primary,
+      backgroundColor: colors.button,
+      borderColor: colors.button,
     },
 
     text: {

@@ -71,7 +71,7 @@ import { useTranslation } from "react-i18next";
                     <FontAwesome
                         name={spec.icon}
                         size={12}
-                        color={colors.primary}
+                        color={colors.button}
                         style={styles.badgeIcon}
                     />
 

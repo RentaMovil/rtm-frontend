@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 
 import { createTextStyles } from "../../../theme/constants/typography";
 import { createSoftShadow } from "../../../theme/constants/shadows";
+import { Radius } from "../../../theme/constants/radius";
 
 /**
  * Boton de accion principal.
@@ -16,9 +17,9 @@ export const createStyles = (colors: any) => {
 
   return StyleSheet.create({
     button: {
-      backgroundColor: colors.primary,
+      backgroundColor: colors.button,
       paddingVertical: 16,
-      borderRadius: 12,
+      borderRadius: Radius.md,
       alignItems: "center",
       marginVertical: 10,
       ...createSoftShadow(colors),

@@ -37,7 +37,7 @@ export const createStyles = (colors: any) => {
 
     toggleText: {
       ...text.bodyMedium,
-      color: colors.primary,
+      color: colors.button,
     },
 
     details: {

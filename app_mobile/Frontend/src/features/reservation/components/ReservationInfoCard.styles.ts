@@ -65,7 +65,7 @@ export const createStyles = (colors: any) => {
     link: {
       ...text.bodyMedium,
       marginTop: 6,
-      color: colors.primary,
+      color: colors.button,
     },
   });
 };
