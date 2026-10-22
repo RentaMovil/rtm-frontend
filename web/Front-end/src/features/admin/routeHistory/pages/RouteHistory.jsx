@@ -49,7 +49,7 @@ export default function RouteHistory() {
         const referencia = lastUpdated.getTime();
 
         return pendientes.filter((v) => {
-            const registrada = v.position?.recorded_at;
+            const registrada = v.position?.recordedAt;
             if (!registrada) return true;
             const horas = (referencia - new Date(registrada).getTime()) / 36e5;
             return horas > SIN_SENAL_HORAS;
@@ -156,7 +156,7 @@ export default function RouteHistory() {
                                     </h2>
 
                                     {pendientes.map((v) => {
-                                        const registrada = v.position?.recorded_at;
+                                        const registrada = v.position?.recordedAt;
                                         const sinReportar = sinSenal.includes(v);
 
                                         return (
