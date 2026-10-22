@@ -75,6 +75,18 @@ export type ChangePasswordRequest = {
   newPassword: string;
 };
 
+/**
+ * Cambio de correo estando autenticado: `PATCH /users/me/email`.
+ *
+ * El backend exige la contrasena actual como confirmacion de seguridad, no
+ * hay paso de verificacion por codigo en este flujo (a diferencia de
+ * recuperar contrasena).
+ */
+export type ChangeEmailRequest = {
+  newEmail: string;
+  currentPassword: string;
+};
+
 /** Verificacion de codigo: `POST /auth/password/verify-code` (204, no gasta el codigo). */
 export type VerifyCodeRequest = {
   email: string;

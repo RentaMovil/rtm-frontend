@@ -3,6 +3,7 @@ import { httpClient } from "../../../shared/api/httpClient";
 
 import type {
   AuthResponse,
+  ChangeEmailRequest,
   ChangePasswordRequest,
   LoginRequest,
   RefreshResponse,
@@ -117,6 +118,21 @@ export async function changePassword(
   data: ChangePasswordRequest,
 ): Promise<void> {
   await httpClient.patch<void>(API_ROUTES.auth.changePassword, data);
+}
+
+/**
+ * Cambia el correo del usuario autenticado.
+ *
+ * `PATCH /users/me/email` (ChangeEmailRequest): exige la contrasena actual
+ * como confirmacion de seguridad. No hay paso de verificacion por codigo en
+ * este flujo (a diferencia de forgotPassword/resetPassword). La respuesta ya
+ * trae el usuario actualizado.
+ */
+export async function changeEmail(data: ChangeEmailRequest): Promise<User> {
+  return httpClient.patch<User>(API_ROUTES.auth.changeEmail, {
+    newEmail: data.newEmail.trim().toLowerCase(),
+    currentPassword: data.currentPassword,
+  });
 }
 
 /**
