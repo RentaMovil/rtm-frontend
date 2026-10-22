@@ -347,3 +347,149 @@
   font-size: 12px;
   color: var(--placeholder);
 }
+
+/* ── Lista de vehiculos como botones seleccionables ── */
+.rh-card {
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.rh-card:hover {
+  background: var(--accent-hover);
+}
+.rh-card.active {
+  border-left-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+/* ── Rejilla: lista + ruta ── */
+.rh-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  align-items: start;
+}
+@media (min-width: 1080px) {
+  .rh-grid {
+    grid-template-columns: 340px 1fr;
+  }
+  .rh-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rh-route {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.rh-empty--inline {
+  padding: 40px 20px;
+}
+
+/* ── Filtro de fecha/hora ── */
+.rh-route-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.rh-route-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rh-route-filter-field label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--placeholder);
+}
+.rh-route-filter-field input {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  color: var(--text-h);
+  background: var(--bg);
+}
+.rh-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--text-h);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.rh-btn-primary:hover:not(:disabled) {
+  opacity: 0.85;
+}
+.rh-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.rh-route-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  font-size: 13px;
+}
+.rh-route-empty,
+.rh-route-count {
+  margin: 0;
+  font-size: 13px;
+  color: var(--placeholder);
+}
+
+/* ── Mapa de la ruta ── */
+.rh-map {
+  height: 420px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+}
+@media (max-width: 700px) {
+  .rh-map {
+    height: 300px;
+  }
+}
+.rh-route-marker {
+  background: transparent;
+  border: 0;
+}
+.rh-route-dot {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.35);
+}
+.rh-route-dot--start {
+  background: #16a34a;
+}
+.rh-route-dot--end {
+  background: var(--accent);
+}

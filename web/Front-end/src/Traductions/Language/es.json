@@ -1364,7 +1364,15 @@
     "live": "Reportando",
     "noSignal": "Sin senal",
     "noReport": "Sin reporte GPS",
-    "updatedAt": "Actualizado {{time}} · {{date}}"
+    "updatedAt": "Actualizado {{time}} · {{date}}",
+    "selectVehicle": "Elige un vehículo de la lista para ver su recorrido",
+    "fromLabel": "Desde",
+    "toLabel": "Hasta",
+    "viewRoute": "Ver ruta",
+    "routeError": "No se pudo cargar el recorrido",
+    "noRoutePoints": "No hay reportes de ese vehículo en el rango elegido",
+    "routePointsCount_one": "{{count}} punto reportado en el rango elegido",
+    "routePointsCount_other": "{{count}} puntos reportados en el rango elegido"
   },
   "emailVerification": {
     "title": "Ingrese su correo electrónico",

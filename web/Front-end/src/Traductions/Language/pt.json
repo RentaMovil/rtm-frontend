@@ -1364,7 +1364,15 @@
     "live": "Reportando",
     "noSignal": "Sem sinal",
     "noReport": "Sem relatório GPS",
-    "updatedAt": "Atualizado {{time}} · {{date}}"
+    "updatedAt": "Atualizado {{time}} · {{date}}",
+    "selectVehicle": "Escolha um veículo da lista para ver seu trajeto",
+    "fromLabel": "De",
+    "toLabel": "Até",
+    "viewRoute": "Ver trajeto",
+    "routeError": "Não foi possível carregar o trajeto",
+    "noRoutePoints": "Não há relatórios desse veículo no período escolhido",
+    "routePointsCount_one": "{{count}} ponto reportado no período escolhido",
+    "routePointsCount_other": "{{count}} pontos reportados no período escolhido"
   },
   "emailVerification": {
     "title": "Digite seu e-mail",

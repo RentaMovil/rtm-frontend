@@ -1,13 +1,28 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { FiClock, FiRefreshCw, FiAlertCircle, FiMapPin, FiNavigation, FiArrowRight } from "react-icons/fi";
+import { FiClock, FiRefreshCw, FiAlertCircle, FiMapPin, FiNavigation, FiArrowRight, FiFilter, FiTruck } from "react-icons/fi";
 
 import NavBarAdmin from "../../../../shared/components/layout/NavBarAdmin";
 import FooterAdmin from "../../../../shared/components/layout/FooterAdmin";
 import { formatDate, formatTime } from "../../reservations/services/reservationHelpers";
+import { fromApiDateTime } from "../../../../shared/utils/apiDate";
 import { useVehicleLocations, REFRESH_MS } from "../../vehicleLocation/hooks/useVehicleLocations";
+import { locationService } from "../../vehicleLocation/services/locationService";
+import RouteMap from "../components/RouteMap";
 import "./RouteHistory.css";
+
+/** "YYYY-MM-DDTHH:mm" en hora local, lo que pide un <input type="datetime-local">. */
+function toDatetimeLocal(date) {
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function startOfToday() {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+}
 
 /**
  * Historial de rutas.
@@ -17,6 +32,9 @@ import "./RouteHistory.css";
  * estan activas ahorita mismo y por lo tanto hay que rastrear. La fuente es el
  * mismo endpoint que alimenta la ubicacion de la flota, asi que ambas paginas
  * cuentan siempre lo mismo.
+ *
+ * Al elegir un vehiculo se puede filtrar por fecha/hora y dibujar en el mapa
+ * el recorrido real reportado en esa ventana (GET /tracking/{rentalId}/history).
  */
 export default function RouteHistory() {
     const { t, i18n } = useTranslation();
@@ -51,12 +69,57 @@ export default function RouteHistory() {
         return pendientes.filter((v) => {
             const registrada = v.position?.recordedAt;
             if (!registrada) return true;
-            const horas = (referencia - new Date(registrada).getTime()) / 36e5;
+            const horas = (referencia - new Date(fromApiDateTime(registrada)).getTime()) / 36e5;
             return horas > SIN_SENAL_HORAS;
         });
     }, [pendientes, lastUpdated]);
 
     const segundosRefresh = Math.round(REFRESH_MS / 1000);
+
+    // ── Ruta del vehiculo seleccionado ──
+    const [selectedId, setSelectedId] = useState(null);
+    const [from, setFrom] = useState(() => toDatetimeLocal(startOfToday()));
+    const [to, setTo] = useState(() => toDatetimeLocal(new Date()));
+    const [routePoints, setRoutePoints] = useState(null);
+    const [isLoadingRoute, setIsLoadingRoute] = useState(false);
+    const [routeError, setRouteError] = useState(null);
+
+    const selected = pendientes.find((v) => v.vehicle_id === selectedId) ?? null;
+
+    const selectVehicle = (v) => {
+        setSelectedId(v.vehicle_id);
+        setRoutePoints(null);
+        setRouteError(null);
+    };
+
+    const loadRoute = async () => {
+        if (!selected?.rental?.id) return;
+
+        const fromDate = from ? new Date(from) : null;
+        const toDate = to ? new Date(to) : null;
+
+        setIsLoadingRoute(true);
+        setRouteError(null);
+
+        try {
+            const allPoints = await locationService.getTrack(selected.rental.id);
+
+            const filtered = allPoints
+                .filter((p) => {
+                    const recorded = new Date(fromApiDateTime(p.recordedAt)).getTime();
+                    if (fromDate && recorded < fromDate.getTime()) return false;
+                    if (toDate && recorded > toDate.getTime()) return false;
+                    return true;
+                })
+                .sort((a, b) => new Date(fromApiDateTime(a.recordedAt)) - new Date(fromApiDateTime(b.recordedAt)));
+
+            setRoutePoints(filtered);
+        } catch (err) {
+            setRouteError(err.message ?? t("routeHistory.routeError"));
+        } finally {
+            setIsLoadingRoute(false);
+        }
+    };
 
     return (
         <div className="rh-page">
@@ -149,54 +212,131 @@ export default function RouteHistory() {
                                     </Link>
                                 </section>
 
-                                <section className="rh-list">
-                                    <h2 className="rh-list-title">
-                                        {t("routeHistory.listTitle")}
-                                        <span className="rh-list-count">{pendientes.length}</span>
-                                    </h2>
+                                <div className="rh-grid">
+                                    <section className="rh-list">
+                                        <h2 className="rh-list-title">
+                                            {t("routeHistory.listTitle")}
+                                            <span className="rh-list-count">{pendientes.length}</span>
+                                        </h2>
 
-                                    {pendientes.map((v) => {
-                                        const registrada = v.position?.recordedAt;
-                                        const sinReportar = sinSenal.includes(v);
+                                        {pendientes.map((v) => {
+                                            const registrada = v.position?.recordedAt;
+                                            const sinReportar = sinSenal.includes(v);
+                                            const isSelected = v.vehicle_id === selectedId;
 
-                                        return (
-                                            <article key={v.vehicle_id} className="rh-card">
-                                                <div className="rh-card-head">
-                                                    <span className="rh-plate">{v.plate}</span>
-                                                    <span
-                                                        className={`rh-status ${sinReportar ? "rh-status--off" : "rh-status--on"}`}
+                                            return (
+                                                <button
+                                                    key={v.vehicle_id}
+                                                    type="button"
+                                                    className={`rh-card ${isSelected ? "active" : ""}`}
+                                                    onClick={() => selectVehicle(v)}
+                                                >
+                                                    <div className="rh-card-head">
+                                                        <span className="rh-plate">{v.plate}</span>
+                                                        <span
+                                                            className={`rh-status ${sinReportar ? "rh-status--off" : "rh-status--on"}`}
+                                                        >
+                                                            {sinReportar
+                                                                ? t("routeHistory.noSignal")
+                                                                : t("routeHistory.live")}
+                                                        </span>
+                                                    </div>
+
+                                                    <p className="rh-card-vehicle">
+                                                        {v.brand} {v.model}
+                                                    </p>
+
+                                                    <dl className="rh-card-meta">
+                                                        <div>
+                                                            <dt>{t("routeHistory.rental")}</dt>
+                                                            <dd>#{v.rental?.id ?? "—"}</dd>
+                                                        </div>
+                                                        <div>
+                                                            <dt>{t("routeHistory.customer")}</dt>
+                                                            <dd>{v.rental?.customer_name ?? "—"}</dd>
+                                                        </div>
+                                                    </dl>
+
+                                                    <p className="rh-card-time">
+                                                        <FiClock />
+                                                        {registrada
+                                                            ? `${formatTime(registrada, lang)} · ${formatDate(registrada, lang)}`
+                                                            : t("routeHistory.noReport")}
+                                                    </p>
+                                                </button>
+                                            );
+                                        })}
+                                    </section>
+
+                                    <section className="rh-route">
+                                        {!selected && (
+                                            <div className="rh-empty rh-empty--inline">
+                                                <FiTruck />
+                                                <p>{t("routeHistory.selectVehicle")}</p>
+                                            </div>
+                                        )}
+
+                                        {selected && (
+                                            <>
+                                                <div className="rh-route-filter">
+                                                    <div className="rh-route-filter-field">
+                                                        <label htmlFor="rh-from">{t("routeHistory.fromLabel")}</label>
+                                                        <input
+                                                            id="rh-from"
+                                                            type="datetime-local"
+                                                            value={from}
+                                                            onChange={(e) => setFrom(e.target.value)}
+                                                        />
+                                                    </div>
+
+                                                    <div className="rh-route-filter-field">
+                                                        <label htmlFor="rh-to">{t("routeHistory.toLabel")}</label>
+                                                        <input
+                                                            id="rh-to"
+                                                            type="datetime-local"
+                                                            value={to}
+                                                            onChange={(e) => setTo(e.target.value)}
+                                                        />
+                                                    </div>
+
+                                                    <button
+                                                        type="button"
+                                                        className="rh-btn-primary"
+                                                        onClick={loadRoute}
+                                                        disabled={isLoadingRoute}
                                                     >
-                                                        {sinReportar
-                                                            ? t("routeHistory.noSignal")
-                                                            : t("routeHistory.live")}
-                                                    </span>
+                                                        <FiFilter />
+                                                        {t("routeHistory.viewRoute")}
+                                                    </button>
                                                 </div>
 
-                                                <p className="rh-card-vehicle">
-                                                    {v.brand} {v.model}
-                                                </p>
+                                                {routeError && (
+                                                    <p className="rh-route-error" role="alert">
+                                                        <FiAlertCircle />
+                                                        {routeError}
+                                                    </p>
+                                                )}
 
-                                                <dl className="rh-card-meta">
-                                                    <div>
-                                                        <dt>{t("routeHistory.rental")}</dt>
-                                                        <dd>#{v.rental?.id ?? "—"}</dd>
-                                                    </div>
-                                                    <div>
-                                                        <dt>{t("routeHistory.customer")}</dt>
-                                                        <dd>{v.rental?.customer_name ?? "—"}</dd>
-                                                    </div>
-                                                </dl>
+                                                {routePoints && !routePoints.length && !routeError && (
+                                                    <p className="rh-route-empty">{t("routeHistory.noRoutePoints")}</p>
+                                                )}
 
-                                                <p className="rh-card-time">
-                                                    <FiClock />
-                                                    {registrada
-                                                        ? `${formatTime(registrada, lang)} · ${formatDate(registrada, lang)}`
-                                                        : t("routeHistory.noReport")}
-                                                </p>
-                                            </article>
-                                        );
-                                    })}
-                                </section>
+                                                {routePoints && !!routePoints.length && (
+                                                    <p className="rh-route-count">
+                                                        {t("routeHistory.routePointsCount", { count: routePoints.length })}
+                                                    </p>
+                                                )}
+
+                                                <div className="rh-map">
+                                                    <RouteMap
+                                                        points={routePoints ?? []}
+                                                        label={`${selected.brand} ${selected.model} · ${selected.plate}`}
+                                                    />
+                                                </div>
+                                            </>
+                                        )}
+                                    </section>
+                                </div>
 
                                 {lastUpdated && (
                                     <p className="rh-foot">
