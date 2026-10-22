@@ -62,6 +62,9 @@ export const API_ROUTES = {
     verifyCode: "/auth/password/verify-code",
     resetPassword: "/auth/password/reset",
     changePassword: "/users/me/password",
+    // PATCH /users/me/email (ChangeEmailRequest): newEmail/currentPassword. Sin
+    // paso de verificacion por codigo en este flujo (distinto a forgotPassword).
+    changeEmail: "/users/me/email",
     // El registro ya no deja logueado (queda PENDING_VERIFICATION, HU-IAM-001):
     // hay que confirmar este codigo antes de poder entrar.
     verifyEmail: "/auth/email/verify",

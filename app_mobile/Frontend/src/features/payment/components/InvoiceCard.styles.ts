@@ -63,7 +63,7 @@ export const createStyles = (colors: any) => {
     // depender de un icono nuevo, pero con la tipografia correcta.
     arrow: {
       ...text.bodyMedium,
-      color: colors.primary,
+      color: colors.button,
     },
 
     content: {

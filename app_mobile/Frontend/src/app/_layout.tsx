@@ -9,6 +9,10 @@ import {
 
 import { Stack, useRouter, useSegments } from "expo-router";
 
+import { Ionicons } from "@expo/vector-icons";
+
+import { TouchableOpacity, View } from "react-native";
+
 import BrandLogo from "../shared/components/Brand/BrandLogo";
 
 import * as SplashScreen from "expo-splash-screen";
@@ -235,17 +239,51 @@ function InnerNav() {
                 screenOptions={{
 
                     /**
-                     * El logotipo va como `headerTitle` por defecto, no como
-                     * `title`. Antes era un string plano ("Renta Móvil"), que
-                     * salia en un solo color y ademas con un espacio, mientras
-                     * que dentro de las tabs se veia bicolor. Al usar un solo
-                     * componente, los colores no pueden divergir entre pantallas.
+                     * El logotipo y el boton de volver van juntos en
+                     * `headerLeft`, pegados al extremo izquierdo: back ->
+                     * texto "RentaMovil" -> icono del carro (orden pedido,
+                     * nada al centro ni a la derecha).
+                     *
+                     * `headerTitle` queda vacio a proposito (sin el nombre de
+                     * la ruta de respaldo). Al sobreescribir `headerLeft`
+                     * React Navigation deja de poner el boton nativo de
+                     * "volver" automaticamente, asi que se reconstruye aqui
+                     * a mano con `canGoBack` (mismo criterio que usa la
+                     * libreria: solo se muestra si hay una pantalla previa en
+                     * el stack) y `router.back()` de expo-router.
                      *
                      * Se aplica a todas las pantallas, incluida la de
                      * notificaciones: esa pagina lleva su nombre en el cuerpo
                      * (`NotificationPage`), no en el header.
                      */
-                    headerTitle: () => <BrandLogo />,
+                    headerTitle: () => null,
+
+                    headerLeft: ({ canGoBack, tintColor }) => (
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: 8,
+                            }}
+                        >
+                            {canGoBack && (
+                                <TouchableOpacity
+                                    onPress={() => router.back()}
+                                    accessibilityRole="button"
+                                    accessibilityLabel="Volver"
+                                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                                >
+                                    <Ionicons
+                                        name="chevron-back"
+                                        size={24}
+                                        color={tintColor ?? currentTheme.text}
+                                    />
+                                </TouchableOpacity>
+                            )}
+
+                            <BrandLogo order="text-first" />
+                        </View>
+                    ),
 
                     headerStyle: {
 

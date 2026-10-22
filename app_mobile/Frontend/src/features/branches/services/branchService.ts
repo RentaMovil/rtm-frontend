@@ -29,6 +29,50 @@ function normalizeBranchesResponse(response: unknown): unknown[] {
 }
 
 /**
+ * Catalogo de sucursales en memoria.
+ *
+ * `GET /branches/{id}` no existe en fleet-maintenance: su `BranchController`
+ * solo expone el listado (`@GetMapping`), el alta, la modificacion y el
+ * borrado. Para resolver una sucursal por id hay que traer el catalogo y
+ * buscar dentro.
+ *
+ * Se cachea para no repetir la misma peticion: el detalle de una reserva
+ * pide dos sucursales (recogida y devolucion) y el home ya habia cargado el
+ * listado. La cache se llena sola cada vez que se llama a `getBranches()`.
+ */
+let branchesCache: Branch[] | null = null;
+
+/** Peticion en vuelo, para que dos ids pedidos a la vez no disparen dos listados. */
+let branchesRequest: Promise<Branch[]> | null = null;
+
+async function fetchBranches(): Promise<Branch[]> {
+    const response = await httpClient.get<unknown>(RESOURCE);
+
+    return normalizeBranchesResponse(response).map((branch) =>
+        toBranchViewModel(branch as Record<string, unknown>),
+    );
+}
+
+/**
+ * Trae el catalogo una sola vez y lo cachea.
+ *
+ * Si la peticion falla no se cachea nada: el siguiente intento reintenta.
+ */
+function loadBranchesOnce(): Promise<Branch[]> {
+    branchesRequest ??= fetchBranches()
+        .then((branches) => {
+            branchesCache = branches;
+            return branches;
+        })
+        .catch((error) => {
+            branchesRequest = null;
+            throw error;
+        });
+
+    return branchesRequest;
+}
+
+/**
  * Acceso a las sucursales.
  *
  * Antes se resolvía localmente contra un catálogo mock; ahora viene de la
@@ -36,10 +80,10 @@ function normalizeBranchesResponse(response: unknown): unknown[] {
  * plataformas vean exactamente las mismas sucursales.
  */
 export async function getBranches(): Promise<Branch[]> {
-    const response = await httpClient.get<unknown>(RESOURCE);
-    return normalizeBranchesResponse(response).map((branch) =>
-        toBranchViewModel(branch as Record<string, unknown>),
-    );
+    const branches = await fetchBranches();
+    branchesCache = branches;
+
+    return branches;
 }
 
 /**
@@ -52,15 +96,20 @@ export async function getBranchOptions(): Promise<BranchOption[]> {
 }
 
 /**
- * Resuelve una sucursal por id contra la API.
+ * Resuelve una sucursal por id.
  *
  * Las reservas guardan `pickupBranchId` / `returnBranchId`, nunca el
  * objeto entero. La UI usa esto para pintar el nombre de la sucursal.
+ *
+ * El backend no tiene `GET /branches/{id}` (devuelve 405), asi que se resuelve
+ * contra el catalogo: se busca la sucursal con ese id. Si no existe o el
+ * catalogo no se puede traer, se devuelve `null` y la pantalla lo muestra
+ * como desconocido, sin inventar datos.
  */
 export async function getBranchById(id: string): Promise<Branch | null> {
     try {
-        const response = await httpClient.get(`${RESOURCE}/${id}`);
-        return toBranchViewModel(response);
+        const branches = branchesCache ?? (await loadBranchesOnce());
+        return branches.find((branch) => branch.id === String(id)) ?? null;
     } catch {
         return null;
     }

@@ -100,7 +100,7 @@ export default function VehicleCard({ vehicle, onContinue }: Props) {
                     : "tachometer"
               }
               size={15}
-              color={colors.primary}
+              color={colors.button}
             />
 
             <Text style={styles.specValue}>

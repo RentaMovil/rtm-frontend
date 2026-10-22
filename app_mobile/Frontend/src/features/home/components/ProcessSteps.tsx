@@ -12,7 +12,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
 
-import { processSteps } from "../mocks/processSteps";
+import { processSteps } from "../data/processSteps";
 
 import { createStyles } from "./ProcessSteps.styles";
 

@@ -11,6 +11,7 @@ import {
 import { tokenStore } from "../../../shared/api/tokenStore";
 
 import {
+  changeEmail as changeEmailService,
   changePassword,
   forgotPassword,
   getCurrentUser,
@@ -46,6 +47,8 @@ type AuthContextType = {
   verifyCode: (email: string, code: string) => Promise<void>;
   resetPassword: (email: string, code: string, newPassword: string) => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
+  /** PATCH /users/me/email: exige la contrasena actual. No hay paso de codigo. */
+  changeEmail: (newEmail: string, currentPassword: string) => Promise<void>;
   refreshUser: () => Promise<void>;
   updateProfile: (data: { firstName: string; lastName: string; phone: string; imageUrl?: string | null }) => Promise<void>;
 };
@@ -197,6 +200,18 @@ const updateProfile = useCallback(
     },
     [],
 );
+
+  // Igual criterio que updateProfile: llama al service y sincroniza `user`
+  // con lo que devuelve el servidor. Sin sesiones que revocar aqui (a
+  // diferencia de changePassword, iam no cierra sesiones al cambiar el correo).
+  const handleChangeEmail = useCallback(
+    async (newEmail: string, currentPassword: string) => {
+      const updatedUser = await changeEmailService({ newEmail, currentPassword });
+      setUser(updatedUser);
+    },
+    [],
+  );
+
   const value = useMemo<AuthContextType>(
     () => ({
       user,
@@ -211,6 +226,7 @@ const updateProfile = useCallback(
       verifyCode: handleVerifyCode,
       resetPassword: handleResetPassword,
       changePassword: handleChangePassword,
+      changeEmail: handleChangeEmail,
       refreshUser,
       updateProfile,
     }),
@@ -227,6 +243,7 @@ const updateProfile = useCallback(
       handleVerifyCode,
       handleResetPassword,
       handleChangePassword,
+      handleChangeEmail,
       updateProfile
     ],
   );

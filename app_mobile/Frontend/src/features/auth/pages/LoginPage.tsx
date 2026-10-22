@@ -159,7 +159,7 @@ export default function LoginPage() {
                 <FontAwesome
                   name={showPassword ? "eye-slash" : "eye"}
                   size={18}
-                  color={colors.primary}
+                  color={colors.button}
                 />
               </TouchableOpacity>
             </View>

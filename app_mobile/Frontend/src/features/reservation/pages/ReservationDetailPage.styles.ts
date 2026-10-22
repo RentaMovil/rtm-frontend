@@ -35,7 +35,7 @@ export function createStyles(colors: any) {
             paddingHorizontal: 22,
             paddingVertical: 12,
             borderRadius: 10,
-            backgroundColor: colors.primary,
+            backgroundColor: colors.button,
         },
 
         backButtonText: {
@@ -136,7 +136,7 @@ export function createStyles(colors: any) {
             justifyContent: "space-between",
             padding: 18,
             borderRadius: 16,
-            backgroundColor: colors.primary,
+            backgroundColor: colors.button,
         },
 
         totalLabel: {

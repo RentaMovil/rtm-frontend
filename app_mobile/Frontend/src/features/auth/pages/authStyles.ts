@@ -117,7 +117,7 @@ export const createAuthStyles = (colors: any) => {
       alignItems: "center",
       justifyContent: "center",
       marginTop: Spacing.sm,
-      backgroundColor: colors.primary,
+      backgroundColor: colors.button,
       ...createSoftShadow(colors),
     },
 
@@ -144,7 +144,7 @@ export const createAuthStyles = (colors: any) => {
     switchLink: {
       ...text.label,
       marginTop: 4,
-      color: colors.primary,
+      color: colors.button,
     },
 
     /** "Olvide mi contrasena" bajo el boton de iniciar sesion. */
@@ -191,7 +191,7 @@ export const createAuthStyles = (colors: any) => {
 
     linkButtonText: {
       ...text.label,
-      color: colors.primary,
+      color: colors.button,
     },
 
     linkButtonDisabled: {

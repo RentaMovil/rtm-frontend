@@ -79,7 +79,7 @@ export const createStyles = (colors: any) => {
     closeText: {
       ...text.label,
       fontSize: 15,
-      color: colors.primary,
+      color: colors.button,
     },
   });
 };
