@@ -114,7 +114,122 @@
     "phone": "Telefone",
     "submit": "Alugar",
     "terms": {
-      "accept": "Li e aceito os termos e condições"
+      "accept": "Li e aceito os termos e condições",
+      "viewLink": "Ver documento completo",
+      "requiredHint": "A aceitação é obrigatória antes de continuar para o pagamento.",
+      "documentLabel": "Reserva de veículo",
+      "title": "Termos e condições",
+      "version": "Versão",
+      "effectiveDateLabel": "Vigente desde",
+      "documentEffectiveDate": "24 de setembro de 2026",
+      "summaryTitle": "Resumo da reserva",
+      "vehicleLabel": "Veículo",
+      "pickupLabel": "Retirada",
+      "returnLabel": "Devolução",
+      "introduction": "Antes de continuar, revise as condições que se aplicam a esta reserva. A versão vigente será associada à sua aceitação.",
+      "closeAction": "Fechar",
+      "cancelAction": "Cancelar",
+      "acceptAction": "Aceitar e continuar",
+      "sections": {
+        "objeto": {
+          "title": "1. Objeto e aceitação",
+          "paragraphs": [
+            "Estes termos e condições regulam o acesso à plataforma RentaMóvil e a reserva e locação de veículos por meio dela. A marcação da caixa de autorização, a data, a versão e os dados da reserva selecionada constituem evidência digital de aceitação deste documento.",
+            "O cliente declara que os leu e compreendeu integralmente. Se não concordar com alguma de suas disposições, não deve continuar com a reserva nem efetuar o pagamento."
+          ]
+        },
+        "requisitos": {
+          "title": "2. Requisitos do cliente e do condutor",
+          "paragraphs": [
+            "O cliente declara ter a idade mínima exigida pela regulamentação aplicável, possuir carteira de habilitação válida durante todo o período da locação, e ter autorização e capacidade para celebrar este contrato.",
+            "No momento da entrega, deverá apresentar os documentos de identidade, carteira de habilitação e demais requisitos informados na reserva ou na filial. Qualquer condutor adicional deverá ser previamente autorizado pela RentaMóvil. O fornecimento de informações falsas, vencidas ou insuficientes poderá suspender ou cancelar o serviço, sem prejuízo dos direitos do cliente."
+          ]
+        },
+        "reserva": {
+          "title": "3. Seleção, disponibilidade e preço",
+          "paragraphs": [
+            "A reserva representa uma solicitação sujeita à verificação de disponibilidade, dados, cobertura escolhida e pagamento. A RentaMóvil poderá oferecer um veículo equivalente da mesma categoria quando necessário, informando a diferença de preço, se houver, e obtendo a aprovação do cliente quando essa mudança afetar substancialmente o que foi contratado.",
+            "O total exibido na plataforma corresponde aos produtos, datas, filiais, cobertura e serviços selecionados. Os impostos incluídos são identificados expressamente na tela de pagamento. Pedágios, estacionamentos, multas, consumos e outras cobranças de terceiros serão pagos pelo cliente quando assim exigido por lei ou pelo serviço prestado."
+          ]
+        },
+        "pago": {
+          "title": "4. Pagamento, comprovante e ativação da reserva",
+          "paragraphs": [
+            "O pagamento deve ser realizado exclusivamente pelos canais e contas bancárias habilitados e vigentes exibidos na plataforma. O cliente deve transferir o valor indicado e registrar um comprovante legível que permita relacioná-lo à reserva.",
+            "O envio do comprovante não equivale à aprovação do pagamento nem confirma por si só a reserva. O status permanece pendente de revisão até que um administrador valide a transferência. Um pagamento rejeitado, uma referência incorreta, uma diferença de valor ou um comprovante ilegível não ativará o serviço. O comprovante não deve ser compartilhado com terceiros fora dos canais autorizados."
+          ]
+        },
+        "cambios": {
+          "title": "5. Alterações, cancelamento e reembolsos",
+          "paragraphs": [
+            "As solicitações de alteração ou cancelamento devem ser apresentadas pelos canais oficiais antes da data e hora de retirada. Serão aplicadas as condições, prazos, custos e penalidades expressamente exibidos na oferta e aceitos pelo cliente ao confirmar a reserva. Caso não exista uma condição especial visível, a RentaMóvil informará o custo aplicável antes de processar a solicitação.",
+            "Não haverá reembolso por serviços já prestados, despesas perante terceiros, danos imputáveis ao cliente ou casos previstos na regulamentação aplicável, sem prejuízo dos direitos irrenunciáveis do consumidor e das regras específicas da cobertura escolhida."
+          ]
+        },
+        "entrega": {
+          "title": "6. Entrega do veículo",
+          "paragraphs": [
+            "A entrega é realizada na filial, data e janela de horário confirmadas, sujeita à disponibilidade e à apresentação oportuna dos documentos exigidos. O cliente deve receber e revisar o veículo antes de deixar a filial.",
+            "A entrega inclui uma revisão de aparência, quilometragem, combustível, acessórios e funcionamento básico, cujo resultado é registrado no documento de entrega. Qualquer dano, item faltante ou defeito não registrado deve ser comunicado antes de dar partida."
+          ]
+        },
+        "deposito": {
+          "title": "7. Depósito de garantia e pagamentos a terceiros",
+          "paragraphs": [
+            "Quando aplicável, o cliente deverá constituir um depósito ou fornecer uma garantia conforme o valor e o mecanismo informados na reserva ou no contrato de locação. Esse depósito é uma garantia de cumprimento e não um pagamento da reserva, salvo indicação expressa em contrário.",
+            "O depósito será liberado após a devolução do veículo e a verificação do estado, da documentação, do combustível, da quilometragem e da ausência de obrigações pendentes. Caso existam danos, multas ou outros valores pendentes, o valor comprovado poderá ser descontado, respeitando as notificações, o processo e os direitos do cliente."
+          ]
+        },
+        "uso": {
+          "title": "8. Uso permitido e proibições",
+          "paragraphs": [
+            "O veículo só poderá ser utilizado para deslocamentos lícitos pelo condutor autorizado. Ficam proibidos, entre outros, o uso sob efeito de álcool ou drogas, corridas, competições, testes de velocidade, condução fora de estrada, sobrecarga, uso comercial não autorizado, sublocação, abandono do veículo, retirada ou manipulação do dispositivo GPS e qualquer atividade ilícita.",
+            "O condutor deve respeitar as normas de trânsito, a sinalização, as restrições de circulação e as ordens legítimas da autoridade. O cliente responderá pelas consequências do uso indevido, sem prejuízo das coberturas contratadas."
+          ]
+        },
+        "responsabilidad": {
+          "title": "9. Responsabilidade, incidentes e seguros",
+          "paragraphs": [
+            "O cliente deve conduzir com prudência e comunicar imediatamente à RentaMóvil, à autoridade competente e, quando aplicável, à sua seguradora qualquer acidente, roubo, dano ou incidente. Não deve realizar reparos nem deslocar o veículo sem autorização, exceto por medida urgente para evitar um dano maior.",
+            "O cliente será responsável por multas, pedágios, estacionamentos, danos e perdas a terceiros na proporção que lhe corresponda legalmente. A cobertura de seguro escolhida opera apenas dentro de seu alcance, limites e franquia; não substitui as responsabilidades não cobertas. O resumo da cobertura selecionada faz parte da reserva."
+          ]
+        },
+        "devolucion": {
+          "title": "10. Devolução e extensão",
+          "paragraphs": [
+            "O veículo deve ser devolvido na filial, data e horário indicados, com o mesmo nível de combustível, quilometragem, acessórios, documentos e estado de qualidade, exceto o desgaste ordinário permitido. A devolução será documentada por meio de uma inspeção e termo de entrega.",
+            "Qualquer extensão deve ser solicitada antes do horário de devolução e está sujeita à disponibilidade e à tarifa vigente. O atraso na devolução não gera uma extensão automática. Uma devolução tardia ou fora da filial acordada pode gerar cobranças adicionais e, quando aplicável, a execução da garantia."
+          ]
+        },
+        "disponibilidad": {
+          "title": "11. Disponibilidade e eventos de força maior",
+          "paragraphs": [
+            "A RentaMóvil poderá modificar ou cancelar uma reserva por motivos de segurança, manutenção, falta de disponibilidade ou outra causa justificada, informando o cliente. Nesse caso, será providenciada a devolução dos valores correspondentes aos serviços não prestados, de acordo com a lei e com o que já foi consumido pelo cliente.",
+            "Eventos de força maior, distúrbios, restrições de circulação, emergências ou outras circunstâncias fora de controle razoável podem alterar datas, rotas ou condições. O cliente deverá utilizar os canais oficiais para receber instruções e opções."
+          ]
+        },
+        "datos": {
+          "title": "12. Dados pessoais e comunicações",
+          "paragraphs": [
+            "Os dados fornecidos serão utilizados para gerenciar a reserva, verificar o pagamento, prestar suporte, cumprir obrigações legais, prevenir fraudes e manter a segurança da plataforma. O tratamento será realizado de acordo com a regulamentação de proteção de dados e com os avisos de privacidade e finalidades que a RentaMóvil informará ao cliente.",
+            "As comunicações operacionais — por exemplo, lembretes, status de pagamento e instruções de entrega — poderão ser realizadas pelos canais cadastrados. O uso comercial dos dados ou as comunicações de marketing exigem a autorização separada exigida por lei."
+          ]
+        },
+        "derechos": {
+          "title": "13. Propriedade intelectual e limites de responsabilidade",
+          "paragraphs": [
+            "A plataforma, seu design, textos, logotipos, fotografias e demais componentes são utilizados exclusivamente para facilitar o serviço. O cliente não poderá reproduzi-los, modificá-los ou explorá-los comercialmente sem autorização prévia.",
+            "Na medida permitida por lei, a RentaMóvil não responde por danos indiretos ou lucros cessantes decorrentes da utilização da plataforma. Essa limitação não exclui responsabilidades que não possam ser excluídas, nem os direitos do consumidor. O cliente deve utilizar o serviço de forma lícita e responsável."
+          ]
+        },
+        "vigencia": {
+          "title": "14. Vigência, lei aplicável e contato",
+          "paragraphs": [
+            "Esta versão rege as reservas iniciadas a partir de sua publicação. As alterações serão publicadas com uma nova versão e data; a versão aceita por cada cliente será mantida junto com a evidência de aceitação. Não serão aplicadas a uma reserva já aceita modificações que afetem direitos adquiridos sem autorização expressa ou fundamento legal.",
+            "A relação é regida pela legislação colombiana. Qualquer controvérsia será resolvida pelos mecanismos de solução aplicáveis e pelos juízes e tribunais competentes, sem prejuízo das normas de proteção ao consumidor. Para consultas, o cliente pode usar os canais oficiais publicados na plataforma ou comparecer à filial relacionada à reserva."
+          ]
+        }
+      }
     }
   },
   "login": {

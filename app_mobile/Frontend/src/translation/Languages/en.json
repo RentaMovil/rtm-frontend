@@ -108,7 +108,122 @@
     "phone": "Phone",
     "submit": "Rent",
     "terms": {
-      "accept": "I have read and accept the terms and conditions"
+      "accept": "I have read and accept the terms and conditions",
+      "viewLink": "View full document",
+      "requiredHint": "Acceptance is required before continuing to payment.",
+      "documentLabel": "Vehicle reservation",
+      "title": "Terms and conditions",
+      "version": "Version",
+      "effectiveDateLabel": "Effective from",
+      "documentEffectiveDate": "September 24, 2026",
+      "summaryTitle": "Reservation summary",
+      "vehicleLabel": "Vehicle",
+      "pickupLabel": "Pickup",
+      "returnLabel": "Return",
+      "introduction": "Before continuing, review the conditions that apply to this reservation. The current version will be linked to your acceptance.",
+      "closeAction": "Close",
+      "cancelAction": "Cancel",
+      "acceptAction": "Accept and continue",
+      "sections": {
+        "objeto": {
+          "title": "1. Purpose and acceptance",
+          "paragraphs": [
+            "These terms and conditions govern access to the RentaMóvil platform and the reservation and rental of vehicles through it. Checking the authorization box, together with the date, version and data of the selected reservation, constitutes digital evidence of acceptance of this document.",
+            "The customer declares that they have read and fully understood them. If they disagree with any of its provisions, they must not continue with the reservation or make the payment."
+          ]
+        },
+        "requisitos": {
+          "title": "2. Customer and driver requirements",
+          "paragraphs": [
+            "The customer declares that they meet the minimum age required by applicable regulations, that they hold a valid driving licence covering the entire rental period, and that they have the authorization and capacity to enter into this contract.",
+            "At the time of handover, the customer must present identification documents, driving licence and any other requirements stated in the reservation or at the branch. Any additional driver must be authorized in advance by RentaMóvil. Providing false, expired or insufficient information may lead to suspension or cancellation of the service, without prejudice to the customer's rights."
+          ]
+        },
+        "reserva": {
+          "title": "3. Selection, availability and price",
+          "paragraphs": [
+            "The reservation represents a request subject to verification of availability, data, chosen coverage and payment. RentaMóvil may offer an equivalent vehicle of the same category when necessary, disclosing any price difference and obtaining the customer's approval when the change substantially affects what was contracted.",
+            "The total shown on the platform corresponds to the products, dates, branches, coverage and services selected. Included taxes are expressly identified on the payment screen. Tolls, parking, fines, consumption and other third-party charges will be paid by the customer when required by law or by the service provided."
+          ]
+        },
+        "pago": {
+          "title": "4. Payment, receipt and reservation activation",
+          "paragraphs": [
+            "Payment must be made exclusively through the enabled and current channels and bank accounts shown on the platform. The customer must transfer the stated amount and submit a legible receipt that can be linked to the reservation.",
+            "Submitting the receipt does not equal payment approval nor does it confirm the reservation by itself. The status remains pending review until an administrator validates the transfer. A rejected payment, an incorrect reference, an amount mismatch or an illegible receipt will not activate the service. The receipt must not be shared with third parties outside the authorized channels."
+          ]
+        },
+        "cambios": {
+          "title": "5. Changes, cancellation and refunds",
+          "paragraphs": [
+            "Change or cancellation requests must be submitted through official channels before the pickup date and time. The conditions, deadlines, costs and penalties expressly shown in the offer and accepted by the customer when confirming the reservation will apply. If no special condition is visible, RentaMóvil will disclose the applicable cost before processing the request.",
+            "No refund will be issued for services already rendered, third-party expenses, damages attributable to the customer, or cases set out in applicable regulations, without prejudice to the consumer's non-waivable rights and the specific rules of the chosen coverage."
+          ]
+        },
+        "entrega": {
+          "title": "6. Vehicle handover",
+          "paragraphs": [
+            "Handover takes place at the confirmed branch, date and time slot, subject to availability and timely presentation of the required documents. The customer must receive and inspect the vehicle before leaving the branch.",
+            "The handover includes a check of appearance, mileage, fuel, accessories and basic operation, the result of which is recorded in the handover document. Any damage, missing item or defect not recorded must be reported before driving off."
+          ]
+        },
+        "deposito": {
+          "title": "7. Security deposit and third-party payments",
+          "paragraphs": [
+            "When applicable, the customer must place a deposit or provide a guarantee according to the amount and mechanism stated in the reservation or rental contract. This deposit is a performance guarantee and not a payment for the reservation, unless expressly stated otherwise.",
+            "The deposit will be released once the vehicle is returned and its condition, documentation, fuel, mileage and absence of outstanding obligations are verified. If there are damages, fines or other pending amounts, the verified amount may be deducted, respecting the required notifications, process and the customer's rights."
+          ]
+        },
+        "uso": {
+          "title": "8. Permitted use and prohibitions",
+          "paragraphs": [
+            "The vehicle may only be used for lawful travel by the authorized driver. Prohibited uses include, among others, driving under the influence of alcohol or drugs, racing, competitions, speed trials, off-road driving, overloading, unauthorized commercial use, subletting, abandoning the vehicle, removing or tampering with the GPS device, and any unlawful activity.",
+            "The driver must comply with traffic regulations, signage, circulation restrictions and legitimate orders from the authorities. The customer will be liable for the consequences of improper use, without prejudice to the contracted coverage."
+          ]
+        },
+        "responsabilidad": {
+          "title": "9. Liability, incidents and insurance",
+          "paragraphs": [
+            "The customer must drive carefully and immediately notify RentaMóvil, the competent authority and, where applicable, their insurer of any accident, theft, damage or incident. They must not carry out repairs or move the vehicle without authorization, except for an urgent measure to prevent further damage.",
+            "The customer will be liable for fines, tolls, parking fees, and damages or losses to third parties to the extent legally applicable. The chosen insurance coverage operates only within its scope, limits and deductible; it does not replace uncovered liabilities. The summary of the selected coverage is part of the reservation."
+          ]
+        },
+        "devolucion": {
+          "title": "10. Return and extension",
+          "paragraphs": [
+            "The vehicle must be returned to the stated branch, date and time, with the same fuel level, mileage, accessories, documents and quality condition, except for permitted ordinary wear. The return will be documented through an inspection and handover record.",
+            "Any extension must be requested before the return time and is subject to availability and the current rate. A delay in returning the vehicle does not create an automatic extension. A late return or one made outside the agreed branch may result in additional charges and, where applicable, the application of the deposit."
+          ]
+        },
+        "disponibilidad": {
+          "title": "11. Availability and force majeure events",
+          "paragraphs": [
+            "RentaMóvil may modify or cancel a reservation for reasons of safety, maintenance, lack of availability or other justified cause, notifying the customer. In that case, the refund of amounts corresponding to services not rendered will be handled in accordance with the law and what the customer has already used.",
+            "Force majeure events, civil unrest, traffic restrictions, emergencies or other circumstances beyond reasonable control may alter dates, routes or conditions. The customer must use the official channels to receive instructions and options."
+          ]
+        },
+        "datos": {
+          "title": "12. Personal data and communications",
+          "paragraphs": [
+            "The data provided will be used to manage the reservation, verify the payment, provide support, comply with legal obligations, prevent fraud and maintain the security of the platform. Processing will be carried out in accordance with data protection regulations and the privacy notices and purposes that RentaMóvil will disclose to the customer.",
+            "Operational communications — for example, reminders, payment status and delivery instructions — may be sent through the registered channels. Commercial use of the data or marketing communications require the separate authorization required by law."
+          ]
+        },
+        "derechos": {
+          "title": "13. Intellectual property and limits of liability",
+          "paragraphs": [
+            "The platform, its design, texts, logos, photographs and other components are used exclusively to facilitate the service. The customer may not reproduce, modify or commercially exploit them without prior authorization.",
+            "To the extent permitted by law, RentaMóvil is not liable for indirect damages or loss of profit arising from the use of the platform. This limitation does not exclude liabilities that cannot be excluded, nor the consumer's rights. The customer must use the service lawfully and responsibly."
+          ]
+        },
+        "vigencia": {
+          "title": "14. Validity, applicable law and contact",
+          "paragraphs": [
+            "This version applies to reservations initiated from its publication date. Changes will be published with a new version and date; the version accepted by each customer will be kept together with the evidence of acceptance. Modifications affecting vested rights will not be applied to an already accepted reservation without express authorization or legal basis.",
+            "This relationship is governed by Colombian law. Any dispute will be resolved through the applicable dispute resolution mechanisms and by the competent courts and tribunals, without prejudice to consumer protection rules. For inquiries, the customer may use the official channels published on the platform or go to the branch related to the reservation."
+          ]
+        }
+      }
     }
   },
   "login": {
