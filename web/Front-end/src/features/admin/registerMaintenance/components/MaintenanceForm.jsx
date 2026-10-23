@@ -12,6 +12,8 @@ import { useVehicles } from '../../registerVehicle/hooks/useVehicles';
 import { VEHICLE_STATUS } from '../../registerVehicle/constans/vehicleStatus';
 import { useCreateMaintenance } from '../hooks/useCreateMaintenance';
 import { useMaintenanceTypes } from '../hooks/useMaintenanceTypes';
+import { FiShield, FiDollarSign, FiStar, FiPlus, FiEdit2, FiTrash2, FiX, FiInfo, FiAlertCircle } from "react-icons/fi";
+
 
 function MaintenanceForm() {
     const navigate = useNavigate();
@@ -21,6 +23,7 @@ function MaintenanceForm() {
     const [search, setSearch] = useState('');
     const [selectedVehicle, setSelectedVehicle] = useState(null);
     const [submitError, setSubmitError] = useState('');
+    const [costError, setCostError] = useState(false);
 
     const { vehicles, refetch } = useVehicles();
     const { createMaintenance, isLoading } = useCreateMaintenance();
@@ -167,10 +170,12 @@ function MaintenanceForm() {
                                         validate: (value) => startNow || ValidateDate(value)
                                     })}
                                 />
-                                <label className={style['maintenance-start-now']}>
-                                    <input type="checkbox" disabled={!canStartNow} {...register('startNow')} />
-                                    {t('MaintenanceForm.startNow')}
-                                </label>
+                                <div className={style['maintenance-start-now-row']}>
+                                    <label className={style['maintenance-start-now']}>
+                                        <input type="checkbox" disabled={!canStartNow} {...register('startNow')} />
+                                        <span>{t('MaintenanceForm.startNow')}</span>
+                                    </label>
+                                </div>
                                 {errors.date && (
                                     <p className={style['error-message']}>
                                         <AiOutlineDashboard /> {errors.date.message}
@@ -179,17 +184,22 @@ function MaintenanceForm() {
                             </div>
                             <div className={style['maintenance-form-input']}>
                                 <label htmlFor="price">{t("vehicleForm.price")}</label>
-                                <input
-                                    type="number"
-                                    placeholder="Ej: 100000"
-                                    step="100"
-                                    {...register('price', {
-                                        required: t("vehicleForm.priceRequired"),
-                                        valueAsNumber: true,
-                                        min: { value: 0, message: t("vehicleForm.minLenghtPrice") },
-                                        max: { value: 100000000, message: t("vehicleForm.maxLenghtPrice") }
-                                    })}
-                                />
+                                <div className="it-cost-input">
+                                    <span>COP $</span>
+                                    <input
+                                        id="price"
+                                        type="number"
+                                        placeholder="Ej: 100000"
+                                        step="any"
+                                        {...register('price', {
+                                            required: t("vehicleForm.priceRequired"),
+                                            valueAsNumber: true,
+                                            min: { value: 0, message: t("vehicleForm.minLenghtPrice") },
+                                            max: { value: 100000000, message: t("vehicleForm.maxLenghtPrice") },
+                                            onChange: () => costError && setCostError(false)
+                                        })}
+                                    />
+                                </div>
                                 {errors.price && (
                                     <p className={style['error-message']}>
                                         <AiOutlineDashboard /> {errors.price.message}
@@ -204,7 +214,7 @@ function MaintenanceForm() {
                                 >
                                     <option value="" disabled>{t("MaintenanceForm.placeholderType")}</option>
                                     {maintenanceTypes.map((type) => (
-                                        <option key={type.id} value={type.id}>{type.name}</option>
+                                    <option key={type.id} value={type.id}>{t(`MaintenanceForm.types.${type.name}`, { defaultValue: type.name })}</option>
                                     ))}
                                 </select>
                                 {errors.maintenanceTypeId && (

@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     ActivityIndicator,
     Alert,
@@ -17,12 +17,34 @@ import {
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
 import type { Branch, Reservation, Vehicle } from "../../../types";
-import { getBranchById } from "../../branches/services/branchService";
+import { ApiError } from "../../../shared/api/httpClient";
+import { getBranchById, getBranches } from "../../branches/services/branchService";
+import BranchSelectorModal from "../components/BranchSelectorModal";
 import {
     cancelReservation,
     getReservationById,
+    updateReturnBranch,
 } from "../services/reservationService";
+import { formatReservationDateTime, parseReservationDateTime, wallClockNow } from "../utils/formatReservationDate";
 import { createStyles } from "./ReservationDetailPage.styles";
+
+/**
+ * Estados "vigentes" de una reserva (ver `Reservation.java`, javadoc de
+ * `changeReturnBranch` y `canTransitionTo`): son los unicos desde los que se
+ * puede cancelar o modificar. Una vez CANCELLED/COMPLETED, ninguna de las
+ * dos acciones esta disponible.
+ */
+const ACTIVE_STATUSES: readonly string[] = [
+    RESERVATION_STATUS.PENDING_PAYMENT,
+    RESERVATION_STATUS.PENDING_REVIEW,
+    RESERVATION_STATUS.CONFIRMED,
+];
+
+/** INV-004: cancelar solo hasta 3 dias antes de `start_date`. */
+const CANCELLATION_WINDOW_DAYS = 3;
+/** INV-013: cambiar la sucursal de devolucion solo hasta 3 dias antes de `end_date`. */
+const RETURN_BRANCH_WINDOW_DAYS = 3;
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 // Etiquetas de display sobre los valores de `RESERVATION_STATUS`. El texto va
 // en espanol (es lo que ve el usuario) pero la clave es el valor del dominio,
@@ -51,15 +73,46 @@ export default function ReservationDetailPage() {
     const styles = createStyles(colors);
     const [pickupBranch, setPickupBranch] = useState<Branch | null>(null);
     const [returnBranch, setReturnBranch] = useState<Branch | null>(null);
+    const [branchOptions, setBranchOptions] = useState<Branch[]>([]);
+    const [isReturnBranchModalVisible, setIsReturnBranchModalVisible] = useState(false);
+    const [isUpdatingReturnBranch, setIsUpdatingReturnBranch] = useState(false);
+
+    // Guardas sincronas (ademas del estado) contra doble solicitud: dos taps
+    // seguidos pueden disparar dos llamadas antes de que el primer
+    // `setState` re-renderice y deshabilite el boton.
+    const cancelInFlightRef = useRef(false);
+    const returnBranchInFlightRef = useRef(false);
 
     useEffect(() => {
         if (!reservation) return;
         getBranchById(reservation.pickupBranchId).then(setPickupBranch);
         getBranchById(reservation.returnBranchId).then(setReturnBranch);
     }, [reservation]);
-    
+
+    useEffect(() => {
+        let cancelled = false;
+
+        getBranches().then((loaded) => {
+            if (!cancelled) setBranchOptions(loaded);
+        });
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
     useEffect(() => {
         async function loadReservation() {
+            // Nuevo id (p. ej. se volvio a esta misma pantalla desde el
+            // historial con otra reserva): se limpia el estado de acciones
+            // en curso de la reserva anterior.
+            setIsCancelModalVisible(false);
+            setIsCancelling(false);
+            setIsReturnBranchModalVisible(false);
+            setIsUpdatingReturnBranch(false);
+            cancelInFlightRef.current = false;
+            returnBranchInFlightRef.current = false;
+
             if (!id) {
                 setLoading(false);
                 return;
@@ -79,8 +132,9 @@ export default function ReservationDetailPage() {
     }, [id]);
 
     async function handleCancelReservation() {
-        if (!reservation || isCancelling) return;
+        if (!reservation || cancelInFlightRef.current) return;
 
+        cancelInFlightRef.current = true;
         setIsCancelling(true);
 
         try {
@@ -91,14 +145,52 @@ export default function ReservationDetailPage() {
                 return;
             }
 
+            // La UI solo se actualiza tras confirmar la respuesta exitosa
+            // del backend: nunca se marca como cancelada de forma optimista.
             setReservation(updatedReservation);
             setIsCancelModalVisible(false);
             Alert.alert("Reserva cancelada", "Tu reserva ha sido cancelada correctamente.");
         } catch (error) {
             console.log("Error cancelando reserva:", error);
-            Alert.alert("Error", "No fue posible cancelar la reserva.");
+            const message =
+                error instanceof ApiError
+                    ? error.message
+                    : "No fue posible cancelar la reserva. Verifica tu conexión e inténtalo de nuevo.";
+            Alert.alert("No se pudo cancelar", message);
         } finally {
             setIsCancelling(false);
+            cancelInFlightRef.current = false;
+        }
+    }
+
+    async function handleSelectReturnBranch(branch: Branch) {
+        if (!reservation || returnBranchInFlightRef.current) return;
+
+        if (branch.id === reservation.returnBranchId) {
+            setIsReturnBranchModalVisible(false);
+            return;
+        }
+
+        returnBranchInFlightRef.current = true;
+        setIsUpdatingReturnBranch(true);
+
+        try {
+            const updated = await updateReturnBranch(reservation.id, branch.id);
+
+            // Igual que al cancelar: solo se refleja el cambio cuando el
+            // backend confirma que lo aplico.
+            setReservation(updated);
+            setIsReturnBranchModalVisible(false);
+        } catch (error) {
+            console.log("Error actualizando sucursal de devolución:", error);
+            const message =
+                error instanceof ApiError
+                    ? error.message
+                    : "No fue posible actualizar la sucursal de devolución. Verifica tu conexión e inténtalo de nuevo.";
+            Alert.alert("No se pudo cambiar la sucursal", message);
+        } finally {
+            setIsUpdatingReturnBranch(false);
+            returnBranchInFlightRef.current = false;
         }
     }
 
@@ -123,9 +215,39 @@ export default function ReservationDetailPage() {
         );
     }
 
-    const canCancel =
-        reservation.status === RESERVATION_STATUS.PENDING_PAYMENT ||
-        reservation.status === RESERVATION_STATUS.CONFIRMED;
+    const isActiveStatus = ACTIVE_STATUSES.includes(reservation.status);
+
+    // Ventanas de tiempo (ver `Reservation.java`): se replican aqui solo para
+    // habilitar/deshabilitar la UI con una razon clara. El backend sigue
+    // siendo quien valida de verdad; si el reloj del dispositivo esta
+    // desincronizado, la peticion real fallara y se muestra su mensaje.
+    const startDate = parseReservationDateTime(reservation.start_date);
+    const isWithinCancellationWindow =
+        !startDate || wallClockNow().getTime() <= startDate.getTime() - CANCELLATION_WINDOW_DAYS * DAY_MS;
+    const canCancel = isActiveStatus && isWithinCancellationWindow;
+
+    let cancelDisabledReason: string | null = null;
+    if (reservation.status === RESERVATION_STATUS.COMPLETED) {
+        cancelDisabledReason = "Esta reserva ya se completó y no se puede cancelar.";
+    } else if (isActiveStatus && !isWithinCancellationWindow) {
+        cancelDisabledReason = "Ya no se puede cancelar: el plazo límite era 3 días antes de la fecha de recogida.";
+    }
+
+    const endDate = parseReservationDateTime(reservation.end_date);
+    const isWithinReturnBranchWindow =
+        !endDate || wallClockNow().getTime() <= endDate.getTime() - RETURN_BRANCH_WINDOW_DAYS * DAY_MS;
+    const canChangeReturnBranch = isActiveStatus && isWithinReturnBranchWindow;
+
+    let returnBranchDisabledReason: string | null = null;
+    if (!isActiveStatus) {
+        returnBranchDisabledReason =
+            reservation.status === RESERVATION_STATUS.CANCELLED
+                ? "Una reserva cancelada ya no se puede modificar."
+                : "Una reserva completada ya no se puede modificar.";
+    } else if (!isWithinReturnBranchWindow) {
+        returnBranchDisabledReason =
+            "La sucursal de devolución ya no se puede cambiar: el plazo límite era 3 días antes de la devolución.";
+    }
 
     return (
         <>
@@ -146,10 +268,25 @@ export default function ReservationDetailPage() {
 
                 <View style={styles.card}>
                     <Text style={styles.sectionTitle}>Información del viaje</Text>
-                    <DetailRow label="Recogida" value={pickupBranch?.name ?? "-"} styles={styles} />
-                    <DetailRow label="Devolución" value={returnBranch?.name ?? "-"} styles={styles} />
-                    <DetailRow label="Fecha de recogida" value={reservation.start_date} styles={styles} />
-                    <DetailRow label="Fecha de devolución" value={reservation.end_date} styles={styles} last />
+
+                    <BranchRow
+                        label="Recogida"
+                        branch={pickupBranch}
+                        styles={styles}
+                        helperText="No se puede cambiar una vez creada la reserva."
+                    />
+
+                    <BranchRow
+                        label="Devolución"
+                        branch={returnBranch}
+                        styles={styles}
+                        onChangePress={canChangeReturnBranch ? () => setIsReturnBranchModalVisible(true) : undefined}
+                        helperText={!canChangeReturnBranch ? returnBranchDisabledReason : null}
+                        isUpdating={isUpdatingReturnBranch}
+                    />
+
+                    <DetailRow label="Fecha de recogida" value={formatReservationDateTime(reservation.start_date)} styles={styles} />
+                    <DetailRow label="Fecha de devolución" value={formatReservationDateTime(reservation.end_date)} styles={styles} last />
                 </View>
 
                 <View style={styles.totalCard}>
@@ -157,16 +294,36 @@ export default function ReservationDetailPage() {
                     <Text style={styles.totalAmount}>${reservation.total_price.toLocaleString()}</Text>
                 </View>
 
-                {canCancel && (
-                    <TouchableOpacity
-                        accessibilityRole="button"
-                        accessibilityLabel="Cancelar reserva"
-                        activeOpacity={0.85}
-                        style={styles.cancelButton}
-                        onPress={() => setIsCancelModalVisible(true)}
-                    >
-                        <Text style={styles.cancelButtonText}>Cancelar reserva</Text>
-                    </TouchableOpacity>
+                {reservation.status !== RESERVATION_STATUS.CANCELLED && (
+                    canCancel ? (
+                        <TouchableOpacity
+                            accessibilityRole="button"
+                            accessibilityLabel="Cancelar reserva"
+                            activeOpacity={0.85}
+                            style={styles.cancelButton}
+                            onPress={() => setIsCancelModalVisible(true)}
+                        >
+                            <Text style={styles.cancelButtonText}>Cancelar reserva</Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <View>
+                            <TouchableOpacity
+                                disabled
+                                accessibilityRole="button"
+                                accessibilityLabel="Cancelar reserva (no disponible)"
+                                accessibilityState={{ disabled: true }}
+                                style={[styles.cancelButton, styles.cancelButtonDisabled]}
+                            >
+                                <Text style={[styles.cancelButtonText, styles.cancelButtonTextDisabled]}>
+                                    Cancelar reserva
+                                </Text>
+                            </TouchableOpacity>
+
+                            {cancelDisabledReason && (
+                                <Text style={styles.cancelReasonText}>{cancelDisabledReason}</Text>
+                            )}
+                        </View>
+                    )
                 )}
             </ScrollView>
 
@@ -210,7 +367,58 @@ export default function ReservationDetailPage() {
                     </Pressable>
                 </Pressable>
             </Modal>
+
+            <BranchSelectorModal
+                visible={isReturnBranchModalVisible}
+                branches={branchOptions}
+                onClose={() => !isUpdatingReturnBranch && setIsReturnBranchModalVisible(false)}
+                onSelect={handleSelectReturnBranch}
+            />
         </>
+    );
+}
+
+function BranchRow({
+    label,
+    branch,
+    styles,
+    onChangePress,
+    helperText,
+    isUpdating = false,
+}: {
+    label: string;
+    branch: Branch | null;
+    styles: ReturnType<typeof createStyles>;
+    onChangePress?: () => void;
+    helperText?: string | null;
+    isUpdating?: boolean;
+}) {
+    return (
+        <View style={styles.branchRow}>
+            <View style={styles.branchRowHeader}>
+                <Text style={styles.branchLabel}>{label}</Text>
+
+                <View style={styles.branchInfo}>
+                    <Text style={styles.branchName}>{branch?.name ?? "Sucursal no disponible"}</Text>
+                    {branch?.address ? <Text style={styles.branchAddress}>{branch.address}</Text> : null}
+
+                    {onChangePress ? (
+                        <TouchableOpacity
+                            onPress={onChangePress}
+                            disabled={isUpdating}
+                            accessibilityRole="button"
+                            accessibilityLabel={`Cambiar ${label.toLowerCase()}`}
+                        >
+                            <Text style={styles.branchActionLink}>
+                                {isUpdating ? "Actualizando..." : "Cambiar"}
+                            </Text>
+                        </TouchableOpacity>
+                    ) : helperText ? (
+                        <Text style={styles.branchHelperText}>{helperText}</Text>
+                    ) : null}
+                </View>
+            </View>
+        </View>
     );
 }
 
