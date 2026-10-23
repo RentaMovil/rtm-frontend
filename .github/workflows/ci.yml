@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, develop]
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web/Front-end
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/Front-end/package-lock.json
+
+      - run: npm ci
+
+      # Informational only for now: the repo has pre-existing lint debt
+      # (see the audit report) that isn't tied to any single change.
+      # Flip this to a plain "npm run lint" once that debt is paid down.
+      - name: Lint (non-blocking)
+        run: npm run lint || true
+
+      - run: npm run build
+
+  mobile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app_mobile/Frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: app_mobile/Frontend/package-lock.json
+
+      - run: npm ci
+
+      - run: npm run typecheck
