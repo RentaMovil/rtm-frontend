@@ -42,6 +42,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
     const [query, setQuery] = useState("");
     const [suggestions, setSuggestions] = useState<Branch[]>([]);
     const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
+    const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
 
     const [startDate, setStartDate] = useState<Date>(today);
     const [endDate, setEndDate] = useState<Date>(getTomorrow());
@@ -83,8 +84,16 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
         setQuery(value);
         setErrorBranch("");
 
+        // El texto ya no corresponde a la sucursal elegida: se invalida la
+        // seleccion para que no se pueda confirmar una sucursal que no es la
+        // que esta escrita en el campo.
+        if (selectedBranch && value !== selectedBranch.name) {
+        setSelectedBranch(null);
+        }
+
         if (!value.trim()) {
         setSuggestions([]);
+        setIsSuggestionsOpen(false);
         return;
         }
 
@@ -92,6 +101,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
         branch.name.toLowerCase().includes(value.toLowerCase())
         );
         setSuggestions(filtered);
+        setIsSuggestionsOpen(true);
     };
 
     const handleSelect = (branch: Branch) => {
@@ -99,6 +109,9 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
         setSelectedBranch(branch);
         setSuggestions([]);
         setErrorBranch("");
+        // Se cierra el desplegable: al vaciar `suggestions` tras elegir una
+        // sucursal valida no debe interpretarse como "sin resultados".
+        setIsSuggestionsOpen(false);
     };
 
     const applyTime = (date: Date, time: Date | null): Date => {
@@ -154,7 +167,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
             <Text style={styles.error}>{errorBranch}</Text>
             ) : null}
 
-            {query.trim().length > 0 && suggestions.length === 0 && (
+            {isSuggestionsOpen && query.trim().length > 0 && suggestions.length === 0 && (
             <View style={styles.suggestions}>
                 <Text style={styles.noSuggestions}>
                 {t("filterCalendar.noBranchResults")}
@@ -162,7 +175,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
             </View>
             )}
 
-            {suggestions.length > 0 && (
+            {isSuggestionsOpen && suggestions.length > 0 && (
             <FlatList
                 data={suggestions}
                 keyExtractor={(item) => item.id.toString()}

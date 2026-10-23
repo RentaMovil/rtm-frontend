@@ -151,6 +151,60 @@ export function createStyles(colors: any) {
             color: colors.buttonText,
         },
 
+        // Fila de sucursal (recogida/devolución), con accion opcional de cambio
+        branchRow: {
+            paddingVertical: 13,
+            borderBottomWidth: 1,
+            borderBottomColor: colors.border,
+            gap: 4,
+        },
+
+        branchRowHeader: {
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            gap: 18,
+        },
+
+        branchLabel: {
+            flex: 1,
+            fontSize: 14,
+            color: colors.text,
+        },
+
+        branchInfo: {
+            flex: 1.25,
+            alignItems: "flex-end",
+        },
+
+        branchName: {
+            fontSize: 14,
+            fontWeight: "600",
+            textAlign: "right",
+            color: colors.text,
+        },
+
+        branchAddress: {
+            marginTop: 2,
+            fontSize: 12,
+            textAlign: "right",
+            color: colors.secondaryText,
+        },
+
+        branchActionLink: {
+            marginTop: 6,
+            fontSize: 13,
+            fontWeight: "700",
+            color: colors.button,
+        },
+
+        branchHelperText: {
+            marginTop: 2,
+            fontSize: 12,
+            textAlign: "right",
+            color: colors.secondaryText,
+        },
+
         // Acción de cancelación
         cancelButton: {
             alignItems: "center",
@@ -165,6 +219,22 @@ export function createStyles(colors: any) {
             fontSize: 15,
             fontWeight: "700",
             color: colors.error,
+        },
+
+        cancelButtonDisabled: {
+            borderColor: colors.border,
+            opacity: 0.6,
+        },
+
+        cancelButtonTextDisabled: {
+            color: colors.secondaryText,
+        },
+
+        cancelReasonText: {
+            marginTop: 8,
+            fontSize: 13,
+            textAlign: "center",
+            color: colors.secondaryText,
         },
 
         // Modal de confirmación
