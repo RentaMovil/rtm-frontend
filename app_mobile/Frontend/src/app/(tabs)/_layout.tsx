@@ -202,7 +202,7 @@ export default function TabLayout() {
          * Igual que en el Stack raiz: `headerTitle` queda vacio y la marca se
          * pinta en `headerLeft` para que quede pegada al extremo izquierdo
          * (texto "RentaMovil" -> icono) en vez de centrada por el
-         * comportamiento default de `headerTitle`. Estas tres pantallas son
+         * comportamiento default de `headerTitle`. Estas pantallas son
          * raiz de cada tab, asi que no llevan boton de volver.
          */
         headerTitle: () => null,
@@ -220,7 +220,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "RentaMóvil",
-          tabBarLabel: t("tabs.home"),
+          tabBarLabel: `${t("tabs.home")} - ${t("tabs.homeModule")}`,
           tabBarIcon: ({ focused, color }) => (
             <TabIcon name="car" focused={focused} color={color} />
           ),
@@ -229,10 +229,21 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
+        name="reservations"
+        options={{
+          title: "RentaMóvil",
+          tabBarLabel: `${t("tabs.reservations")} - ${t("tabs.reservationsModule")}`,
+          tabBarIcon: ({ focused, color }) => (
+            <TabIcon name="bookmark" focused={focused} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
         name="menu"
         options={{
           title: "RentaMóvil",
-          tabBarLabel: t("tabs.menu"),
+          tabBarLabel: `${t("tabs.menu")} - ${t("tabs.menuModule")}`,
           tabBarIcon: ({ focused, color }) => (
             <TabIcon name="bars" focused={focused} color={color} />
           ),
@@ -240,12 +251,12 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="reservations"
+        name="account"
         options={{
           title: "RentaMóvil",
-          tabBarLabel: t("tabs.reservations"),
+          tabBarLabel: `${t("tabs.account")} - ${t("tabs.accountModule")}`,
           tabBarIcon: ({ focused, color }) => (
-            <TabIcon name="bookmark" focused={focused} color={color} />
+            <TabIcon name="user" focused={focused} color={color} />
           ),
         }}
       />

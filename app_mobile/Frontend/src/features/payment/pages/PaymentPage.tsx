@@ -12,6 +12,7 @@ import { getInsuranceOptions } from "../../insurance/services/insuranceService";
 import BankAccountSelector from "../components/BankAccountSelector";
 import InvoiceCard from "../components/InvoiceCard";
 import ReceiptPicker from "../components/ReceiptPicker";
+import ReceiptDeadlineWarning from "../components/ReceiptDeadlineWarning";
 import VehiclePaymentCard from "../components/VehiclePaymentCard";
 
 import { usePayment } from "../context/PaymentContext";
@@ -42,6 +43,7 @@ export default function PaymentPage() {
   const [receiptFile, setReceiptFile] = useState<PaymentReceiptFile | null>(null);
   const [referenceNumber, setReferenceNumber] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showDeadlineWarning, setShowDeadlineWarning] = useState(false);
 
   const { themeName } = useTheme();
   const colors = themes[themeName];
@@ -60,6 +62,17 @@ export default function PaymentPage() {
       cancelled = true;
     };
   }, []);
+
+  // Verificar si hay 24 horas para enviar el comprobante
+  useEffect(() => {
+    if (createdReservation?.createdAt) {
+      const createdAt = new Date(createdReservation.createdAt);
+      const now = new Date();
+      const diffHours = (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60);
+      // Mostrar advertencia si faltan menos de 4 horas para las 24 horas
+      setShowDeadlineWarning(diffHours > 20 && diffHours < 24);
+    }
+  }, [createdReservation?.createdAt]);
 
   const vehicle = reservation?.vehicle;
 
@@ -99,7 +112,7 @@ export default function PaymentPage() {
 
       Alert.alert(
         "Pago registrado",
-        "Tu pago quedo en revision. Un administrador lo confirmara y la reserva pasara a confirmada.",
+        "Tu pago quedo registrado y esta esperando que un administrador lo confirme.",
       );
 
       console.log("Pago creado:", created);
@@ -157,6 +170,9 @@ export default function PaymentPage() {
       <InvoiceCard />
 
       <BankAccountSelector />
+
+      {/* Mostrar advertencia si falta menos de 4 horas para las 24 horas */}
+      {showDeadlineWarning && <ReceiptDeadlineWarning showWarning={true} />}
 
       <ReceiptPicker receiptFile={receiptFile} onChange={setReceiptFile} />
 

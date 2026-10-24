@@ -594,8 +594,13 @@
   },
   "tabs": {
     "home": "Accueil",
+    "homeModule": "Module",
     "menu": "Menu",
-    "reservations": "Réservations"
+    "menuModule": "Module",
+    "reservations": "Réservations",
+    "reservationsModule": "Module",
+    "account": "Compte",
+    "accountModule": "Module"
   },
   "themes": {
     "light": "Vert clair",

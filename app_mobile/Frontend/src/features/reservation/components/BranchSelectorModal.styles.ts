@@ -25,8 +25,7 @@ export const createStyles = (colors: any) => {
       padding: 24,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-      borderTopWidth: 1,
-      borderColor: colors.cardBorder,
+      borderTopWidth: 0,
       maxHeight: "70%",
     },
 
@@ -74,6 +73,7 @@ export const createStyles = (colors: any) => {
       borderRadius: 12,
       alignItems: "center",
       backgroundColor: colors.input,
+      borderWidth: 0,
     },
 
     closeText: {

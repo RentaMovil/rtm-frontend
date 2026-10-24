@@ -588,8 +588,13 @@
   },
   "tabs": {
     "home": "Home",
+    "homeModule": "Module",
     "menu": "Menu",
-    "reservations": "Reservations"
+    "menuModule": "Module",
+    "reservations": "Reservations",
+    "reservationsModule": "Module",
+    "account": "Account",
+    "accountModule": "Module"
   },
   "themes": {
     "light": "Light green",
