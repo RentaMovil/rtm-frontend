@@ -588,8 +588,13 @@
   },
   "tabs": {
     "home": "Inicio",
+    "homeModule": "Módulo",
     "menu": "Menú",
-    "reservations": "Reservas"
+    "menuModule": "Módulo",
+    "reservations": "Reservas",
+    "reservationsModule": "Módulo",
+    "account": "Cuenta",
+    "accountModule": "Módulo"
   },
   "themes": {
     "light": "Verde claro",
