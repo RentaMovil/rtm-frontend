@@ -7,7 +7,7 @@ import { branchService } from "../../admin/branches/services/branchService";
 import { carsService } from "../../vehicles/Services/carsService";
 import "./AuthShowcase.css";
 
-const APP_DOWNLOAD_URL = "https://github.com/RentaMovil/rtm-frontend/releases/download/v1.0.5/application-19cfacab-b35a-4c91-b9d1-045108996c86.apk";
+const APP_DOWNLOAD_URL = "https://github.com/RentaMovil/rtm-frontend/releases/download/v1.0.13/RentaMovil.apk";
 
 function AuthShowcase() {
   const { t } = useTranslation();
