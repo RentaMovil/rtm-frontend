@@ -31,7 +31,7 @@ export function useReservationsAdmin() {
             // Lo de los demás servicios solo completa la información (nombres, pagos, GPS).
             // Con allSettled, si uno de ellos todavía no existe la pantalla carga igual.
             const optional = await Promise.allSettled([
-                carsService.getAll(),
+                carsService.getAllForAdmin(),
                 branchService.getAll(),
                 insuranceService.getAll(),
                 httpClient.get('/payments'),
