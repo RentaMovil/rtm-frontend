@@ -45,3 +45,20 @@ export async function cancelReservation(id: string): Promise<Reservation | undef
     const raw = await httpClient.post<any>(`${RESOURCE}/${id}/cancel`);
     return toReservationViewModel(raw);
 }
+
+/**
+ * PATCH /reservations/{id}: unico campo modificable de una reserva ya creada
+ * (HU-BOOKING-005). El backend valida el estado (no CANCELLED/COMPLETED) y el
+ * plazo (INV-013: hasta 3 dias antes de end_date); si no se cumple responde
+ * 409/400 con un mensaje de negocio que `httpClient` propaga en `error.message`.
+ */
+export async function updateReturnBranch(
+    id: string,
+    newReturnBranchId: string,
+): Promise<Reservation> {
+    const numericId = Number(newReturnBranchId);
+    const raw = await httpClient.patch<any>(`${RESOURCE}/${id}`, {
+        newReturnBranchId: Number.isFinite(numericId) ? numericId : newReturnBranchId,
+    });
+    return toReservationViewModel(raw);
+}

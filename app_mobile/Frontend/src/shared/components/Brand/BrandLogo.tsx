@@ -19,6 +19,16 @@ type Props = {
    * "volver -> texto -> icono" en vez de "icono -> texto".
    */
   readonly order?: "icon-first" | "text-first";
+
+  /**
+   * Oculta el icono de carro, dejando solo el texto "RentaMóvil".
+   *
+   * Lo usan unicamente `LoginPage`/`RegisterPage`: en esas pantallas el icono
+   * sobra junto al resto del branding. El resto de consumidores (header de
+   * las tabs, verificacion de email, recuperar contraseña) no pasan esta
+   * prop y siguen mostrando el icono como antes.
+   */
+  readonly showIcon?: boolean;
 };
 
 /**
@@ -85,14 +95,20 @@ function BrandIcon({ size, color }: BrandIconProps) {
  *
  * La marca no se traduce: es el nombre comercial.
  */
-export default function BrandLogo({ size = "header", order = "icon-first" }: Props) {
+export default function BrandLogo({
+  size = "header",
+  order = "icon-first",
+  showIcon = true,
+}: Props) {
   const { themeName } = useTheme();
   const colors = themes[themeName];
 
   const isAuth = size === "auth";
   const styles = isAuth ? createAuthStyles(colors) : createStyles(colors);
 
-  const icon = <BrandIcon size={isAuth ? 26 : 20} color={colors.button} />;
+  const icon = showIcon ? (
+    <BrandIcon size={isAuth ? 26 : 20} color={colors.button} />
+  ) : null;
 
   const text = (
     <Text style={[styles.text, { color: colors.text }]}>

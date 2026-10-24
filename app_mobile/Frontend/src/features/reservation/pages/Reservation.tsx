@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
 
 import { useReservation } from "../context/ReservationContext";
 
@@ -65,8 +65,18 @@ export default function ReservationPage() {
   }, []);
 
   const handleChangePickup = () => {
-    // Volver al home para cambiar la sucursal/fecha de recogida.
-    router.push("/");
+    // Volver al home para cambiar la sucursal/fecha de recogida. Vuelve a
+    // empezar la seleccion del vehiculo, asi que se confirma antes de
+    // redirigir: un toque accidental en "Cambiar" no debe sacar al usuario
+    // de esta pantalla sin avisar.
+    Alert.alert(
+      "Cambiar sucursal de recogida",
+      "Para cambiar la sucursal de recogida debes volver al inicio y elegir el vehículo nuevamente. ¿Deseas continuar?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        { text: "Aceptar", onPress: () => router.push("/") },
+      ],
+    );
   };
 
   /**

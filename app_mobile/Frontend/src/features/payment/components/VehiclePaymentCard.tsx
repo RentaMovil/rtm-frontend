@@ -31,7 +31,7 @@ export default function VehiclePaymentCard() {
             <Image
                 source={VEHICLE_IMAGE}
                 style={styles.image}
-                resizeMode="cover"
+                resizeMode="contain"
             />
 
             <View style={styles.content}>

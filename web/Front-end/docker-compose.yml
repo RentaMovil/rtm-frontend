@@ -10,7 +10,7 @@ services:
       # El proxy /api de vite.config.js apunta al gateway por su nombre en la red
       GATEWAY_URL: http://api-gateway:8080
     ports:
-      - "4173:4173"
+      - "127.0.0.1:4173:4173"
     networks: [rentamovil]
     restart: unless-stopped
 
