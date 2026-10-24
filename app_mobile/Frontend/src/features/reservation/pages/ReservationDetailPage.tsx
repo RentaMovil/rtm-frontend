@@ -57,6 +57,24 @@ const statusLabels: Record<string, string> = {
     CANCELLED: "Cancelada",
 };
 
+/**
+ * Estilo del badge de estado, por estado.
+ *
+ * Antes solo distinguia CANCELLED (rojo) del resto (siempre verde/success).
+ * Eso pintaba "Pendiente de pago" y "Pago en revision" -que no son un
+ * resultado positivo, solo estados de transito- con el mismo verde que una
+ * reserva ya CONFIRMED. El verde queda reservado para el unico estado que
+ * realmente es positivo (CONFIRMED); pendientes usan el acento neutro y
+ * COMPLETED el primario, igual que ya distingue `ReservationCard` (historial).
+ */
+const statusBadgeStyleKey: Record<string, "pending" | "confirmed" | "completed" | "cancelled"> = {
+    PENDING_PAYMENT: "pending",
+    PENDING_REVIEW: "pending",
+    CONFIRMED: "confirmed",
+    COMPLETED: "completed",
+    CANCELLED: "cancelled",
+};
+
 export default function ReservationDetailPage() {
     const { id } = useLocalSearchParams();
     const [reservation, setReservation] = useState<Reservation | null>(null);
@@ -215,6 +233,14 @@ export default function ReservationDetailPage() {
         );
     }
 
+    const statusKey = statusBadgeStyleKey[reservation.status] ?? "pending";
+    const statusBadgeVariants = {
+        pending: { badge: styles.statusBadgePending, text: styles.statusTextPending },
+        confirmed: { badge: styles.statusBadgeConfirmed, text: styles.statusTextConfirmed },
+        completed: { badge: styles.statusBadgeCompleted, text: styles.statusTextCompleted },
+        cancelled: { badge: styles.statusBadgeCancelled, text: styles.statusTextCancelled },
+    } as const;
+
     const isActiveStatus = ACTIVE_STATUSES.includes(reservation.status);
 
     // Ventanas de tiempo (ver `Reservation.java`): se replican aqui solo para
@@ -254,8 +280,8 @@ export default function ReservationDetailPage() {
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.title}>Detalle de la reserva</Text>
-                    <View style={[styles.statusBadge, reservation.status === RESERVATION_STATUS.CANCELLED && styles.cancelledBadge]}>
-                        <Text style={[styles.statusText, reservation.status === RESERVATION_STATUS.CANCELLED && styles.cancelledStatusText]}>
+                    <View style={[styles.statusBadge, statusBadgeVariants[statusKey].badge]}>
+                        <Text style={[styles.statusText, statusBadgeVariants[statusKey].text]}>
                             {statusLabels[reservation.status]}
                         </Text>
                     </View>

@@ -1,11 +1,14 @@
 import { StyleSheet } from "react-native";
 
+import { Spacing } from "../../../theme/constants/spacing";
+import { Radius } from "../../../theme/constants/radius";
+
 export function createStyles(colors: any) {
     return StyleSheet.create({
         container: {
             flexGrow: 1,
-            gap: 16,
-            padding: 20,
+            gap: Spacing.lg,
+            padding: Spacing.lg,
             backgroundColor: colors.background,
         },
 
@@ -62,28 +65,35 @@ export function createStyles(colors: any) {
             paddingHorizontal: 10,
             paddingVertical: 6,
             borderRadius: 999,
-            backgroundColor: colors.successSurface,
-        },
-
-        cancelledBadge: {
-            backgroundColor: colors.errorSurface,
         },
 
         statusText: {
             fontSize: 12,
             fontWeight: "700",
-            color: colors.success,
         },
 
-        cancelledStatusText: {
-            color: colors.error,
-        },
+        // El verde (`success`/`successSurface`) se reserva para el unico
+        // estado que realmente es positivo: CONFIRMED. PENDING_* usa el
+        // acento neutro (el mismo tono que el resto de badges/botones de
+        // acento), COMPLETED el primario y CANCELLED el error — igual que ya
+        // distingue `ReservationCard` en el historial.
+        statusBadgePending: { backgroundColor: colors.accentBg },
+        statusTextPending: { color: colors.primaryDark },
+
+        statusBadgeConfirmed: { backgroundColor: colors.successSurface },
+        statusTextConfirmed: { color: colors.success },
+
+        statusBadgeCompleted: { backgroundColor: colors.primarySurface },
+        statusTextCompleted: { color: colors.primary },
+
+        statusBadgeCancelled: { backgroundColor: colors.errorSurface },
+        statusTextCancelled: { color: colors.error },
 
         card: {
-            padding: 18,
+            padding: Spacing.lg,
             borderWidth: 1,
             borderColor: colors.border,
-            borderRadius: 16,
+            borderRadius: Radius.lg,
             backgroundColor: colors.card,
         },
 

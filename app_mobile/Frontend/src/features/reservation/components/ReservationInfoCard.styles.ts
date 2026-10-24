@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 
 import { createTextStyles } from "../../../theme/constants/typography";
+import { Spacing } from "../../../theme/constants/spacing";
 
 /**
  * Datos de la reserva (recogida y devolucion).
@@ -47,8 +48,11 @@ export const createStyles = (colors: any) => {
       opacity: 0.75,
     },
 
+    // Antes 18px, un valor fuera de la escala de `Spacing` que no coincidia
+    // con el resto de tarjetas de este mismo flujo (p. ej. `card` en
+    // `ReservationDetailPage.styles.ts` usa el mismo `Spacing.lg`).
     section: {
-      marginBottom: 18,
+      marginBottom: Spacing.lg,
     },
 
     // Etiqueta pequena en versal, el patron `.overline` del web.

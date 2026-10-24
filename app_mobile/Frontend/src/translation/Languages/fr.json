@@ -114,7 +114,122 @@
     "phone": "Téléphone",
     "submit": "Louer",
     "terms": {
-      "accept": "J'ai lu et j'accepte les termes et conditions"
+      "accept": "J'ai lu et j'accepte les termes et conditions",
+      "viewLink": "Voir le document complet",
+      "requiredHint": "L'acceptation est obligatoire avant de continuer vers le paiement.",
+      "documentLabel": "Réservation de véhicule",
+      "title": "Conditions générales",
+      "version": "Version",
+      "effectiveDateLabel": "En vigueur depuis",
+      "documentEffectiveDate": "24 septembre 2026",
+      "summaryTitle": "Résumé de la réservation",
+      "vehicleLabel": "Véhicule",
+      "pickupLabel": "Prise en charge",
+      "returnLabel": "Restitution",
+      "introduction": "Avant de continuer, consultez les conditions qui s'appliquent à cette réservation. La version en vigueur sera associée à votre acceptation.",
+      "closeAction": "Fermer",
+      "cancelAction": "Annuler",
+      "acceptAction": "Accepter et continuer",
+      "sections": {
+        "objeto": {
+          "title": "1. Objet et acceptation",
+          "paragraphs": [
+            "Les présentes conditions générales régissent l'accès à la plateforme RentaMóvil ainsi que la réservation et la location de véhicules par son intermédiaire. L'acceptation de la case d'autorisation, la date, la version et les données de la réservation sélectionnée constituent une preuve numérique d'acceptation de ce document.",
+            "Le client déclare les avoir lues et comprises intégralement. S'il n'est pas d'accord avec l'une de leurs dispositions, il ne doit pas poursuivre la réservation ni effectuer le paiement."
+          ]
+        },
+        "requisitos": {
+          "title": "2. Exigences relatives au client et au conducteur",
+          "paragraphs": [
+            "Le client déclare avoir l'âge minimum requis par la réglementation applicable, posséder un permis de conduire valide pendant toute la durée de la location, et disposer de l'autorisation et de la capacité nécessaires pour conclure ce contrat.",
+            "Au moment de la remise du véhicule, le client devra présenter les documents d'identité, le permis de conduire et les autres exigences indiquées dans la réservation ou à l'agence. Tout conducteur supplémentaire doit être autorisé au préalable par RentaMóvil. La fourniture d'informations fausses, expirées ou insuffisantes pourra entraîner la suspension ou l'annulation du service, sans préjudice des droits du client."
+          ]
+        },
+        "reserva": {
+          "title": "3. Sélection, disponibilité et prix",
+          "paragraphs": [
+            "La réservation constitue une demande soumise à la vérification de la disponibilité, des données, de la couverture choisie et du paiement. RentaMóvil pourra proposer un véhicule équivalent de la même catégorie si nécessaire, en indiquant la différence de prix éventuelle et en obtenant l'approbation du client lorsque ce changement affecte substantiellement ce qui a été contracté.",
+            "Le total affiché sur la plateforme correspond aux produits, dates, agences, couverture et services sélectionnés. Les taxes incluses sont expressément indiquées sur l'écran de paiement. Les péages, stationnements, amendes, consommations et autres frais de tiers seront payés par le client lorsque la loi ou le service fourni l'exige."
+          ]
+        },
+        "pago": {
+          "title": "4. Paiement, justificatif et activation de la réservation",
+          "paragraphs": [
+            "Le paiement doit être effectué exclusivement par les canaux et comptes bancaires actifs et à jour indiqués sur la plateforme. Le client doit transférer le montant indiqué et enregistrer un justificatif lisible permettant de le relier à la réservation.",
+            "L'envoi du justificatif n'équivaut pas à l'approbation du paiement et ne confirme pas à lui seul la réservation. Le statut reste en attente d'examen jusqu'à ce qu'un administrateur valide le virement. Un paiement rejeté, une référence incorrecte, un écart de montant ou un justificatif illisible n'activeront pas le service. Le justificatif ne doit pas être partagé avec des tiers hors des canaux autorisés."
+          ]
+        },
+        "cambios": {
+          "title": "5. Modifications, annulation et remboursements",
+          "paragraphs": [
+            "Les demandes de modification ou d'annulation doivent être présentées par les canaux officiels avant la date et l'heure de prise en charge. S'appliqueront les conditions, délais, coûts et pénalités expressément indiqués dans l'offre et acceptés par le client lors de la confirmation de la réservation. En l'absence de condition particulière visible, RentaMóvil indiquera le coût applicable avant de traiter la demande.",
+            "Aucun remboursement ne sera accordé pour des services déjà rendus, des frais envers des tiers, des dommages imputables au client ou des cas prévus par la réglementation applicable, sans préjudice des droits non renonçables du consommateur et des règles spécifiques de la couverture choisie."
+          ]
+        },
+        "entrega": {
+          "title": "6. Remise du véhicule",
+          "paragraphs": [
+            "La remise du véhicule s'effectue à l'agence, à la date et sur le créneau horaire confirmés, sous réserve de disponibilité et de la présentation en temps voulu des documents requis. Le client doit recevoir et inspecter le véhicule avant de quitter l'agence.",
+            "La remise comprend une vérification de l'apparence, du kilométrage, du carburant, des accessoires et du fonctionnement de base, dont le résultat est consigné dans le document de remise. Tout dommage, élément manquant ou défaut non consigné doit être signalé avant de démarrer."
+          ]
+        },
+        "deposito": {
+          "title": "7. Dépôt de garantie et paiements à des tiers",
+          "paragraphs": [
+            "Le cas échéant, le client devra constituer un dépôt ou fournir une garantie selon le montant et le mécanisme indiqués dans la réservation ou le contrat de location. Ce dépôt constitue une garantie d'exécution et non un paiement de la réservation, sauf indication expresse contraire.",
+            "Le dépôt sera libéré une fois le véhicule restitué et après vérification de son état, de la documentation, du carburant, du kilométrage et de l'absence d'obligations en cours. En cas de dommages, d'amendes ou d'autres sommes dues, le montant vérifié pourra être déduit, dans le respect des notifications, de la procédure et des droits du client."
+          ]
+        },
+        "uso": {
+          "title": "8. Utilisation autorisée et interdictions",
+          "paragraphs": [
+            "Le véhicule ne peut être utilisé que pour des déplacements licites par le conducteur autorisé. Sont notamment interdits l'utilisation sous l'effet de l'alcool ou de drogues, les courses, compétitions, essais de vitesse, la conduite hors route, la surcharge, l'usage commercial non autorisé, la sous-location, l'abandon du véhicule, le retrait ou la manipulation du dispositif GPS, ainsi que toute activité illicite.",
+            "Le conducteur doit respecter le code de la route, la signalisation, les restrictions de circulation et les ordres légitimes de l'autorité. Le client sera responsable des conséquences d'une utilisation inappropriée, sans préjudice des couvertures contractées."
+          ]
+        },
+        "responsabilidad": {
+          "title": "9. Responsabilité, incidents et assurances",
+          "paragraphs": [
+            "Le client doit conduire prudemment et informer immédiatement RentaMóvil, l'autorité compétente et, le cas échéant, son assureur de tout accident, vol, dommage ou incident. Il ne doit effectuer aucune réparation ni déplacer le véhicule sans autorisation, sauf mesure urgente visant à éviter un dommage plus important.",
+            "Le client sera responsable des amendes, péages, stationnements, dommages et pertes envers des tiers dans la proportion qui lui incombe légalement. La couverture d'assurance choisie s'applique uniquement dans la limite de sa portée, de ses plafonds et de sa franchise ; elle ne remplace pas les responsabilités non couvertes. Le résumé de la couverture sélectionnée fait partie de la réservation."
+          ]
+        },
+        "devolucion": {
+          "title": "10. Restitution et prolongation",
+          "paragraphs": [
+            "Le véhicule doit être restitué à l'agence, à la date et à l'heure indiquées, avec le même niveau de carburant, kilométrage, accessoires, documents et état de qualité, sous réserve de l'usure ordinaire admise. La restitution sera documentée au moyen d'une inspection et d'un procès-verbal de remise.",
+            "Toute prolongation doit être demandée avant l'heure de restitution et est soumise à disponibilité et au tarif en vigueur. Un retard dans la restitution ne produit pas de prolongation automatique. Une restitution tardive ou effectuée hors de l'agence convenue peut entraîner des frais supplémentaires et, le cas échéant, l'application de la garantie."
+          ]
+        },
+        "disponibilidad": {
+          "title": "11. Disponibilité et cas de force majeure",
+          "paragraphs": [
+            "RentaMóvil pourra modifier ou annuler une réservation pour des raisons de sécurité, de maintenance, de manque de disponibilité ou pour toute autre cause justifiée, en en informant le client. Dans ce cas, le remboursement des montants correspondant aux services non rendus sera géré conformément à la loi et à ce qui a déjà été consommé par le client.",
+            "Les cas de force majeure, troubles, restrictions de circulation, urgences ou autres circonstances échappant à un contrôle raisonnable peuvent modifier les dates, itinéraires ou conditions. Le client devra utiliser les canaux officiels pour recevoir les instructions et options."
+          ]
+        },
+        "datos": {
+          "title": "12. Données personnelles et communications",
+          "paragraphs": [
+            "Les données fournies seront utilisées pour gérer la réservation, vérifier le paiement, fournir une assistance, respecter les obligations légales, prévenir la fraude et maintenir la sécurité de la plateforme. Le traitement sera effectué conformément à la réglementation sur la protection des données et aux avis de confidentialité et finalités que RentaMóvil communiquera au client.",
+            "Les communications opérationnelles — par exemple, rappels, statut de paiement et instructions de remise — pourront être effectuées via les canaux enregistrés. L'utilisation commerciale des données ou les communications marketing nécessitent l'autorisation distincte exigée par la loi."
+          ]
+        },
+        "derechos": {
+          "title": "13. Propriété intellectuelle et limites de responsabilité",
+          "paragraphs": [
+            "La plateforme, sa conception, ses textes, logos, photographies et autres composants sont utilisés exclusivement pour faciliter le service. Le client ne pourra les reproduire, les modifier ni les exploiter commercialement sans autorisation préalable.",
+            "Dans la mesure permise par la loi, RentaMóvil n'est pas responsable des dommages indirects ou du manque à gagner découlant de l'utilisation de la plateforme. Cette limitation n'exclut pas les responsabilités qui ne peuvent être exclues, ni les droits du consommateur. Le client doit utiliser le service de manière licite et responsable."
+          ]
+        },
+        "vigencia": {
+          "title": "14. Validité, loi applicable et contact",
+          "paragraphs": [
+            "Cette version s'applique aux réservations initiées à compter de sa publication. Les modifications seront publiées avec une nouvelle version et une nouvelle date ; la version acceptée par chaque client sera conservée avec la preuve d'acceptation. Les modifications affectant des droits acquis ne seront pas appliquées à une réservation déjà acceptée sans autorisation expresse ou fondement légal.",
+            "La relation est régie par la législation colombienne. Tout litige sera résolu par les mécanismes de règlement applicables et par les juridictions compétentes, sans préjudice des règles de protection des consommateurs. Pour toute question, le client peut utiliser les canaux officiels publiés sur la plateforme ou se rendre à l'agence liée à la réservation."
+          ]
+        }
+      }
     }
   },
   "login": {
