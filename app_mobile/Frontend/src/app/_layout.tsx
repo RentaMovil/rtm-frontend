@@ -44,6 +44,8 @@ import { AuthProvider, useAuth } from "../features/auth/context/AuthContext";
 
 import { NotificationProvider } from "../features/notification/context/NotificationContext";
 
+import { PushNotificationProvider } from "../shared/push/PushNotificationProvider";
+
 import { PaymentProvider } from "../features/payment/context/PaymentContext";
 
 import UpdateBanner from "../shared/components/UpdateBanner/UpdateBanner";
@@ -103,6 +105,7 @@ export default function RootLayout() {
 
                 <NotificationProvider>
 
+                <PushNotificationProvider>
                 <ReservationProvider>
 
                     <PaymentProvider>
@@ -112,6 +115,7 @@ export default function RootLayout() {
                     </PaymentProvider>
 
                 </ReservationProvider>
+                </PushNotificationProvider>
 
                 </NotificationProvider>
 
