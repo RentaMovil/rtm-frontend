@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 
+import { VEHICLE_IMAGE_ASPECT_RATIO } from "../../../config/assets";
 import { createTextStyles } from "../../../theme/constants/typography";
 
 export const createStyles = (colors: any) => {
@@ -7,9 +8,12 @@ export const createStyles = (colors: any) => {
   const text = createTextStyles(colors);
 
   return StyleSheet.create({
+    // Antes: `height: 180` fijo + `resizeMode="cover"` en el `<Image>`. La
+    // imagen real es ~2.09:1, asi que esa caja recortaba los lados del
+    // auto. Con `aspectRatio` el alto se ajusta a la proporcion real.
     image: {
       width: "100%",
-      height: 180,
+      aspectRatio: VEHICLE_IMAGE_ASPECT_RATIO,
       borderRadius: 16,
       backgroundColor: colors.input,
     },

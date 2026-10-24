@@ -112,7 +112,7 @@ export default function LoginPage() {
         contentContainerStyle={styles.scroll}
         keyboardShouldPersistTaps="handled"
       >
-        <BrandLogo size="auth" />
+        <BrandLogo size="auth" showIcon={false} />
 
         <Text style={styles.title}>{t("loginForm.Title")}</Text>
 
