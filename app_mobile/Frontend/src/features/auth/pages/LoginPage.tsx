@@ -63,6 +63,37 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Campos tocados (al menos un onBlur): hasta entonces no se muestra el
+  // error individual, igual que en RegisterPage.
+  const [touched, setTouched] = useState({
+    email: false,
+    password: false,
+  });
+
+  function markTouched(field: "email" | "password") {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+  }
+
+  /**
+   * Validacion en tiempo real, mismo patron que RegisterPage: el error
+   * aparece tras el primer onBlur del campo y se recalcula en cada tecla
+   * hasta quedar valido. La contrasena solo se exige no vacia: el resto
+   * (credenciales) lo decide el server al intentar entrar.
+   */
+  function errorFor(field: "email" | "password"): string | null {
+    const value = field === "email" ? email : password;
+
+    if (!value.trim()) {
+      return t("common.required");
+    }
+
+    if (field === "email" && !/^\S+@\S+\.\S+$/.test(value.trim())) {
+      return t("loginForm.emailInvalid");
+    }
+
+    return null;
+  }
+
   /**
    * Tras entrar no se navega aqui: `isAuthenticated` cambia en
    * `AuthContext`, y el guard de `app/_layout.tsx` es quien lleva al menu.
@@ -76,6 +107,8 @@ export default function LoginPage() {
 
     if (!email.trim() || !password) {
       setError(t("loginForm.errorFields"));
+      // Ademas del resumen, cada campo muestra su propio error.
+      setTouched({ email: true, password: true });
       return;
     }
 
@@ -126,11 +159,16 @@ export default function LoginPage() {
               placeholderTextColor={colors.secondaryText}
               value={email}
               onChangeText={setEmail}
+              onBlur={() => markTouched("email")}
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="email-address"
               style={[styles.input, styles.inputWeb]}
             />
+
+            {touched.email && errorFor("email") ? (
+              <Text style={styles.fieldError}>{errorFor("email")}</Text>
+            ) : null}
           </View>
 
           <View>
@@ -143,6 +181,7 @@ export default function LoginPage() {
                 secureTextEntry={!showPassword}
                 value={password}
                 onChangeText={setPassword}
+                onBlur={() => markTouched("password")}
                 style={[styles.input, styles.inputWeb, styles.inputPassword]}
               />
 
@@ -164,6 +203,10 @@ export default function LoginPage() {
                 />
               </TouchableOpacity>
             </View>
+
+            {touched.password && errorFor("password") ? (
+              <Text style={styles.fieldError}>{errorFor("password")}</Text>
+            ) : null}
           </View>
 
           {error ? <Text style={styles.error}>{error}</Text> : null}

@@ -275,8 +275,7 @@
     "phoneInvalid": "Teléfono inválido (10 dígitos)",
     "passwordShort": "La contraseña debe tener al menos 6 caracteres",
     "passwordMatch": "Las contraseñas no coinciden",
-    "errorCreate": "Error al crear la cuenta",
-    "required": "Este campo es obligatorio"
+    "errorCreate": "Error al crear la cuenta"
   },
   "quotes": {
     "quote1": "Confía en tu viaje. Confía en Rentamovil.",
@@ -629,7 +628,8 @@
   "common": {
     "error": "Error",
     "accept": "Aceptar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "required": "Este campo es obligatorio"
   },
   "reservationDetail": {
     "notFound": "No se encontró la reserva.",

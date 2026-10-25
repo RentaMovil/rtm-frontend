@@ -53,6 +53,56 @@ export default function ChangePasswordPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  // Campos tocados (al menos un onBlur): hasta entonces no se muestra el
+  // error individual, igual que en RegisterPage y LoginPage.
+  const [touched, setTouched] = useState({
+    currentPassword: false,
+    newPassword: false,
+    confirmPassword: false,
+  });
+
+  function markTouched(
+    field: "currentPassword" | "newPassword" | "confirmPassword",
+  ) {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+  }
+
+  /**
+   * Validacion en tiempo real, mismo patron que RegisterPage/LoginPage.
+   *
+   * En `newPassword` no se repite el largo ni el formato: la lista de
+   * `buildPasswordRules` justo debajo ya pinta ese estado en cada tecla.
+   * Aqui solo se añade lo que esa lista no cubre (que no sea igual a la
+   * actual) y los errores de las otras dos cajas.
+   */
+  function errorFor(
+    field: "currentPassword" | "newPassword" | "confirmPassword",
+  ): string | null {
+    const value =
+      field === "currentPassword"
+        ? currentPassword
+        : field === "newPassword"
+          ? newPassword
+          : confirmPassword;
+
+    if (field === "newPassword") {
+      if (currentPassword && value === currentPassword) {
+        return t("changePassword.samePassword");
+      }
+      return null;
+    }
+
+    if (!value) {
+      return t("common.required");
+    }
+
+    if (field === "confirmPassword" && value !== newPassword) {
+      return t("changePassword.invalid");
+    }
+
+    return null;
+  }
+
   const { themeName } = useTheme();
   const colors = themes[themeName];
   const styles = createStyles(colors);
@@ -95,6 +145,12 @@ export default function ChangePasswordPage() {
 
     if (problem) {
       setError(problem);
+      // Ademas del resumen, cada campo muestra su propio error.
+      setTouched({
+        currentPassword: true,
+        newPassword: true,
+        confirmPassword: true,
+      });
       return;
     }
 
@@ -166,6 +222,7 @@ export default function ChangePasswordPage() {
                   style={[styles.input, styles.inputPassword]}
                   value={currentPassword}
                   onChangeText={setCurrentPassword}
+                  onBlur={() => markTouched("currentPassword")}
                   secureTextEntry={!showPassword}
                   autoCapitalize="none"
                   placeholder={t("loginForm.passwordPlaceholder")}
@@ -191,12 +248,19 @@ export default function ChangePasswordPage() {
                 </TouchableOpacity>
               </View>
 
+              {touched.currentPassword && errorFor("currentPassword") ? (
+                <Text style={styles.fieldError}>
+                  {errorFor("currentPassword")}
+                </Text>
+              ) : null}
+
               <Text style={styles.label}>{t("changePassword.newPassword")}</Text>
               <View style={styles.passwordField}>
                 <TextInput
                   style={[styles.input, styles.inputPassword]}
                   value={newPassword}
                   onChangeText={setNewPassword}
+                  onBlur={() => markTouched("newPassword")}
                   secureTextEntry={!showPassword}
                   autoCapitalize="none"
                   placeholder={t("loginForm.passwordPlaceholder")}
@@ -233,12 +297,19 @@ export default function ChangePasswordPage() {
                 ))}
               </View>
 
+              {touched.newPassword && errorFor("newPassword") ? (
+                <Text style={styles.fieldError}>
+                  {errorFor("newPassword")}
+                </Text>
+              ) : null}
+
               <Text style={styles.label}>{t("changePassword.confirmPassword")}</Text>
               <View style={styles.passwordField}>
                 <TextInput
                   style={[styles.input, styles.inputPassword]}
                   value={confirmPassword}
                   onChangeText={setConfirmPassword}
+                  onBlur={() => markTouched("confirmPassword")}
                   secureTextEntry={!showPassword}
                   autoCapitalize="none"
                   placeholder={t("loginForm.passwordPlaceholder")}
@@ -263,6 +334,12 @@ export default function ChangePasswordPage() {
                   />
                 </TouchableOpacity>
               </View>
+
+              {touched.confirmPassword && errorFor("confirmPassword") ? (
+                <Text style={styles.fieldError}>
+                  {errorFor("confirmPassword")}
+                </Text>
+              ) : null}
 
               {error ? <Text style={styles.error}>{error}</Text> : null}
 
@@ -406,6 +483,14 @@ const createStyles = (colors: any) =>
     error: {
       color: colors.error,
       fontSize: 14,
+      marginBottom: 12,
+    },
+
+    /** Error de validacion bajo un campo concreto (validacion en tiempo real). */
+    fieldError: {
+      color: colors.error,
+      fontSize: 12,
+      marginTop: -8,
       marginBottom: 12,
     },
 

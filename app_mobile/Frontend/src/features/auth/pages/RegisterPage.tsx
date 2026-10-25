@@ -114,23 +114,23 @@ export default function RegisterPage() {
 
     switch (name) {
       case "email":
-        if (!value.trim()) return t("register.required");
+        if (!value.trim()) return t("common.required");
         return /^\S+@\S+\.\S+$/.test(value.trim())
           ? null
           : t("register.emailInvalid");
       case "phone":
-        if (!value.trim()) return t("register.required");
+        if (!value.trim()) return t("common.required");
         return /^\d{10}$/.test(value.trim())
           ? null
           : t("register.phoneInvalid");
       case "password":
-        if (!value) return t("register.required");
+        if (!value) return t("common.required");
         return value.length >= 6 ? null : t("register.passwordShort");
       case "confirmPassword":
-        if (!value) return t("register.required");
+        if (!value) return t("common.required");
         return value === fields.password ? null : t("register.passwordMatch");
       default:
-        return value.trim() ? null : t("register.required");
+        return value.trim() ? null : t("common.required");
     }
   }
 
