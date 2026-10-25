@@ -88,11 +88,15 @@ export default function HomePage() {
     });
 
     // Sucursal elegida en el buscador: por branchId si la API lo dio, y por
-    // nombre como respaldo (no todos los vehiculos traen branchId).
+    // nombre como respaldo (no todos los vehiculos traen branchId). El
+    // nombre se compara sin distinguir mayusculas ni espacios, porque el
+    // campo permite escribirlo a mano y "Aeropuerto Norte " debia encontrar
+    // lo mismo que la opcion elegida de las sugerencias.
+    const branchName = currentSearchData.branch.name.trim().toLowerCase();
     const byBranch = byGenericFilters.filter((vehicle) =>
       vehicle.branchId
         ? vehicle.branchId === currentSearchData.branch.id
-        : vehicle.location === currentSearchData.branch.name,
+        : vehicle.location?.trim().toLowerCase() === branchName,
     );
 
     // Un vehiculo puede estar AVAILABLE y aun asi tener otra reserva que se
