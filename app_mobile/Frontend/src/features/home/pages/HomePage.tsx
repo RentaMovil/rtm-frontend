@@ -20,15 +20,16 @@ import VehicleCard from "../components/VehicleCard";
 
 import { Vehicle } from "../../../types/vehicle";
 import { useReservation } from "../../reservation/context/ReservationContext";
+import { useTranslation } from "react-i18next";
 
 export default function HomePage() {
+  const { t } = useTranslation();
+
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [searchData, setSearchData] = useState<SearchData | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const hasSearched = searchData !==null;
-  const [emptyMessage, setEmptyMessage] = useState(
-    "Primero debe realizar una búsqueda."
-  );
+  const [emptyMessage, setEmptyMessage] = useState(t("home.searchFirst"));
 
   const [filters, setFilters] = useState<Filters>({
     brand: "",
@@ -76,7 +77,7 @@ export default function HomePage() {
   const runSearch = async (currentSearchData: SearchData | null, currentFilters: Filters) => {
     if (!currentSearchData) {
       setVehicles([]);
-      setEmptyMessage("Primero debe realizar una búsqueda.");
+      setEmptyMessage(t("home.searchFirst"));
       return;
     }
 
@@ -122,7 +123,7 @@ export default function HomePage() {
     setVehicles(filteredVehicles);
 
     if (filteredVehicles.length === 0) {
-      setEmptyMessage("No hay vehículos disponibles para los filtros seleccionados.");
+      setEmptyMessage(t("home.noResults"));
     } else {
       setEmptyMessage("");
     }
@@ -159,7 +160,7 @@ export default function HomePage() {
     setVehicles([]);
     setShowFilters(true);
 
-    setEmptyMessage("Primero debe realizar una búsqueda.");
+    setEmptyMessage(t("home.searchFirst"));
   };
 
   const handleContinue = (vehicle: Vehicle) => {

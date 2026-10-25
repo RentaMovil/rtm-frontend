@@ -65,7 +65,9 @@
     "branch": "Branch",
     "deliveryLocationPlaceholder": "Select a branch",
     "noBranchResults": "No branch matches your search",
-    "search": "Search"
+    "search": "Search",
+    "endDateBeforeStart": "The return date cannot be earlier than the pickup date.",
+    "invalidBranch": "Select a valid branch."
   },
   "cartVehicule": {
     "capacity": "Passengers",
@@ -224,7 +226,10 @@
           ]
         }
       }
-    }
+    },
+    "changePickupTitle": "Change pickup branch",
+    "changePickupMessage": "To change the pickup branch you must go back to the home screen and choose the vehicle again. Do you want to continue?",
+    "createErrorMessage": "Could not create the reservation. Please try again."
   },
   "login": {
     "createAccount": "Create account",
@@ -584,7 +589,9 @@
     "sure": "Are you sure you want to cancel the reservation for",
     "yes": "Yes, cancel",
     "no": "No",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "loadErrorTitle": "Error loading reservations",
+    "loadErrorMessage": "Your reservations could not be loaded. Check your connection and try again."
   },
   "tabs": {
     "home": "Home",
@@ -601,5 +608,39 @@
     "dark": "Dark",
     "darkPurple": "Midnight",
     "skylight": "Light blue"
+  },
+  "home": {
+    "searchFirst": "Please run a search first.",
+    "noResults": "No vehicles are available for the selected filters."
+  },
+  "errors": {
+    "unexpected": "An unexpected error occurred.",
+    "network": "Could not connect to the API at {{url}}. Make sure it is running."
+  },
+  "account": {
+    "saveProfileError": "Could not save the profile.",
+    "emailRequired": "The new email is required.",
+    "emailInvalid": "Enter a valid email.",
+    "emailDifferent": "The new email must be different from the current one.",
+    "emailPasswordRequired": "Enter your current password to confirm the change.",
+    "changeEmailError": "Could not change the email."
+  },
+  "common": {
+    "error": "Error",
+    "accept": "Accept",
+    "cancel": "Cancel"
+  },
+  "reservationDetail": {
+    "notFound": "The reservation was not found.",
+    "cancelledTitle": "Reservation cancelled",
+    "cancelledMessage": "Your reservation has been cancelled successfully.",
+    "cancelErrorTitle": "Could not cancel the reservation",
+    "cancelErrorMessage": "The reservation could not be cancelled. Check your connection and try again.",
+    "returnBranchErrorTitle": "Could not change the branch",
+    "returnBranchErrorMessage": "The return branch could not be updated. Check your connection and try again."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "goHome": "Go to the home screen"
   }
 }

@@ -1,5 +1,6 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
     ActivityIndicator,
     Alert,
@@ -77,6 +78,7 @@ const statusBadgeStyleKey: Record<string, "pending" | "confirmed" | "completed" 
 
 export default function ReservationDetailPage() {
     const { id } = useLocalSearchParams();
+    const { t } = useTranslation();
     const [reservation, setReservation] = useState<Reservation | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -140,7 +142,7 @@ export default function ReservationDetailPage() {
                 const data = await getReservationById(String(id));
                 setReservation(data ?? null);
             } catch (error) {
-                console.log("Error cargando reserva:", error);
+                console.error("Error cargando reserva:", error);
             } finally {
                 setLoading(false);
             }
@@ -159,7 +161,7 @@ export default function ReservationDetailPage() {
             const updatedReservation = await cancelReservation(reservation.id);
 
             if (!updatedReservation) {
-                Alert.alert("Error", "No se encontró la reserva.");
+            Alert.alert(t("common.error"), t("reservationDetail.notFound"));
                 return;
             }
 
@@ -167,14 +169,14 @@ export default function ReservationDetailPage() {
             // del backend: nunca se marca como cancelada de forma optimista.
             setReservation(updatedReservation);
             setIsCancelModalVisible(false);
-            Alert.alert("Reserva cancelada", "Tu reserva ha sido cancelada correctamente.");
+            Alert.alert(t("reservationDetail.cancelledTitle"), t("reservationDetail.cancelledMessage"));
         } catch (error) {
-            console.log("Error cancelando reserva:", error);
+            console.error("Error cancelando reserva:", error);
             const message =
                 error instanceof ApiError
                     ? error.message
-                    : "No fue posible cancelar la reserva. Verifica tu conexión e inténtalo de nuevo.";
-            Alert.alert("No se pudo cancelar", message);
+                    : t("reservationDetail.cancelErrorMessage");
+            Alert.alert(t("reservationDetail.cancelErrorTitle"), message);
         } finally {
             setIsCancelling(false);
             cancelInFlightRef.current = false;
@@ -200,12 +202,12 @@ export default function ReservationDetailPage() {
             setReservation(updated);
             setIsReturnBranchModalVisible(false);
         } catch (error) {
-            console.log("Error actualizando sucursal de devolución:", error);
+            console.error("Error actualizando sucursal de devolución:", error);
             const message =
                 error instanceof ApiError
                     ? error.message
-                    : "No fue posible actualizar la sucursal de devolución. Verifica tu conexión e inténtalo de nuevo.";
-            Alert.alert("No se pudo cambiar la sucursal", message);
+                    : t("reservationDetail.returnBranchErrorMessage");
+            Alert.alert(t("reservationDetail.returnBranchErrorTitle"), message);
         } finally {
             setIsUpdatingReturnBranch(false);
             returnBranchInFlightRef.current = false;

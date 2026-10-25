@@ -65,7 +65,9 @@
     "branch": "Sucursal",
     "deliveryLocationPlaceholder": "Selecciona una sucursal",
     "noBranchResults": "Ninguna sucursal coincide con la búsqueda",
-    "search": "Buscar"
+    "search": "Buscar",
+    "endDateBeforeStart": "La fecha de devolución no puede ser menor.",
+    "invalidBranch": "Selecciona una sucursal válida."
   },
   "cartVehicule": {
     "capacity": "Pasajeros",
@@ -224,7 +226,10 @@
           ]
         }
       }
-    }
+    },
+    "changePickupTitle": "Cambiar sucursal de recogida",
+    "changePickupMessage": "Para cambiar la sucursal de recogida debes volver al inicio y elegir el vehículo nuevamente. ¿Deseas continuar?",
+    "createErrorMessage": "No se pudo crear la reserva. Intenta de nuevo."
   },
   "login": {
     "createAccount": "Crear cuenta",
@@ -584,7 +589,9 @@
     "sure": "¿Seguro que deseas cancelar la reserva de",
     "yes": "Sí, cancelar",
     "no": "No",
-    "confirm": "Confirmar"
+    "confirm": "Confirmar",
+    "loadErrorTitle": "Error cargando reservas",
+    "loadErrorMessage": "No se pudieron cargar tus reservas. Verifica tu conexión e inténtalo de nuevo."
   },
   "tabs": {
     "home": "Inicio",
@@ -601,5 +608,39 @@
     "dark": "Oscuro",
     "darkPurple": "Noche",
     "skylight": "Azul claro"
+  },
+  "home": {
+    "searchFirst": "Primero debe realizar una búsqueda.",
+    "noResults": "No hay vehículos disponibles para los filtros seleccionados."
+  },
+  "errors": {
+    "unexpected": "Ocurrió un error inesperado.",
+    "network": "No se pudo conectar con la API en {{url}}. Verifica que esté corriendo."
+  },
+  "account": {
+    "saveProfileError": "No se pudo guardar el perfil.",
+    "emailRequired": "El correo nuevo es obligatorio.",
+    "emailInvalid": "Ingresa un correo válido.",
+    "emailDifferent": "El correo nuevo debe ser distinto al actual.",
+    "emailPasswordRequired": "Ingresa tu contraseña actual para confirmar el cambio.",
+    "changeEmailError": "No se pudo cambiar el correo."
+  },
+  "common": {
+    "error": "Error",
+    "accept": "Aceptar",
+    "cancel": "Cancelar"
+  },
+  "reservationDetail": {
+    "notFound": "No se encontró la reserva.",
+    "cancelledTitle": "Reserva cancelada",
+    "cancelledMessage": "Tu reserva ha sido cancelada correctamente.",
+    "cancelErrorTitle": "No se pudo cancelar",
+    "cancelErrorMessage": "No fue posible cancelar la reserva. Verifica tu conexión e inténtalo de nuevo.",
+    "returnBranchErrorTitle": "No se pudo cambiar la sucursal",
+    "returnBranchErrorMessage": "No fue posible actualizar la sucursal de devolución. Verifica tu conexión e inténtalo de nuevo."
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "goHome": "Ir al inicio"
   }
 }

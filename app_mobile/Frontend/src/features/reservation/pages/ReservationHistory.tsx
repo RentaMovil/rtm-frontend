@@ -1,4 +1,5 @@
 import {
+    Alert,
     ScrollView,
     Text,
     TouchableOpacity,
@@ -9,6 +10,8 @@ import {
     useEffect,
     useState,
 } from "react";
+
+import { useTranslation } from "react-i18next";
 
 import {
     router,
@@ -45,6 +48,8 @@ import {
 
 
 export default function ReservationHistoryScreen() {
+
+    const { t } = useTranslation();
 
     const { user } = useAuth();
 
@@ -113,9 +118,14 @@ export default function ReservationHistoryScreen() {
 
             } catch (error) {
 
-                console.log(
+                console.error(
                     "Error cargando reservas:",
                     error
+                );
+
+                Alert.alert(
+                    t("historyReservation.loadErrorTitle"),
+                    t("historyReservation.loadErrorMessage"),
                 );
 
             } finally {

@@ -56,11 +56,6 @@
     "branch": "Succursale",
     "deliveryLocationPlaceholder": "Choisissez une succursale",
     "noBranchResults": "Aucune succursale ne correspond à la recherche",
-    "branch1": "Bogotá - Centre",
-    "branch2": "Bogotá - Nord",
-    "branch3": "Medellín - El Poblado",
-    "branch4": "Cali - Sud",
-    "branch5": "Barranquilla - Centre",
     "errorDate": "La date de retour ne peut pas être antérieure à la date de prise en charge",
     "errorBranch": "Agence invalide",
     "errorHour": "Heure invalide (8:00 - 18:00)",
@@ -70,14 +65,15 @@
     "deliveryHour": "Heure de prise en charge",
     "returnDate": "Date de retour",
     "returnHour": "Heure de retour",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "endDateBeforeStart": "La date de retour ne peut pas être antérieure à la date de prise en charge.",
+    "invalidBranch": "Sélectionnez une agence valide."
   },
   "cartVehicule": {
     "capacity": "Passagers",
     "year": "Année",
     "gasoline": "Essence",
     "doors": "Portes",
-    "driving": "⚙️ Manuelle",
     "kmLimit": "∞ Km limite",
     "location": "📍 Aéroport, Bogotá",
     "cancellation": "Annulation gratuite",
@@ -230,7 +226,10 @@
           ]
         }
       }
-    }
+    },
+    "changePickupTitle": "Changer l'agence de prise en charge",
+    "changePickupMessage": "Pour changer l'agence de prise en charge, vous devez revenir à l'accueil et choisir le véhicule à nouveau. Voulez-vous continuer ?",
+    "createErrorMessage": "Impossible de créer la réservation. Veuillez réessayer."
   },
   "login": {
     "createAccount": "Créer un compte",
@@ -590,7 +589,9 @@
     "sure": "Êtes-vous sûr de vouloir annuler la réservation de",
     "yes": "Oui, annuler",
     "no": "Non",
-    "confirm": "Confirmer"
+    "confirm": "Confirmer",
+    "loadErrorTitle": "Erreur lors du chargement des réservations",
+    "loadErrorMessage": "Vos réservations n'ont pas pu être chargées. Vérifiez votre connexion et réessayez."
   },
   "tabs": {
     "home": "Accueil",
@@ -607,5 +608,39 @@
     "dark": "Sombre",
     "darkPurple": "Nuit",
     "skylight": "Bleu clair"
+  },
+  "home": {
+    "searchFirst": "Commencez par une recherche.",
+    "noResults": "Aucun véhicule disponible pour les filtres sélectionnés."
+  },
+  "errors": {
+    "unexpected": "Une erreur inattendue s'est produite.",
+    "network": "Impossible de se connecter à l'API sur {{url}}. Vérifiez qu'elle est en cours d'exécution."
+  },
+  "account": {
+    "saveProfileError": "Impossible d'enregistrer le profil.",
+    "emailRequired": "Le nouvel e-mail est obligatoire.",
+    "emailInvalid": "Saisissez un e-mail valide.",
+    "emailDifferent": "Le nouvel e-mail doit être différent de l'actuel.",
+    "emailPasswordRequired": "Saisissez votre mot de passe actuel pour confirmer le changement.",
+    "changeEmailError": "Impossible de changer l'e-mail."
+  },
+  "common": {
+    "error": "Erreur",
+    "accept": "Accepter",
+    "cancel": "Annuler"
+  },
+  "reservationDetail": {
+    "notFound": "Réservation introuvable.",
+    "cancelledTitle": "Réservation annulée",
+    "cancelledMessage": "Votre réservation a été annulée avec succès.",
+    "cancelErrorTitle": "Impossible d'annuler la réservation",
+    "cancelErrorMessage": "La réservation n'a pas pu être annulée. Vérifiez votre connexion et réessayez.",
+    "returnBranchErrorTitle": "Impossible de changer l'agence",
+    "returnBranchErrorMessage": "L'agence de retour n'a pas pu être mise à jour. Vérifiez votre connexion et réessayez."
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "goHome": "Aller à l'accueil"
   }
 }

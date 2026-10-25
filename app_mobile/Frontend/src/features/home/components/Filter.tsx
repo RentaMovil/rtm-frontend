@@ -60,7 +60,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 
     useEffect(() => {
         setErrorDate(
-        endDate < startDate ? "La fecha de devolución no puede ser menor." : ""
+        endDate < startDate ? t("filterCalendar.endDateBeforeStart") : ""
         );
     }, [startDate, endDate]);
 
@@ -124,7 +124,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 
     const handleSubmit = () => {
         if (!selectedBranch) {
-        setErrorBranch("Selecciona una sucursal válida.");
+        setErrorBranch(t("filterCalendar.invalidBranch"));
         return;
         }
 

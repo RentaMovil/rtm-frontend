@@ -18,6 +18,7 @@ import BrandLogo from "../../../shared/components/Brand/BrandLogo";
 import { useAuth } from "../hooks/useAuth";
 import { ApiError } from "../../../shared/api/httpClient";
 import { API_URL } from "../../../config/env";
+import i18n from "../../../translation/i18n";
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
@@ -40,10 +41,10 @@ function readableError(error: unknown): string {
   const message = error instanceof Error ? error.message : "";
 
   if (message.includes("Network request failed")) {
-    return `No se pudo conectar con la API en ${API_URL}. Verifica que este corriendo.`;
+    return i18n.t("errors.network", { url: API_URL });
   }
 
-  return message || "Ocurrio un error inesperado.";
+  return message || i18n.t("errors.unexpected");
 }
 
 export default function LoginPage() {

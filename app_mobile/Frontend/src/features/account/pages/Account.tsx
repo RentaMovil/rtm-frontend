@@ -1,5 +1,6 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import * as ImagePicker from "expo-image-picker";
 
@@ -32,6 +33,8 @@ const defaultUser =
 
 
 export default function Account() {
+
+    const { t } = useTranslation();
 
     const router = useRouter();
 
@@ -183,7 +186,7 @@ export default function Account() {
             setEditing(false);
         } catch (err) {
             setSaveError(
-                err instanceof Error ? err.message : "No se pudo guardar el perfil.",
+                err instanceof Error ? err.message : t("account.saveProfileError"),
             );
         } finally {
             setIsSaving(false);
@@ -220,19 +223,19 @@ export default function Account() {
 
     function validateNewEmail(correo: string): string | null {
         if (!correo) {
-            return "El correo nuevo es obligatorio.";
+            return t("account.emailRequired");
         }
 
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
-            return "Ingresa un correo válido.";
+            return t("account.emailInvalid");
         }
 
         if (correo.toLowerCase() === (user?.email ?? "").toLowerCase()) {
-            return "El correo nuevo debe ser distinto al actual.";
+            return t("account.emailDifferent");
         }
 
         if (!emailPassword) {
-            return "Ingresa tu contraseña actual para confirmar el cambio.";
+            return t("account.emailPasswordRequired");
         }
 
         return null;
@@ -265,7 +268,7 @@ export default function Account() {
             setEmailError(
                 err instanceof ApiError || err instanceof Error
                     ? err.message
-                    : "No se pudo cambiar el correo.",
+                    : t("account.changeEmailError"),
             );
         } finally {
             setIsChangingEmail(false);
