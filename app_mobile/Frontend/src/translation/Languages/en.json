@@ -275,7 +275,8 @@
     "phoneInvalid": "Invalid phone number (10 digits)",
     "passwordShort": "Password must be at least 6 characters",
     "passwordMatch": "Passwords do not match",
-    "errorCreate": "Error creating account"
+    "errorCreate": "Error creating account",
+    "required": "This field is required"
   },
   "quotes": {
     "quote1": "Trust your journey. Trust Rentamovil.",

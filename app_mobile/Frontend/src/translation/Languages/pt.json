@@ -275,7 +275,8 @@
     "phoneInvalid": "Telefone inválido (10 dígitos)",
     "passwordShort": "A senha deve ter pelo menos 6 caracteres",
     "passwordMatch": "As senhas não coincidem",
-    "errorCreate": "Erro ao criar conta"
+    "errorCreate": "Erro ao criar conta",
+    "required": "Este campo é obrigatório"
   },
   "quotes": {
     "quote1": "Confie na sua viagem. Confie na Rentamovil.",

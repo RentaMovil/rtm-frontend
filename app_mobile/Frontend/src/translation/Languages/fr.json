@@ -275,7 +275,8 @@
     "phoneInvalid": "Téléphone invalide (10 chiffres)",
     "passwordShort": "Le mot de passe doit contenir au moins 6 caractères",
     "passwordMatch": "Les mots de passe ne correspondent pas",
-    "errorCreate": "Erreur lors de la création du compte"
+    "errorCreate": "Erreur lors de la création du compte",
+    "required": "Ce champ est obligatoire"
   },
   "quotes": {
     "quote1": "Faites confiance à votre voyage. Faites confiance à Rentamovil.",
