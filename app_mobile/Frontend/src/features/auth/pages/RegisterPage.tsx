@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { Link, useRouter } from "expo-router";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import BrandLogo from "../../../shared/components/Brand/BrandLogo";
 
@@ -83,6 +84,7 @@ export default function RegisterPage() {
   const [fields, setFields] = useState<Fields>(EMPTY);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   function set<K extends keyof Fields>(key: K, value: string) {
     setFields((prev) => ({ ...prev, [key]: value }));
@@ -171,17 +173,51 @@ export default function RegisterPage() {
     <View>
       <Text style={styles.label}>{t(labelKey)}</Text>
 
-      <TextInput
-        placeholder={t(placeholderKey)}
-        placeholderTextColor={colors.secondaryText}
-        value={value}
-        onChangeText={onChange}
-        secureTextEntry={options?.secureTextEntry}
-        keyboardType={options?.keyboardType ?? "default"}
-        autoCapitalize={options?.autoCapitalize ?? "words"}
-        autoCorrect={false}
-        style={[styles.input, styles.inputWeb]}
-      />
+      {options?.secureTextEntry ? (
+        // Mismo ojo de mostrar/ocultar que LoginPage y PasswordCodeFlow:
+        // un unico toggle compartido por password y confirmPassword.
+        <View style={styles.passwordField}>
+          <TextInput
+            placeholder={t(placeholderKey)}
+            placeholderTextColor={colors.secondaryText}
+            value={value}
+            onChangeText={onChange}
+            secureTextEntry={!showPassword}
+            autoCapitalize="none"
+            autoCorrect={false}
+            style={[styles.input, styles.inputWeb, styles.inputPassword]}
+          />
+
+          <TouchableOpacity
+            style={styles.togglePassword}
+            onPress={() => setShowPassword((prev) => !prev)}
+            accessibilityRole="button"
+            accessibilityLabel={t(
+              showPassword
+                ? "loginForm.hidePassword"
+                : "loginForm.showPassword"
+            )}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <FontAwesome
+              name={showPassword ? "eye-slash" : "eye"}
+              size={18}
+              color={colors.button}
+            />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <TextInput
+          placeholder={t(placeholderKey)}
+          placeholderTextColor={colors.secondaryText}
+          value={value}
+          onChangeText={onChange}
+          keyboardType={options?.keyboardType ?? "default"}
+          autoCapitalize={options?.autoCapitalize ?? "words"}
+          autoCorrect={false}
+          style={[styles.input, styles.inputWeb]}
+        />
+      )}
     </View>
   );
 

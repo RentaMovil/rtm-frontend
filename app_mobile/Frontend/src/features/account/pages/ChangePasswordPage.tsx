@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -11,6 +13,7 @@ import {
   View,
 } from "react-native";
 import { useRouter } from "expo-router";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import ContinueButton from "../../../shared/components/Button/ContinueButton";
 import AppCard from "../../../shared/components/AppCard/AppCard";
@@ -48,6 +51,7 @@ export default function ChangePasswordPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { themeName } = useTheme();
   const colors = themes[themeName];
@@ -112,117 +116,181 @@ export default function ChangePasswordPage() {
   }
 
   return (
-    <ScrollView
+    <KeyboardAvoidingView
       style={styles.container}
-      contentContainerStyle={styles.content}
-      keyboardShouldPersistTaps="handled"
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
-      <Text style={styles.title}>{t("changePassword.title")}</Text>
-
-      <View style={styles.tabs}>
-        <TouchableOpacity
-          style={[styles.tab, method === "password" && styles.tabActive]}
-          onPress={() => selectMethod("password")}
-          accessibilityRole="tab"
-          accessibilityState={{ selected: method === "password" }}
-        >
-          <Text
-            style={[
-              styles.tabText,
-              method === "password" && styles.tabTextActive,
-            ]}
-          >
-            {t("changePassword.methodPassword")}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.tab, method === "code" && styles.tabActive]}
-          onPress={() => selectMethod("code")}
-          accessibilityRole="tab"
-          accessibilityState={{ selected: method === "code" }}
-        >
-          <Text
-            style={[styles.tabText, method === "code" && styles.tabTextActive]}
-          >
-            {t("changePassword.methodCode")}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <AppCard>
-        {method === "password" ? (
-          <>
-            <Text style={styles.label}>{t("changePassword.currentPassword")}</Text>
-            <TextInput
-              style={styles.input}
-              value={currentPassword}
-              onChangeText={setCurrentPassword}
-              secureTextEntry
-              autoCapitalize="none"
-              placeholder={t("loginForm.passwordPlaceholder")}
-              placeholderTextColor={colors.secondaryText}
-            />
-
-            <Text style={styles.label}>{t("changePassword.newPassword")}</Text>
-            <TextInput
-              style={styles.input}
-              value={newPassword}
-              onChangeText={setNewPassword}
-              secureTextEntry
-              autoCapitalize="none"
-              placeholder={t("loginForm.passwordPlaceholder")}
-              placeholderTextColor={colors.secondaryText}
-            />
-
-            <View style={styles.rules}>
-              {rules.map((rule) => (
-                <Text
-                  key={rule.label}
-                  style={rule.valid ? styles.ruleValid : styles.ruleInvalid}
-                >
-                  {rule.label}
-                </Text>
-              ))}
-            </View>
-
-            <Text style={styles.label}>{t("changePassword.confirmPassword")}</Text>
-            <TextInput
-              style={styles.input}
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry
-              autoCapitalize="none"
-              placeholder={t("loginForm.passwordPlaceholder")}
-              placeholderTextColor={colors.secondaryText}
-            />
-
-            {error ? <Text style={styles.error}>{error}</Text> : null}
-
-            <View style={styles.actions}>
-              {isSubmitting ? (
-                <ActivityIndicator color={colors.primary} />
-              ) : (
-                <ContinueButton
-                  title={t("changePassword.save")}
-                  onPress={handleSubmit}
-                />
-              )}
-            </View>
-          </>
-        ) : (
-          <PasswordCodeFlow fixedEmail={user?.email} onDone={finish} />
-        )}
-      </AppCard>
-
-      <TouchableOpacity
-        style={styles.cancel}
-        onPress={() => router.back()}
-        disabled={isSubmitting}
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
       >
-        <Text style={styles.cancelText}>{t("changePassword.cancel")}</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        <Text style={styles.title}>{t("changePassword.title")}</Text>
+
+        <View style={styles.tabs}>
+          <TouchableOpacity
+            style={[styles.tab, method === "password" && styles.tabActive]}
+            onPress={() => selectMethod("password")}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: method === "password" }}
+          >
+            <Text
+              style={[
+                styles.tabText,
+                method === "password" && styles.tabTextActive,
+              ]}
+            >
+              {t("changePassword.methodPassword")}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.tab, method === "code" && styles.tabActive]}
+            onPress={() => selectMethod("code")}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: method === "code" }}
+          >
+            <Text
+              style={[styles.tabText, method === "code" && styles.tabTextActive]}
+            >
+              {t("changePassword.methodCode")}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <AppCard>
+          {method === "password" ? (
+            <>
+              <Text style={styles.label}>{t("changePassword.currentPassword")}</Text>
+              <View style={styles.passwordField}>
+                <TextInput
+                  style={[styles.input, styles.inputPassword]}
+                  value={currentPassword}
+                  onChangeText={setCurrentPassword}
+                  secureTextEntry={!showPassword}
+                  autoCapitalize="none"
+                  placeholder={t("loginForm.passwordPlaceholder")}
+                  placeholderTextColor={colors.secondaryText}
+                />
+
+                <TouchableOpacity
+                  style={styles.togglePassword}
+                  onPress={() => setShowPassword((prev) => !prev)}
+                  accessibilityRole="button"
+                  accessibilityLabel={t(
+                    showPassword
+                      ? "loginForm.hidePassword"
+                      : "loginForm.showPassword"
+                  )}
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                >
+                  <FontAwesome
+                    name={showPassword ? "eye-slash" : "eye"}
+                    size={18}
+                    color={colors.button}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <Text style={styles.label}>{t("changePassword.newPassword")}</Text>
+              <View style={styles.passwordField}>
+                <TextInput
+                  style={[styles.input, styles.inputPassword]}
+                  value={newPassword}
+                  onChangeText={setNewPassword}
+                  secureTextEntry={!showPassword}
+                  autoCapitalize="none"
+                  placeholder={t("loginForm.passwordPlaceholder")}
+                  placeholderTextColor={colors.secondaryText}
+                />
+
+                <TouchableOpacity
+                  style={styles.togglePassword}
+                  onPress={() => setShowPassword((prev) => !prev)}
+                  accessibilityRole="button"
+                  accessibilityLabel={t(
+                    showPassword
+                      ? "loginForm.hidePassword"
+                      : "loginForm.showPassword"
+                  )}
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                >
+                  <FontAwesome
+                    name={showPassword ? "eye-slash" : "eye"}
+                    size={18}
+                    color={colors.button}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.rules}>
+                {rules.map((rule) => (
+                  <Text
+                    key={rule.label}
+                    style={rule.valid ? styles.ruleValid : styles.ruleInvalid}
+                  >
+                    {rule.label}
+                  </Text>
+                ))}
+              </View>
+
+              <Text style={styles.label}>{t("changePassword.confirmPassword")}</Text>
+              <View style={styles.passwordField}>
+                <TextInput
+                  style={[styles.input, styles.inputPassword]}
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                  secureTextEntry={!showPassword}
+                  autoCapitalize="none"
+                  placeholder={t("loginForm.passwordPlaceholder")}
+                  placeholderTextColor={colors.secondaryText}
+                />
+
+                <TouchableOpacity
+                  style={styles.togglePassword}
+                  onPress={() => setShowPassword((prev) => !prev)}
+                  accessibilityRole="button"
+                  accessibilityLabel={t(
+                    showPassword
+                      ? "loginForm.hidePassword"
+                      : "loginForm.showPassword"
+                  )}
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                >
+                  <FontAwesome
+                    name={showPassword ? "eye-slash" : "eye"}
+                    size={18}
+                    color={colors.button}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              {error ? <Text style={styles.error}>{error}</Text> : null}
+
+              <View style={styles.actions}>
+                {isSubmitting ? (
+                  <ActivityIndicator color={colors.primary} />
+                ) : (
+                  <ContinueButton
+                    title={t("changePassword.save")}
+                    onPress={handleSubmit}
+                  />
+                )}
+              </View>
+            </>
+          ) : (
+            <PasswordCodeFlow fixedEmail={user?.email} onDone={finish} />
+          )}
+        </AppCard>
+
+        <TouchableOpacity
+          style={styles.cancel}
+          onPress={() => router.back()}
+          disabled={isSubmitting}
+        >
+          <Text style={styles.cancelText}>{t("changePassword.cancel")}</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -296,6 +364,28 @@ const createStyles = (colors: any) =>
       fontSize: 15,
       color: colors.text,
       marginBottom: 16,
+    },
+
+    /**
+     * Campo de contrasena con el boton de mostrar/ocultar superpuesto a la
+     * derecha: mismo patron que `authStyles` (login/register/flow).
+     */
+    passwordField: {
+      position: "relative",
+      justifyContent: "center",
+    },
+
+    inputPassword: {
+      paddingRight: 52,
+    },
+
+    togglePassword: {
+      position: "absolute",
+      right: 4,
+      width: 44,
+      height: 44,
+      alignItems: "center",
+      justifyContent: "center",
     },
 
     rules: {
