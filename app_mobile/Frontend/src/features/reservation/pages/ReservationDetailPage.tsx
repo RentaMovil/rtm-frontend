@@ -18,6 +18,7 @@ import {
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
 import type { Branch, Reservation, Vehicle } from "../../../types";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { ApiError } from "../../../shared/api/httpClient";
 import { getBranchById, getBranches } from "../../branches/services/branchService";
 import BranchSelectorModal from "../components/BranchSelectorModal";
@@ -291,7 +292,19 @@ export default function ReservationDetailPage() {
 
                 <View style={styles.card}>
                     <Text style={styles.sectionTitle}>Vehículo</Text>
-                    <Text style={styles.vehicleName}>{vehicle ? `${vehicle.brand} ${vehicle.model}` : "Vehiculo no disponible"}</Text>
+
+                    {/* Icono del vehiculo, mismo lenguaje visual que los
+                        badges de `VehicleSummaryCard` (icono en `button`). */}
+                    <View style={styles.vehicleRow}>
+                        <FontAwesome
+                            name="car"
+                            size={18}
+                            color={colors.button}
+                        />
+                        <Text style={styles.vehicleName}>
+                            {vehicle ? `${vehicle.brand} ${vehicle.model}` : "Vehiculo no disponible"}
+                        </Text>
+                    </View>
                 </View>
 
                 <View style={styles.card}>
