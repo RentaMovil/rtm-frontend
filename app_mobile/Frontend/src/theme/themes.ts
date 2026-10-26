@@ -52,6 +52,21 @@ const darkThemeAccents = {
   errorSurface: "rgba(239, 68, 68, 0.14)",
 } as const;
 
+type DarkThemeOverrides = Omit<
+  ThemeColors,
+  keyof typeof darkThemeAccents | "text" | "error" | "label"
+>;
+
+function createDarkTheme(overrides: DarkThemeOverrides): ThemeColors {
+  return {
+    ...darkThemeAccents,
+    text: "#F8FAFC",
+    error: "#EF4444",
+    label: "#FFFFFF",
+    ...overrides,
+  };
+}
+
 /**
  * Paleta de la app.
  *
@@ -107,12 +122,10 @@ export const themes = {
     errorSurface: "#FEF2F2",
   },
 
-  dark: {
-    ...darkThemeAccents,
+  dark: createDarkTheme({
     background: "#121212",
     backgroundCard: "#1C1C1C",
     card: "#1C1C1C",
-    text: "#F8FAFC",
     textHeading: "#e8e8e8",
     secondaryText: "#64748B",
     border: "rgba(255, 255, 255, 0.06)",
@@ -123,17 +136,13 @@ export const themes = {
     cardBg: "#1C1C1C",
     borderfilter: "#262626",
     textBtn: "#121212",
-    error: "#EF4444",
-    label: "#FFFFFF",
     successSurface: "#1A1A1A",
-  },
+  }),
 
-  darkPurple: {
-    ...darkThemeAccents,
+  darkPurple: createDarkTheme({
     background: "#030712",
     backgroundCard: "#070F22",
     card: "#070F22",
-    text: "#F8FAFC",
     textHeading: "#94A3B8",
     secondaryText: "#475569",
     border: "rgba(255, 255, 255, 0.04)",
@@ -144,10 +153,8 @@ export const themes = {
     cardBg: "#070F22",
     borderfilter: "#111E33",
     textBtn: "#030712",
-    error: "#EF4444",
-    label: "#FFFFFF",
     successSurface: "#0B1528",
-  },
+  }),
 
   skylight: {
     background: "#F8FAFC",
