@@ -17,12 +17,15 @@ export default function ReceiptDeadlineWarning({ showWarning }: Props) {
   const colors = themes[themeName];
   const styles = createStyles(colors);
 
-  const { reservation } = useReservation();
+  // La fecha de creacion vive en la reserva YA creada (respuesta del
+  // POST /reservations), no en el borrador de UI: este componente se pinta
+  // justo despues de crear la reserva, cuando el borrador no tiene fecha.
+  const { createdReservation } = useReservation();
 
   const deadline = useMemo(() => {
-    if (!reservation?.createdAt) return null;
+    if (!createdReservation?.createdAt) return null;
 
-    const createdAt = new Date(reservation.createdAt);
+    const createdAt = new Date(createdReservation.createdAt);
     const deadlineDate = new Date(createdAt.getTime() + 24 * 60 * 60 * 1000);
 
     return {
@@ -30,7 +33,7 @@ export default function ReceiptDeadlineWarning({ showWarning }: Props) {
       time: deadlineDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       full: deadlineDate.toLocaleString(),
     };
-  }, [reservation?.createdAt]);
+  }, [createdReservation?.createdAt]);
 
   if (!showWarning || !deadline) return null;
 
