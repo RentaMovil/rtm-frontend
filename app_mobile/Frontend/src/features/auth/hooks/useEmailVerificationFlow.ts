@@ -59,7 +59,7 @@ export function useEmailVerificationFlow({ email, t }: Options) {
     try {
       await verifyEmail(email, code);
       // Si llega aqui la sesion ya quedo iniciada (verifyEmail guarda los
-      // tokens); el guard de app/_layout.tsx lleva al menu solo.
+      // tokens); el guard de app/_layout.tsx lleva a la pantalla principal.
     } catch {
       setError(t("emailVerification.invalidCode"));
     } finally {

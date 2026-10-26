@@ -111,6 +111,13 @@ export const createAuthStyles = (colors: any) => {
       color: colors.error,
     },
 
+    /** Error de validacion bajo un campo concreto (validacion en tiempo real). */
+    fieldError: {
+      ...text.caption,
+      color: colors.error,
+      marginTop: 6,
+    },
+
     button: {
       height: 54,
       borderRadius: Radius.md,
