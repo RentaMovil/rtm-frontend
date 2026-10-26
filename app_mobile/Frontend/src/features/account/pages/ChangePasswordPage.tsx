@@ -1,12 +1,14 @@
 import { useState } from "react";
+import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -14,6 +16,7 @@ import { useRouter } from "expo-router";
 
 import ContinueButton from "../../../shared/components/Button/ContinueButton";
 import AppCard from "../../../shared/components/AppCard/AppCard";
+import PasswordField from "../../../shared/components/PasswordField/PasswordField";
 
 import { ApiError } from "../../../shared/api/httpClient";
 import { useAuth } from "../../auth/context/AuthContext";
@@ -48,12 +51,93 @@ export default function ChangePasswordPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Campos tocados (al menos un onBlur): hasta entonces no se muestra el
+  // error individual, igual que en RegisterPage y LoginPage.
+  const [touched, setTouched] = useState({
+    currentPassword: false,
+    newPassword: false,
+    confirmPassword: false,
+  });
+
+  function markTouched(
+    field: "currentPassword" | "newPassword" | "confirmPassword",
+  ) {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+  }
+
+  /** Un unico ojo para las tres cajas: mismo comportamiento que antes. */
+  function togglePassword() {
+    setShowPassword((prev) => !prev);
+  }
+
+  /**
+   * Validacion en tiempo real, mismo patron que RegisterPage/LoginPage.
+   *
+   * En `newPassword` no se repite el largo ni el formato: la lista de
+   * `buildPasswordRules` justo debajo ya pinta ese estado en cada tecla.
+   * Aqui solo se añade lo que esa lista no cubre (que no sea igual a la
+   * actual) y los errores de las otras dos cajas.
+   */
+  function errorFor(
+    field: "currentPassword" | "newPassword" | "confirmPassword",
+  ): string | null {
+    const value =
+      field === "currentPassword"
+        ? currentPassword
+        : field === "newPassword"
+          ? newPassword
+          : confirmPassword;
+
+    if (field === "newPassword") {
+      if (currentPassword && value === currentPassword) {
+        return t("changePassword.samePassword");
+      }
+      return null;
+    }
+
+    if (!value) {
+      return t("common.required");
+    }
+
+    if (field === "confirmPassword" && value !== newPassword) {
+      return t("changePassword.invalid");
+    }
+
+    return null;
+  }
 
   const { themeName } = useTheme();
   const colors = themes[themeName];
   const styles = createStyles(colors);
 
   const rules = buildPasswordRules(newPassword, t);
+
+  function renderPasswordField(
+    field: "currentPassword" | "newPassword" | "confirmPassword",
+    value: string,
+    onChange: (value: string) => void,
+    children?: ReactNode,
+  ) {
+    const fieldError = touched[field] ? errorFor(field) : null;
+
+    return (
+      <>
+        <Text style={styles.label}>{t(`changePassword.${field}`)}</Text>
+        <PasswordField
+          value={value}
+          onChange={onChange}
+          onBlur={() => markTouched(field)}
+          hidden={!showPassword}
+          onToggleVisibility={togglePassword}
+          inputStyle={styles.input}
+        />
+        {children}
+        {fieldError ? <Text style={styles.fieldError}>{fieldError}</Text> : null}
+      </>
+    );
+  }
 
   function selectMethod(next: Method) {
     setMethod(next);
@@ -91,6 +175,8 @@ export default function ChangePasswordPage() {
 
     if (problem) {
       setError(problem);
+      // Ademas del resumen, cada campo muestra su propio error.
+      setTouched({ currentPassword: true, newPassword: true, confirmPassword: true });
       return;
     }
 
@@ -112,117 +198,97 @@ export default function ChangePasswordPage() {
   }
 
   return (
-    <ScrollView
+    <KeyboardAvoidingView
       style={styles.container}
-      contentContainerStyle={styles.content}
-      keyboardShouldPersistTaps="handled"
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
-      <Text style={styles.title}>{t("changePassword.title")}</Text>
-
-      <View style={styles.tabs}>
-        <TouchableOpacity
-          style={[styles.tab, method === "password" && styles.tabActive]}
-          onPress={() => selectMethod("password")}
-          accessibilityRole="tab"
-          accessibilityState={{ selected: method === "password" }}
-        >
-          <Text
-            style={[
-              styles.tabText,
-              method === "password" && styles.tabTextActive,
-            ]}
-          >
-            {t("changePassword.methodPassword")}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.tab, method === "code" && styles.tabActive]}
-          onPress={() => selectMethod("code")}
-          accessibilityRole="tab"
-          accessibilityState={{ selected: method === "code" }}
-        >
-          <Text
-            style={[styles.tabText, method === "code" && styles.tabTextActive]}
-          >
-            {t("changePassword.methodCode")}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <AppCard>
-        {method === "password" ? (
-          <>
-            <Text style={styles.label}>{t("changePassword.currentPassword")}</Text>
-            <TextInput
-              style={styles.input}
-              value={currentPassword}
-              onChangeText={setCurrentPassword}
-              secureTextEntry
-              autoCapitalize="none"
-              placeholder={t("loginForm.passwordPlaceholder")}
-              placeholderTextColor={colors.secondaryText}
-            />
-
-            <Text style={styles.label}>{t("changePassword.newPassword")}</Text>
-            <TextInput
-              style={styles.input}
-              value={newPassword}
-              onChangeText={setNewPassword}
-              secureTextEntry
-              autoCapitalize="none"
-              placeholder={t("loginForm.passwordPlaceholder")}
-              placeholderTextColor={colors.secondaryText}
-            />
-
-            <View style={styles.rules}>
-              {rules.map((rule) => (
-                <Text
-                  key={rule.label}
-                  style={rule.valid ? styles.ruleValid : styles.ruleInvalid}
-                >
-                  {rule.label}
-                </Text>
-              ))}
-            </View>
-
-            <Text style={styles.label}>{t("changePassword.confirmPassword")}</Text>
-            <TextInput
-              style={styles.input}
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry
-              autoCapitalize="none"
-              placeholder={t("loginForm.passwordPlaceholder")}
-              placeholderTextColor={colors.secondaryText}
-            />
-
-            {error ? <Text style={styles.error}>{error}</Text> : null}
-
-            <View style={styles.actions}>
-              {isSubmitting ? (
-                <ActivityIndicator color={colors.primary} />
-              ) : (
-                <ContinueButton
-                  title={t("changePassword.save")}
-                  onPress={handleSubmit}
-                />
-              )}
-            </View>
-          </>
-        ) : (
-          <PasswordCodeFlow fixedEmail={user?.email} onDone={finish} />
-        )}
-      </AppCard>
-
-      <TouchableOpacity
-        style={styles.cancel}
-        onPress={() => router.back()}
-        disabled={isSubmitting}
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
       >
-        <Text style={styles.cancelText}>{t("changePassword.cancel")}</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        <Text style={styles.title}>{t("changePassword.title")}</Text>
+
+        <View style={styles.tabs}>
+          <TouchableOpacity
+            style={[styles.tab, method === "password" && styles.tabActive]}
+            onPress={() => selectMethod("password")}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: method === "password" }}
+          >
+            <Text
+              style={[
+                styles.tabText,
+                method === "password" && styles.tabTextActive,
+              ]}
+            >
+              {t("changePassword.methodPassword")}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.tab, method === "code" && styles.tabActive]}
+            onPress={() => selectMethod("code")}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: method === "code" }}
+          >
+            <Text
+              style={[styles.tabText, method === "code" && styles.tabTextActive]}
+            >
+              {t("changePassword.methodCode")}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <AppCard>
+          {method === "password" ? (
+            <>
+              {renderPasswordField("currentPassword", currentPassword, setCurrentPassword)}
+
+              {renderPasswordField(
+                "newPassword",
+                newPassword,
+                setNewPassword,
+                <View style={styles.rules}>
+                  {rules.map((rule) => (
+                    <Text
+                      key={rule.label}
+                      style={rule.valid ? styles.ruleValid : styles.ruleInvalid}
+                    >
+                      {rule.label}
+                    </Text>
+                  ))}
+                </View>,
+              )}
+
+              {renderPasswordField("confirmPassword", confirmPassword, setConfirmPassword)}
+
+              {error ? <Text style={styles.error}>{error}</Text> : null}
+
+              <View style={styles.actions}>
+                {isSubmitting ? (
+                  <ActivityIndicator color={colors.primary} />
+                ) : (
+                  <ContinueButton
+                    title={t("changePassword.save")}
+                    onPress={handleSubmit}
+                  />
+                )}
+              </View>
+            </>
+          ) : (
+            <PasswordCodeFlow fixedEmail={user?.email} onDone={finish} />
+          )}
+        </AppCard>
+
+        <TouchableOpacity
+          style={styles.cancel}
+          onPress={() => router.back()}
+          disabled={isSubmitting}
+        >
+          <Text style={styles.cancelText}>{t("changePassword.cancel")}</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -316,6 +382,14 @@ const createStyles = (colors: any) =>
     error: {
       color: colors.error,
       fontSize: 14,
+      marginBottom: 12,
+    },
+
+    /** Error de validacion bajo un campo concreto (validacion en tiempo real). */
+    fieldError: {
+      color: colors.error,
+      fontSize: 12,
+      marginTop: -8,
       marginBottom: 12,
     },
 

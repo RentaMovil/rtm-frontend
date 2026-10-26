@@ -15,6 +15,7 @@ export const createStyles = (colors: any) => {
       right: 0,
       alignItems: "center",
       zIndex: 1000,
+      pointerEvents: "box-none",
     },
 
     banner: {

@@ -13,10 +13,12 @@ import {
 import { Link, useRouter } from "expo-router";
 
 import BrandLogo from "../../../shared/components/Brand/BrandLogo";
+import PasswordField from "../../../shared/components/PasswordField/PasswordField";
 
 import { useAuth } from "../hooks/useAuth";
 import { ApiError } from "../../../shared/api/httpClient";
 import { API_URL } from "../../../config/env";
+import i18n from "../../../translation/i18n";
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
@@ -32,10 +34,10 @@ function readableError(error: unknown): string {
   const message = error instanceof Error ? error.message : "";
 
   if (message.includes("Network request failed")) {
-    return `No se pudo conectar con la API en ${API_URL}. Verifica que este corriendo.`;
+    return i18n.t("errors.network", { url: API_URL });
   }
 
-  return message || "Ocurrio un error inesperado.";
+  return message || i18n.t("errors.unexpected");
 }
 
 type Fields = {
@@ -47,6 +49,22 @@ type Fields = {
   password: string;
   confirmPassword: string;
 };
+
+const FIELD_NAMES = [
+  "firstName",
+  "lastName",
+  "email",
+  "phone",
+  "username",
+  "password",
+  "confirmPassword",
+] as const satisfies readonly (keyof Fields)[];
+
+function createTouchedState(value: boolean): Record<keyof Fields, boolean> {
+  return Object.fromEntries(
+    FIELD_NAMES.map((name) => [name, value]),
+  ) as Record<keyof Fields, boolean>;
+}
 
 const EMPTY: Fields = {
   firstName: "",
@@ -82,6 +100,47 @@ export default function RegisterPage() {
   const [fields, setFields] = useState<Fields>(EMPTY);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Campos tocados (al menos un onBlur): hasta entonces no se muestra el
+  // error individual, para no marcar el formulario en rojo al abrirlo.
+  const [touched, setTouched] = useState(() => createTouchedState(false));
+
+  function markTouched(name: keyof Fields) {
+    setTouched((prev) => ({ ...prev, [name]: true }));
+  }
+
+  /**
+   * Error de un campo concreto, para la validacion en tiempo real.
+   *
+   * Misma regla que `validate()` (el resumen que se manda al enviar), pero
+   * evaluada campo a campo y en cada render: una vez tocado el campo, el
+   * mensaje aparece y desaparece solo cuando el valor pasa a ser valido.
+   */
+  function errorFor(name: keyof Fields): string | null {
+    const value = fields[name];
+
+    switch (name) {
+      case "email":
+        if (!value.trim()) return t("common.required");
+        return /^\S+@\S+\.\S+$/.test(value.trim())
+          ? null
+          : t("register.emailInvalid");
+      case "phone":
+        if (!value.trim()) return t("common.required");
+        return /^\d{10}$/.test(value.trim())
+          ? null
+          : t("register.phoneInvalid");
+      case "password":
+        if (!value) return t("common.required");
+        return value.length >= 6 ? null : t("register.passwordShort");
+      case "confirmPassword":
+        if (!value) return t("common.required");
+        return value === fields.password ? null : t("register.passwordMatch");
+      default:
+        return value.trim() ? null : t("common.required");
+    }
+  }
 
   function set<K extends keyof Fields>(key: K, value: string) {
     setFields((prev) => ({ ...prev, [key]: value }));
@@ -133,6 +192,9 @@ export default function RegisterPage() {
 
     if (invalid) {
       setError(invalid);
+      // Ademas del resumen, se marca todos los campos para que cada uno
+      // muestre su propio error bajo la caja.
+      setTouched(createTouchedState(true));
       return;
     }
 
@@ -157,7 +219,7 @@ export default function RegisterPage() {
   }
 
   const field = (
-    labelKey: string,
+    name: keyof Fields,
     placeholderKey: string,
     value: string,
     onChange: (v: string) => void,
@@ -166,23 +228,47 @@ export default function RegisterPage() {
       keyboardType?: "default" | "email-address" | "phone-pad";
       autoCapitalize?: "none" | "words" | "sentences";
     },
-  ) => (
-    <View>
-      <Text style={styles.label}>{t(labelKey)}</Text>
+  ) => {
+    // En tiempo real: el error solo aparece tras el primer onBlur del campo
+    // (o si se intento enviar); a partir de ahi se recalcula en cada tecla.
+    const liveError = touched[name] ? errorFor(name) : null;
 
-      <TextInput
-        placeholder={t(placeholderKey)}
-        placeholderTextColor={colors.secondaryText}
-        value={value}
-        onChangeText={onChange}
-        secureTextEntry={options?.secureTextEntry}
-        keyboardType={options?.keyboardType ?? "default"}
-        autoCapitalize={options?.autoCapitalize ?? "words"}
-        autoCorrect={false}
-        style={[styles.input, styles.inputWeb]}
-      />
-    </View>
-  );
+    return (
+      <View>
+        <Text style={styles.label}>{t(`register.${name}`)}</Text>
+
+        {options?.secureTextEntry ? (
+          // Mismo ojo de mostrar/ocultar que LoginPage: un unico toggle
+          // compartido por password y confirmPassword (lo aporta
+          // PasswordField, compartido con el resto de la app).
+          <PasswordField
+            value={value}
+            onChange={onChange}
+            onBlur={() => markTouched(name)}
+            hidden={!showPassword}
+            onToggleVisibility={() => setShowPassword((prev) => !prev)}
+            inputStyle={[styles.input, styles.inputWeb]}
+          />
+        ) : (
+          <TextInput
+            placeholder={t(placeholderKey)}
+            placeholderTextColor={colors.secondaryText}
+            value={value}
+            onChangeText={onChange}
+            onBlur={() => markTouched(name)}
+            keyboardType={options?.keyboardType ?? "default"}
+            autoCapitalize={options?.autoCapitalize ?? "words"}
+            autoCorrect={false}
+            style={[styles.input, styles.inputWeb]}
+          />
+        )}
+
+        {liveError ? (
+          <Text style={styles.fieldError}>{liveError}</Text>
+        ) : null}
+      </View>
+    );
+  };
 
   return (
     <KeyboardAvoidingView
@@ -201,7 +287,7 @@ export default function RegisterPage() {
           <View style={styles.row}>
             <View style={styles.rowItem}>
               {field(
-                "register.firstName",
+                "firstName",
                 "register.firstNamePlaceholder",
                 fields.firstName,
                 (v) => set("firstName", v),
@@ -211,7 +297,7 @@ export default function RegisterPage() {
 
             <View style={styles.rowItem}>
               {field(
-                "register.lastName",
+                "lastName",
                 "register.lastNamePlaceholder",
                 fields.lastName,
                 (v) => set("lastName", v),
@@ -221,7 +307,7 @@ export default function RegisterPage() {
           </View>
 
           {field(
-            "register.email",
+            "email",
             "register.emailPlaceholder",
             fields.email,
             (v) => set("email", v),
@@ -231,7 +317,7 @@ export default function RegisterPage() {
           <View style={styles.row}>
             <View style={styles.rowItem}>
               {field(
-                "register.phone",
+                "phone",
                 "register.phonePlaceholder",
                 fields.phone,
                 (v) => set("phone", v),
@@ -241,7 +327,7 @@ export default function RegisterPage() {
 
             <View style={styles.rowItem}>
               {field(
-                "register.username",
+                "username",
                 "register.usernamePlaceholder",
                 fields.username,
                 (v) => set("username", v),
@@ -253,7 +339,7 @@ export default function RegisterPage() {
           <View style={styles.row}>
             <View style={styles.rowItem}>
               {field(
-                "register.password",
+                "password",
                 "register.passwordPlaceholder",
                 fields.password,
                 (v) => set("password", v),
@@ -263,7 +349,7 @@ export default function RegisterPage() {
 
             <View style={styles.rowItem}>
               {field(
-                "register.confirmPassword",
+                "confirmPassword",
                 "register.passwordPlaceholder",
                 fields.confirmPassword,
                 (v) => set("confirmPassword", v),
