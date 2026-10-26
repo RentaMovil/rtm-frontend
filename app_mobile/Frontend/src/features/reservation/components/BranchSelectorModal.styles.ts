@@ -52,19 +52,30 @@ export const createStyles = (colors: any) => {
 
     branchItem: {
       paddingVertical: 16,
-      borderBottomWidth: 1,
-      borderBottomColor: colors.border,
+      paddingHorizontal: 12,
+      borderRadius: 12,
+      marginBottom: 8,
+      backgroundColor: colors.backgroundCard,
+      borderWidth: 1,
+      borderColor: colors.border,
     },
 
     branchName: {
       ...text.bodyMedium,
       fontSize: 16,
       color: colors.textHeading,
+      fontWeight: "600",
     },
 
     branchAddress: {
       ...text.caption,
       marginTop: 4,
+      color: colors.secondaryText,
+    },
+
+    branchSelected: {
+      backgroundColor: colors.primarySurface,
+      borderColor: colors.primary,
     },
 
     closeButton: {

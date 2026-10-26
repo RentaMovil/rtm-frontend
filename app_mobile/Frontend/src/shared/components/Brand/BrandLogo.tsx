@@ -113,7 +113,7 @@ export default function BrandLogo({
   const text = (
     <Text style={[styles.text, { color: colors.text }]}>
       Renta
-      <Text style={{ color: colors.button }}>Móvil</Text>
+      <Text style={{ color: "#F2C063" }}>Móvil</Text>
     </Text>
   );
 

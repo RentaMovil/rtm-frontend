@@ -169,7 +169,7 @@ export default function ReservationHistoryScreen() {
 
                 <Text>
 
-                    Cargando reservas...
+                    {t("historyReservation.loadingText")}
 
                 </Text>
 
@@ -188,10 +188,10 @@ export default function ReservationHistoryScreen() {
                 style={styles.container}
             >
 
-                <Text style={styles.eyebrow}>TU ACTIVIDAD</Text>
-                <Text style={styles.title}>Mis reservas</Text>
-                <Text style={styles.subtitle}>Consulta y administra tus próximos viajes.</Text>
-                <Text style={styles.count}>{reservations.length} reserva{reservations.length === 1 ? "" : "s"} registrada{reservations.length === 1 ? "" : "s"}</Text>
+                <Text style={styles.eyebrow}>{t("historyReservation.activityTitle")}</Text>
+                <Text style={styles.title}>{t("historyReservation.myReservationsLabel")}</Text>
+                <Text style={styles.subtitle}>{t("historyReservation.subtitle")}</Text>
+                <Text style={styles.count}>{reservations.length} {t("historyReservation.myReservationsLabel")}{reservations.length === 1 ? "" : "s"} registrada{reservations.length === 1 ? "" : "s"}</Text>
 
             </View>
 
@@ -217,7 +217,7 @@ export default function ReservationHistoryScreen() {
                         style={styles.subtitle}
                     >
 
-                        No tienes reservas todavía.
+                        {t("historyReservation.emptyState")}
 
                     </Text>
 

@@ -200,7 +200,7 @@ function InnerNav() {
 
             if (inAuthFlow) {
 
-                router.replace("/menu");
+                router.replace("/");
 
             }
 

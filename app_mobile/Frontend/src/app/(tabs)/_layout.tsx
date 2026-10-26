@@ -7,148 +7,46 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "../../theme/useTheme";
 import { themes } from "../../theme/themes";
 import { Fonts } from "../../theme/fonts";
-import { Radius } from "../../theme/constants/radius";
-
 import { useNotifications } from "../../features/notification/context/NotificationContext";
-
 import BrandLogo from "../../shared/components/Brand/BrandLogo";
 import { useClientOnlyValue } from "../../shared/hooks/useClientOnlyValue";
 
 type IconName = React.ComponentProps<typeof FontAwesome>["name"];
 
-/**
- * `styles` es estatico a proposito: no depende del tema, asi que se declara
- * una sola vez a nivel de modulo. Los colores se aplican en el JSX con
- * `colors.x`, como en el resto de la app.
- */
 const styles = {
-
-  headerActions: {
-    flexDirection: "row" as const,
-    alignItems: "center" as const,
-    gap: 18,
-    marginRight: 15,
-  },
-
-  headerAction: {
-    paddingVertical: 4,
-  },
-
+  headerActions: { flexDirection: "row" as const, alignItems: "center" as const, gap: 18, marginRight: 15 },
+  headerAction: { paddingVertical: 4 },
   badge: {
-    position: "absolute" as const,
-    top: -4,
-    right: -8,
-    minWidth: 16,
-    height: 16,
-    paddingHorizontal: 4,
-    borderRadius: 8,
-    alignItems: "center" as const,
-    justifyContent: "center" as const,
+    position: "absolute" as const, top: -4, right: -8, minWidth: 16, height: 16,
+    paddingHorizontal: 4, borderRadius: 8, alignItems: "center" as const, justifyContent: "center" as const,
   },
-
-  badgeText: {
-    fontSize: 10,
-    fontWeight: "700" as const,
-  },
-
-  /** Contenedor de la pastilla del icono activo. */
-  tabIconWrap: {
-    width: 46,
-    height: 30,
-    borderRadius: Radius.pill,
-    alignItems: "center" as const,
-    justifyContent: "center" as const,
-  },
+  badgeText: { fontSize: 10, fontWeight: "700" as const },
 };
 
-/**
- * El logotipo se define una sola vez en
- * `shared/components/Brand/BrandLogo.tsx` y lo usan las tres tabs, el Stack
- * raiz, el login y el registro. Antes cada uno tenia su copia y la palabra
- * salia con colores distintos segun la pantalla.
- */
-type TabBarIconProps = Readonly<{
-  name: IconName;
-  focused: boolean;
-  color: string;
-}>;
+type TabBarIconProps = Readonly<{ name: IconName; color: string }>;
 
-/**
- * Icono de tab con pastilla de fondo cuando esta activa.
- *
- * Se resuelve con `tabBarIcon` en vez de un `tabBar` a medida: el componente
- * ya recibe `focused`, y pintar el fondo avoids reimplementar la navegacion
- * por tabs completa.
- */
-function TabIcon({ name, focused, color }: TabBarIconProps) {
-  const { themeName } = useTheme();
-  const colors = themes[themeName];
-
-  return (
-    <View
-      style={[
-        styles.tabIconWrap,
-        focused && { backgroundColor: colors.accentBg },
-      ]}
-    >
-      <FontAwesome
-        name={name}
-        size={19}
-        color={color}
-      />
-    </View>
-  );
+function TabIcon({ name, color }: TabBarIconProps) {
+  return <FontAwesome name={name} size={20} color={color} />;
 }
 
 function HeaderRightButton() {
   const { themeName } = useTheme();
   const colors = themes[themeName];
-
-  // El contador vive en NotificationContext, montado por encima de las tabs,
-  // asi que la campana puede leerlo sin que la lista se cargue otra vez.
   const { unreadCount } = useNotifications();
 
   return (
     <View style={styles.headerActions}>
       <Link href="/notifications" asChild>
-        <Pressable style={styles.headerAction}>
+        <Pressable style={styles.headerAction} accessibilityRole="button" accessibilityLabel="Notificaciones">
           {({ pressed }) => (
             <View>
-              <FontAwesome
-                name="bell"
-                size={22}
-                color={colors.button}
-                style={{ opacity: pressed ? 0.5 : 1 }}
-              />
-
+              <FontAwesome name="bell" size={22} color={colors.button} style={{ opacity: pressed ? 0.5 : 1 }} />
               {unreadCount > 0 && (
-                <View
-                  style={[styles.badge, { backgroundColor: colors.error }]}
-                >
-                  <Text
-                    style={[
-                      styles.badgeText,
-                      { color: colors.backgroundCard },
-                    ]}
-                  >
-                    {unreadCount}
-                  </Text>
+                <View style={[styles.badge, { backgroundColor: colors.error }]}>
+                  <Text style={[styles.badgeText, { color: colors.backgroundCard }]}>{unreadCount}</Text>
                 </View>
               )}
             </View>
-          )}
-        </Pressable>
-      </Link>
-
-      <Link href="/account" asChild>
-        <Pressable>
-          {({ pressed }) => (
-            <FontAwesome
-              name="user"
-              size={25}
-              color={colors.button}
-              style={{ opacity: pressed ? 0.5 : 1 }}
-            />
           )}
         </Pressable>
       </Link>
@@ -158,61 +56,32 @@ function HeaderRightButton() {
 
 export default function TabLayout() {
   const { t } = useTranslation();
-
   const { themeName } = useTheme();
   const colors = themes[themeName];
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: colors.button,
+        tabBarActiveTintColor: colors.secondaryText,
         tabBarInactiveTintColor: colors.secondaryText,
-
+        tabBarActiveBackgroundColor: colors.backgroundCard,
+        tabBarInactiveBackgroundColor: colors.backgroundCard,
         tabBarStyle: {
           backgroundColor: colors.backgroundCard,
           borderTopWidth: 1,
           borderTopColor: colors.border,
         },
-
-        /**
-         * Solo la tipografia, sin `color`.
-         *
-         * `text.overline` trae `color: colors.secondaryText`, y extenderlo
-         * aqui pisaba `tabBarActiveTintColor`/`tabBarInactiveTintColor`: la
-         * etiqueta activa se quedaba gris igual que las otras.
-         */
         tabBarLabelStyle: {
           fontFamily: Fonts.sans.semibold,
           fontSize: 11,
           fontWeight: "600",
           marginTop: 2,
         },
-
-        tabBarItemStyle: {
-          paddingVertical: 6,
-        },
-
-        headerStyle: {
-          backgroundColor: colors.background,
-        },
-
+        tabBarItemStyle: { paddingVertical: 6, backgroundColor: colors.backgroundCard },
+        headerStyle: { backgroundColor: colors.background },
         headerTintColor: colors.text,
-
-        /**
-         * Igual que en el Stack raiz: `headerTitle` queda vacio y la marca se
-         * pinta en `headerLeft` para que quede pegada al extremo izquierdo
-         * (texto "RentaMovil" -> icono) en vez de centrada por el
-         * comportamiento default de `headerTitle`. Estas pantallas son
-         * raiz de cada tab, asi que no llevan boton de volver.
-         */
         headerTitle: () => null,
-        headerLeft: () => (
-          <View style={{ marginLeft: 15 }}>
-            <BrandLogo order="text-first" />
-          </View>
-        ),
-
-        // El header solo se ve en web; en nativo se oculta y no hace falta.
+        headerLeft: () => <View style={{ marginLeft: 15 }}><BrandLogo order="text-first" /></View>,
         headerShown: useClientOnlyValue(false, true),
       }}
     >
@@ -221,43 +90,24 @@ export default function TabLayout() {
         options={{
           title: "RentaMóvil",
           tabBarLabel: `${t("tabs.home")} - ${t("tabs.homeModule")}`,
-          tabBarIcon: ({ focused, color }) => (
-            <TabIcon name="car" focused={focused} color={color} />
-          ),
+          tabBarIcon: ({ focused, color }) => <TabIcon name="car" color={focused ? colors.button : color} />,
           headerRight: HeaderRightButton,
         }}
       />
-
       <Tabs.Screen
         name="reservations"
         options={{
           title: "RentaMóvil",
           tabBarLabel: `${t("tabs.reservations")} - ${t("tabs.reservationsModule")}`,
-          tabBarIcon: ({ focused, color }) => (
-            <TabIcon name="bookmark" focused={focused} color={color} />
-          ),
+          tabBarIcon: ({ focused, color }) => <TabIcon name="bookmark" color={focused ? colors.button : color} />,
         }}
       />
-
-      <Tabs.Screen
-        name="menu"
-        options={{
-          title: "RentaMóvil",
-          tabBarLabel: `${t("tabs.menu")} - ${t("tabs.menuModule")}`,
-          tabBarIcon: ({ focused, color }) => (
-            <TabIcon name="bars" focused={focused} color={color} />
-          ),
-        }}
-      />
-
       <Tabs.Screen
         name="account"
         options={{
           title: "RentaMóvil",
           tabBarLabel: `${t("tabs.account")} - ${t("tabs.accountModule")}`,
-          tabBarIcon: ({ focused, color }) => (
-            <TabIcon name="user" focused={focused} color={color} />
-          ),
+          tabBarIcon: ({ focused, color }) => <TabIcon name="user" color={focused ? colors.button : color} />,
         }}
       />
     </Tabs>
