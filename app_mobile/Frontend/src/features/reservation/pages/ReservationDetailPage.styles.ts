@@ -112,6 +112,13 @@ export function createStyles(colors: any) {
             color: colors.text,
         },
 
+        // Fila icono + nombre del vehiculo en el card de detalles.
+        vehicleRow: {
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
+        },
+
         detailRow: {
             flexDirection: "row",
             justifyContent: "space-between",

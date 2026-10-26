@@ -6,7 +6,6 @@ import {
   useState,
 } from "react";
 
-import { useAuth } from "../../auth/context/AuthContext";
 
 import type {
   Branch,
@@ -47,7 +46,6 @@ type Props = {
 };
 
 export function ReservationProvider({ children }: Props) {
-  const { user } = useAuth();
   const [reservation, setReservation] = useState<ReservationDraft | null>(null);
   const [createdReservation, setCreatedReservation] =
     useState<ReservationResponse | null>(null);

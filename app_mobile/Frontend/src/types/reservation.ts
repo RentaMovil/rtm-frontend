@@ -105,4 +105,13 @@ export type ReservationRequest = {
 export type ReservationResponse = {
   reservationId: string;
   status: ReservationStatus;
+
+  /**
+   * Fecha de creacion, que la API manda como `reservationDate` (DTO
+   * ReservationResponse del backend; el mismo campo que `Reservation.created_at`).
+   * La necesita el flujo de pago para la ventana de 24h (INV-015): sin ella
+   * la advertencia de comprobante nunca se podia calcular. Opcional porque
+   * depende de que la API la mande.
+   */
+  createdAt?: ISODateTime;
 };

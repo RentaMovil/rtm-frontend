@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 
 import { createTextStyles } from "../../../theme/constants/typography";
-import { createCardShadow } from "../../../theme/constants/shadows";
 import { Radius } from "../../../theme/constants/radius";
 import { Spacing } from "../../../theme/constants/spacing";
 

@@ -20,15 +20,16 @@ import VehicleCard from "../components/VehicleCard";
 
 import { Vehicle } from "../../../types/vehicle";
 import { useReservation } from "../../reservation/context/ReservationContext";
+import { useTranslation } from "react-i18next";
 
 export default function HomePage() {
+  const { t } = useTranslation();
+
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [searchData, setSearchData] = useState<SearchData | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const hasSearched = searchData !==null;
-  const [emptyMessage, setEmptyMessage] = useState(
-    "Primero debe realizar una búsqueda."
-  );
+  const [emptyMessage, setEmptyMessage] = useState(t("home.searchFirst"));
 
   const [filters, setFilters] = useState<Filters>({
     brand: "",
@@ -76,7 +77,7 @@ export default function HomePage() {
   const runSearch = async (currentSearchData: SearchData | null, currentFilters: Filters) => {
     if (!currentSearchData) {
       setVehicles([]);
-      setEmptyMessage("Primero debe realizar una búsqueda.");
+      setEmptyMessage(t("home.searchFirst"));
       return;
     }
 
@@ -87,11 +88,15 @@ export default function HomePage() {
     });
 
     // Sucursal elegida en el buscador: por branchId si la API lo dio, y por
-    // nombre como respaldo (no todos los vehiculos traen branchId).
+    // nombre como respaldo (no todos los vehiculos traen branchId). El
+    // nombre se compara sin distinguir mayusculas ni espacios, porque el
+    // campo permite escribirlo a mano y "Aeropuerto Norte " debia encontrar
+    // lo mismo que la opcion elegida de las sugerencias.
+    const branchName = currentSearchData.branch.name.trim().toLowerCase();
     const byBranch = byGenericFilters.filter((vehicle) =>
       vehicle.branchId
         ? vehicle.branchId === currentSearchData.branch.id
-        : vehicle.location === currentSearchData.branch.name,
+        : vehicle.location?.trim().toLowerCase() === branchName,
     );
 
     // Un vehiculo puede estar AVAILABLE y aun asi tener otra reserva que se
@@ -122,7 +127,7 @@ export default function HomePage() {
     setVehicles(filteredVehicles);
 
     if (filteredVehicles.length === 0) {
-      setEmptyMessage("No hay vehículos disponibles para los filtros seleccionados.");
+      setEmptyMessage(t("home.noResults"));
     } else {
       setEmptyMessage("");
     }
@@ -159,7 +164,7 @@ export default function HomePage() {
     setVehicles([]);
     setShowFilters(true);
 
-    setEmptyMessage("Primero debe realizar una búsqueda.");
+    setEmptyMessage(t("home.searchFirst"));
   };
 
   const handleContinue = (vehicle: Vehicle) => {
