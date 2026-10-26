@@ -41,7 +41,6 @@ export default function PaymentPage() {
 
   const [insuranceOptions, setInsuranceOptions] = useState<InsuranceType[]>([]);
   const [receiptFile, setReceiptFile] = useState<PaymentReceiptFile | null>(null);
-  const [referenceNumber, setReferenceNumber] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDeadlineWarning, setShowDeadlineWarning] = useState(false);
 
@@ -106,7 +105,6 @@ export default function PaymentPage() {
         reservationId: createdReservation.reservationId,
         bankAccountId: selectedBankAccount.id,
         amount: total,
-        ...(referenceNumber ? { referenceNumber } : {}),
         receiptFile,
       });
 
@@ -127,12 +125,12 @@ export default function PaymentPage() {
   }
 
   if (payment) {
-    // Se limpia la reserva y el pago del borrador: volver al menu no debe
+    // Se limpia la reserva y el pago del borrador: volver al inicio no debe
     // dejar datos de esta reserva ya enviada para la siguiente.
-    const handleGoToMenu = () => {
+    const handleGoHome = () => {
       clearPayment();
       clearReservation();
-      router.replace("/menu");
+      router.replace("/(tabs)");
     };
 
     return (
@@ -145,7 +143,7 @@ export default function PaymentPage() {
         </Text>
 
         <View style={{ marginTop: 24 }}>
-          <ContinueButton title="Volver al menu" onPress={handleGoToMenu} />
+          <ContinueButton title="Volver al inicio" onPress={handleGoHome} />
         </View>
       </ScrollView>
     );

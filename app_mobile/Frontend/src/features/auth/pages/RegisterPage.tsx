@@ -50,6 +50,22 @@ type Fields = {
   confirmPassword: string;
 };
 
+const FIELD_NAMES = [
+  "firstName",
+  "lastName",
+  "email",
+  "phone",
+  "username",
+  "password",
+  "confirmPassword",
+] as const satisfies readonly (keyof Fields)[];
+
+function createTouchedState(value: boolean): Record<keyof Fields, boolean> {
+  return Object.fromEntries(
+    FIELD_NAMES.map((name) => [name, value]),
+  ) as Record<keyof Fields, boolean>;
+}
+
 const EMPTY: Fields = {
   firstName: "",
   lastName: "",
@@ -88,15 +104,7 @@ export default function RegisterPage() {
 
   // Campos tocados (al menos un onBlur): hasta entonces no se muestra el
   // error individual, para no marcar el formulario en rojo al abrirlo.
-  const [touched, setTouched] = useState<Record<keyof Fields, boolean>>({
-    firstName: false,
-    lastName: false,
-    email: false,
-    phone: false,
-    username: false,
-    password: false,
-    confirmPassword: false,
-  });
+  const [touched, setTouched] = useState(() => createTouchedState(false));
 
   function markTouched(name: keyof Fields) {
     setTouched((prev) => ({ ...prev, [name]: true }));
@@ -186,15 +194,7 @@ export default function RegisterPage() {
       setError(invalid);
       // Ademas del resumen, se marca todos los campos para que cada uno
       // muestre su propio error bajo la caja.
-      setTouched({
-        firstName: true,
-        lastName: true,
-        email: true,
-        phone: true,
-        username: true,
-        password: true,
-        confirmPassword: true,
-      });
+      setTouched(createTouchedState(true));
       return;
     }
 

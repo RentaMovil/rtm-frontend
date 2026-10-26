@@ -104,7 +104,7 @@ export default function BrandLogo({
   const colors = themes[themeName];
 
   const isAuth = size === "auth";
-  const styles = isAuth ? createAuthStyles(colors) : createStyles(colors);
+  const styles = isAuth ? createAuthStyles() : createStyles();
 
   const icon = showIcon ? (
     <BrandIcon size={isAuth ? 26 : 20} color={colors.button} />

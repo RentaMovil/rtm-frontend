@@ -40,6 +40,18 @@ export interface ThemeColors {
   errorSurface: string;
 }
 
+const darkThemeAccents = {
+  primary: "#C59B27",
+  primaryDark: "#AA820A",
+  button: "#C59B27",
+  accentBg: "#C59B27",
+  accentBorder: "#C59B27",
+  shadow: "rgba(0, 0, 0, 0.5)",
+  overlay: "rgba(0, 0, 0, 0.6)",
+  primarySurface: "rgba(197, 155, 39, 0.15)",
+  errorSurface: "rgba(239, 68, 68, 0.14)",
+} as const;
+
 /**
  * Paleta de la app.
  *
@@ -96,18 +108,16 @@ export const themes = {
   },
 
   dark: {
+    ...darkThemeAccents,
     background: "#121212",
     backgroundCard: "#1C1C1C",
     card: "#1C1C1C",
     text: "#F8FAFC",
     textHeading: "#e8e8e8",
     secondaryText: "#64748B",
-    primary: "#C59B27",
-    primaryDark: "#AA820A",
     border: "rgba(255, 255, 255, 0.06)",
     cardBorder: "#262626",
     success: "#22C55E",
-    button: "#C59B27",
     buttonText: "#121212",
     input: "#1A1A1A",
     cardBg: "#1C1C1C",
@@ -115,28 +125,20 @@ export const themes = {
     textBtn: "#121212",
     error: "#EF4444",
     label: "#FFFFFF",
-    accentBg: "#C59B27",
-    accentBorder: "#C59B27",
-    shadow: "rgba(0, 0, 0, 0.5)",
-    overlay: "rgba(0, 0, 0, 0.6)",
-    primarySurface: "rgba(197, 155, 39, 0.15)",
     successSurface: "#1A1A1A",
-    errorSurface: "rgba(239, 68, 68, 0.14)",
   },
 
   darkPurple: {
+    ...darkThemeAccents,
     background: "#030712",
     backgroundCard: "#070F22",
     card: "#070F22",
     text: "#F8FAFC",
     textHeading: "#94A3B8",
     secondaryText: "#475569",
-    primary: "#C59B27",
-    primaryDark: "#AA820A",
     border: "rgba(255, 255, 255, 0.04)",
     cardBorder: "#111E33",
     success: "#137310",
-    button: "#C59B27",
     buttonText: "#030712",
     input: "#0B1528",
     cardBg: "#070F22",
@@ -144,13 +146,7 @@ export const themes = {
     textBtn: "#030712",
     error: "#EF4444",
     label: "#FFFFFF",
-    accentBg: "#C59B27",
-    accentBorder: "#C59B27",
-    shadow: "rgba(0, 0, 0, 0.5)",
-    overlay: "rgba(0, 0, 0, 0.6)",
-    primarySurface: "rgba(197, 155, 39, 0.15)",
     successSurface: "#0B1528",
-    errorSurface: "rgba(239, 68, 68, 0.14)",
   },
 
   skylight: {

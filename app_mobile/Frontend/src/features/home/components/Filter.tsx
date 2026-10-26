@@ -56,13 +56,8 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
     const [showEndTime, setShowEndTime] = useState(false);
 
     const [errorBranch, setErrorBranch] = useState("");
-    const [errorDate, setErrorDate] = useState("");
-
-    useEffect(() => {
-        setErrorDate(
-        endDate < startDate ? t("filterCalendar.endDateBeforeStart") : ""
-        );
-    }, [startDate, endDate]);
+    const errorDate =
+        endDate < startDate ? t("filterCalendar.endDateBeforeStart") : "";
 
     const [branchOptions, setBranchOptions] = useState<Branch[]>([]);
 
@@ -128,6 +123,8 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
     };
 
     const handleSubmit = () => {
+        if (errorDate) return;
+
         // El usuario puede escribir el nombre completo sin tocar las
         // sugerencias: en ese caso `selectedBranch` queda en null y, antes
         // de este fix, la busqueda se rechazaba con "sucursal invalida"
@@ -344,6 +341,8 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
             )}
             </View>
         </View>
+
+        {errorDate ? <Text style={styles.error}>{errorDate}</Text> : null}
 
         {/* BUTTON */}
         <TouchableOpacity style={styles.btnSearch} onPress={handleSubmit}>

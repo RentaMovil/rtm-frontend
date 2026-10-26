@@ -22,7 +22,6 @@ import i18n from "../../../translation/i18n";
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
-import { Fonts } from "../../../theme/fonts";
 
 import { createAuthStyles } from "./authStyles";
 
@@ -96,7 +95,7 @@ export default function LoginPage() {
 
   /**
    * Tras entrar no se navega aqui: `isAuthenticated` cambia en
-   * `AuthContext`, y el guard de `app/_layout.tsx` es quien lleva al menu.
+   * `AuthContext`, y el guard de `app/_layout.tsx` lleva a Inicio.
    * Hacerlo aqui ademas competia con ese `replace` y podia quedar la ruta a
    * medias.
    */

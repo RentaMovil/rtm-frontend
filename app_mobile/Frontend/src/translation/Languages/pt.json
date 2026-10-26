@@ -30,13 +30,6 @@
       "premium": "Premium"
     }
   },
-  "menu": {
-    "title": "Menu",
-    "home": "Início",
-    "reservations": "Minhas reservas",
-    "account": "Minha conta",
-    "logout": "Sair"
-  },
   "navbar": {
     "linkInit": "Início",
     "linkNotifications": "Notificações",
@@ -582,6 +575,11 @@
   },
   "historyReservation": {
     "myReservations": "Minhas reservas",
+    "loadingText": "Carregando reservas...",
+    "activityTitle": "SUA ATIVIDADE",
+    "myReservationsLabel": "Minhas reservas",
+    "subtitle": "Consulte e gerencie suas próximas viagens.",
+    "emptyState": "Você ainda não tem reservas.",
     "date": "Data: ",
     "days": "Dias: ",
     "total": "Total: ",
@@ -596,8 +594,6 @@
   "tabs": {
     "home": "Início",
     "homeModule": "Módulo",
-    "menu": "Menu",
-    "menuModule": "Módulo",
     "reservations": "Reservas",
     "reservationsModule": "Módulo",
     "account": "Conta",

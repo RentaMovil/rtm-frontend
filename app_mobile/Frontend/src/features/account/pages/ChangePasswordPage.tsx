@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
@@ -113,6 +114,31 @@ export default function ChangePasswordPage() {
 
   const rules = buildPasswordRules(newPassword, t);
 
+  function renderPasswordField(
+    field: "currentPassword" | "newPassword" | "confirmPassword",
+    value: string,
+    onChange: (value: string) => void,
+    children?: ReactNode,
+  ) {
+    const fieldError = touched[field] ? errorFor(field) : null;
+
+    return (
+      <>
+        <Text style={styles.label}>{t(`changePassword.${field}`)}</Text>
+        <PasswordField
+          value={value}
+          onChange={onChange}
+          onBlur={() => markTouched(field)}
+          hidden={!showPassword}
+          onToggleVisibility={togglePassword}
+          inputStyle={styles.input}
+        />
+        {children}
+        {fieldError ? <Text style={styles.fieldError}>{fieldError}</Text> : null}
+      </>
+    );
+  }
+
   function selectMethod(next: Method) {
     setMethod(next);
     setError(null);
@@ -150,11 +176,7 @@ export default function ChangePasswordPage() {
     if (problem) {
       setError(problem);
       // Ademas del resumen, cada campo muestra su propio error.
-      setTouched({
-        currentPassword: true,
-        newPassword: true,
-        confirmPassword: true,
-      });
+      setTouched({ currentPassword: true, newPassword: true, confirmPassword: true });
       return;
     }
 
@@ -220,64 +242,25 @@ export default function ChangePasswordPage() {
         <AppCard>
           {method === "password" ? (
             <>
-              <Text style={styles.label}>{t("changePassword.currentPassword")}</Text>
-              <PasswordField
-                value={currentPassword}
-                onChange={setCurrentPassword}
-                onBlur={() => markTouched("currentPassword")}
-                hidden={!showPassword}
-                onToggleVisibility={togglePassword}
-                inputStyle={styles.input}
-              />
+              {renderPasswordField("currentPassword", currentPassword, setCurrentPassword)}
 
-              {touched.currentPassword && errorFor("currentPassword") ? (
-                <Text style={styles.fieldError}>
-                  {errorFor("currentPassword")}
-                </Text>
-              ) : null}
+              {renderPasswordField(
+                "newPassword",
+                newPassword,
+                setNewPassword,
+                <View style={styles.rules}>
+                  {rules.map((rule) => (
+                    <Text
+                      key={rule.label}
+                      style={rule.valid ? styles.ruleValid : styles.ruleInvalid}
+                    >
+                      {rule.label}
+                    </Text>
+                  ))}
+                </View>,
+              )}
 
-              <Text style={styles.label}>{t("changePassword.newPassword")}</Text>
-              <PasswordField
-                value={newPassword}
-                onChange={setNewPassword}
-                onBlur={() => markTouched("newPassword")}
-                hidden={!showPassword}
-                onToggleVisibility={togglePassword}
-                inputStyle={styles.input}
-              />
-
-              <View style={styles.rules}>
-                {rules.map((rule) => (
-                  <Text
-                    key={rule.label}
-                    style={rule.valid ? styles.ruleValid : styles.ruleInvalid}
-                  >
-                    {rule.label}
-                  </Text>
-                ))}
-              </View>
-
-              {touched.newPassword && errorFor("newPassword") ? (
-                <Text style={styles.fieldError}>
-                  {errorFor("newPassword")}
-                </Text>
-              ) : null}
-
-              <Text style={styles.label}>{t("changePassword.confirmPassword")}</Text>
-              <PasswordField
-                value={confirmPassword}
-                onChange={setConfirmPassword}
-                onBlur={() => markTouched("confirmPassword")}
-                hidden={!showPassword}
-                onToggleVisibility={togglePassword}
-                inputStyle={styles.input}
-              />
-
-              {touched.confirmPassword && errorFor("confirmPassword") ? (
-                <Text style={styles.fieldError}>
-                  {errorFor("confirmPassword")}
-                </Text>
-              ) : null}
+              {renderPasswordField("confirmPassword", confirmPassword, setConfirmPassword)}
 
               {error ? <Text style={styles.error}>{error}</Text> : null}
 

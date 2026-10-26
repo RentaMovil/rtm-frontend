@@ -30,13 +30,6 @@
       "premium": "Premium"
     }
   },
-  "menu": {
-    "title": "Menu",
-    "home": "Accueil",
-    "reservations": "Mes réservations",
-    "account": "Mon compte",
-    "logout": "Se déconnecter"
-  },
   "navbar": {
     "linkInit": "Accueil",
     "linkNotifications": "Notifications",
@@ -601,8 +594,6 @@
   "tabs": {
     "home": "Accueil",
     "homeModule": "Module",
-    "menu": "Menu",
-    "menuModule": "Module",
     "reservations": "Réservations",
     "reservationsModule": "Module",
     "account": "Compte",

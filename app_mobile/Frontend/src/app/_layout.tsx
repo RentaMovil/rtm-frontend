@@ -182,8 +182,8 @@ function InnerNav() {
      * asi que refrescar en `/account` (o en `/payment`) te botaba al home y
      * se comia la navegacion real.
      *
-     * Tras entrar, el destino es el **menu**, no Inicio: la idea es que el
-     * cliente aterrice en su panel, no en la pantalla de buscar vehiculo.
+     * Tras entrar, el destino es Inicio para que el cliente pueda buscar
+     * vehiculos desde la pantalla principal.
      */
     useEffect(() => {
 

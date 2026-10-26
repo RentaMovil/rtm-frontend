@@ -17,7 +17,7 @@ import {
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
-import type { Branch, Reservation, Vehicle } from "../../../types";
+import type { Branch, Reservation } from "../../../types";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { ApiError } from "../../../shared/api/httpClient";
 import { getBranchById, getBranches } from "../../branches/services/branchService";
@@ -86,7 +86,6 @@ export default function ReservationDetailPage() {
     // La reserva guarda solo ids (vehicleId, pickupBranchId,
     // returnBranchId). El vehiculo viene de la API y las sucursales del
     // catalogo, asi que se resuelven aqui para poder pintar los nombres.
-    const [vehicle, setVehicle] = useState<Vehicle | null>(null);
     const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
     const [isCancelling, setIsCancelling] = useState(false);
     const { themeName } = useTheme();
@@ -302,7 +301,7 @@ export default function ReservationDetailPage() {
                             color={colors.button}
                         />
                         <Text style={styles.vehicleName}>
-                            {vehicle ? `${vehicle.brand} ${vehicle.model}` : "Vehiculo no disponible"}
+                            Vehículo no disponible
                         </Text>
                     </View>
                 </View>
@@ -384,7 +383,7 @@ export default function ReservationDetailPage() {
                         </View>
                         <Text style={styles.modalTitle}>¿Cancelar reserva?</Text>
                         <Text style={styles.modalMessage}>
-                            ¿De verdad quieres cancelar la reserva de {vehicle ? `${vehicle.brand} ${vehicle.model}` : reservation.vehicleId}? Esta acción no se puede deshacer.
+                            ¿De verdad quieres cancelar la reserva de {reservation.vehicleId}? Esta acción no se puede deshacer.
                         </Text>
 
                         <View style={styles.modalActions}>

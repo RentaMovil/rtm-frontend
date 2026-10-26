@@ -626,6 +626,10 @@ export default function Account() {
 
             {/* BOTONES */}
 
+            {saveError ? (
+                <Text style={styles.saveError}>{saveError}</Text>
+            ) : null}
+
             <View
                 style={
                     styles.buttonsRow
