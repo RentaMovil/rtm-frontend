@@ -11,9 +11,9 @@ import {
   View,
 } from "react-native";
 import { Link, useRouter } from "expo-router";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import BrandLogo from "../../../shared/components/Brand/BrandLogo";
+import PasswordField from "../../../shared/components/PasswordField/PasswordField";
 
 import { useAuth } from "../hooks/useAuth";
 import { ApiError } from "../../../shared/api/httpClient";
@@ -238,39 +238,17 @@ export default function RegisterPage() {
         <Text style={styles.label}>{t(`register.${name}`)}</Text>
 
         {options?.secureTextEntry ? (
-          // Mismo ojo de mostrar/ocultar que LoginPage y PasswordCodeFlow:
-          // un unico toggle compartido por password y confirmPassword.
-          <View style={styles.passwordField}>
-            <TextInput
-              placeholder={t(placeholderKey)}
-              placeholderTextColor={colors.secondaryText}
-              value={value}
-              onChangeText={onChange}
-              onBlur={() => markTouched(name)}
-              secureTextEntry={!showPassword}
-              autoCapitalize="none"
-              autoCorrect={false}
-              style={[styles.input, styles.inputWeb, styles.inputPassword]}
-            />
-
-            <TouchableOpacity
-              style={styles.togglePassword}
-              onPress={() => setShowPassword((prev) => !prev)}
-              accessibilityRole="button"
-              accessibilityLabel={t(
-                showPassword
-                  ? "loginForm.hidePassword"
-                  : "loginForm.showPassword"
-              )}
-              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-            >
-              <FontAwesome
-                name={showPassword ? "eye-slash" : "eye"}
-                size={18}
-                color={colors.button}
-              />
-            </TouchableOpacity>
-          </View>
+          // Mismo ojo de mostrar/ocultar que LoginPage: un unico toggle
+          // compartido por password y confirmPassword (lo aporta
+          // PasswordField, compartido con el resto de la app).
+          <PasswordField
+            value={value}
+            onChange={onChange}
+            onBlur={() => markTouched(name)}
+            hidden={!showPassword}
+            onToggleVisibility={() => setShowPassword((prev) => !prev)}
+            inputStyle={[styles.input, styles.inputWeb]}
+          />
         ) : (
           <TextInput
             placeholder={t(placeholderKey)}

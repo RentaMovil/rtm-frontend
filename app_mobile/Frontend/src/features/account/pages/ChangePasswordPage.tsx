@@ -8,15 +8,14 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import { useRouter } from "expo-router";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import ContinueButton from "../../../shared/components/Button/ContinueButton";
 import AppCard from "../../../shared/components/AppCard/AppCard";
+import PasswordField from "../../../shared/components/PasswordField/PasswordField";
 
 import { ApiError } from "../../../shared/api/httpClient";
 import { useAuth } from "../../auth/context/AuthContext";
@@ -65,6 +64,11 @@ export default function ChangePasswordPage() {
     field: "currentPassword" | "newPassword" | "confirmPassword",
   ) {
     setTouched((prev) => ({ ...prev, [field]: true }));
+  }
+
+  /** Un unico ojo para las tres cajas: mismo comportamiento que antes. */
+  function togglePassword() {
+    setShowPassword((prev) => !prev);
   }
 
   /**
@@ -217,36 +221,14 @@ export default function ChangePasswordPage() {
           {method === "password" ? (
             <>
               <Text style={styles.label}>{t("changePassword.currentPassword")}</Text>
-              <View style={styles.passwordField}>
-                <TextInput
-                  style={[styles.input, styles.inputPassword]}
-                  value={currentPassword}
-                  onChangeText={setCurrentPassword}
-                  onBlur={() => markTouched("currentPassword")}
-                  secureTextEntry={!showPassword}
-                  autoCapitalize="none"
-                  placeholder={t("loginForm.passwordPlaceholder")}
-                  placeholderTextColor={colors.secondaryText}
-                />
-
-                <TouchableOpacity
-                  style={styles.togglePassword}
-                  onPress={() => setShowPassword((prev) => !prev)}
-                  accessibilityRole="button"
-                  accessibilityLabel={t(
-                    showPassword
-                      ? "loginForm.hidePassword"
-                      : "loginForm.showPassword"
-                  )}
-                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                >
-                  <FontAwesome
-                    name={showPassword ? "eye-slash" : "eye"}
-                    size={18}
-                    color={colors.button}
-                  />
-                </TouchableOpacity>
-              </View>
+              <PasswordField
+                value={currentPassword}
+                onChange={setCurrentPassword}
+                onBlur={() => markTouched("currentPassword")}
+                hidden={!showPassword}
+                onToggleVisibility={togglePassword}
+                inputStyle={styles.input}
+              />
 
               {touched.currentPassword && errorFor("currentPassword") ? (
                 <Text style={styles.fieldError}>
@@ -255,36 +237,14 @@ export default function ChangePasswordPage() {
               ) : null}
 
               <Text style={styles.label}>{t("changePassword.newPassword")}</Text>
-              <View style={styles.passwordField}>
-                <TextInput
-                  style={[styles.input, styles.inputPassword]}
-                  value={newPassword}
-                  onChangeText={setNewPassword}
-                  onBlur={() => markTouched("newPassword")}
-                  secureTextEntry={!showPassword}
-                  autoCapitalize="none"
-                  placeholder={t("loginForm.passwordPlaceholder")}
-                  placeholderTextColor={colors.secondaryText}
-                />
-
-                <TouchableOpacity
-                  style={styles.togglePassword}
-                  onPress={() => setShowPassword((prev) => !prev)}
-                  accessibilityRole="button"
-                  accessibilityLabel={t(
-                    showPassword
-                      ? "loginForm.hidePassword"
-                      : "loginForm.showPassword"
-                  )}
-                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                >
-                  <FontAwesome
-                    name={showPassword ? "eye-slash" : "eye"}
-                    size={18}
-                    color={colors.button}
-                  />
-                </TouchableOpacity>
-              </View>
+              <PasswordField
+                value={newPassword}
+                onChange={setNewPassword}
+                onBlur={() => markTouched("newPassword")}
+                hidden={!showPassword}
+                onToggleVisibility={togglePassword}
+                inputStyle={styles.input}
+              />
 
               <View style={styles.rules}>
                 {rules.map((rule) => (
@@ -304,36 +264,14 @@ export default function ChangePasswordPage() {
               ) : null}
 
               <Text style={styles.label}>{t("changePassword.confirmPassword")}</Text>
-              <View style={styles.passwordField}>
-                <TextInput
-                  style={[styles.input, styles.inputPassword]}
-                  value={confirmPassword}
-                  onChangeText={setConfirmPassword}
-                  onBlur={() => markTouched("confirmPassword")}
-                  secureTextEntry={!showPassword}
-                  autoCapitalize="none"
-                  placeholder={t("loginForm.passwordPlaceholder")}
-                  placeholderTextColor={colors.secondaryText}
-                />
-
-                <TouchableOpacity
-                  style={styles.togglePassword}
-                  onPress={() => setShowPassword((prev) => !prev)}
-                  accessibilityRole="button"
-                  accessibilityLabel={t(
-                    showPassword
-                      ? "loginForm.hidePassword"
-                      : "loginForm.showPassword"
-                  )}
-                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                >
-                  <FontAwesome
-                    name={showPassword ? "eye-slash" : "eye"}
-                    size={18}
-                    color={colors.button}
-                  />
-                </TouchableOpacity>
-              </View>
+              <PasswordField
+                value={confirmPassword}
+                onChange={setConfirmPassword}
+                onBlur={() => markTouched("confirmPassword")}
+                hidden={!showPassword}
+                onToggleVisibility={togglePassword}
+                inputStyle={styles.input}
+              />
 
               {touched.confirmPassword && errorFor("confirmPassword") ? (
                 <Text style={styles.fieldError}>
@@ -441,28 +379,6 @@ const createStyles = (colors: any) =>
       fontSize: 15,
       color: colors.text,
       marginBottom: 16,
-    },
-
-    /**
-     * Campo de contrasena con el boton de mostrar/ocultar superpuesto a la
-     * derecha: mismo patron que `authStyles` (login/register/flow).
-     */
-    passwordField: {
-      position: "relative",
-      justifyContent: "center",
-    },
-
-    inputPassword: {
-      paddingRight: 52,
-    },
-
-    togglePassword: {
-      position: "absolute",
-      right: 4,
-      width: 44,
-      height: 44,
-      alignItems: "center",
-      justifyContent: "center",
     },
 
     rules: {

@@ -11,9 +11,9 @@ import {
   View,
 } from "react-native";
 import { Link, useRouter } from "expo-router";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import BrandLogo from "../../../shared/components/Brand/BrandLogo";
+import PasswordField from "../../../shared/components/PasswordField/PasswordField";
 
 import { useAuth } from "../hooks/useAuth";
 import { ApiError } from "../../../shared/api/httpClient";
@@ -174,35 +174,14 @@ export default function LoginPage() {
           <View>
             <Text style={styles.label}>{t("loginForm.password")}</Text>
 
-            <View style={styles.passwordField}>
-              <TextInput
-                placeholder={t("loginForm.passwordPlaceholder")}
-                placeholderTextColor={colors.secondaryText}
-                secureTextEntry={!showPassword}
-                value={password}
-                onChangeText={setPassword}
-                onBlur={() => markTouched("password")}
-                style={[styles.input, styles.inputWeb, styles.inputPassword]}
-              />
-
-              <TouchableOpacity
-                style={styles.togglePassword}
-                onPress={() => setShowPassword((prev) => !prev)}
-                accessibilityRole="button"
-                accessibilityLabel={t(
-                  showPassword
-                    ? "loginForm.hidePassword"
-                    : "loginForm.showPassword"
-                )}
-                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-              >
-                <FontAwesome
-                  name={showPassword ? "eye-slash" : "eye"}
-                  size={18}
-                  color={colors.button}
-                />
-              </TouchableOpacity>
-            </View>
+            <PasswordField
+              value={password}
+              onChange={setPassword}
+              onBlur={() => markTouched("password")}
+              hidden={!showPassword}
+              onToggleVisibility={() => setShowPassword((prev) => !prev)}
+              inputStyle={[styles.input, styles.inputWeb]}
+            />
 
             {touched.password && errorFor("password") ? (
               <Text style={styles.fieldError}>{errorFor("password")}</Text>
