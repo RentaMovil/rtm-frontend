@@ -8,63 +8,57 @@ import Login from './features/auth/pages/Login.jsx';
 // /account y /account/admin usan el mismo componente: el prop `admin` solo cambia
 // el Navbar y el Footer. Antes cada ruta tenía su propio perfil y divergían.
 import AccountView from './features/auth/components/AccountView';
-import AccountAdmin from './features/account/pages/AccountAdmin.jsx';
-
+// Auth - Change Password
 import ChangePassword from './features/auth/pages/ChangePassword.jsx';
-
-import VehicleInventory from './features/admin/VehicleInventory/pages/VehicleInventory.jsx';
 // Vehicles
 import Home from './features/vehicles/pages/Home.jsx';
 import HomeS from './features/vehicles/pages/HomeS.jsx';
 import { useAuth } from './contexts/AuthContext.jsx';
-
 // Booking
 import Reservation from './features/booking//pages/Reservation.jsx';
 import HistorialReservation from './features/booking/pages/HistorialReservation.jsx';
-
 // Payment
 import Payment from './features/payment/pages/Payment.jsx';
 import { RequireAuth, RequireRole } from './shared/components/ProtectedRoute.jsx';
-
 // Notification
 import Notification from './features/notification/pages/Notification.jsx';
+// Admin - Vehicles
+import VehicleInventory from './features/admin/VehicleInventory/pages/VehicleInventory.jsx';
+// Admin - Account
+import AccountAdmin from './features/account/pages/AccountAdmin.jsx';
+// Admin - Notification
 import NotificationAdmin from './features/notification/pages/NotificationAdmin.jsx';
-
 // Admin - Vehicles
 import RegisterVehicle from './features/admin/registerVehicle/pages/RegisterVehicle.jsx';
-
 // Admin - Maintenance
 import Maintenance from './features/admin/registerMaintenance/pages/Maintenance.jsx';
-
 // Admin - HomeAdmin
 import HomeAdmin from './features/admin/HomeAdmin/pages/HomeAdmin.jsx';
-
+// Admin - Insurance Types
 import InsuranceTypes from './features/admin/insuranceTypes/pages/InsuranceTypes.jsx';
+// Admin - Branches
 import Branches from './features/admin/branches/pages/Branches.jsx';
+// Admin - Reservations
 import ReservationsList from './features/admin/reservations/pages/ReservationsList.jsx';
+// Admin - Reservation Detail
 import ReservationDetail from './features/admin/reservations/pages/ReservationDetail.jsx';
+// Admin - Vehicle Location
 import VehicleLocation from './features/admin/vehicleLocation/pages/VehicleLocation.jsx';
+// Admin - Route History
 import RouteHistory from './features/admin/routeHistory/pages/RouteHistory.jsx';
-
-
+// Admin - History Maintenance
 import History from './features/admin/historyMaintenance/pages/History.jsx';
-
+// Auth - Register
 import RegisterForm from './features/auth/components/RegisterForm.jsx';
-
+// Auth - Email Verification
 import EmailVerification from './features/auth/pages/EmailVerification.jsx';
-
+// Auth - Code Verification
 import CodeVerification from "./features/auth/pages/CodeVerification.jsx";
-
+// Auth - Change Password Login
 import ChangePasswordLogin from './features/auth/pages/ChangePasswordLogin.jsx';
-
-//----------
-
 // Super Admin
 import UserManagement from './features/admin/users/pages/UserManagement.jsx';
 import BankAccounts from './features/admin/bankAccounts/pages/BankAccounts.jsx';
-
-
-
 
 // Admin con sesión ya restaurada: lleva directo a HomeAdmin, sin esperar a que
 // entre a /account para que la navbar refleje el rol real.
@@ -88,14 +82,47 @@ function App() {
     <BrowserRouter>
 
       <Routes>
-        <Route path="/" element={<HomeGate />} />
-        <Route path="/login" element={<Login theme={theme} setTheme={setTheme} />} />
-        <Route path="/register" element={<RegisterForm />} />
-        <Route path="/Register" element={<RegisterForm />} />
-        <Route path="/EmailVerification" element={<EmailVerification />} />
-        <Route path="/CodeVerification" element={<CodeVerification />} />
-        <Route path="/ChangePasswordLogin" element={<ChangePasswordLogin />} />
-
+        <Route 
+          path="/" 
+          element={
+            <HomeGate />
+          } 
+        />
+        <Route 
+          path="/login" 
+          element={
+            <Login theme={theme} setTheme={setTheme} />
+          }
+        />
+        <Route 
+          path="/register"
+          element={
+          <RegisterForm />
+          } />
+        <Route 
+          path="/Register" 
+          element={
+            <RegisterForm />
+          }
+        />
+        <Route 
+          path="/EmailVerification" 
+          element={
+          <EmailVerification />
+          }
+        />
+        <Route 
+          path="/CodeVerification" 
+          element={
+            <CodeVerification />
+          }
+        />
+        <Route 
+          path="/ChangePasswordLogin"
+          element={
+            <ChangePasswordLogin />
+          }
+        />
         <Route
           path="/account"
           element={
