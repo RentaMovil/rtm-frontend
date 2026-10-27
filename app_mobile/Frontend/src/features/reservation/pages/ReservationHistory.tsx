@@ -1,10 +1,11 @@
 import {
-    Alert,
     ScrollView,
     Text,
     TouchableOpacity,
     View,
 } from "react-native";
+
+import { appAlert } from "../../../shared/components/Alert/AppAlert";
 
 import {
     useEffect,
@@ -123,7 +124,7 @@ export default function ReservationHistoryScreen() {
                     error
                 );
 
-                Alert.alert(
+                appAlert.alert(
                     t("historyReservation.loadErrorTitle"),
                     t("historyReservation.loadErrorMessage"),
                 );

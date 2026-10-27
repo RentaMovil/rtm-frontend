@@ -319,7 +319,8 @@
     "noReservationTitle": "Nenhuma reserva ativa",
     "noReservationText": "Crie primeiro uma reserva para poder registrar o pagamento.",
     "submitting": "Enviando...",
-    "submit": "Registrar pagamento"
+    "submit": "Registrar pagamento",
+    "uploadLater": "Enviar comprovante depois"
   },
   "receiptPicker": {
     "title": "Comprovante de pagamento",
@@ -327,7 +328,7 @@
     "subtitleNative": "Anexe a foto do comprovante da transferência",
     "attachImage": "Anexar imagem",
     "pickCamera": "Tirar foto",
-    "pickGallery": "Escolher da galeria",
+    "pickGallery": "Enviar foto",
     "chooseSourceTitle": "Comprovante de pagamento",
     "chooseSourceMessage": "Como você quer anexar?",
     "cancel": "Cancelar",
@@ -617,7 +618,12 @@
     "no": "Não",
     "confirm": "Confirmar",
     "loadErrorTitle": "Erro ao carregar reservas",
-    "loadErrorMessage": "Não foi possível carregar suas reservas. Verifique sua conexão e tente novamente."
+    "loadErrorMessage": "Não foi possível carregar suas reservas. Verifique sua conexão e tente novamente.",
+    "uploadReceipt": "Enviar comprovante"
+  },
+  "uploadReceipt": {
+    "modalTitle": "Enviar comprovante de pagamento",
+    "totalToTransfer": "Total a transferir"
   },
   "tabs": {
     "home": "Início",
@@ -664,6 +670,9 @@
     "saveBtn": "Salvar",
     "saveBtnSaving": "Salvando...",
     "logoutBtn": "Sair",
+    "confirmLogout": "Sair",
+    "logoutQuestion": "Tem certeza de que deseja sair?",
+    "confirmLogoutBtn": "Sair",
     "emailModalTitle": "Alterar email",
     "currentEmailLabel": "Email atual",
     "newEmailLabel": "Novo email",

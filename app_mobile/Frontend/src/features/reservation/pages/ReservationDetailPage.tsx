@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
     ActivityIndicator,
-    Alert,
     Modal,
     Pressable,
     ScrollView,
@@ -11,6 +10,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+import { appAlert } from "../../../shared/components/Alert/AppAlert";
 import {
     RESERVATION_STATUS,
 } from "../../../types";
@@ -22,6 +22,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { ApiError } from "../../../shared/api/httpClient";
 import { getBranchById, getBranches } from "../../branches/services/branchService";
 import BranchSelectorModal from "../components/BranchSelectorModal";
+import UploadReceiptModal from "../../payment/components/UploadReceiptModal";
 import {
     cancelReservation,
     getReservationById,
@@ -96,6 +97,7 @@ export default function ReservationDetailPage() {
     const [branchOptions, setBranchOptions] = useState<Branch[]>([]);
     const [isReturnBranchModalVisible, setIsReturnBranchModalVisible] = useState(false);
     const [isUpdatingReturnBranch, setIsUpdatingReturnBranch] = useState(false);
+    const [isUploadReceiptModalVisible, setIsUploadReceiptModalVisible] = useState(false);
 
     // Guardas sincronas (ademas del estado) contra doble solicitud: dos taps
     // seguidos pueden disparar dos llamadas antes de que el primer
@@ -161,7 +163,7 @@ export default function ReservationDetailPage() {
             const updatedReservation = await cancelReservation(reservation.id);
 
             if (!updatedReservation) {
-            Alert.alert(t("common.error"), t("reservationDetail.notFound"));
+            appAlert.alert(t("common.error"), t("reservationDetail.notFound"));
                 return;
             }
 
@@ -169,17 +171,28 @@ export default function ReservationDetailPage() {
             // del backend: nunca se marca como cancelada de forma optimista.
             setReservation(updatedReservation);
             setIsCancelModalVisible(false);
-            Alert.alert(t("reservationDetail.cancelledTitle"), t("reservationDetail.cancelledMessage"));
+            appAlert.alert(t("reservationDetail.cancelledTitle"), t("reservationDetail.cancelledMessage"));
         } catch (error) {
             console.error("Error cancelando reserva:", error);
             const message =
                 error instanceof ApiError
                     ? error.message
                     : t("reservationDetail.cancelErrorMessage");
-            Alert.alert(t("reservationDetail.cancelErrorTitle"), message);
+            appAlert.alert(t("reservationDetail.cancelErrorTitle"), message);
         } finally {
             setIsCancelling(false);
             cancelInFlightRef.current = false;
+        }
+    }
+
+    async function handleUploadReceiptSuccess() {
+        setIsUploadReceiptModalVisible(false);
+
+        try {
+            const updated = await getReservationById(String(id));
+            setReservation(updated ?? null);
+        } catch (error) {
+            console.error("Error recargando reserva tras subir el comprobante:", error);
         }
     }
 
@@ -207,7 +220,7 @@ export default function ReservationDetailPage() {
                 error instanceof ApiError
                     ? error.message
                     : t("reservationDetail.returnBranchErrorMessage");
-            Alert.alert(t("reservationDetail.returnBranchErrorTitle"), message);
+            appAlert.alert(t("reservationDetail.returnBranchErrorTitle"), message);
         } finally {
             setIsUpdatingReturnBranch(false);
             returnBranchInFlightRef.current = false;
@@ -334,6 +347,18 @@ export default function ReservationDetailPage() {
                     <Text style={styles.totalAmount}>${reservation.total_price.toLocaleString()}</Text>
                 </View>
 
+                {reservation.status === RESERVATION_STATUS.PENDING_PAYMENT && (
+                    <TouchableOpacity
+                        accessibilityRole="button"
+                        accessibilityLabel="Subir comprobante"
+                        activeOpacity={0.85}
+                        style={styles.uploadReceiptButton}
+                        onPress={() => setIsUploadReceiptModalVisible(true)}
+                    >
+                        <Text style={styles.uploadReceiptButtonText}>Subir comprobante</Text>
+                    </TouchableOpacity>
+                )}
+
                 {reservation.status !== RESERVATION_STATUS.CANCELLED && (
                     canCancel ? (
                         <TouchableOpacity
@@ -413,6 +438,14 @@ export default function ReservationDetailPage() {
                 branches={branchOptions}
                 onClose={() => !isUpdatingReturnBranch && setIsReturnBranchModalVisible(false)}
                 onSelect={handleSelectReturnBranch}
+            />
+
+            <UploadReceiptModal
+                visible={isUploadReceiptModalVisible}
+                reservationId={reservation.id}
+                amount={reservation.total_price}
+                onClose={() => setIsUploadReceiptModalVisible(false)}
+                onSuccess={handleUploadReceiptSuccess}
             />
         </>
     );

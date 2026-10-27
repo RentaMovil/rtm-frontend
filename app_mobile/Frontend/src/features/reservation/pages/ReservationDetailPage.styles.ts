@@ -222,6 +222,20 @@ export function createStyles(colors: any) {
             color: colors.secondaryText,
         },
 
+        uploadReceiptButton: {
+            alignItems: "center",
+            padding: 15,
+            borderRadius: 12,
+            marginBottom: 12,
+            backgroundColor: colors.button,
+        },
+
+        uploadReceiptButtonText: {
+            fontSize: 15,
+            fontWeight: "700",
+            color: colors.buttonText,
+        },
+
         // Acción de cancelación
         cancelButton: {
             alignItems: "center",

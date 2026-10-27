@@ -24,5 +24,17 @@ export const createStyles = (colors: any) => {
       marginTop: Spacing.sm,
       color: colors.secondaryText,
     },
+
+    uploadLaterLink: {
+      alignItems: "center",
+      marginTop: Spacing.md,
+      padding: Spacing.sm,
+    },
+
+    uploadLaterText: {
+      ...text.label,
+      color: colors.secondaryText,
+      textDecorationLine: "underline",
+    },
   });
 };
