@@ -1,4 +1,4 @@
-import { httpClient } from "../../../shared/api/httpClient";
+import { httpClient, type HttpRequestOptions } from "../../../shared/api/httpClient";
 import { toBranchViewModel } from "./branchMapper";
 import type { Branch, BranchOption } from "../../../types";
 
@@ -45,8 +45,8 @@ let branchesCache: Branch[] | null = null;
 /** Peticion en vuelo, para que dos ids pedidos a la vez no disparen dos listados. */
 let branchesRequest: Promise<Branch[]> | null = null;
 
-async function fetchBranches(): Promise<Branch[]> {
-    const response = await httpClient.get<unknown>(RESOURCE);
+async function fetchBranches(options?: HttpRequestOptions): Promise<Branch[]> {
+    const response = await httpClient.get<unknown>(RESOURCE, options);
 
     return normalizeBranchesResponse(response).map((branch) =>
         toBranchViewModel(branch as Record<string, unknown>),
@@ -79,8 +79,8 @@ function loadBranchesOnce(): Promise<Branch[]> {
  * misma API real que usa el frontend web (/branches), para que ambas
  * plataformas vean exactamente las mismas sucursales.
  */
-export async function getBranches(): Promise<Branch[]> {
-    const branches = await fetchBranches();
+export async function getBranches(options?: HttpRequestOptions): Promise<Branch[]> {
+    const branches = await fetchBranches(options);
     branchesCache = branches;
 
     return branches;

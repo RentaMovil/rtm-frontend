@@ -10,6 +10,7 @@ import { calculateDays } from "../utils/calculateDays";
 import { calculateInvoiceTotal } from "../utils/calculateInvoiceTotal";
 
 import { getInsuranceOptions } from "../../insurance/services/insuranceService";
+import { isAbortError } from "../../../shared/api/httpClient";
 import type { InsuranceType } from "../../../types";
 
 import { themes } from "../../../theme/themes";
@@ -37,17 +38,17 @@ export default function InvoiceCard() {
   const [insuranceOptions, setInsuranceOptions] = useState<InsuranceType[]>([]);
 
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
 
-    getInsuranceOptions().then((loaded) => {
-      if (!cancelled) {
+    getInsuranceOptions({ signal: controller.signal })
+      .then((loaded) => {
         setInsuranceOptions(loaded);
-      }
-    });
+      })
+      .catch((error) => {
+        if (!isAbortError(error)) console.error("No se pudieron cargar los seguros.", error);
+      });
 
-    return () => {
-      cancelled = true;
-    };
+    return () => controller.abort();
   }, []);
 
   if (!reservation?.vehicle) {

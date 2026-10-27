@@ -27,6 +27,7 @@ import {
 } from "../../../theme/useTheme";
 
 import { useAuth } from "../../auth/context/AuthContext";
+import { isAbortError } from "../../../shared/api/httpClient";
 import {
     getMyReservations,
 } from "../services/reservationService";
@@ -96,37 +97,38 @@ export default function ReservationHistoryScreen() {
 
     useEffect(() => {
 
-        async function loadReservations() {
+        async function loadReservations(signal: AbortSignal) {
 
             if (!user?.id) {
                 setReservations([]);
-                setLoading(false);
+                if (!signal.aborted) setLoading(false);
                 return;
             }
 
             try {
 
                 const data =
-                    await getMyReservations(user.id);
+                    await getMyReservations(user.id, { signal });
 
                 setReservations(data);
 
             } catch (error) {
 
-                console.log(
-                    "Error cargando reservas:",
-                    error
-                );
+                if (!isAbortError(error)) {
+                    console.log("Error cargando reservas:", error);
+                }
 
             } finally {
 
-                setLoading(false);
+                if (!signal.aborted) setLoading(false);
 
             }
 
         }
 
-        loadReservations();
+        const controller = new AbortController();
+        void loadReservations(controller.signal);
+        return () => controller.abort();
 
     }, [user?.id]);
 

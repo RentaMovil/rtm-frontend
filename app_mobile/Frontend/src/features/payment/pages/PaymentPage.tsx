@@ -8,6 +8,7 @@ import ContinueButton from "../../../shared/components/Button/ContinueButton";
 
 import { useReservation } from "../../reservation/context/ReservationContext";
 import { getInsuranceOptions } from "../../insurance/services/insuranceService";
+import { isAbortError } from "../../../shared/api/httpClient";
 
 import BankAccountSelector from "../components/BankAccountSelector";
 import InvoiceCard from "../components/InvoiceCard";
@@ -48,17 +49,17 @@ export default function PaymentPage() {
   const styles = createStyles(colors);
 
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
 
-    getInsuranceOptions().then((loaded) => {
-      if (!cancelled) {
+    getInsuranceOptions({ signal: controller.signal })
+      .then((loaded) => {
         setInsuranceOptions(loaded);
-      }
-    });
+      })
+      .catch((error) => {
+        if (!isAbortError(error)) console.error("No se pudieron cargar los seguros.", error);
+      });
 
-    return () => {
-      cancelled = true;
-    };
+    return () => controller.abort();
   }, []);
 
   const vehicle = reservation?.vehicle;

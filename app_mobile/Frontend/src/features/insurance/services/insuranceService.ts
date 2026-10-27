@@ -1,4 +1,4 @@
-import { httpClient } from "../../../shared/api/httpClient";
+import { httpClient, type HttpRequestOptions } from "../../../shared/api/httpClient";
 import { toInsuranceViewModel } from "./insuranceMapper";
 import type { InsuranceType } from "../../../types";
 
@@ -14,7 +14,7 @@ const RESOURCE = "/reservations/insurance-types";
  * la misma API real que usa el frontend web.
  */
 
-export async function getInsuranceOptions(): Promise<InsuranceType[]> {
-    const response = await httpClient.get<any[]>(RESOURCE);
+export async function getInsuranceOptions(options?: HttpRequestOptions): Promise<InsuranceType[]> {
+    const response = await httpClient.get<any[]>(RESOURCE, options);
     return response.map(toInsuranceViewModel);
 }

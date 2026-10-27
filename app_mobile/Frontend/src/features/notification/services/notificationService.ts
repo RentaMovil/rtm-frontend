@@ -1,5 +1,5 @@
 import { API_ROUTES } from "../../../config/env";
-import { httpClient } from "../../../shared/api/httpClient";
+import { httpClient, type HttpRequestOptions } from "../../../shared/api/httpClient";
 import { vehicleService } from "../../vehicles/services/vehicleService";
 
 import type { Notification } from "../../../types";
@@ -30,13 +30,14 @@ export const notificationService = {
    */
   async getNotifications(
     personId?: string,
+    options?: HttpRequestOptions,
   ): Promise<NotificationWithVehicle[]> {
-    const response = await httpClient.get<Notification[]>(API_ROUTES.notifications);
+    const response = await httpClient.get<Notification[]>(API_ROUTES.notifications, options);
     const notifications = personId
       ? response.filter((notification) => String(notification.person_id) === String(personId))
       : response;
 
-    const vehicles = await vehicleService.getVehicles();
+    const vehicles = await vehicleService.getVehicles(undefined, options);
 
     return attachVehicle(notifications, vehicles);
   },

@@ -14,6 +14,7 @@ import FilterCalendar, { SearchData } from "../components/Filter";
 import ProcessSteps from "../components/ProcessSteps";
 
 import { vehicleService } from "../../vehicles/services/vehicleService";
+import { isAbortError } from "../../../shared/api/httpClient";
 import { formatDateOnly } from "../../vehicles/utils/formatDateOnly";
 import VehicleCard from "../components/VehicleCard";
 
@@ -53,24 +54,22 @@ export default function HomePage() {
   });
 
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
 
-    vehicleService.getVehicles().then((all) => {
-      if (cancelled) {
-        return;
-      }
-
-      setFilterOptions({
-        categories: [...new Set(all.map((v) => v.vehicleType))],
-        brands: [...new Set(all.map((v) => v.brand))],
-        models: [...new Set(all.map((v) => v.model))],
-        fuelTypes: [...new Set(all.map((v) => v.fuelType))],
+    vehicleService.getVehicles(undefined, { signal: controller.signal })
+      .then((all) => {
+        setFilterOptions({
+          categories: [...new Set(all.map((v) => v.vehicleType))],
+          brands: [...new Set(all.map((v) => v.brand))],
+          models: [...new Set(all.map((v) => v.model))],
+          fuelTypes: [...new Set(all.map((v) => v.fuelType))],
+        });
+      })
+      .catch((error) => {
+        if (!isAbortError(error)) console.error("No se pudieron cargar los filtros de vehículos.", error);
       });
-    });
 
-    return () => {
-      cancelled = true;
-    };
+    return () => controller.abort();
   }, []);
 
   const runSearch = async (currentSearchData: SearchData | null, currentFilters: Filters) => {
