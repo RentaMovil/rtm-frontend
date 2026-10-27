@@ -64,10 +64,10 @@ export const notificationService = {
         return attachVehicle(notifications, vehicles);
     },
 
-    async markAsRead(notificationId: number): Promise<Notification> {
-        const updated = await httpClient.patch<ApiNotification>(
-            `${API_ROUTES.notifications}/${notificationId}/read`,
-        );
-        return fromApiNotification(updated);
-    },
+  async markAsRead(notificationId: number): Promise<Notification> {
+    return httpClient.patch<Notification>(
+      `${API_ROUTES.notifications}/${notificationId}`,
+      { is_read: true, read_at: new Date().toISOString() },
+    );
+  },
 };
