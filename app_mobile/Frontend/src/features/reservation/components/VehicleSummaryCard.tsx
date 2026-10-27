@@ -70,7 +70,7 @@ import { useTranslation } from "react-i18next";
                 <View key={spec.key} style={styles.badge}>
                     <FontAwesome
                         name={spec.icon}
-                        size={12}
+                        size={16}
                         color={colors.button}
                         style={styles.badgeIcon}
                     />

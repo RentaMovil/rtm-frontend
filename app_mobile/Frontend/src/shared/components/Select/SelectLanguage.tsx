@@ -15,10 +15,9 @@ const languages = [
 
 export default function SelectLanguage() {
   const { themeName } = useTheme();
-  const styles = createStyles(themes[themeName]);
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    i18n.language || "es"
-  );
+  const colors = themes[themeName];
+  const styles = createStyles(colors);
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language || "es");
 
   const handleChangeLanguage = (language: string) => {
     setSelectedLanguage(language);
@@ -27,21 +26,21 @@ export default function SelectLanguage() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>
-        Idioma
-      </Text>
-
+      <Text style={styles.label}>Idioma</Text>
       <View style={styles.selectContainer}>
         <Picker
           selectedValue={selectedLanguage}
           onValueChange={handleChangeLanguage}
           style={styles.picker}
+          dropdownIconColor={colors.text}
+          itemStyle={{ color: colors.text, backgroundColor: colors.card }}
         >
           {languages.map((language) => (
             <Picker.Item
               key={language.code}
               label={language.label}
               value={language.code}
+              color={colors.text}
             />
           ))}
         </Picker>

@@ -78,7 +78,7 @@ export const createStyles = (colors: any) => {
       ...text.h3,
       fontSize: 18,
       fontWeight: "800",
-      color: colors.primaryDark,
+      color: colors.buttonText,
     },
 
     stepTitle: {
