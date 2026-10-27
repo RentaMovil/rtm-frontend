@@ -18,6 +18,11 @@ import { useTheme } from "../../../theme/useTheme";
 
 import { createStyles } from "./InvoiceCard.styles";
 
+/** Separador de miles es-CO, el mismo que usa el web y el resto del mobile. */
+function formatMoney(value: number): string {
+  return value.toLocaleString("es-CO");
+}
+
 /**
  * Resumen de factura del pago.
  *
@@ -113,7 +118,7 @@ export default function InvoiceCard() {
               </Text>
             </View>
 
-            <Text style={styles.value}>${vehicleTotal}</Text>
+            <Text style={styles.value}>${formatMoney(vehicleTotal)}</Text>
           </View>
 
           <View style={styles.row}>
@@ -125,7 +130,7 @@ export default function InvoiceCard() {
               </Text>
             </View>
 
-            <Text style={styles.value}>${insuranceTotal}</Text>
+            <Text style={styles.value}>${formatMoney(insuranceTotal)}</Text>
           </View>
 
           <View style={styles.separator} />
@@ -135,7 +140,7 @@ export default function InvoiceCard() {
               <Text style={styles.totalLabel}>Total a pagar</Text>
             </View>
 
-            <Text style={styles.total}>${total}</Text>
+            <Text style={styles.total}>${formatMoney(total)}</Text>
           </View>
 
           <View style={styles.statusBadge}>

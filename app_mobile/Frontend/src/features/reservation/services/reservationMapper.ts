@@ -35,6 +35,9 @@ export function toReservationResponse(raw: any): ReservationResponse {
     return {
         reservationId: String(raw.id),
         status: raw.status,
+        // El backend manda `reservationDate` (fecha de creacion) en el mismo
+        // cuerpo 201 del POST /reservations; es lo que el pago usa para INV-015.
+        createdAt: raw.reservationDate ?? undefined,
     };
 }
 

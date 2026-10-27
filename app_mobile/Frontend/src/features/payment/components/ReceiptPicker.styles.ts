@@ -88,13 +88,13 @@ export const createStyles = (colors: any) => {
       flex: 1,
       paddingVertical: 12,
       alignItems: "center",
-      borderWidth: 1,
-      borderColor: colors.border,
+      borderWidth: 0,
       borderRadius: 12,
+      backgroundColor: colors.input,
     },
 
     dangerAction: {
-      borderColor: colors.error,
+      backgroundColor: colors.errorSurface,
     },
 
     actionText: {

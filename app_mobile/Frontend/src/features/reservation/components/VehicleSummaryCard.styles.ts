@@ -55,18 +55,22 @@ export const createStyles = (colors: any) => {
       backgroundColor: colors.input,
       borderRadius: Radius.pill,
       paddingHorizontal: 14,
-      paddingVertical: 8,
+      paddingVertical: 6,
       borderWidth: 1,
       borderColor: colors.border,
+      flexDirection: "row",
+      alignItems: "center",
     },
 
     badgeText: {
       ...text.label,
       color: colors.text,
+      fontSize: 13,
     },
 
     badgeIcon: {
       marginRight: 6,
+      marginTop: 0,
     },
 
     price: {

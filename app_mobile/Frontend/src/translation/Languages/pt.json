@@ -30,13 +30,6 @@
       "premium": "Premium"
     }
   },
-  "menu": {
-    "title": "Menu",
-    "home": "Início",
-    "reservations": "Minhas reservas",
-    "account": "Minha conta",
-    "logout": "Sair"
-  },
   "navbar": {
     "linkInit": "Início",
     "linkNotifications": "Notificações",
@@ -56,11 +49,6 @@
     "branch": "Filial",
     "deliveryLocationPlaceholder": "Selecione uma filial",
     "noBranchResults": "Nenhuma filial corresponde à busca",
-    "branch1": "Bogotá - Centro",
-    "branch2": "Bogotá - Norte",
-    "branch3": "Medellín - El Poblado",
-    "branch4": "Cali - Sul",
-    "branch5": "Barranquilla - Centro",
     "errorDate": "A data de devolução não pode ser anterior à data de retirada",
     "errorBranch": "Filial inválida",
     "errorHour": "Horário inválido (8:00 - 18:00)",
@@ -70,14 +58,15 @@
     "deliveryHour": "Hora de retirada",
     "returnDate": "Data de devolução",
     "returnHour": "Hora de devolução",
-    "search": "Buscar"
+    "search": "Buscar",
+    "endDateBeforeStart": "A data de devolução não pode ser anterior à data de retirada.",
+    "invalidBranch": "Selecione uma filial válida."
   },
   "cartVehicule": {
     "capacity": "Passageiros",
     "year": "Ano",
     "gasoline": "Gasolina",
     "doors": "Portas",
-    "driving": "⚙️ Manual",
     "kmLimit": "∞ Limite de Km",
     "location": "📍 Aeroporto, Bogotá",
     "cancellation": "Cancelamento grátis",
@@ -230,7 +219,10 @@
           ]
         }
       }
-    }
+    },
+    "changePickupTitle": "Alterar filial de retirada",
+    "changePickupMessage": "Para alterar a filial de retirada, você precisa voltar ao início e escolher o veículo novamente. Deseja continuar?",
+    "createErrorMessage": "Não foi possível criar a reserva. Tente novamente."
   },
   "login": {
     "createAccount": "Criar conta",
@@ -318,7 +310,35 @@
     "placeholderAddress": "Endereço de entrega",
     "confirm": "Confirmar e pagar",
     "copyNumber": "Copiar número",
-    "copied": "Copiado!"
+    "copied": "Copiado!",
+    "reviewAlertTitle": "Pagamento registrado",
+    "reviewErrorTitle": "Não foi possível registrar o pagamento",
+    "reviewStateTitle": "Pagamento em análise",
+    "reviewMessage": "Seu pagamento foi registrado. Um administrador vai revisá-lo e você receberá uma notificação assim que for aprovado.",
+    "goHome": "Voltar ao início",
+    "noReservationTitle": "Nenhuma reserva ativa",
+    "noReservationText": "Crie primeiro uma reserva para poder registrar o pagamento.",
+    "submitting": "Enviando...",
+    "submit": "Registrar pagamento"
+  },
+  "receiptPicker": {
+    "title": "Comprovante de pagamento",
+    "subtitleWeb": "Anexe a foto ou captura do comprovante da transferência",
+    "subtitleNative": "Anexe a foto do comprovante da transferência",
+    "attachImage": "Anexar imagem",
+    "pickCamera": "Tirar foto",
+    "pickGallery": "Escolher da galeria",
+    "chooseSourceTitle": "Comprovante de pagamento",
+    "chooseSourceMessage": "Como você quer anexar?",
+    "cancel": "Cancelar",
+    "cameraPermissionTitle": "Permissão necessária",
+    "cameraPermissionMessage": "É necessário acesso à câmera para anexar o comprovante de pagamento.",
+    "galleryPermissionTitle": "Permissão necessária",
+    "galleryPermissionMessage": "É necessário acesso às fotos para anexar o comprovante de pagamento.",
+    "cameraError": "Não foi possível abrir a câmera",
+    "libraryError": "Não foi possível anexar a imagem",
+    "change": "Alterar",
+    "remove": "Remover"
   },
   "buttonBack": {
     "label": "Voltar"
@@ -583,6 +603,11 @@
   },
   "historyReservation": {
     "myReservations": "Minhas reservas",
+    "loadingText": "Carregando reservas...",
+    "activityTitle": "SUA ATIVIDADE",
+    "myReservationsLabel": "Minhas reservas",
+    "subtitle": "Consulte e gerencie suas próximas viagens.",
+    "emptyState": "Você ainda não tem reservas.",
     "date": "Data: ",
     "days": "Dias: ",
     "total": "Total: ",
@@ -590,17 +615,81 @@
     "sure": "Tem certeza de que deseja cancelar a reserva de",
     "yes": "Sim, cancelar",
     "no": "Não",
-    "confirm": "Confirmar"
+    "confirm": "Confirmar",
+    "loadErrorTitle": "Erro ao carregar reservas",
+    "loadErrorMessage": "Não foi possível carregar suas reservas. Verifique sua conexão e tente novamente."
   },
   "tabs": {
     "home": "Início",
-    "menu": "Menu",
-    "reservations": "Reservas"
+    "homeModule": "Módulo",
+    "reservations": "Reservas",
+    "reservationsModule": "Módulo",
+    "account": "Conta",
+    "accountModule": "Módulo"
   },
   "themes": {
     "light": "Verde claro",
     "dark": "Escuro",
     "darkPurple": "Noite",
     "skylight": "Azul claro"
+  },
+  "home": {
+    "searchFirst": "Comece por uma busca.",
+    "noResults": "Nenhum veículo disponível para os filtros selecionados."
+  },
+  "errors": {
+    "unexpected": "Ocorreu um erro inesperado.",
+    "network": "Não foi possível conectar à API em {{url}}. Verifique se ela está em execução."
+  },
+  "account": {
+    "saveProfileError": "Não foi possível salvar o perfil.",
+    "emailRequired": "O novo e-mail é obrigatório.",
+    "emailInvalid": "Digite um e-mail válido.",
+    "emailDifferent": "O novo e-mail deve ser diferente do atual.",
+    "emailPasswordRequired": "Digite sua senha atual para confirmar a alteração.",
+    "changeEmailError": "Não foi possível alterar o e-mail.",
+    "changePhoto": "Alterar foto",
+    "accountTitle": "Minha conta",
+    "accountSubtitle": "Gerencie suas informações e preferências.",
+    "settings": "Configurações",
+    "themeLabel": "Tema",
+    "personalInfo": "Informações pessoais",
+    "nameLabel": "Nome",
+    "phoneLabel": "Telefone",
+    "usernameLabel": "Usuário",
+    "emailLabel": "Email",
+    "changeEmailBtn": "Alterar email",
+    "changePasswordBtn": "Alterar senha",
+    "editBtn": "Editar",
+    "saveBtn": "Salvar",
+    "saveBtnSaving": "Salvando...",
+    "logoutBtn": "Sair",
+    "emailModalTitle": "Alterar email",
+    "currentEmailLabel": "Email atual",
+    "newEmailLabel": "Novo email",
+    "passwordLabel": "Senha atual",
+    "cancelBtn": "Cancelar",
+    "confirmBtn": "Confirmar",
+    "emailPlaceholder": "novo@email.com",
+    "passwordPlaceholder": "Sua senha"
+  },
+  "common": {
+    "error": "Erro",
+    "accept": "Aceitar",
+    "cancel": "Cancelar",
+    "required": "Este campo é obrigatório"
+  },
+  "reservationDetail": {
+    "notFound": "Reserva não encontrada.",
+    "cancelledTitle": "Reserva cancelada",
+    "cancelledMessage": "Sua reserva foi cancelada com sucesso.",
+    "cancelErrorTitle": "Não foi possível cancelar a reserva",
+    "cancelErrorMessage": "Não foi possível cancelar a reserva. Verifique sua conexão e tente novamente.",
+    "returnBranchErrorTitle": "Não foi possível alterar a filial",
+    "returnBranchErrorMessage": "Não foi possível atualizar a filial de devolução. Verifique sua conexão e tente novamente."
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "goHome": "Ir para a tela inicial"
   }
 }

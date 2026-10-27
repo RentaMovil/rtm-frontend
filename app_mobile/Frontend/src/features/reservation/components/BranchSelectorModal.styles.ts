@@ -25,8 +25,7 @@ export const createStyles = (colors: any) => {
       padding: 24,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-      borderTopWidth: 1,
-      borderColor: colors.cardBorder,
+      borderTopWidth: 0,
       maxHeight: "70%",
     },
 
@@ -53,19 +52,30 @@ export const createStyles = (colors: any) => {
 
     branchItem: {
       paddingVertical: 16,
-      borderBottomWidth: 1,
-      borderBottomColor: colors.border,
+      paddingHorizontal: 12,
+      borderRadius: 12,
+      marginBottom: 8,
+      backgroundColor: colors.backgroundCard,
+      borderWidth: 1,
+      borderColor: colors.border,
     },
 
     branchName: {
       ...text.bodyMedium,
       fontSize: 16,
       color: colors.textHeading,
+      fontWeight: "600",
     },
 
     branchAddress: {
       ...text.caption,
       marginTop: 4,
+      color: colors.secondaryText,
+    },
+
+    branchSelected: {
+      backgroundColor: colors.primarySurface,
+      borderColor: colors.primary,
     },
 
     closeButton: {
@@ -74,6 +84,7 @@ export const createStyles = (colors: any) => {
       borderRadius: 12,
       alignItems: "center",
       backgroundColor: colors.input,
+      borderWidth: 0,
     },
 
     closeText: {

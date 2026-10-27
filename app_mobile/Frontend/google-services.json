@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "257255593036",
+    "project_id": "rentamovil-38fa5",
+    "storage_bucket": "rentamovil-38fa5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257255593036:android:b2db4dff21093184e750e9",
+        "android_client_info": {
+          "package_name": "com.rentamovil.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBzkTFErwBqBiwWIwWFHRIfq8X9jEAhVI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
