@@ -350,7 +350,6 @@ export default function ReservationDetailPage() {
                     <Text style={styles.totalAmount}>${reservation.total_price.toLocaleString()}</Text>
                 </View>
 
-<<<<<<< HEAD
                 {reservation.status === RESERVATION_STATUS.PENDING_PAYMENT && (
                     <TouchableOpacity
                         accessibilityRole="button"
@@ -363,10 +362,7 @@ export default function ReservationDetailPage() {
                     </TouchableOpacity>
                 )}
 
-                {reservation.status !== RESERVATION_STATUS.CANCELLED && (
-=======
                 {customerCancellationEnabled && reservation.status !== RESERVATION_STATUS.CANCELLED && (
->>>>>>> 4aea0ad (Fix: cancel reservation)
                     canCancel ? (
                         <TouchableOpacity
                             accessibilityRole="button"

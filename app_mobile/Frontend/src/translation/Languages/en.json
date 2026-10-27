@@ -618,14 +618,10 @@
     "activityTitle": "YOUR ACTIVITY",
     "myReservationsLabel": "My reservations",
     "subtitle": "View and manage your upcoming trips.",
-<<<<<<< HEAD
     "emptyState": "You don't have reservations yet.",
     "uploadReceipt": "Upload receipt",
     "loadErrorTitle": "Error loading reservations",
     "loadErrorMessage": "Could not load your reservations. Check your connection and try again."
-=======
-    "emptyState": "You don't have reservations yet."
->>>>>>> 4aea0ad (Fix: cancel reservation)
   },
   "uploadReceipt": {
     "modalTitle": "Upload payment receipt",
