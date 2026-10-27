@@ -11,17 +11,17 @@ import {
   View,
 } from "react-native";
 import { Link, useRouter } from "expo-router";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import BrandLogo from "../../../shared/components/Brand/BrandLogo";
+import PasswordField from "../../../shared/components/PasswordField/PasswordField";
 
 import { useAuth } from "../hooks/useAuth";
 import { ApiError } from "../../../shared/api/httpClient";
 import { API_URL } from "../../../config/env";
+import i18n from "../../../translation/i18n";
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
-import { Fonts } from "../../../theme/fonts";
 
 import { createAuthStyles } from "./authStyles";
 
@@ -40,10 +40,10 @@ function readableError(error: unknown): string {
   const message = error instanceof Error ? error.message : "";
 
   if (message.includes("Network request failed")) {
-    return `No se pudo conectar con la API en ${API_URL}. Verifica que este corriendo.`;
+    return i18n.t("errors.network", { url: API_URL });
   }
 
-  return message || "Ocurrio un error inesperado.";
+  return message || i18n.t("errors.unexpected");
 }
 
 export default function LoginPage() {
@@ -62,9 +62,40 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Campos tocados (al menos un onBlur): hasta entonces no se muestra el
+  // error individual, igual que en RegisterPage.
+  const [touched, setTouched] = useState({
+    email: false,
+    password: false,
+  });
+
+  function markTouched(field: "email" | "password") {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+  }
+
+  /**
+   * Validacion en tiempo real, mismo patron que RegisterPage: el error
+   * aparece tras el primer onBlur del campo y se recalcula en cada tecla
+   * hasta quedar valido. La contrasena solo se exige no vacia: el resto
+   * (credenciales) lo decide el server al intentar entrar.
+   */
+  function errorFor(field: "email" | "password"): string | null {
+    const value = field === "email" ? email : password;
+
+    if (!value.trim()) {
+      return t("common.required");
+    }
+
+    if (field === "email" && !/^\S+@\S+\.\S+$/.test(value.trim())) {
+      return t("loginForm.emailInvalid");
+    }
+
+    return null;
+  }
+
   /**
    * Tras entrar no se navega aqui: `isAuthenticated` cambia en
-   * `AuthContext`, y el guard de `app/_layout.tsx` es quien lleva al menu.
+   * `AuthContext`, y el guard de `app/_layout.tsx` lleva a Inicio.
    * Hacerlo aqui ademas competia con ese `replace` y podia quedar la ruta a
    * medias.
    */
@@ -75,6 +106,8 @@ export default function LoginPage() {
 
     if (!email.trim() || !password) {
       setError(t("loginForm.errorFields"));
+      // Ademas del resumen, cada campo muestra su propio error.
+      setTouched({ email: true, password: true });
       return;
     }
 
@@ -125,44 +158,33 @@ export default function LoginPage() {
               placeholderTextColor={colors.secondaryText}
               value={email}
               onChangeText={setEmail}
+              onBlur={() => markTouched("email")}
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="email-address"
               style={[styles.input, styles.inputWeb]}
             />
+
+            {touched.email && errorFor("email") ? (
+              <Text style={styles.fieldError}>{errorFor("email")}</Text>
+            ) : null}
           </View>
 
           <View>
             <Text style={styles.label}>{t("loginForm.password")}</Text>
 
-            <View style={styles.passwordField}>
-              <TextInput
-                placeholder={t("loginForm.passwordPlaceholder")}
-                placeholderTextColor={colors.secondaryText}
-                secureTextEntry={!showPassword}
-                value={password}
-                onChangeText={setPassword}
-                style={[styles.input, styles.inputWeb, styles.inputPassword]}
-              />
+            <PasswordField
+              value={password}
+              onChange={setPassword}
+              onBlur={() => markTouched("password")}
+              hidden={!showPassword}
+              onToggleVisibility={() => setShowPassword((prev) => !prev)}
+              inputStyle={[styles.input, styles.inputWeb]}
+            />
 
-              <TouchableOpacity
-                style={styles.togglePassword}
-                onPress={() => setShowPassword((prev) => !prev)}
-                accessibilityRole="button"
-                accessibilityLabel={t(
-                  showPassword
-                    ? "loginForm.hidePassword"
-                    : "loginForm.showPassword"
-                )}
-                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-              >
-                <FontAwesome
-                  name={showPassword ? "eye-slash" : "eye"}
-                  size={18}
-                  color={colors.button}
-                />
-              </TouchableOpacity>
-            </View>
+            {touched.password && errorFor("password") ? (
+              <Text style={styles.fieldError}>{errorFor("password")}</Text>
+            ) : null}
           </View>
 
           {error ? <Text style={styles.error}>{error}</Text> : null}

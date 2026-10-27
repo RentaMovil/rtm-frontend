@@ -1,5 +1,6 @@
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, ScrollView, Text, View } from "react-native";
 
 import { useReservation } from "../context/ReservationContext";
@@ -27,6 +28,8 @@ import type { InsuranceType } from "../../../types";
 import type { Branch } from "../../../types/branch";
 import { useAuth } from "../../auth/context/AuthContext";
 export default function ReservationPage() {
+  const { t } = useTranslation();
+
   const {
     reservation,
     updateReturnBranch,
@@ -69,11 +72,11 @@ export default function ReservationPage() {
     // redirigir: un toque accidental en "Cambiar" no debe sacar al usuario
     // de esta pantalla sin avisar.
     Alert.alert(
-      "Cambiar sucursal de recogida",
-      "Para cambiar la sucursal de recogida debes volver al inicio y elegir el vehículo nuevamente. ¿Deseas continuar?",
+      t("reservation.changePickupTitle"),
+      t("reservation.changePickupMessage"),
       [
-        { text: "Cancelar", style: "cancel" },
-        { text: "Aceptar", onPress: () => router.push("/") },
+        { text: t("common.cancel"), style: "cancel" },
+        { text: t("common.accept"), onPress: () => router.push("/") },
       ],
     );
   };
@@ -96,7 +99,13 @@ export default function ReservationPage() {
 
       router.push("/payment");
     } catch (error) {
-      console.log("Error creando la reserva:", error);
+      console.error("Error creando la reserva:", error);
+      Alert.alert(
+        t("common.error"),
+        error instanceof Error
+          ? error.message
+          : t("reservation.createErrorMessage"),
+      );
     } finally {
       setIsCreating(false);
     }

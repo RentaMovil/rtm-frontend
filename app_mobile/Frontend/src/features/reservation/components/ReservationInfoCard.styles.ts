@@ -17,8 +17,7 @@ export const createStyles = (colors: any) => {
     header: {
       marginBottom: 20,
       paddingBottom: 16,
-      borderBottomWidth: 1,
-      borderBottomColor: colors.border,
+      borderBottomWidth: 0,
     },
 
     titleRow: {
