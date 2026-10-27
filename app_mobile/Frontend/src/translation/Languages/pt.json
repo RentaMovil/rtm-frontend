@@ -310,7 +310,35 @@
     "placeholderAddress": "Endereço de entrega",
     "confirm": "Confirmar e pagar",
     "copyNumber": "Copiar número",
-    "copied": "Copiado!"
+    "copied": "Copiado!",
+    "reviewAlertTitle": "Pagamento registrado",
+    "reviewErrorTitle": "Não foi possível registrar o pagamento",
+    "reviewStateTitle": "Pagamento em análise",
+    "reviewMessage": "Seu pagamento foi registrado. Um administrador vai revisá-lo e você receberá uma notificação assim que for aprovado.",
+    "goHome": "Voltar ao início",
+    "noReservationTitle": "Nenhuma reserva ativa",
+    "noReservationText": "Crie primeiro uma reserva para poder registrar o pagamento.",
+    "submitting": "Enviando...",
+    "submit": "Registrar pagamento"
+  },
+  "receiptPicker": {
+    "title": "Comprovante de pagamento",
+    "subtitleWeb": "Anexe a foto ou captura do comprovante da transferência",
+    "subtitleNative": "Anexe a foto do comprovante da transferência",
+    "attachImage": "Anexar imagem",
+    "pickCamera": "Tirar foto",
+    "pickGallery": "Escolher da galeria",
+    "chooseSourceTitle": "Comprovante de pagamento",
+    "chooseSourceMessage": "Como você quer anexar?",
+    "cancel": "Cancelar",
+    "cameraPermissionTitle": "Permissão necessária",
+    "cameraPermissionMessage": "É necessário acesso à câmera para anexar o comprovante de pagamento.",
+    "galleryPermissionTitle": "Permissão necessária",
+    "galleryPermissionMessage": "É necessário acesso às fotos para anexar o comprovante de pagamento.",
+    "cameraError": "Não foi possível abrir a câmera",
+    "libraryError": "Não foi possível anexar a imagem",
+    "change": "Alterar",
+    "remove": "Remover"
   },
   "buttonBack": {
     "label": "Voltar"

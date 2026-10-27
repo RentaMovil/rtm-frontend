@@ -310,7 +310,35 @@
     "placeholderAddress": "Delivery address",
     "confirm": "Confirm and pay",
     "copyNumber": "Copy number",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "reviewAlertTitle": "Payment submitted",
+    "reviewErrorTitle": "Could not submit the payment",
+    "reviewStateTitle": "Payment under review",
+    "reviewMessage": "Your payment was submitted. An administrator will review it and you'll get a notification once it's approved.",
+    "goHome": "Back to home",
+    "noReservationTitle": "No active reservation",
+    "noReservationText": "Create a reservation first to submit its payment.",
+    "submitting": "Submitting...",
+    "submit": "Submit payment"
+  },
+  "receiptPicker": {
+    "title": "Payment receipt",
+    "subtitleWeb": "Attach the photo or screenshot of the transfer receipt",
+    "subtitleNative": "Attach the photo of the transfer receipt",
+    "attachImage": "Attach image",
+    "pickCamera": "Take photo",
+    "pickGallery": "Choose from gallery",
+    "chooseSourceTitle": "Payment receipt",
+    "chooseSourceMessage": "How do you want to attach it?",
+    "cancel": "Cancel",
+    "cameraPermissionTitle": "Permission needed",
+    "cameraPermissionMessage": "Camera access is needed to attach the payment receipt.",
+    "galleryPermissionTitle": "Permission needed",
+    "galleryPermissionMessage": "Photo library access is needed to attach the payment receipt.",
+    "cameraError": "Could not open the camera",
+    "libraryError": "Could not attach the image",
+    "change": "Change",
+    "remove": "Remove"
   },
   "buttonBack": {
     "label": "Back"

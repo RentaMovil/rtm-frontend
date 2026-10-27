@@ -310,7 +310,35 @@
     "placeholderAddress": "Adresse de livraison",
     "confirm": "Confirmer et payer",
     "copyNumber": "Copier le numéro",
-    "copied": "Copié !"
+    "copied": "Copié !",
+    "reviewAlertTitle": "Paiement enregistré",
+    "reviewErrorTitle": "Le paiement n'a pas pu être enregistré",
+    "reviewStateTitle": "Paiement en cours de révision",
+    "reviewMessage": "Votre paiement a été enregistré. Un administrateur va le vérifier et vous recevrez une notification dès son approbation.",
+    "goHome": "Retour à l'accueil",
+    "noReservationTitle": "Aucune réservation active",
+    "noReservationText": "Créez d'abord une réservation pour pouvoir enregistrer son paiement.",
+    "submitting": "Envoi en cours...",
+    "submit": "Enregistrer le paiement"
+  },
+  "receiptPicker": {
+    "title": "Justificatif de paiement",
+    "subtitleWeb": "Joignez la photo ou la capture d'écran du justificatif de virement",
+    "subtitleNative": "Joignez la photo du justificatif de virement",
+    "attachImage": "Joindre une image",
+    "pickCamera": "Prendre une photo",
+    "pickGallery": "Choisir dans la galerie",
+    "chooseSourceTitle": "Justificatif de paiement",
+    "chooseSourceMessage": "Comment voulez-vous le joindre ?",
+    "cancel": "Annuler",
+    "cameraPermissionTitle": "Autorisation requise",
+    "cameraPermissionMessage": "L'accès à la caméra est nécessaire pour joindre le justificatif de paiement.",
+    "galleryPermissionTitle": "Autorisation requise",
+    "galleryPermissionMessage": "L'accès aux photos est nécessaire pour joindre le justificatif de paiement.",
+    "cameraError": "Impossible d'ouvrir la caméra",
+    "libraryError": "Impossible de joindre l'image",
+    "change": "Changer",
+    "remove": "Retirer"
   },
   "buttonBack": {
     "label": "Retour"
