@@ -319,7 +319,8 @@
     "noReservationTitle": "No hay una reserva activa",
     "noReservationText": "Crea primero una reserva para poder registrar su pago.",
     "submitting": "Enviando...",
-    "submit": "Registrar pago"
+    "submit": "Registrar pago",
+    "uploadLater": "Subir comprobante después"
   },
   "receiptPicker": {
     "title": "Comprobante de pago",
@@ -327,7 +328,7 @@
     "subtitleNative": "Adjunta la foto del comprobante de la transferencia",
     "attachImage": "Adjuntar imagen",
     "pickCamera": "Tomar foto",
-    "pickGallery": "Elegir de galería",
+    "pickGallery": "Subir foto",
     "chooseSourceTitle": "Comprobante de pago",
     "chooseSourceMessage": "¿Cómo quieres adjuntarlo?",
     "cancel": "Cancelar",
@@ -617,7 +618,12 @@
     "activityTitle": "TU ACTIVIDAD",
     "myReservationsLabel": "Mis reservas",
     "subtitle": "Consulta y administra tus próximos viajes.",
-    "emptyState": "No tienes reservas todavía."
+    "emptyState": "No tienes reservas todavía.",
+    "uploadReceipt": "Subir comprobante"
+  },
+  "uploadReceipt": {
+    "modalTitle": "Subir comprobante de pago",
+    "totalToTransfer": "Total a transferir"
   },
   "tabs": {
     "home": "Inicio",
@@ -664,6 +670,9 @@
     "saveBtn": "Guardar",
     "saveBtnSaving": "Guardando...",
     "logoutBtn": "Cerrar sesión",
+    "confirmLogout": "Cerrar sesión",
+    "logoutQuestion": "¿Seguro que quieres cerrar sesión?",
+    "confirmLogoutBtn": "Cerrar sesión",
     "emailModalTitle": "Cambiar correo",
     "currentEmailLabel": "Correo actual",
     "newEmailLabel": "Correo nuevo",

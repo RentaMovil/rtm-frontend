@@ -1,7 +1,8 @@
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
+import { appAlert } from "../../../shared/components/Alert/AppAlert";
 
 import { useReservation } from "../context/ReservationContext";
 
@@ -72,7 +73,7 @@ export default function ReservationPage() {
     // empezar la seleccion del vehiculo, asi que se confirma antes de
     // redirigir: un toque accidental en "Cambiar" no debe sacar al usuario
     // de esta pantalla sin avisar.
-    Alert.alert(
+    appAlert.alert(
       t("reservation.changePickupTitle"),
       t("reservation.changePickupMessage"),
       [
@@ -101,7 +102,7 @@ export default function ReservationPage() {
       router.push("/payment");
     } catch (error) {
       console.error("Error creando la reserva:", error);
-      Alert.alert(
+      appAlert.alert(
         t("common.error"),
         error instanceof Error
           ? error.message
