@@ -119,16 +119,9 @@ export default function ReservationHistoryScreen() {
 
             } catch (error) {
 
-<<<<<<< HEAD
                 if (!isAbortError(error)) {
                     console.log("Error cargando reservas:", error);
                 }
-=======
-                console.error(
-                    "Error cargando reservas:",
-                    error
-                );
->>>>>>> develop
 
                 Alert.alert(
                     t("historyReservation.loadErrorTitle"),

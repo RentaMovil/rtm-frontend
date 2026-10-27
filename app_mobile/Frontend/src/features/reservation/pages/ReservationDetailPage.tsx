@@ -17,14 +17,9 @@ import {
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
-<<<<<<< HEAD
-import type { Branch, Reservation, Vehicle } from "../../../types";
-import { ApiError, isAbortError } from "../../../shared/api/httpClient";
-=======
 import type { Branch, Reservation } from "../../../types";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { ApiError } from "../../../shared/api/httpClient";
->>>>>>> develop
+import { ApiError, isAbortError } from "../../../shared/api/httpClient";
 import { getBranchById, getBranches } from "../../branches/services/branchService";
 import BranchSelectorModal from "../components/BranchSelectorModal";
 import {
@@ -155,11 +150,7 @@ export default function ReservationDetailPage() {
                 const data = await getReservationById(String(id), { signal });
                 setReservation(data ?? null);
             } catch (error) {
-<<<<<<< HEAD
                 if (!isAbortError(error)) console.log("Error cargando reserva:", error);
-=======
-                console.error("Error cargando reserva:", error);
->>>>>>> develop
             } finally {
                 if (!signal.aborted) setLoading(false);
             }
