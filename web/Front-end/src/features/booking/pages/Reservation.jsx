@@ -147,6 +147,11 @@ function Reservation() {
             return;
         }
 
+        if (pickupDateTime && new Date(pickupDateTime).getTime() <= Date.now()) {
+            alert({ message: t("reservation.pickupTimePassed"), tone: "warning" });
+            return;
+        }
+
         if (!termsAccepted) {
             alert({ message: t("terms.acceptError"), tone: "warning" });
             return;
