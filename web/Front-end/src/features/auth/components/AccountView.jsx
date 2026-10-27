@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { RoleNavbar, RoleFooter } from "../../../shared/components/layout/RoleChrome";
-import ButtonBack from "../../../shared/components/buttonBack";
 import { useAuth } from "../../../contexts/AuthContext";
 import ProfileIdentity from "./ProfileIdentity";
 
@@ -191,15 +190,6 @@ export default function AccountView({ theme, setTheme }) {
                 <div className="cardC">
                     <div className="header-page">
                         <div className="header-left">
-                            {/* `normal` y no `overlay`: la variante overlay es
-                                `position: absolute`, y dentro de `.header-left`
-                                se salia del flujo y se montaba encima del
-                                estado de perfil. */}
-                            <ButtonBack
-                                onClick={() => navigate(-1)}
-                                variant="normal"
-                            />
-
                             <p className="status2">
                                 {t("account.profileStatus")}
                             </p>

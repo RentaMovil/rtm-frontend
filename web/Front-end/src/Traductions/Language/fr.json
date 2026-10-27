@@ -27,6 +27,7 @@
     "errorDate": "La date de retour ne peut pas être antérieure à la date de prise en charge",
     "errorBranch": "Agence invalide",
     "errorHour": "Heure invalide (8:00 - 18:00)",
+    "errorPastHour": "L'heure de prise en charge est passée. Choisissez une heure future.",
     "success": "Recherche effectuée",
     "deliveryLocation": "Lieu de prise en charge",
     "deliveryDate": "Date de prise en charge",
@@ -96,7 +97,8 @@
     "branchFallback": "Agence sans nom",
     "addressUnavailable": "Adresse indisponible",
     "tapBranchOnMap": "Touchez une agence sur la carte",
-    "mapHint": "Touchez un marqueur sur la carte pour choisir l'agence de restitution.",
+    "mapHint": "Explorez la carte avec la souris ou les commandes de zoom. Sélectionnez un marqueur pour voir le nom et l'adresse de l'agence ; la sélection définit l'agence de restitution et recentre la carte.",
+    "pickupTimePassed": "L'heure de prise en charge est passée. Choisissez une heure future pour continuer.",
     "insuranceLabel": "Assurance"
   },
   "terms": {

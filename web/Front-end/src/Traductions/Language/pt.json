@@ -27,6 +27,7 @@
     "errorDate": "A data de devolução não pode ser anterior à data de retirada",
     "errorBranch": "Filial inválida",
     "errorHour": "Horário inválido (8:00 - 18:00)",
+    "errorPastHour": "O horário de retirada já passou. Escolha um horário futuro.",
     "success": "Busca realizada",
     "deliveryLocation": "Local de retirada",
     "deliveryDate": "Data de retirada",
@@ -96,7 +97,8 @@
     "branchFallback": "Filial sem nome",
     "addressUnavailable": "Endereço indisponível",
     "tapBranchOnMap": "Toque em uma filial no mapa",
-    "mapHint": "Toque em um marcador no mapa para escolher a filial de devolução.",
+    "mapHint": "Explore o mapa com o mouse ou os controles de zoom. Selecione um marcador para ver o nome e o endereço da filial; a seleção define a filial de devolução e centraliza o mapa.",
+    "pickupTimePassed": "O horário de retirada já passou. Escolha um horário futuro para continuar.",
     "insuranceLabel": "Seguro"
   },
   "terms": {
