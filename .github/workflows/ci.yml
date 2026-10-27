@@ -55,3 +55,5 @@ jobs:
         run: npm run format:check || true
 
       - run: npm run typecheck
+
+      - run: npm test -- --ci
