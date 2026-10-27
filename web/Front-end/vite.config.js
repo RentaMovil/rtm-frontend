@@ -16,6 +16,7 @@ function stripOrigin(proxy) {
 }
 
 // https://vite.dev/config/
+/* global process */
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
