@@ -9,20 +9,50 @@ import {
     type NotificationWithVehicle,
 } from "../utils/notificationUtils";
 
+// Tipos de booking (enum backend) -> tipos que muestra la interfaz
+// (NOTIFICATION_TYPES). Los que no tienen equivalente visual caen en
+// "recordatorio". Mismo mapa que usa el web
+// (`web/Front-end/src/features/notification/services/notificationService.js`).
+const UI_TYPE: Record<string, string> = {
+    PAYMENT_APPROVED: "pago_confirmado",
+    RESERVATION_CANCELLED: "reserva_cancelada",
+    RESERVATION_EXPIRED: "reserva_cancelada",
+};
+
+type ApiNotification = {
+    id: number;
+    type: string;
+    message: string;
+    sentDate: string;
+    read: boolean;
+    reservationId?: number;
+};
+
+/**
+ * Respuesta de rtm-booking-reservation (camelCase, sin `personId`: el
+ * endpoint ya devuelve solo las del usuario autenticado, via JWT) -> forma
+ * que usan los componentes (snake_case).
+ */
+function fromApiNotification(notification: ApiNotification): Notification {
+    return {
+        notification_id: notification.id,
+        person_id: "",
+        type: UI_TYPE[notification.type] ?? "recordatorio",
+        message: notification.message,
+        sent_date: notification.sentDate,
+        is_read: notification.read,
+        reservation_id: notification.reservationId,
+        // Booking no guarda el vehiculo en la notificacion; el mensaje ya lo describe.
+        vehicle_id: undefined,
+    };
+}
+
 /**
  * Servicio de notificaciones contra la API real.
  *
- * A diferencia de `insuranceService` o `branchService`, aqui la entidad tiene
- * endpoint propio: rtm-booking-reservation expone la coleccion
- * `notifications` y el gateway la enruta sin cambiar la ruta.
- *
- * Los endpoints son los mismos que consume el web
- * (`web/Front-end/src/features/notification/services/notificationService.js`),
- * que tiene ese camino escrito pero desactivado por no tener `VITE_API_URL`.
- *
- * `PATCH /notifications/{id}/read` persiste `is_read` en la base, asi que
- * marcar como leida sobrevive a recargar. El web, al no tener API, solo lo
- * cambia en memoria y lo pierde.
+ * `GET /notifications` ya devuelve solo las del usuario autenticado
+ * (NotificationController las filtra por el personId del JWT, no por query
+ * param), asi que aqui no se vuelve a filtrar por personId.
  */
 export const notificationService = {
   /**

@@ -319,7 +319,8 @@
     "noReservationTitle": "Aucune réservation active",
     "noReservationText": "Créez d'abord une réservation pour pouvoir enregistrer son paiement.",
     "submitting": "Envoi en cours...",
-    "submit": "Enregistrer le paiement"
+    "submit": "Enregistrer le paiement",
+    "uploadLater": "Téléverser le reçu plus tard"
   },
   "receiptPicker": {
     "title": "Justificatif de paiement",
@@ -327,7 +328,7 @@
     "subtitleNative": "Joignez la photo du justificatif de virement",
     "attachImage": "Joindre une image",
     "pickCamera": "Prendre une photo",
-    "pickGallery": "Choisir dans la galerie",
+    "pickGallery": "Téléverser une photo",
     "chooseSourceTitle": "Justificatif de paiement",
     "chooseSourceMessage": "Comment voulez-vous le joindre ?",
     "cancel": "Annuler",
@@ -617,7 +618,12 @@
     "activityTitle": "VOTRE ACTIVITÉ",
     "myReservationsLabel": "Mes réservations",
     "subtitle": "Consultez et gérez vos prochains voyages.",
-    "emptyState": "Vous n'avez pas encore de réservations."
+    "emptyState": "Vous n'avez pas encore de réservations.",
+    "uploadReceipt": "Téléverser le reçu"
+  },
+  "uploadReceipt": {
+    "modalTitle": "Téléverser le reçu de paiement",
+    "totalToTransfer": "Total à transférer"
   },
   "tabs": {
     "home": "Accueil",
@@ -664,6 +670,9 @@
     "saveBtn": "Enregistrer",
     "saveBtnSaving": "Enregistrement...",
     "logoutBtn": "Se déconnecter",
+    "confirmLogout": "Se déconnecter",
+    "logoutQuestion": "Voulez-vous vraiment vous déconnecter ?",
+    "confirmLogoutBtn": "Se déconnecter",
     "emailModalTitle": "Changer l'email",
     "currentEmailLabel": "Email actuel",
     "newEmailLabel": "Nouvel email",

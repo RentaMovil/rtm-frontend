@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import {
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -9,6 +8,8 @@ import {
   View,
 } from "react-native";
 import { useRouter } from "expo-router";
+
+import { appAlert } from "../../../shared/components/Alert/AppAlert";
 
 import BrandLogo from "../../../shared/components/Brand/BrandLogo";
 
@@ -30,7 +31,7 @@ export default function ForgotPasswordPage() {
   const styles = createAuthStyles(themes[themeName]);
 
   function handleDone() {
-    Alert.alert(t("passwordRecovery.title"), t("passwordRecovery.success"));
+    appAlert.alert(t("passwordRecovery.title"), t("passwordRecovery.success"));
     router.replace("/auth/login");
   }
 

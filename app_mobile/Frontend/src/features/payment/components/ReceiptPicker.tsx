@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   ActivityIndicator,
-  Alert,
   Image,
   Platform,
   Text,
@@ -13,6 +12,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useTranslation } from "react-i18next";
 
 import AppCard from "../../../shared/components/AppCard/AppCard";
+import { appAlert } from "../../../shared/components/Alert/AppAlert";
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
@@ -63,7 +63,7 @@ export default function ReceiptPicker({ receiptFile, onChange }: Props) {
     const permission = await ImagePicker.requestCameraPermissionsAsync();
 
     if (!permission.granted) {
-      Alert.alert(t("receiptPicker.cameraPermissionTitle"), t("receiptPicker.cameraPermissionMessage"));
+      appAlert.alert(t("receiptPicker.cameraPermissionTitle"), t("receiptPicker.cameraPermissionMessage"));
       return null;
     }
 
@@ -75,7 +75,7 @@ export default function ReceiptPicker({ receiptFile, onChange }: Props) {
       const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
       if (!permission.granted) {
-        Alert.alert(t("receiptPicker.galleryPermissionTitle"), t("receiptPicker.galleryPermissionMessage"));
+        appAlert.alert(t("receiptPicker.galleryPermissionTitle"), t("receiptPicker.galleryPermissionMessage"));
         return null;
       }
     }
@@ -103,28 +103,13 @@ export default function ReceiptPicker({ receiptFile, onChange }: Props) {
         });
       }
     } catch (error) {
-      Alert.alert(
+      appAlert.alert(
         source === "camera" ? t("receiptPicker.cameraError") : t("receiptPicker.libraryError"),
         error instanceof Error ? error.message : t("errors.unexpected"),
       );
     } finally {
       setIsPicking(false);
     }
-  }
-
-  // En web ya se abre directo el selector de archivos (no hay camara real que elegir);
-  // en nativo se deja elegir entre tomar una foto nueva o una que ya se tenia.
-  function pick() {
-    if (IS_WEB) {
-      runPick("library");
-      return;
-    }
-
-    Alert.alert(t("receiptPicker.chooseSourceTitle"), t("receiptPicker.chooseSourceMessage"), [
-      { text: t("receiptPicker.pickCamera"), onPress: () => runPick("camera") },
-      { text: t("receiptPicker.pickGallery"), onPress: () => runPick("library") },
-      { text: t("receiptPicker.cancel"), style: "cancel" },
-    ]);
   }
 
   return (
@@ -148,8 +133,14 @@ export default function ReceiptPicker({ receiptFile, onChange }: Props) {
           />
 
           <View style={styles.actions}>
-            <TouchableOpacity style={styles.action} onPress={pick}>
-              <Text style={styles.actionText}>{t("receiptPicker.change")}</Text>
+            {!IS_WEB && (
+              <TouchableOpacity style={styles.action} onPress={() => runPick("camera")}>
+                <Text style={styles.actionText}>{t("receiptPicker.pickCamera")}</Text>
+              </TouchableOpacity>
+            )}
+
+            <TouchableOpacity style={styles.action} onPress={() => runPick("library")}>
+              <Text style={styles.actionText}>{t("receiptPicker.pickGallery")}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -160,26 +151,30 @@ export default function ReceiptPicker({ receiptFile, onChange }: Props) {
             </TouchableOpacity>
           </View>
         </View>
-      ) : (
-        <TouchableOpacity
-          style={styles.placeholder}
-          onPress={pick}
-          disabled={isPicking}
-        >
-          {isPicking ? (
-            <ActivityIndicator color={colors.button} />
-          ) : (
-            <>
-              <FontAwesome
-                name="paperclip"
-                size={22}
-                color={colors.button}
-              />
+      ) : isPicking ? (
+        <View style={styles.placeholder}>
+          <ActivityIndicator color={colors.button} />
+        </View>
+      ) : IS_WEB ? (
+        <TouchableOpacity style={styles.placeholder} onPress={() => runPick("library")}>
+          <FontAwesome name="paperclip" size={22} color={colors.button} />
 
-              <Text style={styles.placeholderText}>{pickLabel}</Text>
-            </>
-          )}
+          <Text style={styles.placeholderText}>{pickLabel}</Text>
         </TouchableOpacity>
+      ) : (
+        <View style={styles.actions}>
+          <TouchableOpacity style={[styles.placeholder, { flex: 1 }]} onPress={() => runPick("camera")}>
+            <FontAwesome name="camera" size={22} color={colors.button} />
+
+            <Text style={styles.placeholderText}>{t("receiptPicker.pickCamera")}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.placeholder, { flex: 1 }]} onPress={() => runPick("library")}>
+            <FontAwesome name="paperclip" size={22} color={colors.button} />
+
+            <Text style={styles.placeholderText}>{t("receiptPicker.pickGallery")}</Text>
+          </TouchableOpacity>
+        </View>
       )}
     </AppCard>
   );

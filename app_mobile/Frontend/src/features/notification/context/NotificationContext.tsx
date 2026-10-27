@@ -44,7 +44,7 @@ type Props = {
  * para no dejar notificaciones de un usuario en memoria al cambiar de cuenta.
  */
 export function NotificationProvider({ children }: Props) {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const [notifications, setNotifications] = useState<
     NotificationWithVehicle[]
@@ -71,7 +71,7 @@ export function NotificationProvider({ children }: Props) {
     } finally {
       if (!signal?.aborted) setIsLoading(false);
     }
-  }, [personId]);
+  }, []);
 
   useEffect(() => {
     if (!isAuthenticated) {

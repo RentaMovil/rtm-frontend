@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Alert, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
 import ContinueButton from "../../../shared/components/Button/ContinueButton";
+import { appAlert } from "../../../shared/components/Alert/AppAlert";
 
 import { useReservation } from "../../reservation/context/ReservationContext";
 import { getInsuranceOptions } from "../../insurance/services/insuranceService";
@@ -96,6 +97,16 @@ export default function PaymentPage() {
   const canPay =
     !!createdReservation && !!selectedBankAccount && !!receiptFile && !isSubmitting;
 
+  // La reserva ya quedo creada en PENDING_PAYMENT en el backend (ver
+  // comentario del componente): salir de aqui sin pagar no pierde nada,
+  // solo limpia el borrador local. Desde el modulo de reservas se puede
+  // retomar el pago con `UploadReceiptModal`.
+  function handleUploadLater() {
+    clearPayment();
+    clearReservation();
+    router.replace("/(tabs)/reservations");
+  }
+
   async function handlePayment() {
     if (!canPay || !createdReservation || !selectedBankAccount || !receiptFile) {
       return;
@@ -111,9 +122,9 @@ export default function PaymentPage() {
         receiptFile,
       });
 
-      Alert.alert(t("payment.reviewAlertTitle"), t("payment.reviewMessage"));
+      appAlert.alert(t("payment.reviewAlertTitle"), t("payment.reviewMessage"));
     } catch (error) {
-      Alert.alert(
+      appAlert.alert(
         t("payment.reviewErrorTitle"),
         error instanceof Error ? error.message : t("errors.unexpected"),
       );
@@ -171,6 +182,15 @@ export default function PaymentPage() {
         title={isSubmitting ? t("payment.submitting") : t("payment.submit")}
         onPress={handlePayment}
       />
+
+      <TouchableOpacity
+        style={styles.uploadLaterLink}
+        onPress={handleUploadLater}
+        disabled={isSubmitting}
+        accessibilityRole="button"
+      >
+        <Text style={styles.uploadLaterText}>{t("payment.uploadLater")}</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
