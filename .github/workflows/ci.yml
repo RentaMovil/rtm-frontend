@@ -20,7 +20,7 @@ jobs:
           cache: npm
           cache-dependency-path: web/Front-end/package-lock.json
 
-      - run: npm ci
+      - run: npm ci --ignore-scripts
 
       # Informational only for now: the repo has pre-existing lint debt
       # (see the audit report) that isn't tied to any single change.
@@ -44,6 +44,6 @@ jobs:
           cache: npm
           cache-dependency-path: app_mobile/Frontend/package-lock.json
 
-      - run: npm ci
+      - run: npm ci --ignore-scripts
 
       - run: npm run typecheck
