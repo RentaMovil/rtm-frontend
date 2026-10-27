@@ -319,7 +319,8 @@
     "noReservationTitle": "No active reservation",
     "noReservationText": "Create a reservation first to submit its payment.",
     "submitting": "Submitting...",
-    "submit": "Submit payment"
+    "submit": "Submit payment",
+    "uploadLater": "Upload receipt later"
   },
   "receiptPicker": {
     "title": "Payment receipt",
@@ -327,7 +328,7 @@
     "subtitleNative": "Attach the photo of the transfer receipt",
     "attachImage": "Attach image",
     "pickCamera": "Take photo",
-    "pickGallery": "Choose from gallery",
+    "pickGallery": "Upload photo",
     "chooseSourceTitle": "Payment receipt",
     "chooseSourceMessage": "How do you want to attach it?",
     "cancel": "Cancel",
@@ -618,8 +619,13 @@
     "myReservationsLabel": "My reservations",
     "subtitle": "View and manage your upcoming trips.",
     "emptyState": "You don't have reservations yet.",
+    "uploadReceipt": "Upload receipt",
     "loadErrorTitle": "Error loading reservations",
     "loadErrorMessage": "Could not load your reservations. Check your connection and try again."
+  },
+  "uploadReceipt": {
+    "modalTitle": "Upload payment receipt",
+    "totalToTransfer": "Total to transfer"
   },
   "tabs": {
     "home": "Home",
@@ -666,6 +672,9 @@
     "saveBtn": "Save",
     "saveBtnSaving": "Saving...",
     "logoutBtn": "Log out",
+    "confirmLogout": "Log out",
+    "logoutQuestion": "Are you sure you want to log out?",
+    "confirmLogoutBtn": "Log out",
     "emailModalTitle": "Change email",
     "currentEmailLabel": "Current email",
     "newEmailLabel": "New email",

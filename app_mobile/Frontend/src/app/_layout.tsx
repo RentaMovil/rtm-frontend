@@ -50,6 +50,8 @@ import { PaymentProvider } from "../features/payment/context/PaymentContext";
 
 import UpdateBanner from "../shared/components/UpdateBanner/UpdateBanner";
 
+import AppAlertHost from "../shared/components/Alert/AppAlert";
+
 
 export { ErrorBoundary } from "expo-router";
 
@@ -365,6 +367,8 @@ function InnerNav() {
             </Stack>
 
             <UpdateBanner />
+
+            <AppAlertHost />
 
         </NavigationThemeProvider>
 

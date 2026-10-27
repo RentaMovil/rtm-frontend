@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -14,6 +13,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 
+import { appAlert } from "../../../shared/components/Alert/AppAlert";
 import ContinueButton from "../../../shared/components/Button/ContinueButton";
 import AppCard from "../../../shared/components/AppCard/AppCard";
 import PasswordField from "../../../shared/components/PasswordField/PasswordField";
@@ -145,7 +145,7 @@ export default function ChangePasswordPage() {
   }
 
   async function finish() {
-    Alert.alert(t("changePassword.title"), t("changePassword.successRelogin"));
+    appAlert.alert(t("changePassword.title"), t("changePassword.successRelogin"));
 
     await logout();
   }

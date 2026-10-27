@@ -43,7 +43,7 @@ type Props = {
  * para no dejar notificaciones de un usuario en memoria al cambiar de cuenta.
  */
 export function NotificationProvider({ children }: Props) {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const [notifications, setNotifications] = useState<
     NotificationWithVehicle[]
@@ -51,15 +51,13 @@ export function NotificationProvider({ children }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const personId = user?.id;
-
   const load = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      // Sin `personId` la API devuelve todas; se pide solo la del usuario.
-      setNotifications(await notificationService.getNotifications(personId));
+      // El backend ya devuelve solo las notificaciones del usuario autenticado (JWT).
+      setNotifications(await notificationService.getNotifications());
     } catch (loadError) {
       setError(
         loadError instanceof Error
@@ -69,7 +67,7 @@ export function NotificationProvider({ children }: Props) {
     } finally {
       setIsLoading(false);
     }
-  }, [personId]);
+  }, []);
 
   useEffect(() => {
     if (!isAuthenticated) {
