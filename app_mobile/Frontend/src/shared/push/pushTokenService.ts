@@ -22,39 +22,41 @@ export async function registerForPushNotificationsAsync(): Promise<void> {
     return;
   }
 
-  const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  let finalStatus = existingStatus;
-
-  if (existingStatus !== "granted") {
-    const { status } = await Notifications.requestPermissionsAsync();
-    finalStatus = status;
-  }
-
-  if (finalStatus !== "granted") {
-    return;
-  }
-
-  if (Platform.OS === "android") {
-    await Notifications.setNotificationChannelAsync("default", {
-      name: "default",
-      importance: Notifications.AndroidImportance.DEFAULT,
-    });
-  }
-
-  const projectId = Constants.expoConfig?.extra?.eas?.projectId;
-  if (!projectId) {
-    return;
-  }
-
-  const { data: expoPushToken } = await Notifications.getExpoPushTokenAsync({ projectId });
-
   try {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+
+    if (finalStatus !== "granted") {
+      return;
+    }
+
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.DEFAULT,
+      });
+    }
+
+    const projectId = Constants.expoConfig?.extra?.eas?.projectId;
+    if (!projectId) {
+      return;
+    }
+
+    const { data: expoPushToken } = await Notifications.getExpoPushTokenAsync({ projectId });
+
     await httpClient.post("/users/me/push-token", {
       token: expoPushToken,
       platform: Platform.OS,
     });
-  } catch {
-    // Si falla (red, backend caido), simplemente no queda registrado este dispositivo
-    // todavia; se reintenta solo la proxima vez que la app arranque con sesion activa.
+  } catch (err) {
+    // Si falla (permiso, FCM sin configurar, red, backend caido), este dispositivo
+    // simplemente no queda registrado; se reintenta solo la proxima vez que la app
+    // arranque con sesion activa. Se deja un log para poder diagnosticarlo.
+    console.warn("No se pudo registrar el token de push:", err);
   }
 }
