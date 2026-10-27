@@ -265,6 +265,9 @@ export default function ReservationDetailPage() {
     const startDate = parseReservationDateTime(reservation.start_date);
     const isWithinCancellationWindow =
         !startDate || wallClockNow().getTime() <= startDate.getTime() - CANCELLATION_WINDOW_DAYS * DAY_MS;
+    // ADR-015: el cliente no puede cancelar una reserva. Se oculta el boton; el backend aun conserva
+    // POST /reservations/{id}/cancel y debe retirarse aparte.
+    const customerCancellationEnabled = false;
     const canCancel = isActiveStatus && isWithinCancellationWindow;
 
     let cancelDisabledReason: string | null = null;
@@ -347,6 +350,7 @@ export default function ReservationDetailPage() {
                     <Text style={styles.totalAmount}>${reservation.total_price.toLocaleString()}</Text>
                 </View>
 
+<<<<<<< HEAD
                 {reservation.status === RESERVATION_STATUS.PENDING_PAYMENT && (
                     <TouchableOpacity
                         accessibilityRole="button"
@@ -360,6 +364,9 @@ export default function ReservationDetailPage() {
                 )}
 
                 {reservation.status !== RESERVATION_STATUS.CANCELLED && (
+=======
+                {customerCancellationEnabled && reservation.status !== RESERVATION_STATUS.CANCELLED && (
+>>>>>>> 4aea0ad (Fix: cancel reservation)
                     canCancel ? (
                         <TouchableOpacity
                             accessibilityRole="button"

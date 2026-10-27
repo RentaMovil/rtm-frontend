@@ -75,7 +75,6 @@ function CartVehicule({ vehicle, rentalSearch, showActions = true }) {
             </div>
             <div className="car-price">
                 <p className="price">${formattedPrice}</p>
-                <span className="free">{t('cartVehicule.cancellation')}</span>
                 {showActions && (
                     <button type="button" onClick={handleContinue}>{t('cartVehicule.continue')}</button>
                 )}

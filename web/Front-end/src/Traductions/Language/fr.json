@@ -199,7 +199,7 @@
       "En créant un compte sur RentaMovil, vous autorisez le traitement de vos données personnelles (prénom, nom, e-mail, téléphone et nom d'utilisateur) conformément à la loi colombienne 1581 de 2012 (Habeas Data).",
       "Finalité : gérer votre compte, vos réservations, paiements et facturation, et vous contacter au sujet du service.",
       "Vos droits : consulter, mettre à jour, rectifier et supprimer vos données, et révoquer cette autorisation à tout moment.",
-      "Vos données ne seront pas partagées avec des tiers, sauf obligation légale ou pour réaliser le service contracté (par exemple le traitement des paiements).",
+      "Vos données ne seront pas partagées avec des tiers, sauf obligation légale ou pour réaliser le service contracté (par exemple le stockage des photos de profil et des justificatifs de paiement).",
       "Les conditions de location de véhicules seront de nouveau présentées et acceptées lors de la réservation."
     ]
   },
@@ -1435,7 +1435,7 @@
     "noLocationAvailable": "Aucune position disponible"
   },
   "rentalTerms": {
-    "effectiveDate": "24 septembre 2026",
+    "effectiveDate": "27 octobre 2026",
     "sections": {
       "objeto": {
         "title": "1. Objet et acceptation",
@@ -1445,10 +1445,10 @@
         ]
       },
       "requisitos": {
-        "title": "2. Exigences relatives au client et au conducteur",
+        "title": "2. Exigences relatives au client",
         "paragraphs": [
-          "Le client déclare avoir l'âge minimum requis par la réglementation applicable, posséder un permis de conduire valide pendant toute la durée de la location, et disposer de l'autorisation et de la capacité nécessaires pour conclure ce contrat.",
-          "Au moment de la remise du véhicule, le client devra présenter les documents d'identité, le permis de conduire et les autres exigences indiquées dans la réservation ou à l'agence. Tout conducteur supplémentaire doit être autorisé au préalable par RentaMóvil. La fourniture d'informations fausses, expirées ou insuffisantes pourra entraîner la suspension ou l'annulation du service, sans préjudice des droits du client."
+          "Le client déclare avoir l'âge minimum exigé par la réglementation applicable, détenir un permis de conduire valide pendant toute la durée de la location et avoir la capacité juridique d'accepter ces conditions. La plateforme ne demande ni ne vérifie les documents de conduite.",
+          "Lors de la remise, le client doit présenter en agence sa pièce d'identité, son permis et les autres exigences communiquées. Le titulaire de la réservation est responsable du véhicule pendant la location ; la plateforme ne gère pas les conducteurs supplémentaires. La fourniture d'informations fausses, périmées ou insuffisantes peut empêcher la remise du véhicule, sans préjudice des droits du client."
         ]
       },
       "reserva": {
@@ -1468,8 +1468,8 @@
       "cambios": {
         "title": "5. Modifications, annulation et remboursements",
         "paragraphs": [
-          "Les demandes de modification ou d'annulation doivent être présentées par les canaux officiels avant la date et l'heure de prise en charge. S'appliqueront les conditions, délais, coûts et pénalités expressément indiqués dans l'offre et acceptés par le client lors de la confirmation de la réservation. En l'absence de condition particulière visible, RentaMóvil indiquera le coût applicable avant de traiter la demande.",
-          "Aucun remboursement ne sera accordé pour des services déjà rendus, des frais envers des tiers, des dommages imputables au client ou des cas prévus par la réglementation applicable, sans préjudice des droits non renonçables du consommateur et des règles spécifiques de la couverture choisie."
+          "Une fois la réservation créée, elle ne peut pas être annulée depuis la plateforme, et le véhicule, la date de prise en charge et la date de restitution ne peuvent pas être modifiés. Seule l'agence de restitution peut être modifiée, tant qu'il reste plus de 3 jours avant la date de restitution et que le statut de la réservation le permet.",
+          "Un paiement approuvé n'est pas remboursable à la demande du client. Sont exceptés les cas où RentaMóvil ne peut pas fournir le service (section 11) et les droits irrévocables du consommateur prévus par la loi."
         ]
       },
       "entrega": {
@@ -1480,10 +1480,10 @@
         ]
       },
       "deposito": {
-        "title": "7. Dépôt de garantie et paiements à des tiers",
+        "title": "7. Garanties et paiements à des tiers",
         "paragraphs": [
-          "Le cas échéant, le client devra constituer un dépôt ou fournir une garantie selon le montant et le mécanisme indiqués dans la réservation ou le contrat de location. Ce dépôt constitue une garantie d'exécution et non un paiement de la réservation, sauf indication expresse contraire.",
-          "Le dépôt sera libéré une fois le véhicule restitué et après vérification de son état, de la documentation, du carburant, du kilométrage et de l'absence d'obligations en cours. En cas de dommages, d'amendes ou d'autres sommes dues, le montant vérifié pourra être déduit, dans le respect des notifications, de la procédure et des droits du client."
+          "La plateforme ne perçoit ni ne gère de dépôts de garantie. Si une agence exige une garantie supplémentaire, elle sera communiquée avant la remise et gérée en dehors de la plateforme, et ne fait pas partie du paiement de la réservation.",
+          "Les dommages, amendes ou autres sommes imputables au client seront réclamés conformément à la loi, avec notification préalable et dans le respect du droit du client de les contester. La plateforme ne traite pas ces prélèvements."
         ]
       },
       "uso": {
@@ -1501,10 +1501,10 @@
         ]
       },
       "devolucion": {
-        "title": "10. Restitution et prolongation",
+        "title": "10. Restitution",
         "paragraphs": [
           "Le véhicule doit être restitué à l'agence, à la date et à l'heure indiquées, avec le même niveau de carburant, kilométrage, accessoires, documents et état de qualité, sous réserve de l'usure ordinaire admise. La restitution sera documentée au moyen d'une inspection et d'un procès-verbal de remise.",
-          "Toute prolongation doit être demandée avant l'heure de restitution et est soumise à disponibilité et au tarif en vigueur. Un retard dans la restitution ne produit pas de prolongation automatique. Une restitution tardive ou effectuée hors de l'agence convenue peut entraîner des frais supplémentaires et, le cas échéant, l'application de la garantie."
+          "La date et l'heure de restitution de la réservation sont fixes : elles ne peuvent être ni modifiées ni prolongées depuis la plateforme. Un retard de restitution ne produit pas de prolongation automatique. Une restitution tardive, ou effectuée hors de l'agence convenue, peut entraîner des frais supplémentaires selon les informations communiquées par l'agence."
         ]
       },
       "disponibilidad": {
