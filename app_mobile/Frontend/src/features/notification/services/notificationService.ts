@@ -1,5 +1,5 @@
 import { API_ROUTES } from "../../../config/env";
-import { httpClient } from "../../../shared/api/httpClient";
+import { httpClient, type HttpRequestOptions } from "../../../shared/api/httpClient";
 import { vehicleService } from "../../vehicles/services/vehicleService";
 
 import type { Notification } from "../../../types";
@@ -55,19 +55,19 @@ function fromApiNotification(notification: ApiNotification): Notification {
  * param), asi que aqui no se vuelve a filtrar por personId.
  */
 export const notificationService = {
-    async getNotifications(): Promise<NotificationWithVehicle[]> {
-        const response = await httpClient.get<ApiNotification[]>(API_ROUTES.notifications);
+    async getNotifications(options?: HttpRequestOptions): Promise<NotificationWithVehicle[]> {
+        const response = await httpClient.get<ApiNotification[]>(API_ROUTES.notifications, options);
         const notifications = response.map(fromApiNotification);
 
-        const vehicles = await vehicleService.getVehicles();
+        const vehicles = await vehicleService.getVehicles(undefined, options);
 
         return attachVehicle(notifications, vehicles);
     },
 
-    async markAsRead(notificationId: number): Promise<Notification> {
-        const updated = await httpClient.patch<ApiNotification>(
-            `${API_ROUTES.notifications}/${notificationId}/read`,
-        );
-        return fromApiNotification(updated);
-    },
+  async markAsRead(notificationId: number): Promise<Notification> {
+    return httpClient.patch<Notification>(
+      `${API_ROUTES.notifications}/${notificationId}`,
+      { is_read: true, read_at: new Date().toISOString() },
+    );
+  },
 };
