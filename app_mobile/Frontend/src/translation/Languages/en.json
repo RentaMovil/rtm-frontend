@@ -30,13 +30,6 @@
       "premium": "Premium"
     }
   },
-  "menu": {
-    "title": "Menu",
-    "home": "Home",
-    "reservations": "My reservations",
-    "account": "My account",
-    "logout": "Log out"
-  },
   "navbar": {
     "linkInit": "Home",
     "linkNotifications": "Notifications",
@@ -65,7 +58,9 @@
     "branch": "Branch",
     "deliveryLocationPlaceholder": "Select a branch",
     "noBranchResults": "No branch matches your search",
-    "search": "Search"
+    "search": "Search",
+    "endDateBeforeStart": "The return date cannot be earlier than the pickup date.",
+    "invalidBranch": "Select a valid branch."
   },
   "cartVehicule": {
     "capacity": "Passengers",
@@ -224,7 +219,10 @@
           ]
         }
       }
-    }
+    },
+    "changePickupTitle": "Change pickup branch",
+    "changePickupMessage": "To change the pickup branch you must go back to the home screen and choose the vehicle again. Do you want to continue?",
+    "createErrorMessage": "Could not create the reservation. Please try again."
   },
   "login": {
     "createAccount": "Create account",
@@ -312,7 +310,35 @@
     "placeholderAddress": "Delivery address",
     "confirm": "Confirm and pay",
     "copyNumber": "Copy number",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "reviewAlertTitle": "Payment submitted",
+    "reviewErrorTitle": "Could not submit the payment",
+    "reviewStateTitle": "Payment under review",
+    "reviewMessage": "Your payment was submitted. An administrator will review it and you'll get a notification once it's approved.",
+    "goHome": "Back to home",
+    "noReservationTitle": "No active reservation",
+    "noReservationText": "Create a reservation first to submit its payment.",
+    "submitting": "Submitting...",
+    "submit": "Submit payment"
+  },
+  "receiptPicker": {
+    "title": "Payment receipt",
+    "subtitleWeb": "Attach the photo or screenshot of the transfer receipt",
+    "subtitleNative": "Attach the photo of the transfer receipt",
+    "attachImage": "Attach image",
+    "pickCamera": "Take photo",
+    "pickGallery": "Choose from gallery",
+    "chooseSourceTitle": "Payment receipt",
+    "chooseSourceMessage": "How do you want to attach it?",
+    "cancel": "Cancel",
+    "cameraPermissionTitle": "Permission needed",
+    "cameraPermissionMessage": "Camera access is needed to attach the payment receipt.",
+    "galleryPermissionTitle": "Permission needed",
+    "galleryPermissionMessage": "Photo library access is needed to attach the payment receipt.",
+    "cameraError": "Could not open the camera",
+    "libraryError": "Could not attach the image",
+    "change": "Change",
+    "remove": "Remove"
   },
   "buttonBack": {
     "label": "Back"
@@ -584,17 +610,88 @@
     "sure": "Are you sure you want to cancel the reservation for",
     "yes": "Yes, cancel",
     "no": "No",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "loadErrorTitle": "Error loading reservations",
+    "loadErrorMessage": "Your reservations could not be loaded. Check your connection and try again.",
+    "loadingText": "Loading reservations...",
+    "activityTitle": "YOUR ACTIVITY",
+    "myReservationsLabel": "My reservations",
+    "subtitle": "View and manage your upcoming trips.",
+    "emptyState": "You don't have reservations yet.",
+    "loadErrorTitle": "Error loading reservations",
+    "loadErrorMessage": "Could not load your reservations. Check your connection and try again."
   },
   "tabs": {
     "home": "Home",
-    "menu": "Menu",
-    "reservations": "Reservations"
+    "homeModule": "Module",
+    "reservations": "Reservations",
+    "reservationsModule": "Module",
+    "account": "Account",
+    "accountModule": "Module"
   },
   "themes": {
     "light": "Light green",
     "dark": "Dark",
     "darkPurple": "Midnight",
     "skylight": "Light blue"
+  },
+  "home": {
+    "searchFirst": "Please run a search first.",
+    "noResults": "No vehicles are available for the selected filters."
+  },
+  "errors": {
+    "unexpected": "An unexpected error occurred.",
+    "network": "Could not connect to the API at {{url}}. Make sure it is running."
+  },
+  "account": {
+    "saveProfileError": "Could not save the profile.",
+    "emailRequired": "The new email is required.",
+    "emailInvalid": "Enter a valid email.",
+    "emailDifferent": "The new email must be different from the current one.",
+    "emailPasswordRequired": "Enter your current password to confirm the change.",
+    "changeEmailError": "Could not change the email.",
+    "changePhoto": "Change photo",
+    "accountTitle": "My account",
+    "accountSubtitle": "Manage your information and preferences.",
+    "settings": "Settings",
+    "themeLabel": "Theme",
+    "personalInfo": "Personal information",
+    "nameLabel": "Name",
+    "phoneLabel": "Phone",
+    "usernameLabel": "Username",
+    "emailLabel": "Email",
+    "changeEmailBtn": "Change email",
+    "changePasswordBtn": "Change password",
+    "editBtn": "Edit",
+    "saveBtn": "Save",
+    "saveBtnSaving": "Saving...",
+    "logoutBtn": "Log out",
+    "emailModalTitle": "Change email",
+    "currentEmailLabel": "Current email",
+    "newEmailLabel": "New email",
+    "passwordLabel": "Current password",
+    "cancelBtn": "Cancel",
+    "confirmBtn": "Confirm",
+    "emailPlaceholder": "new@email.com",
+    "passwordPlaceholder": "Your password"
+  },
+  "common": {
+    "error": "Error",
+    "accept": "Accept",
+    "cancel": "Cancel",
+    "required": "This field is required"
+  },
+  "reservationDetail": {
+    "notFound": "The reservation was not found.",
+    "cancelledTitle": "Reservation cancelled",
+    "cancelledMessage": "Your reservation has been cancelled successfully.",
+    "cancelErrorTitle": "Could not cancel the reservation",
+    "cancelErrorMessage": "The reservation could not be cancelled. Check your connection and try again.",
+    "returnBranchErrorTitle": "Could not change the branch",
+    "returnBranchErrorMessage": "The return branch could not be updated. Check your connection and try again."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "goHome": "Go to the home screen"
   }
 }

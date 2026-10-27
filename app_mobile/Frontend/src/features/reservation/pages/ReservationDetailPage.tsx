@@ -1,5 +1,6 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
     ActivityIndicator,
     Alert,
@@ -16,7 +17,8 @@ import {
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
-import type { Branch, Reservation, Vehicle } from "../../../types";
+import type { Branch, Reservation } from "../../../types";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { ApiError } from "../../../shared/api/httpClient";
 import { getBranchById, getBranches } from "../../branches/services/branchService";
 import BranchSelectorModal from "../components/BranchSelectorModal";
@@ -77,13 +79,13 @@ const statusBadgeStyleKey: Record<string, "pending" | "confirmed" | "completed" 
 
 export default function ReservationDetailPage() {
     const { id } = useLocalSearchParams();
+    const { t } = useTranslation();
     const [reservation, setReservation] = useState<Reservation | null>(null);
     const [loading, setLoading] = useState(true);
 
     // La reserva guarda solo ids (vehicleId, pickupBranchId,
     // returnBranchId). El vehiculo viene de la API y las sucursales del
     // catalogo, asi que se resuelven aqui para poder pintar los nombres.
-    const [vehicle, setVehicle] = useState<Vehicle | null>(null);
     const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
     const [isCancelling, setIsCancelling] = useState(false);
     const { themeName } = useTheme();
@@ -140,7 +142,7 @@ export default function ReservationDetailPage() {
                 const data = await getReservationById(String(id));
                 setReservation(data ?? null);
             } catch (error) {
-                console.log("Error cargando reserva:", error);
+                console.error("Error cargando reserva:", error);
             } finally {
                 setLoading(false);
             }
@@ -159,7 +161,7 @@ export default function ReservationDetailPage() {
             const updatedReservation = await cancelReservation(reservation.id);
 
             if (!updatedReservation) {
-                Alert.alert("Error", "No se encontró la reserva.");
+            Alert.alert(t("common.error"), t("reservationDetail.notFound"));
                 return;
             }
 
@@ -167,14 +169,14 @@ export default function ReservationDetailPage() {
             // del backend: nunca se marca como cancelada de forma optimista.
             setReservation(updatedReservation);
             setIsCancelModalVisible(false);
-            Alert.alert("Reserva cancelada", "Tu reserva ha sido cancelada correctamente.");
+            Alert.alert(t("reservationDetail.cancelledTitle"), t("reservationDetail.cancelledMessage"));
         } catch (error) {
-            console.log("Error cancelando reserva:", error);
+            console.error("Error cancelando reserva:", error);
             const message =
                 error instanceof ApiError
                     ? error.message
-                    : "No fue posible cancelar la reserva. Verifica tu conexión e inténtalo de nuevo.";
-            Alert.alert("No se pudo cancelar", message);
+                    : t("reservationDetail.cancelErrorMessage");
+            Alert.alert(t("reservationDetail.cancelErrorTitle"), message);
         } finally {
             setIsCancelling(false);
             cancelInFlightRef.current = false;
@@ -200,12 +202,12 @@ export default function ReservationDetailPage() {
             setReservation(updated);
             setIsReturnBranchModalVisible(false);
         } catch (error) {
-            console.log("Error actualizando sucursal de devolución:", error);
+            console.error("Error actualizando sucursal de devolución:", error);
             const message =
                 error instanceof ApiError
                     ? error.message
-                    : "No fue posible actualizar la sucursal de devolución. Verifica tu conexión e inténtalo de nuevo.";
-            Alert.alert("No se pudo cambiar la sucursal", message);
+                    : t("reservationDetail.returnBranchErrorMessage");
+            Alert.alert(t("reservationDetail.returnBranchErrorTitle"), message);
         } finally {
             setIsUpdatingReturnBranch(false);
             returnBranchInFlightRef.current = false;
@@ -289,7 +291,19 @@ export default function ReservationDetailPage() {
 
                 <View style={styles.card}>
                     <Text style={styles.sectionTitle}>Vehículo</Text>
-                    <Text style={styles.vehicleName}>{vehicle ? `${vehicle.brand} ${vehicle.model}` : "Vehiculo no disponible"}</Text>
+
+                    {/* Icono del vehiculo, mismo lenguaje visual que los
+                        badges de `VehicleSummaryCard` (icono en `button`). */}
+                    <View style={styles.vehicleRow}>
+                        <FontAwesome
+                            name="car"
+                            size={18}
+                            color={colors.button}
+                        />
+                        <Text style={styles.vehicleName}>
+                            Vehículo no disponible
+                        </Text>
+                    </View>
                 </View>
 
                 <View style={styles.card}>
@@ -369,7 +383,7 @@ export default function ReservationDetailPage() {
                         </View>
                         <Text style={styles.modalTitle}>¿Cancelar reserva?</Text>
                         <Text style={styles.modalMessage}>
-                            ¿De verdad quieres cancelar la reserva de {vehicle ? `${vehicle.brand} ${vehicle.model}` : reservation.vehicleId}? Esta acción no se puede deshacer.
+                            ¿De verdad quieres cancelar la reserva de {reservation.vehicleId}? Esta acción no se puede deshacer.
                         </Text>
 
                         <View style={styles.modalActions}>

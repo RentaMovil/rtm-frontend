@@ -30,13 +30,6 @@
       "premium": "Premium"
     }
   },
-  "menu": {
-    "title": "Menu",
-    "home": "Accueil",
-    "reservations": "Mes réservations",
-    "account": "Mon compte",
-    "logout": "Se déconnecter"
-  },
   "navbar": {
     "linkInit": "Accueil",
     "linkNotifications": "Notifications",
@@ -56,11 +49,6 @@
     "branch": "Succursale",
     "deliveryLocationPlaceholder": "Choisissez une succursale",
     "noBranchResults": "Aucune succursale ne correspond à la recherche",
-    "branch1": "Bogotá - Centre",
-    "branch2": "Bogotá - Nord",
-    "branch3": "Medellín - El Poblado",
-    "branch4": "Cali - Sud",
-    "branch5": "Barranquilla - Centre",
     "errorDate": "La date de retour ne peut pas être antérieure à la date de prise en charge",
     "errorBranch": "Agence invalide",
     "errorHour": "Heure invalide (8:00 - 18:00)",
@@ -70,14 +58,15 @@
     "deliveryHour": "Heure de prise en charge",
     "returnDate": "Date de retour",
     "returnHour": "Heure de retour",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "endDateBeforeStart": "La date de retour ne peut pas être antérieure à la date de prise en charge.",
+    "invalidBranch": "Sélectionnez une agence valide."
   },
   "cartVehicule": {
     "capacity": "Passagers",
     "year": "Année",
     "gasoline": "Essence",
     "doors": "Portes",
-    "driving": "⚙️ Manuelle",
     "kmLimit": "∞ Km limite",
     "location": "📍 Aéroport, Bogotá",
     "cancellation": "Annulation gratuite",
@@ -230,7 +219,10 @@
           ]
         }
       }
-    }
+    },
+    "changePickupTitle": "Changer l'agence de prise en charge",
+    "changePickupMessage": "Pour changer l'agence de prise en charge, vous devez revenir à l'accueil et choisir le véhicule à nouveau. Voulez-vous continuer ?",
+    "createErrorMessage": "Impossible de créer la réservation. Veuillez réessayer."
   },
   "login": {
     "createAccount": "Créer un compte",
@@ -318,7 +310,35 @@
     "placeholderAddress": "Adresse de livraison",
     "confirm": "Confirmer et payer",
     "copyNumber": "Copier le numéro",
-    "copied": "Copié !"
+    "copied": "Copié !",
+    "reviewAlertTitle": "Paiement enregistré",
+    "reviewErrorTitle": "Le paiement n'a pas pu être enregistré",
+    "reviewStateTitle": "Paiement en cours de révision",
+    "reviewMessage": "Votre paiement a été enregistré. Un administrateur va le vérifier et vous recevrez une notification dès son approbation.",
+    "goHome": "Retour à l'accueil",
+    "noReservationTitle": "Aucune réservation active",
+    "noReservationText": "Créez d'abord une réservation pour pouvoir enregistrer son paiement.",
+    "submitting": "Envoi en cours...",
+    "submit": "Enregistrer le paiement"
+  },
+  "receiptPicker": {
+    "title": "Justificatif de paiement",
+    "subtitleWeb": "Joignez la photo ou la capture d'écran du justificatif de virement",
+    "subtitleNative": "Joignez la photo du justificatif de virement",
+    "attachImage": "Joindre une image",
+    "pickCamera": "Prendre une photo",
+    "pickGallery": "Choisir dans la galerie",
+    "chooseSourceTitle": "Justificatif de paiement",
+    "chooseSourceMessage": "Comment voulez-vous le joindre ?",
+    "cancel": "Annuler",
+    "cameraPermissionTitle": "Autorisation requise",
+    "cameraPermissionMessage": "L'accès à la caméra est nécessaire pour joindre le justificatif de paiement.",
+    "galleryPermissionTitle": "Autorisation requise",
+    "galleryPermissionMessage": "L'accès aux photos est nécessaire pour joindre le justificatif de paiement.",
+    "cameraError": "Impossible d'ouvrir la caméra",
+    "libraryError": "Impossible de joindre l'image",
+    "change": "Changer",
+    "remove": "Retirer"
   },
   "buttonBack": {
     "label": "Retour"
@@ -590,17 +610,86 @@
     "sure": "Êtes-vous sûr de vouloir annuler la réservation de",
     "yes": "Oui, annuler",
     "no": "Non",
-    "confirm": "Confirmer"
+    "confirm": "Confirmer",
+    "loadErrorTitle": "Erreur lors du chargement des réservations",
+    "loadErrorMessage": "Vos réservations n'ont pas pu être chargées. Vérifiez votre connexion et réessayez.",
+    "loadingText": "Chargement des réservations...",
+    "activityTitle": "VOTRE ACTIVITÉ",
+    "myReservationsLabel": "Mes réservations",
+    "subtitle": "Consultez et gérez vos prochains voyages.",
+    "emptyState": "Vous n'avez pas encore de réservations."
   },
   "tabs": {
     "home": "Accueil",
-    "menu": "Menu",
-    "reservations": "Réservations"
+    "homeModule": "Module",
+    "reservations": "Réservations",
+    "reservationsModule": "Module",
+    "account": "Compte",
+    "accountModule": "Module"
   },
   "themes": {
     "light": "Vert clair",
     "dark": "Sombre",
     "darkPurple": "Nuit",
     "skylight": "Bleu clair"
+  },
+  "home": {
+    "searchFirst": "Commencez par une recherche.",
+    "noResults": "Aucun véhicule disponible pour les filtres sélectionnés."
+  },
+  "errors": {
+    "unexpected": "Une erreur inattendue s'est produite.",
+    "network": "Impossible de se connecter à l'API sur {{url}}. Vérifiez qu'elle est en cours d'exécution."
+  },
+  "account": {
+    "saveProfileError": "Impossible d'enregistrer le profil.",
+    "emailRequired": "Le nouvel e-mail est obligatoire.",
+    "emailInvalid": "Saisissez un e-mail valide.",
+    "emailDifferent": "Le nouvel e-mail doit être différent de l'actuel.",
+    "emailPasswordRequired": "Saisissez votre mot de passe actuel pour confirmer le changement.",
+    "changeEmailError": "Impossible de changer l'e-mail.",
+    "changePhoto": "Changer la photo",
+    "accountTitle": "Mon compte",
+    "accountSubtitle": "Gérez vos informations et préférences.",
+    "settings": "Paramètres",
+    "themeLabel": "Thème",
+    "personalInfo": "Informations personnelles",
+    "nameLabel": "Nom",
+    "phoneLabel": "Téléphone",
+    "usernameLabel": "Nom d'utilisateur",
+    "emailLabel": "Email",
+    "changeEmailBtn": "Changer l'email",
+    "changePasswordBtn": "Changer le mot de passe",
+    "editBtn": "Modifier",
+    "saveBtn": "Enregistrer",
+    "saveBtnSaving": "Enregistrement...",
+    "logoutBtn": "Se déconnecter",
+    "emailModalTitle": "Changer l'email",
+    "currentEmailLabel": "Email actuel",
+    "newEmailLabel": "Nouvel email",
+    "passwordLabel": "Mot de passe actuel",
+    "cancelBtn": "Annuler",
+    "confirmBtn": "Confirmer",
+    "emailPlaceholder": "nouvel@email.com",
+    "passwordPlaceholder": "Votre mot de passe"
+  },
+  "common": {
+    "error": "Erreur",
+    "accept": "Accepter",
+    "cancel": "Annuler",
+    "required": "Ce champ est obligatoire"
+  },
+  "reservationDetail": {
+    "notFound": "Réservation introuvable.",
+    "cancelledTitle": "Réservation annulée",
+    "cancelledMessage": "Votre réservation a été annulée avec succès.",
+    "cancelErrorTitle": "Impossible d'annuler la réservation",
+    "cancelErrorMessage": "La réservation n'a pas pu être annulée. Vérifiez votre connexion et réessayez.",
+    "returnBranchErrorTitle": "Impossible de changer l'agence",
+    "returnBranchErrorMessage": "L'agence de retour n'a pas pu être mise à jour. Vérifiez votre connexion et réessayez."
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "goHome": "Aller à l'accueil"
   }
 }

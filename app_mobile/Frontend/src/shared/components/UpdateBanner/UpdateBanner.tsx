@@ -22,7 +22,7 @@ export default function UpdateBanner() {
   }
 
   return (
-    <View style={styles.container} pointerEvents="box-none">
+    <View style={styles.container}>
       <View style={styles.banner}>
         <Text style={styles.text}>{t("otaUpdate.available")}</Text>
 

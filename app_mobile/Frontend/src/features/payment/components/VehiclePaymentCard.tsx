@@ -11,6 +11,11 @@ import { createStyles } from "./VehiclePaymentCard.styles";
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
 
+/** Separador de miles es-CO, el mismo que usa el web y el resto del mobile. */
+function formatMoney(value: number): string {
+    return value.toLocaleString("es-CO");
+}
+
 export default function VehiclePaymentCard() {
 
     const { reservation } = useReservation();
@@ -41,7 +46,7 @@ export default function VehiclePaymentCard() {
                 </Text>
 
                 <Text style={styles.price}>
-                    ${reservation.vehicle.price} / día
+                    ${formatMoney(reservation.vehicle.price)} / día
                 </Text>
 
             </View>

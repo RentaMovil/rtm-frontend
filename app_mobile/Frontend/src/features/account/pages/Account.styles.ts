@@ -27,6 +27,7 @@ export const CountStyles = (colors: any) => StyleSheet.create({
     emailActionButton: { marginTop: -4, marginBottom: 16, alignSelf: "flex-start" },
     emailActionText: { color: colors.primary, fontWeight: "700", fontSize: 13 },
     buttonsRow: { flexDirection: "row", marginTop: 16, gap: 12 },
+    saveError: { color: colors.error, fontSize: 13, marginBottom: 12 },
     editButton: { flex: 1, backgroundColor: colors.primary, paddingVertical: 14, borderRadius: 12, alignItems: "center" },
     buttonEditar: { color: colors.buttonText, fontWeight: "700", fontSize: 15 },
     outCesionButton: { flex: 1, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.error, paddingVertical: 14, borderRadius: 12, alignItems: "center" },

@@ -50,16 +50,16 @@ export function PushNotificationProvider({ children }: Props) {
     }
     registeredRef.current = true;
 
-    registerForPushNotificationsAsync();
+    void registerForPushNotificationsAsync();
   }, [isAuthenticated]);
 
   useEffect(() => {
     const receivedSub = Notifications.addNotificationReceivedListener(() => {
-      refresh();
+      void refresh();
     });
 
     const responseSub = Notifications.addNotificationResponseReceivedListener(() => {
-      refresh();
+      void refresh();
       router.push("/notifications");
     });
 

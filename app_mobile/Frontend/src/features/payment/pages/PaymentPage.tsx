@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
@@ -12,6 +13,7 @@ import { getInsuranceOptions } from "../../insurance/services/insuranceService";
 import BankAccountSelector from "../components/BankAccountSelector";
 import InvoiceCard from "../components/InvoiceCard";
 import ReceiptPicker from "../components/ReceiptPicker";
+import ReceiptDeadlineWarning from "../components/ReceiptDeadlineWarning";
 import VehiclePaymentCard from "../components/VehiclePaymentCard";
 
 import { usePayment } from "../context/PaymentContext";
@@ -34,14 +36,15 @@ import { createStyles } from "./PaymentPage.styles";
  * asi que aqui no se crea nada: solo se le reporta el pago.
  */
 export default function PaymentPage() {
+  const { t } = useTranslation();
   const { selectedBankAccount, processPayment, payment, clearPayment } = usePayment();
 
   const { reservation, createdReservation, clearReservation } = useReservation();
 
   const [insuranceOptions, setInsuranceOptions] = useState<InsuranceType[]>([]);
   const [receiptFile, setReceiptFile] = useState<PaymentReceiptFile | null>(null);
-  const [referenceNumber, setReferenceNumber] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showDeadlineWarning, setShowDeadlineWarning] = useState(false);
 
   const { themeName } = useTheme();
   const colors = themes[themeName];
@@ -60,6 +63,17 @@ export default function PaymentPage() {
       cancelled = true;
     };
   }, []);
+
+  // Verificar si hay 24 horas para enviar el comprobante
+  useEffect(() => {
+    if (createdReservation?.createdAt) {
+      const createdAt = new Date(createdReservation.createdAt);
+      const now = new Date();
+      const diffHours = (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60);
+      // Mostrar advertencia si faltan menos de 4 horas para las 24 horas
+      setShowDeadlineWarning(diffHours > 20 && diffHours < 24);
+    }
+  }, [createdReservation?.createdAt]);
 
   const vehicle = reservation?.vehicle;
 
@@ -89,24 +103,18 @@ export default function PaymentPage() {
     setIsSubmitting(true);
 
     try {
-      const created = await processPayment({
+      await processPayment({
         reservationId: createdReservation.reservationId,
         bankAccountId: selectedBankAccount.id,
         amount: total,
-        ...(referenceNumber ? { referenceNumber } : {}),
         receiptFile,
       });
 
-      Alert.alert(
-        "Pago registrado",
-        "Tu pago quedo en revision. Un administrador lo confirmara y la reserva pasara a confirmada.",
-      );
-
-      console.log("Pago creado:", created);
+      Alert.alert(t("payment.reviewAlertTitle"), t("payment.reviewMessage"));
     } catch (error) {
       Alert.alert(
-        "No se pudo registrar el pago",
-        error instanceof Error ? error.message : "Error inesperado.",
+        t("payment.reviewErrorTitle"),
+        error instanceof Error ? error.message : t("errors.unexpected"),
       );
     } finally {
       setIsSubmitting(false);
@@ -114,25 +122,22 @@ export default function PaymentPage() {
   }
 
   if (payment) {
-    // Se limpia la reserva y el pago del borrador: volver al menu no debe
+    // Se limpia la reserva y el pago del borrador: volver al inicio no debe
     // dejar datos de esta reserva ya enviada para la siguiente.
-    const handleGoToMenu = () => {
+    const handleGoHome = () => {
       clearPayment();
       clearReservation();
-      router.replace("/menu");
+      router.replace("/(tabs)");
     };
 
     return (
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.stateTitle}>Pago en revision</Text>
+        <Text style={styles.stateTitle}>{t("payment.reviewStateTitle")}</Text>
 
-        <Text style={styles.stateText}>
-          Tu pago quedo registrado y esta esperando que un administrador lo
-          confirme.
-        </Text>
+        <Text style={styles.stateText}>{t("payment.reviewMessage")}</Text>
 
         <View style={{ marginTop: 24 }}>
-          <ContinueButton title="Volver al menu" onPress={handleGoToMenu} />
+          <ContinueButton title={t("payment.goHome")} onPress={handleGoHome} />
         </View>
       </ScrollView>
     );
@@ -141,11 +146,9 @@ export default function PaymentPage() {
   if (!createdReservation) {
     return (
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.stateTitle}>No hay una reserva activa</Text>
+        <Text style={styles.stateTitle}>{t("payment.noReservationTitle")}</Text>
 
-        <Text style={styles.stateText}>
-          Crea primero una reserva para poder registrar su pago.
-        </Text>
+        <Text style={styles.stateText}>{t("payment.noReservationText")}</Text>
       </ScrollView>
     );
   }
@@ -158,10 +161,13 @@ export default function PaymentPage() {
 
       <BankAccountSelector />
 
+      {/* Mostrar advertencia si falta menos de 4 horas para las 24 horas */}
+      {showDeadlineWarning && <ReceiptDeadlineWarning showWarning={true} />}
+
       <ReceiptPicker receiptFile={receiptFile} onChange={setReceiptFile} />
 
       <ContinueButton
-        title={isSubmitting ? "Enviando..." : "Registrar pago"}
+        title={isSubmitting ? t("payment.submitting") : t("payment.submit")}
         onPress={handlePayment}
       />
     </ScrollView>

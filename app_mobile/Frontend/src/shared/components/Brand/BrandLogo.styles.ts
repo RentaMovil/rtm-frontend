@@ -10,7 +10,7 @@ import { Radius } from "../../../theme/constants/radius";
  * una sola vez a nivel de modulo. Los colores se aplican en el JSX con
  * `colors.x`, como en el resto de la app.
  */
-export const createStyles = (colors: any) =>
+export const createStyles = () =>
   StyleSheet.create({
     row: {
       flexDirection: "row",
@@ -29,7 +29,7 @@ export const createStyles = (colors: any) =>
   });
 
 /** Variante de pantalla de acceso, con el icono y el texto mas grandes. */
-export const createAuthStyles = (colors: any) =>
+export const createAuthStyles = () =>
   StyleSheet.create({
     row: {
       flexDirection: "row",

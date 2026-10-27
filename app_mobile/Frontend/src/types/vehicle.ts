@@ -1,4 +1,4 @@
-import type { ISODateTime, Money, UUID } from "./common";
+import type { Money, UUID } from "./common";
 
 /**
  * Entity: Vehicle.

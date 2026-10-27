@@ -56,13 +56,8 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
     const [showEndTime, setShowEndTime] = useState(false);
 
     const [errorBranch, setErrorBranch] = useState("");
-    const [errorDate, setErrorDate] = useState("");
-
-    useEffect(() => {
-        setErrorDate(
-        endDate < startDate ? "La fecha de devolución no puede ser menor." : ""
-        );
-    }, [startDate, endDate]);
+    const errorDate =
+        endDate < startDate ? t("filterCalendar.endDateBeforeStart") : "";
 
     const [branchOptions, setBranchOptions] = useState<Branch[]>([]);
 
@@ -73,6 +68,11 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
         if (!cancelled) {
             setBranchOptions(loaded);
         }
+        }).catch(() => {
+        // Sin catalogo no hay sugerencias: o el usuario escribe el nombre
+        // a mano (se resuelve en handleSubmit) o vera el mensaje de
+        // sucursal invalida. Lo importante es no dejar la promesa sin
+        // manejar.
         });
 
         return () => {
@@ -123,18 +123,35 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
     };
 
     const handleSubmit = () => {
-        if (!selectedBranch) {
-        setErrorBranch("Selecciona una sucursal válida.");
-        return;
+        if (errorDate) return;
+
+        // El usuario puede escribir el nombre completo sin tocar las
+        // sugerencias: en ese caso `selectedBranch` queda en null y, antes
+        // de este fix, la busqueda se rechazaba con "sucursal invalida"
+        // aunque el texto correspondiera a una sucursal real. Si el texto
+        // coincide con una opcion (sin distinguir mayusculas ni espacios),
+        // se resuelve aqui.
+        const branch =
+            selectedBranch ??
+            branchOptions.find(
+                (option) =>
+                    option.name.trim().toLowerCase() ===
+                    query.trim().toLowerCase(),
+            ) ??
+            null;
+
+        if (!branch) {
+            setErrorBranch(t("filterCalendar.invalidBranch"));
+            return;
         }
 
         const finalStartDate = applyTime(startDate, startTime);
         const finalEndDate = applyTime(endDate, endTime);
 
         onSearch({
-        branch: selectedBranch,
-        startDate: finalStartDate,
-        endDate: finalEndDate,
+            branch,
+            startDate: finalStartDate,
+            endDate: finalEndDate,
         });
     };
 
@@ -324,6 +341,8 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
             )}
             </View>
         </View>
+
+        {errorDate ? <Text style={styles.error}>{errorDate}</Text> : null}
 
         {/* BUTTON */}
         <TouchableOpacity style={styles.btnSearch} onPress={handleSubmit}>

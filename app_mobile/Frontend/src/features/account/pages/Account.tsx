@@ -1,10 +1,12 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import * as ImagePicker from "expo-image-picker";
 
 import {
     ActivityIndicator,
+    Alert,
     Modal,
     ScrollView,
     Text,
@@ -32,6 +34,8 @@ const defaultUser =
 
 
 export default function Account() {
+
+    const { t } = useTranslation();
 
     const router = useRouter();
 
@@ -183,7 +187,7 @@ export default function Account() {
             setEditing(false);
         } catch (err) {
             setSaveError(
-                err instanceof Error ? err.message : "No se pudo guardar el perfil.",
+                err instanceof Error ? err.message : t("account.saveProfileError"),
             );
         } finally {
             setIsSaving(false);
@@ -191,12 +195,26 @@ export default function Account() {
     }
 
 
-    async function handleLogout() {
-
-        await logout();
-
-        router.replace("/auth/login");
-
+    function handleLogout() {
+        Alert.alert(
+            t("account.confirmLogout"),
+            t("account.logoutQuestion"),
+            [
+                {
+                    text: t("account.cancelBtn"),
+                    style: "cancel",
+                },
+                {
+                    text: t("account.confirmLogoutBtn"),
+                    style: "destructive",
+                    onPress: async () => {
+                        await logout();
+                        router.replace("/auth/login");
+                    },
+                },
+            ],
+            { cancelable: true }
+        );
     }
 
 
@@ -220,19 +238,19 @@ export default function Account() {
 
     function validateNewEmail(correo: string): string | null {
         if (!correo) {
-            return "El correo nuevo es obligatorio.";
+            return t("account.emailRequired");
         }
 
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
-            return "Ingresa un correo válido.";
+            return t("account.emailInvalid");
         }
 
         if (correo.toLowerCase() === (user?.email ?? "").toLowerCase()) {
-            return "El correo nuevo debe ser distinto al actual.";
+            return t("account.emailDifferent");
         }
 
         if (!emailPassword) {
-            return "Ingresa tu contraseña actual para confirmar el cambio.";
+            return t("account.emailPasswordRequired");
         }
 
         return null;
@@ -265,7 +283,7 @@ export default function Account() {
             setEmailError(
                 err instanceof ApiError || err instanceof Error
                     ? err.message
-                    : "No se pudo cambiar el correo.",
+                    : t("account.changeEmailError"),
             );
         } finally {
             setIsChangingEmail(false);
@@ -311,15 +329,15 @@ export default function Account() {
                             }
                         >
 
-                            Cambiar foto
+                            {t("account.changePhoto")}
 
                         </Text>
 
                     </TouchableOpacity>
 
                 </View>
-                <Text style={styles.pageTitle}>{user ? `${user.firstName} ${user.lastName}` : "Mi cuenta"}</Text>
-                <Text style={styles.pageSubtitle}>Gestiona tu información y preferencias.</Text>
+                <Text style={styles.pageTitle}>{user ? `${user.firstName} ${user.lastName}` : t("account.accountTitle")}</Text>
+                <Text style={styles.pageSubtitle}>{t("account.accountSubtitle")}</Text>
             </View>
 
 
@@ -351,7 +369,7 @@ export default function Account() {
                         style={styles.settingsTitle}
                     >
 
-                        Configuración
+                        {t("account.settings")}
 
                     </Text>
 
@@ -390,7 +408,7 @@ export default function Account() {
                                 }
                             >
 
-                                Tema
+                                {t("account.themeLabel")}
 
                             </Text>
 
@@ -426,7 +444,7 @@ export default function Account() {
                     }
                 >
 
-                    Información personal
+                    {t("account.personalInfo")}
 
                 </Text>
 
@@ -441,7 +459,7 @@ export default function Account() {
                         style={styles.label}
                     >
 
-                        Nombre
+                        {t("account.nameLabel")}
 
                     </Text>
 
@@ -471,7 +489,7 @@ export default function Account() {
                         style={styles.label}
                     >
 
-                        Teléfono
+                        {t("account.phoneLabel")}
 
                     </Text>
 
@@ -501,7 +519,7 @@ export default function Account() {
                         style={styles.label}
                     >
 
-                        Usuario
+                        {t("account.usernameLabel")}
 
                     </Text>
 
@@ -531,7 +549,7 @@ export default function Account() {
                         style={styles.label}
                     >
 
-                        Correo
+                        {t("account.emailLabel")}
 
                     </Text>
 
@@ -563,7 +581,7 @@ export default function Account() {
 
                     <Text style={styles.emailActionText}>
 
-                        Cambiar correo
+                        {t("account.changeEmailBtn")}
 
                     </Text>
 
@@ -572,7 +590,7 @@ export default function Account() {
 
                 {emailSuccess ? (
                     <Text style={[styles.label, { color: colors.success, marginBottom: 16 }]}>
-                        Correo actualizado correctamente.
+                        {t("account.emailLabel")} actualizado correctamente.
                     </Text>
                 ) : null}
 
@@ -597,7 +615,7 @@ export default function Account() {
                         }
                     >
 
-                        Cambiar contraseña
+                        {t("account.changePasswordBtn")}
 
                     </Text>
 
@@ -607,6 +625,10 @@ export default function Account() {
 
 
             {/* BOTONES */}
+
+            {saveError ? (
+                <Text style={styles.saveError}>{saveError}</Text>
+            ) : null}
 
             <View
                 style={
@@ -633,7 +655,7 @@ export default function Account() {
                 >
                     <Text style={styles.buttonEditar}>
 
-                        {editing ? (isSaving ? "Guardando..." : "Guardar") : "Editar"}
+                        {editing ? (isSaving ? t("account.saveBtnSaving") : t("account.saveBtn")) : t("account.editBtn")}
 
                     </Text>
                 </TouchableOpacity>
@@ -657,7 +679,7 @@ export default function Account() {
                         }
                     >
 
-                        Cerrar sesión
+                        {t("account.logoutBtn")}
 
                     </Text>
 
@@ -680,11 +702,11 @@ export default function Account() {
                     <View style={styles.modalCard}>
 
                         <Text style={styles.modalTitle}>
-                            Cambiar correo
+                            {t("account.changeEmailBtn")}
                         </Text>
 
                         <View style={styles.inputContainer}>
-                            <Text style={styles.label}>Correo actual</Text>
+                            <Text style={styles.label}>{t("account.currentEmailLabel")}</Text>
                             <TextInput
                                 style={styles.input}
                                 value={user?.email ?? ""}
@@ -693,7 +715,7 @@ export default function Account() {
                         </View>
 
                         <View style={styles.inputContainer}>
-                            <Text style={styles.label}>Correo nuevo</Text>
+                            <Text style={styles.label}>{t("account.newEmailLabel")}</Text>
                             <TextInput
                                 style={[styles.input, styles.inputEditing]}
                                 value={newEmail}
@@ -701,13 +723,13 @@ export default function Account() {
                                 editable={!isChangingEmail}
                                 autoCapitalize="none"
                                 keyboardType="email-address"
-                                placeholder="nuevo@correo.com"
+                                placeholder={t("account.emailPlaceholder")}
                                 placeholderTextColor={colors.secondaryText}
                             />
                         </View>
 
                         <View style={styles.inputContainer}>
-                            <Text style={styles.label}>Contraseña actual</Text>
+                            <Text style={styles.label}>{t("account.passwordLabel")}</Text>
                             <TextInput
                                 style={[styles.input, styles.inputEditing]}
                                 value={emailPassword}
@@ -715,7 +737,7 @@ export default function Account() {
                                 editable={!isChangingEmail}
                                 secureTextEntry
                                 autoCapitalize="none"
-                                placeholder="Tu contraseña"
+                                placeholder={t("account.passwordPlaceholder")}
                                 placeholderTextColor={colors.secondaryText}
                             />
                         </View>
@@ -730,7 +752,7 @@ export default function Account() {
                                 onPress={closeEmailModal}
                                 disabled={isChangingEmail}
                             >
-                                <Text style={styles.modalCancelText}>Cancelar</Text>
+                                <Text style={styles.modalCancelText}>{t("account.cancelBtn")}</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity
@@ -744,7 +766,7 @@ export default function Account() {
                                 {isChangingEmail ? (
                                     <ActivityIndicator color={colors.buttonText} />
                                 ) : (
-                                    <Text style={styles.modalConfirmText}>Confirmar</Text>
+                                    <Text style={styles.modalConfirmText}>{t("account.confirmBtn")}</Text>
                                 )}
                             </TouchableOpacity>
                         </View>
