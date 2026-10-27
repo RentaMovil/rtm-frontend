@@ -15,6 +15,7 @@ import VehicleSummaryCard from "../components/VehicleSummaryCard";
 
 import { getBranches } from "../../branches/services/branchService";
 import { getInsuranceOptions } from "../../insurance/services/insuranceService";
+import { isAbortError } from "../../../shared/api/httpClient";
 
 import { createReservation } from "../services/reservationService";
 import { buildReservationRequest } from "../utils/buildReservationRequest";
@@ -49,23 +50,21 @@ export default function ReservationPage() {
   const [insuranceOptions, setInsuranceOptions] = useState<InsuranceType[]>([]);
 
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
 
-    getBranches().then((loaded) => {
-      if (!cancelled) {
-        setBranchOptions(loaded);
-      }
-    });
+    getBranches({ signal: controller.signal })
+      .then(setBranchOptions)
+      .catch((error) => {
+        if (!isAbortError(error)) console.error("No se pudieron cargar las sucursales.", error);
+      });
 
-    getInsuranceOptions().then((loaded) => {
-      if (!cancelled) {
-        setInsuranceOptions(loaded);
-      }
-    });
+    getInsuranceOptions({ signal: controller.signal })
+      .then(setInsuranceOptions)
+      .catch((error) => {
+        if (!isAbortError(error)) console.error("No se pudieron cargar los seguros.", error);
+      });
 
-    return () => {
-      cancelled = true;
-    };
+    return () => controller.abort();
   }, []);
 
   const handleChangePickup = () => {

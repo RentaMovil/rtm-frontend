@@ -11,6 +11,7 @@ import {
 import { useAuth } from "../../auth/context/AuthContext";
 
 import { notificationService } from "../services/notificationService";
+import { isAbortError } from "../../../shared/api/httpClient";
 
 import {
   countUnread,
@@ -51,21 +52,22 @@ export function NotificationProvider({ children }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (signal?: AbortSignal) => {
     setIsLoading(true);
     setError(null);
 
     try {
       // El backend ya devuelve solo las notificaciones del usuario autenticado (JWT).
-      setNotifications(await notificationService.getNotifications());
+      setNotifications(await notificationService.getNotifications({ signal }));
     } catch (loadError) {
+      if (isAbortError(loadError)) return;
       setError(
         loadError instanceof Error
           ? loadError.message
           : "No fue posible obtener las notificaciones.",
       );
     } finally {
-      setIsLoading(false);
+      if (!signal?.aborted) setIsLoading(false);
     }
   }, []);
 
@@ -73,10 +75,13 @@ export function NotificationProvider({ children }: Props) {
     if (!isAuthenticated) {
       setNotifications([]);
       setError(null);
+      setIsLoading(false);
       return;
     }
 
-    load();
+    const controller = new AbortController();
+    void load(controller.signal);
+    return () => controller.abort();
   }, [isAuthenticated, load]);
 
   /**

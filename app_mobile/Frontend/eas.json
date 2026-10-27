@@ -10,6 +10,9 @@
       "android": {
         "buildType": "apk"
       },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://rentamovil.tech/api"
+      },
       "channel": "development"
     },
     "preview": {
@@ -25,7 +28,7 @@
     "production": {
       "autoIncrement": true,
       "android": {
-        "buildType": "apk"
+        "buildType": "app-bundle"
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://rentamovil.tech/api"
