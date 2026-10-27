@@ -13,9 +13,25 @@ export default function NotFoundScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <View style={styles.container}>
-        <Text style={styles.title}>This screen doesn&apos;t exist.</Text>
+      <Stack.Screen options={{ title: t('notFound.title') }} />
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 20,
+          backgroundColor: colors.background,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: 'bold',
+            color: colors.text,
+          }}
+        >
+          {t('notFound.title')}
+        </Text>
 
         <Link href="/" style={{ marginTop: 15, paddingVertical: 15 }}>
           <Text style={{ fontSize: 14, color: colors.primary }}>
