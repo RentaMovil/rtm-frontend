@@ -19,7 +19,7 @@ import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
 import type { Branch, Reservation } from "../../../types";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { ApiError } from "../../../shared/api/httpClient";
+import { ApiError, isAbortError } from "../../../shared/api/httpClient";
 import { getBranchById, getBranches } from "../../branches/services/branchService";
 import BranchSelectorModal from "../components/BranchSelectorModal";
 import UploadReceiptModal from "../../payment/components/UploadReceiptModal";
@@ -107,24 +107,32 @@ export default function ReservationDetailPage() {
 
     useEffect(() => {
         if (!reservation) return;
-        getBranchById(reservation.pickupBranchId).then(setPickupBranch);
-        getBranchById(reservation.returnBranchId).then(setReturnBranch);
+        let cancelled = false;
+        getBranchById(reservation.pickupBranchId).then((branch) => {
+            if (!cancelled) setPickupBranch(branch);
+        });
+        getBranchById(reservation.returnBranchId).then((branch) => {
+            if (!cancelled) setReturnBranch(branch);
+        });
+        return () => { cancelled = true; };
     }, [reservation]);
 
     useEffect(() => {
-        let cancelled = false;
+        const controller = new AbortController();
 
-        getBranches().then((loaded) => {
-            if (!cancelled) setBranchOptions(loaded);
-        });
+        getBranches({ signal: controller.signal })
+            .then(setBranchOptions)
+            .catch((error) => {
+                if (!isAbortError(error)) console.error("No se pudieron cargar las sucursales.", error);
+            });
 
-        return () => {
-            cancelled = true;
-        };
+        return () => controller.abort();
     }, []);
 
     useEffect(() => {
-        async function loadReservation() {
+        const controller = new AbortController();
+
+        async function loadReservation(signal: AbortSignal) {
             // Nuevo id (p. ej. se volvio a esta misma pantalla desde el
             // historial con otra reserva): se limpia el estado de acciones
             // en curso de la reserva anterior.
@@ -141,16 +149,17 @@ export default function ReservationDetailPage() {
             }
 
             try {
-                const data = await getReservationById(String(id));
+                const data = await getReservationById(String(id), { signal });
                 setReservation(data ?? null);
             } catch (error) {
-                console.error("Error cargando reserva:", error);
+                if (!isAbortError(error)) console.log("Error cargando reserva:", error);
             } finally {
-                setLoading(false);
+                if (!signal.aborted) setLoading(false);
             }
         }
 
-        loadReservation();
+        void loadReservation(controller.signal);
+        return () => controller.abort();
     }, [id]);
 
     async function handleCancelReservation() {

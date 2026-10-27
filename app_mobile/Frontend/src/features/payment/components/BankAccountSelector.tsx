@@ -8,6 +8,7 @@ import { useTheme } from "../../../theme/useTheme";
 
 import { usePayment } from "../context/PaymentContext";
 import { getActiveBankAccounts } from "../services/paymentService";
+import { isAbortError } from "../../../shared/api/httpClient";
 
 import type { BankAccount } from "../../../types";
 
@@ -34,17 +35,17 @@ export default function BankAccountSelector() {
   const styles = createStyles(colors);
 
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
 
-    getActiveBankAccounts().then((loaded) => {
-      if (!cancelled) {
+    getActiveBankAccounts({ signal: controller.signal })
+      .then((loaded) => {
         setAccounts(loaded);
-      }
-    });
+      })
+      .catch((error) => {
+        if (!isAbortError(error)) console.error("No se pudieron cargar las cuentas bancarias.", error);
+      });
 
-    return () => {
-      cancelled = true;
-    };
+    return () => controller.abort();
   }, []);
 
   /** Iniciales del banco, para el cuadrado de marca. */

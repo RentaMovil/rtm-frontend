@@ -1,4 +1,4 @@
-import { httpClient } from "../../../shared/api/httpClient";
+import { httpClient, type HttpRequestOptions } from "../../../shared/api/httpClient";
 import { uploadPaymentReceipt } from "./paymentReceiptService";
 import type { BankAccount, Payment, PaymentDraft } from "../../../types";
 import { toBankAccountViewModel } from "./banckAccountMapper";
@@ -6,8 +6,8 @@ import { toCreatePaymentPayload, toPaymentViewModel } from "./paymentMapper";
 
 // GET /bank-accounts (rtm-payment-billing), no /bankAccounts: el gateway solo enruta
 // /payments/**, /invoices/** y /bank-accounts/** hacia ese servicio.
-export async function getActiveBankAccounts(): Promise<BankAccount[]> {
-    const raw = await httpClient.get<any[]>("/bank-accounts");
+export async function getActiveBankAccounts(options?: HttpRequestOptions): Promise<BankAccount[]> {
+    const raw = await httpClient.get<any[]>("/bank-accounts", options);
     return raw.filter((account) => account.isActive).map(toBankAccountViewModel);
 }
 

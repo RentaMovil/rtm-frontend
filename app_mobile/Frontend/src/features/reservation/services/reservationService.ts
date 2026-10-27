@@ -1,4 +1,4 @@
-import { httpClient } from "../../../shared/api/httpClient";
+import { httpClient, isAbortError, type HttpRequestOptions } from "../../../shared/api/httpClient";
 import type { Reservation, ReservationRequest, ReservationResponse } from "../../../types";
 import { toCreateReservationPayload, toReservationResponse, toReservationViewModel } from "./reservationMapper";
 
@@ -23,16 +23,23 @@ export async function createReservation(
 }
 
 /** GET /reservations/mine: ya viene filtrado al usuario del token, no hay que filtrar aqui. */
-export async function getMyReservations(_clientId: string): Promise<Reservation[]> {
-    const all = await httpClient.get<any[]>(`${RESOURCE}/mine`);
+export async function getMyReservations(
+    _clientId: string,
+    options?: HttpRequestOptions,
+): Promise<Reservation[]> {
+    const all = await httpClient.get<any[]>(`${RESOURCE}/mine`, options);
     return all.map(toReservationViewModel);
 }
 
-export async function getReservationById(id: string): Promise<Reservation | undefined> {
+export async function getReservationById(
+    id: string,
+    options?: HttpRequestOptions,
+): Promise<Reservation | undefined> {
     try {
-        const raw = await httpClient.get<any>(`${RESOURCE}/${id}`);
+        const raw = await httpClient.get<any>(`${RESOURCE}/${id}`, options);
         return toReservationViewModel(raw);
-    } catch {
+    } catch (error) {
+        if (isAbortError(error)) throw error;
         return undefined;
     }
 }
