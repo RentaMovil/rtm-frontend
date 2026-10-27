@@ -15,7 +15,7 @@ import type { TFunction } from "i18next";
  * publica una nueva version, esta constante y las traducciones de
  * `reservation.terms` deben actualizarse juntas.
  */
-export const RENTAL_TERMS_VERSION = "2026-09-24";
+export const RENTAL_TERMS_VERSION = "2026-10-27";
 
 const RENTAL_TERMS_SECTION_IDS = [
   "objeto",

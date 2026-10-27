@@ -7,7 +7,7 @@
  * de publicar el sistema en producción. Al modificar el texto, incremente la
  * versión para que las aceptaciones anteriores sigan siendo auditables.
  */
-export const RENTAL_TERMS_VERSION = "2026-09-24";
+export const RENTAL_TERMS_VERSION = "2026-10-27";
 
 // IDs de las secciones, en orden. El título y los párrafos de cada una viven en las
 // traducciones (namespace "rentalTerms") para que el documento se muestre en el idioma

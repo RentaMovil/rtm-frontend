@@ -122,14 +122,6 @@ export default function VehicleCard({ vehicle, onContinue }: Props) {
             {t("cartVehicule.location")}, {vehicle.location}
           </Text>
         </View>
-
-        <View style={styles.freeCancel}>
-          <FontAwesome name="check" size={11} color={colors.success} />
-
-          <Text style={styles.freeCancelText}>
-            {t("cartVehicule.cancellation")}
-          </Text>
-        </View>
       </View>
 
       <View style={styles.footer}>

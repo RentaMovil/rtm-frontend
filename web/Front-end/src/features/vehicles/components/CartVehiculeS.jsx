@@ -33,7 +33,6 @@ function CartVehicule({img,name,model,price, branch,type, door, capacity, rental
     </div>
     <div className="car-price">
         <p className="price">${price}</p>
-        <span className="free">{t('cartVehicule.cancellation')}</span>
         <button onClick={() => navigate("/reservation", {
             state: { img, name, price, branch, model, type, door, capacity, rentalSearch }
         })}>{t('cartVehicule.continue')}</button>
