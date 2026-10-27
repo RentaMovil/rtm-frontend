@@ -26,6 +26,17 @@
       "package": "com.rentamovil.app",
       "versionCode": 5
     },
+    "androidNavigationBar": {
+      "backgroundColor": "#FFFFFF",
+      "barStyle": "dark-content",
+      "enforceContrast": true
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#FFFFFF",
+      "barStyle": "dark-content",
+      "hidden": false,
+      "translucent": false
+    },
     "web": {
       "bundler": "metro",
       "output": "static",

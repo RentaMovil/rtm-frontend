@@ -85,22 +85,16 @@ assets/
 
 ---
 
-## assets/fonts/
+## Fuentes tipográficas
 
-```txt
-fonts/
-└── SpaceMono-Regular.ttf
-```
-
-Contiene las fuentes tipográficas utilizadas en la aplicación.
-
-Estas fuentes se cargan mediante:
+Las fuentes Inter y Poppins se importan desde los paquetes `@expo-google-fonts`
+y se cargan mediante:
 
 ```tsx
 useFonts()
 ```
 
-desde:
+en:
 
 ```txt
 src/app/_layout.tsx
