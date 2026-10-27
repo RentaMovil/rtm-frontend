@@ -23,7 +23,13 @@ const FilterCalendar = forwardRef(
 
     const { t } = useTranslation();
 
-    const today = new Date().toISOString().split("T")[0];
+    const toLocalDate = (date) => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+    const today = toLocalDate(new Date());
 
     const getCurrentTime = () =>
       new Date().toTimeString().slice(0, 5);
@@ -279,6 +285,12 @@ const FilterCalendar = forwardRef(
         return false;
       }
 
+      const pickupAt = new Date(`${date}T${hora}`);
+      if (!date || !hora || pickupAt.getTime() <= Date.now()) {
+        setErrorHora(t("filterCalendar.errorPastHour"));
+        return false;
+      }
+
 
       /*
        * IMPORTANTE:
@@ -317,9 +329,7 @@ const FilterCalendar = forwardRef(
 
       clear: () => {
 
-        const newToday = new Date()
-          .toISOString()
-          .split("T")[0];
+        const newToday = toLocalDate(new Date());
 
         const newTomorrow = getTomorrow();
 
@@ -458,6 +468,7 @@ const FilterCalendar = forwardRef(
                   : ""
                 }`}
               value={hora}
+              min={date === toLocalDate(new Date()) ? getCurrentTime() : undefined}
               onChange={(e) => {
 
                 setHora(e.target.value);
@@ -484,6 +495,7 @@ const FilterCalendar = forwardRef(
             <input
               type="date"
               className="input-container"
+              min={today}
               min={date}
               value={dateReturn}
               onChange={(e) =>
