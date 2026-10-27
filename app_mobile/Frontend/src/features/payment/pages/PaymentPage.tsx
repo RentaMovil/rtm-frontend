@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
@@ -35,6 +36,7 @@ import { createStyles } from "./PaymentPage.styles";
  * asi que aqui no se crea nada: solo se le reporta el pago.
  */
 export default function PaymentPage() {
+  const { t } = useTranslation();
   const { selectedBankAccount, processPayment, payment, clearPayment } = usePayment();
 
   const { reservation, createdReservation, clearReservation } = useReservation();
@@ -101,23 +103,18 @@ export default function PaymentPage() {
     setIsSubmitting(true);
 
     try {
-      const created = await processPayment({
+      await processPayment({
         reservationId: createdReservation.reservationId,
         bankAccountId: selectedBankAccount.id,
         amount: total,
         receiptFile,
       });
 
-      Alert.alert(
-        "Pago registrado",
-        "Tu pago quedo registrado y esta esperando que un administrador lo confirme.",
-      );
-
-      console.log("Pago creado:", created);
+      Alert.alert(t("payment.reviewAlertTitle"), t("payment.reviewMessage"));
     } catch (error) {
       Alert.alert(
-        "No se pudo registrar el pago",
-        error instanceof Error ? error.message : "Error inesperado.",
+        t("payment.reviewErrorTitle"),
+        error instanceof Error ? error.message : t("errors.unexpected"),
       );
     } finally {
       setIsSubmitting(false);
@@ -135,15 +132,12 @@ export default function PaymentPage() {
 
     return (
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.stateTitle}>Pago en revision</Text>
+        <Text style={styles.stateTitle}>{t("payment.reviewStateTitle")}</Text>
 
-        <Text style={styles.stateText}>
-          Tu pago quedo registrado y esta esperando que un administrador lo
-          confirme.
-        </Text>
+        <Text style={styles.stateText}>{t("payment.reviewMessage")}</Text>
 
         <View style={{ marginTop: 24 }}>
-          <ContinueButton title="Volver al inicio" onPress={handleGoHome} />
+          <ContinueButton title={t("payment.goHome")} onPress={handleGoHome} />
         </View>
       </ScrollView>
     );
@@ -152,11 +146,9 @@ export default function PaymentPage() {
   if (!createdReservation) {
     return (
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.stateTitle}>No hay una reserva activa</Text>
+        <Text style={styles.stateTitle}>{t("payment.noReservationTitle")}</Text>
 
-        <Text style={styles.stateText}>
-          Crea primero una reserva para poder registrar su pago.
-        </Text>
+        <Text style={styles.stateText}>{t("payment.noReservationText")}</Text>
       </ScrollView>
     );
   }
@@ -175,7 +167,7 @@ export default function PaymentPage() {
       <ReceiptPicker receiptFile={receiptFile} onChange={setReceiptFile} />
 
       <ContinueButton
-        title={isSubmitting ? "Enviando..." : "Registrar pago"}
+        title={isSubmitting ? t("payment.submitting") : t("payment.submit")}
         onPress={handlePayment}
       />
     </ScrollView>
