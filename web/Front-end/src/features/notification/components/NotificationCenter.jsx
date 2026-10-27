@@ -1,7 +1,6 @@
 import React from "react";
 import { FaEnvelopeOpen } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
-import ButtonBack from "../../../shared/components/buttonBack.jsx";
 import { useNotifications } from "../hooks/useNotifications.js";
 import { useNotificationRealtime } from "../context/NotificationRealtimeContext.jsx";
 import { getNotificationStatus, NOTIFICATION_TYPES } from "../utils/notificationsUtils.js";
@@ -13,7 +12,7 @@ const filterTranslationKeys = {
   recordatorio: "recordatory",
 };
 
-function NotificationCenter({ onBack }) {
+function NotificationCenter() {
   const { t } = useTranslation();
   const {
     notifications,
@@ -35,10 +34,6 @@ function NotificationCenter({ onBack }) {
       <div className="main-layout">
         {/* Sección Lateral de Filtros */}
         <div className="filter-section">
-          <div className="header-page">
-            <ButtonBack onClick={onBack} variant="normal" />
-          </div>
-
           {filters.map((type) => (
             <button
               type="button"

@@ -6,7 +6,6 @@ import * as ImagePicker from "expo-image-picker";
 
 import {
     ActivityIndicator,
-    Alert,
     Modal,
     ScrollView,
     Text,
@@ -15,6 +14,8 @@ import {
     View,
     Image,
 } from "react-native";
+
+import { appAlert } from "../../../shared/components/Alert/AppAlert";
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
@@ -196,7 +197,7 @@ export default function Account() {
 
 
     function handleLogout() {
-        Alert.alert(
+        appAlert.alert(
             t("account.confirmLogout"),
             t("account.logoutQuestion"),
             [
@@ -213,7 +214,6 @@ export default function Account() {
                     },
                 },
             ],
-            { cancelable: true }
         );
     }
 

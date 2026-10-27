@@ -56,6 +56,10 @@ export function toCreateReservationPayload(reservation) {
         throw new Error(i18n.t("reservation.incomplete"));
     }
 
+    if (new Date(reservation.pickupDate).getTime() <= Date.now()) {
+        throw new Error(i18n.t("reservation.pickupTimePassed"));
+    }
+
     return {
         vehicleId: Number(reservation.vehicle.vehicleId),
         insuranceTypeId: reservation.insuranceId == null ? null : Number(reservation.insuranceId),

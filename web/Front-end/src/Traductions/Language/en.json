@@ -27,6 +27,7 @@
     "errorDate": "Return date cannot be earlier than pickup date",
     "errorBranch": "Invalid branch",
     "errorHour": "Invalid hour (8:00 - 18:00)",
+    "errorPastHour": "The pickup time has passed. Choose a future time.",
     "success": "Search completed",
     "deliveryLocation": "Pickup location",
     "deliveryDate": "Pickup date",
@@ -96,7 +97,8 @@
     "branchFallback": "Unnamed branch",
     "addressUnavailable": "Address unavailable",
     "tapBranchOnMap": "Tap a branch on the map",
-    "mapHint": "Tap a marker on the map to choose the drop-off branch.",
+    "mapHint": "Explore the map with your mouse or the zoom controls. Select a marker to see the branch name and address; selecting it sets the drop-off branch and centers the map.",
+    "pickupTimePassed": "The pickup time has passed. Choose a future time to continue.",
     "insuranceLabel": "Insurance"
   },
   "terms": {
