@@ -28,6 +28,7 @@
     "errorBranch": "Filial inválida",
     "errorHour": "Horário inválido (8:00 - 18:00)",
     "errorPastHour": "O horário de retirada já passou. Escolha um horário futuro.",
+    "errorReturnBeforePickup": "Se for o mesmo dia, o horário de devolução deve ser depois do horário de retirada.",
     "success": "Busca realizada",
     "deliveryLocation": "Local de retirada",
     "deliveryDate": "Data de retirada",
