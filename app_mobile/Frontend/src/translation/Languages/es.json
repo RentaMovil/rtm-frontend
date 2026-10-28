@@ -24,6 +24,10 @@
   "insurance": {
     "title": "Seguro",
     "subtitle": "Selecciona la cobertura que deseas para tu reserva.",
+    "viewDetails": "Ver detalles",
+    "detailTitle": "Detalle del seguro",
+    "price": "Precio",
+    "close": "Cerrar",
     "tag": {
       "base": "Básico",
       "popular": "Popular",
@@ -627,11 +631,8 @@
   },
   "tabs": {
     "home": "Inicio",
-    "homeModule": "Módulo",
     "reservations": "Reservas",
-    "reservationsModule": "Módulo",
-    "account": "Cuenta",
-    "accountModule": "Módulo"
+    "account": "Cuenta"
   },
   "themes": {
     "light": "Verde claro",

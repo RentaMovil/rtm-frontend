@@ -82,19 +82,22 @@ export const createStyles = (colors: any) => {
       marginBottom: 16,
     },
 
-    // `.bank-account-logo`: cuadrado con tinte de acento.
+    // `.bank-account-logo`: fondo neutro `--input`, no el acento (en los temas
+    // oscuros accentBg/primaryDark son ambos dorados y el texto se perdia).
     logo: {
       width: 42,
       height: 42,
       borderRadius: 10,
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: colors.accentBg,
+      backgroundColor: colors.input,
+      borderWidth: 1,
+      borderColor: colors.cardBorder,
     },
 
     logoText: {
       ...text.label,
-      color: colors.primaryDark,
+      color: colors.textHeading,
     },
 
     radioWrapper: {
