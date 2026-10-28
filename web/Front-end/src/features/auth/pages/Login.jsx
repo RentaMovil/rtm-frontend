@@ -5,7 +5,7 @@ import LoginForm from "../components/LoginForm.jsx";
 import RegisterForm from "../components/RegisterForm.jsx";
 import AuthShowcase from "../components/AuthShowcase.jsx";
 import AuthTopbar from "../components/AuthTopbar.jsx";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 
 import "./Login.css";
@@ -24,6 +24,7 @@ function Login({ theme, setTheme }) {
     const [displayedMode, setDisplayedMode] = useState(true);
     const [isLeaving, setIsLeaving] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
     const { login, register } = useAuth();
 
     useEffect(() => {
@@ -38,6 +39,15 @@ function Login({ theme, setTheme }) {
 
     const handleLogin = async (credentials) => {
         const session = await login(credentials);
+
+        // Si llegó al login desde /Reservation o /account (ProtectedRoute o
+        // CartVehicule guardan "from" en el state), vuelve ahí en vez del
+        // home por defecto. "fromState" trae los datos del vehículo elegido.
+        const { from, fromState } = location.state ?? {};
+        if (from) {
+            navigate(from, fromState ? { state: fromState } : undefined);
+            return;
+        }
 
         navigate(
             isAdminRole(session.user.role)

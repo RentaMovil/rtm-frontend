@@ -1,0 +1,63 @@
+.mobile-app-banner {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 40px 10px 14px;
+  background: var(--card, #fff);
+  border-bottom: 1px solid var(--bordercard, #e5e7eb);
+}
+
+.mobile-app-banner-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-h, #111827);
+  opacity: 0.6;
+  font-size: 14px;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.mobile-app-banner-qr {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+.mobile-app-banner-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobile-app-banner-text strong {
+  display: block;
+  font-size: 14px;
+  color: var(--text-h, #111827);
+}
+
+.mobile-app-banner-text p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text, #4b5563);
+}
+
+.mobile-app-banner-link {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--primary, #00b67a);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}

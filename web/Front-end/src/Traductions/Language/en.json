@@ -44,7 +44,6 @@
     "driving": "⚙️ Manual",
     "kmLimit": "∞ Km limit",
     "location": "📍 Airport, Bogotá",
-    "cancellation": "Free cancellation",
     "continue": "Continue",
     "type": "Mini similar"
   },
@@ -1279,14 +1278,20 @@
       }
     }
   },
+  "mobileAppBanner": {
+    "title": "Use the RentaMóvil app",
+    "description": "Scan the code or download the APK for a better experience on your phone.",
+    "download": "Download",
+    "close": "Close"
+  },
   "requirements": {
-    "title": "Requirements to rent a vehicle",
-    "license": "Driver's licence",
-    "licenseDescription": "Present a valid and current licence for the type of vehicle reserved.",
+    "title": "Why book with us",
+    "branches": "Branches",
+    "branchesDescription": "Choose the pickup and return branch that suits you best.",
     "insurance": "Selected insurance",
     "insuranceDescription": "Choose the coverage that best suits the needs of your trip.",
-    "id": "Identity document",
-    "idDescription": "Bring your original document to complete the vehicle handover."
+    "securePayment": "Verified payment",
+    "securePaymentDescription": "An administrator reviews your receipt before confirming the reservation."
   },
   "title": {
     "rentamovil": "Travel with RentaMovil"
