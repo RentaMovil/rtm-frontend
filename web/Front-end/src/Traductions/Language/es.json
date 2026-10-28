@@ -28,6 +28,7 @@
     "errorBranch": "Sucursal no válida",
     "errorHour": "Hora inválida (8:00 - 18:00)",
     "errorPastHour": "La hora de recogida ya pasó. Elige una hora futura.",
+    "errorReturnBeforePickup": "Si es el mismo día, la hora de devolución debe ser posterior a la de recogida.",
     "success": "Búsqueda realizada",
     "deliveryLocation": "Lugar de entrega",
     "deliveryDate": "Fecha de entrega",

@@ -28,6 +28,7 @@
     "errorBranch": "Invalid branch",
     "errorHour": "Invalid hour (8:00 - 18:00)",
     "errorPastHour": "The pickup time has passed. Choose a future time.",
+    "errorReturnBeforePickup": "If it's the same day, the return time must be later than the pickup time.",
     "success": "Search completed",
     "deliveryLocation": "Pickup location",
     "deliveryDate": "Pickup date",
