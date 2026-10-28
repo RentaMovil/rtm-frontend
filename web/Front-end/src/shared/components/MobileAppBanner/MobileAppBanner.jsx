@@ -5,7 +5,6 @@ import { FaMobileAlt, FaTimes } from "react-icons/fa";
 import "./MobileAppBanner.css";
 
 const APP_DOWNLOAD_URL = "https://github.com/RentaMovil/rtm-frontend/releases/download/v1.0.13/RentaMovil.apk";
-const QR_IMAGE_URL = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(APP_DOWNLOAD_URL)}`;
 const DISMISS_KEY = "mobileAppBannerDismissed";
 
 // Visitante en navegador de celular (no un desktop angosto): mejor
@@ -34,6 +33,14 @@ export default function MobileAppBanner() {
 
   return (
     <div className="mobile-app-banner">
+      <span className="mobile-app-banner-text">
+        <FaMobileAlt /> {t("mobileAppBanner.title")}
+      </span>
+
+      <a className="mobile-app-banner-link" href={APP_DOWNLOAD_URL}>
+        {t("mobileAppBanner.download")}
+      </a>
+
       <button
         type="button"
         className="mobile-app-banner-close"
@@ -42,20 +49,6 @@ export default function MobileAppBanner() {
       >
         <FaTimes />
       </button>
-
-      <img className="mobile-app-banner-qr" src={QR_IMAGE_URL} alt="QR" />
-
-      <div className="mobile-app-banner-text">
-        <strong>{t("mobileAppBanner.title")}</strong>
-        <p>{t("mobileAppBanner.description")}</p>
-      </div>
-
-      <a
-        className="mobile-app-banner-link"
-        href={APP_DOWNLOAD_URL}
-      >
-        <FaMobileAlt /> {t("mobileAppBanner.download")}
-      </a>
     </div>
   );
 }
