@@ -23,6 +23,7 @@ function response(status: number, body?: unknown): Response {
     ok: status >= 200 && status < 300,
     status,
     json: jest.fn().mockResolvedValue(body),
+    text: jest.fn().mockResolvedValue(body === undefined ? "" : JSON.stringify(body)),
   } as unknown as Response;
 }
 
@@ -89,6 +90,16 @@ describe("httpClient", () => {
 
     await expect(httpClient.delete("/reservations/123")).resolves.toBeNull();
     expect(noContent.json).not.toHaveBeenCalled();
+  });
+
+  it("returns null for a 202 response with an empty body (e.g. /auth/password/forgot)", async () => {
+    const accepted = response(202);
+    fetchMock.mockResolvedValueOnce(accepted);
+
+    await expect(
+      httpClient.post(API_ROUTES.auth.forgotPassword, { email: "a@b.com" }),
+    ).resolves.toBeNull();
+    expect(accepted.json).not.toHaveBeenCalled();
   });
 
   it("shares one refresh when concurrent requests receive 401", async () => {
