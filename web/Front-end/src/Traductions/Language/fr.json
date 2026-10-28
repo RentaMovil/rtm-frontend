@@ -28,6 +28,7 @@
     "errorBranch": "Agence invalide",
     "errorHour": "Heure invalide (8:00 - 18:00)",
     "errorPastHour": "L'heure de prise en charge est passée. Choisissez une heure future.",
+    "errorReturnBeforePickup": "Le même jour, l'heure de restitution doit être postérieure à l'heure de prise en charge.",
     "success": "Recherche effectuée",
     "deliveryLocation": "Lieu de prise en charge",
     "deliveryDate": "Date de prise en charge",

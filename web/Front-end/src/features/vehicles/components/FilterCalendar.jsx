@@ -105,7 +105,18 @@ const FilterCalendar = forwardRef(
 
       }
 
-    }, [date, dateReturn, t]);
+      // Mismo día: la hora de devolución debe ser posterior a la de entrega.
+      if (date && dateReturn === date && hora && returnhora) {
+
+        setErrorReturnHora(
+          returnhora <= hora
+            ? t("filterCalendar.errorReturnBeforePickup")
+            : ""
+        );
+
+      }
+
+    }, [date, dateReturn, hora, returnhora, t]);
 
 
     /*
@@ -291,6 +302,12 @@ const FilterCalendar = forwardRef(
         return false;
       }
 
+      // Mismo día: la hora de devolución debe ser posterior a la de entrega.
+      if (dateReturn === date && returnhora <= hora) {
+        setErrorReturnHora(t("filterCalendar.errorReturnBeforePickup"));
+        return false;
+      }
+
 
       /*
        * IMPORTANTE:
@@ -468,7 +485,8 @@ const FilterCalendar = forwardRef(
                   : ""
                 }`}
               value={hora}
-              min={date === toLocalDate(new Date()) ? getCurrentTime() : undefined}
+              min="08:00"
+              max="18:00"
               onChange={(e) => {
 
                 setHora(e.target.value);
@@ -495,7 +513,6 @@ const FilterCalendar = forwardRef(
             <input
               type="date"
               className="input-container"
-              min={today}
               min={date}
               value={dateReturn}
               onChange={(e) =>
@@ -519,6 +536,8 @@ const FilterCalendar = forwardRef(
                   : ""
                 }`}
               value={returnhora}
+              min={dateReturn === date ? hora : "08:00"}
+              max="18:00"
               onChange={(e) => {
 
                 setReturnHora(e.target.value);
