@@ -485,8 +485,6 @@ const FilterCalendar = forwardRef(
                   : ""
                 }`}
               value={hora}
-              min="08:00"
-              max="18:00"
               onChange={(e) => {
 
                 setHora(e.target.value);
@@ -536,8 +534,6 @@ const FilterCalendar = forwardRef(
                   : ""
                 }`}
               value={returnhora}
-              min={dateReturn === date ? hora : "08:00"}
-              max="18:00"
               onChange={(e) => {
 
                 setReturnHora(e.target.value);
