@@ -220,6 +220,16 @@ const FilterCalendar = forwardRef(
   };
 
 
+    /*
+     * ============================================================
+     * MOSTRAR TODAS LAS SUCURSALES AL ENTRAR AL CAMPO
+     * ============================================================
+     */
+    const handleFocus = () => {
+      setSugerencias(branches || []);
+    };
+
+
 
     /*
      * ============================================================
@@ -406,9 +416,9 @@ const FilterCalendar = forwardRef(
                 }`}
               value={query}
               onChange={handleChange}
+              onFocus={handleFocus}
               placeholder={t("filterCalendar.branchPlaceholder")}
               autoComplete="off"
-              required
             />
 
             {errorSucursal && (
