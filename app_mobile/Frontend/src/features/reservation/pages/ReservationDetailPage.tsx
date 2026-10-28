@@ -3,8 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
     ActivityIndicator,
-    Modal,
-    Pressable,
     ScrollView,
     Text,
     TouchableOpacity,
@@ -24,7 +22,6 @@ import { getBranchById, getBranches } from "../../branches/services/branchServic
 import BranchSelectorModal from "../components/BranchSelectorModal";
 import UploadReceiptModal from "../../payment/components/UploadReceiptModal";
 import {
-    cancelReservation,
     getReservationById,
     updateReturnBranch,
 } from "../services/reservationService";
@@ -43,8 +40,6 @@ const ACTIVE_STATUSES: readonly string[] = [
     RESERVATION_STATUS.CONFIRMED,
 ];
 
-/** INV-004: cancelar solo hasta 3 dias antes de `start_date`. */
-const CANCELLATION_WINDOW_DAYS = 3;
 /** INV-013: cambiar la sucursal de devolucion solo hasta 3 dias antes de `end_date`. */
 const RETURN_BRANCH_WINDOW_DAYS = 3;
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -87,8 +82,6 @@ export default function ReservationDetailPage() {
     // La reserva guarda solo ids (vehicleId, pickupBranchId,
     // returnBranchId). El vehiculo viene de la API y las sucursales del
     // catalogo, asi que se resuelven aqui para poder pintar los nombres.
-    const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
-    const [isCancelling, setIsCancelling] = useState(false);
     const { themeName } = useTheme();
     const colors = themes[themeName];
     const styles = createStyles(colors);
@@ -99,10 +92,9 @@ export default function ReservationDetailPage() {
     const [isUpdatingReturnBranch, setIsUpdatingReturnBranch] = useState(false);
     const [isUploadReceiptModalVisible, setIsUploadReceiptModalVisible] = useState(false);
 
-    // Guardas sincronas (ademas del estado) contra doble solicitud: dos taps
+    // Guarda sincrona (ademas del estado) contra doble solicitud: dos taps
     // seguidos pueden disparar dos llamadas antes de que el primer
     // `setState` re-renderice y deshabilite el boton.
-    const cancelInFlightRef = useRef(false);
     const returnBranchInFlightRef = useRef(false);
 
     useEffect(() => {
@@ -136,11 +128,8 @@ export default function ReservationDetailPage() {
             // Nuevo id (p. ej. se volvio a esta misma pantalla desde el
             // historial con otra reserva): se limpia el estado de acciones
             // en curso de la reserva anterior.
-            setIsCancelModalVisible(false);
-            setIsCancelling(false);
             setIsReturnBranchModalVisible(false);
             setIsUpdatingReturnBranch(false);
-            cancelInFlightRef.current = false;
             returnBranchInFlightRef.current = false;
 
             if (!id) {
@@ -161,38 +150,6 @@ export default function ReservationDetailPage() {
         void loadReservation(controller.signal);
         return () => controller.abort();
     }, [id]);
-
-    async function handleCancelReservation() {
-        if (!reservation || cancelInFlightRef.current) return;
-
-        cancelInFlightRef.current = true;
-        setIsCancelling(true);
-
-        try {
-            const updatedReservation = await cancelReservation(reservation.id);
-
-            if (!updatedReservation) {
-            appAlert.alert(t("common.error"), t("reservationDetail.notFound"));
-                return;
-            }
-
-            // La UI solo se actualiza tras confirmar la respuesta exitosa
-            // del backend: nunca se marca como cancelada de forma optimista.
-            setReservation(updatedReservation);
-            setIsCancelModalVisible(false);
-            appAlert.alert(t("reservationDetail.cancelledTitle"), t("reservationDetail.cancelledMessage"));
-        } catch (error) {
-            console.error("Error cancelando reserva:", error);
-            const message =
-                error instanceof ApiError
-                    ? error.message
-                    : t("reservationDetail.cancelErrorMessage");
-            appAlert.alert(t("reservationDetail.cancelErrorTitle"), message);
-        } finally {
-            setIsCancelling(false);
-            cancelInFlightRef.current = false;
-        }
-    }
 
     async function handleUploadReceiptSuccess() {
         setIsUploadReceiptModalVisible(false);
@@ -267,25 +224,10 @@ export default function ReservationDetailPage() {
 
     const isActiveStatus = ACTIVE_STATUSES.includes(reservation.status);
 
-    // Ventanas de tiempo (ver `Reservation.java`): se replican aqui solo para
+    // Ventana de tiempo (ver `Reservation.java`): se replica aqui solo para
     // habilitar/deshabilitar la UI con una razon clara. El backend sigue
     // siendo quien valida de verdad; si el reloj del dispositivo esta
     // desincronizado, la peticion real fallara y se muestra su mensaje.
-    const startDate = parseReservationDateTime(reservation.start_date);
-    const isWithinCancellationWindow =
-        !startDate || wallClockNow().getTime() <= startDate.getTime() - CANCELLATION_WINDOW_DAYS * DAY_MS;
-    // ADR-015: el cliente no puede cancelar una reserva. Se oculta el boton; el backend aun conserva
-    // POST /reservations/{id}/cancel y debe retirarse aparte.
-    const customerCancellationEnabled = false;
-    const canCancel = isActiveStatus && isWithinCancellationWindow;
-
-    let cancelDisabledReason: string | null = null;
-    if (reservation.status === RESERVATION_STATUS.COMPLETED) {
-        cancelDisabledReason = "Esta reserva ya se completó y no se puede cancelar.";
-    } else if (isActiveStatus && !isWithinCancellationWindow) {
-        cancelDisabledReason = "Ya no se puede cancelar: el plazo límite era 3 días antes de la fecha de recogida.";
-    }
-
     const endDate = parseReservationDateTime(reservation.end_date);
     const isWithinReturnBranchWindow =
         !endDate || wallClockNow().getTime() <= endDate.getTime() - RETURN_BRANCH_WINDOW_DAYS * DAY_MS;
@@ -371,79 +313,7 @@ export default function ReservationDetailPage() {
                     </TouchableOpacity>
                 )}
 
-                {customerCancellationEnabled && reservation.status !== RESERVATION_STATUS.CANCELLED && (
-                    canCancel ? (
-                        <TouchableOpacity
-                            accessibilityRole="button"
-                            accessibilityLabel="Cancelar reserva"
-                            activeOpacity={0.85}
-                            style={styles.cancelButton}
-                            onPress={() => setIsCancelModalVisible(true)}
-                        >
-                            <Text style={styles.cancelButtonText}>Cancelar reserva</Text>
-                        </TouchableOpacity>
-                    ) : (
-                        <View>
-                            <TouchableOpacity
-                                disabled
-                                accessibilityRole="button"
-                                accessibilityLabel="Cancelar reserva (no disponible)"
-                                accessibilityState={{ disabled: true }}
-                                style={[styles.cancelButton, styles.cancelButtonDisabled]}
-                            >
-                                <Text style={[styles.cancelButtonText, styles.cancelButtonTextDisabled]}>
-                                    Cancelar reserva
-                                </Text>
-                            </TouchableOpacity>
-
-                            {cancelDisabledReason && (
-                                <Text style={styles.cancelReasonText}>{cancelDisabledReason}</Text>
-                            )}
-                        </View>
-                    )
-                )}
             </ScrollView>
-
-            <Modal
-                visible={isCancelModalVisible}
-                transparent
-                animationType="fade"
-                onRequestClose={() => !isCancelling && setIsCancelModalVisible(false)}
-            >
-                <Pressable
-                    style={styles.modalOverlay}
-                    onPress={() => !isCancelling && setIsCancelModalVisible(false)}
-                >
-                    <Pressable style={styles.modalContent} onPress={(event) => event.stopPropagation()}>
-                        <View style={styles.modalIcon}>
-                            <Text style={styles.modalIconText}>!</Text>
-                        </View>
-                        <Text style={styles.modalTitle}>¿Cancelar reserva?</Text>
-                        <Text style={styles.modalMessage}>
-                            ¿De verdad quieres cancelar la reserva de {reservation.vehicleId}? Esta acción no se puede deshacer.
-                        </Text>
-
-                        <View style={styles.modalActions}>
-                            <TouchableOpacity
-                                disabled={isCancelling}
-                                style={styles.keepButton}
-                                onPress={() => setIsCancelModalVisible(false)}
-                            >
-                                <Text style={styles.keepButtonText}>Conservar reserva</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                disabled={isCancelling}
-                                style={[styles.confirmCancelButton, isCancelling && styles.disabledButton]}
-                                onPress={handleCancelReservation}
-                            >
-                                <Text style={styles.confirmCancelButtonText}>
-                                    {isCancelling ? "Cancelando..." : "Sí, cancelar"}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </Pressable>
-                </Pressable>
-            </Modal>
 
             <BranchSelectorModal
                 visible={isReturnBranchModalVisible}

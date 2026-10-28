@@ -59,6 +59,7 @@ import ChangePasswordLogin from './features/auth/pages/ChangePasswordLogin.jsx';
 // Super Admin
 import UserManagement from './features/admin/users/pages/UserManagement.jsx';
 import BankAccounts from './features/admin/bankAccounts/pages/BankAccounts.jsx';
+import MobileAppBanner from './shared/components/MobileAppBanner/MobileAppBanner.jsx';
 
 // Admin con sesión ya restaurada: lleva directo a HomeAdmin, sin esperar a que
 // entre a /account para que la navbar refleje el rol real.
@@ -80,6 +81,7 @@ function App() {
   }, [theme]);
   return (
     <BrowserRouter>
+      <MobileAppBanner />
 
       <Routes>
         <Route 
