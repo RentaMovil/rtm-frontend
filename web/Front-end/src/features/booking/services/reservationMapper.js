@@ -36,8 +36,8 @@ export function fromApiReservation(reservation) {
     };
 }
 
-// ADR-015: el cliente no puede cancelar una reserva. Se oculta el boton; el backend aun conserva
-// POST /reservations/{id}/cancel y debe retirarse aparte.
+// ADR-015: el cliente no puede cancelar una reserva. El backend ya no expone
+// POST /reservations/{id}/cancel; este codigo de UI queda inactivo y puede eliminarse.
 const CUSTOMER_CANCELLATION_ENABLED = false;
 
 export function canCancelReservation(reservation, now = Date.now()) {
