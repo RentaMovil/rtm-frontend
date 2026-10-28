@@ -1,5 +1,5 @@
 import { API_ROUTES } from "../../../config/env";
-import { httpClient } from "../../../shared/api/httpClient";
+import { httpClient, type HttpRequestOptions } from "../../../shared/api/httpClient";
 import { fromApiVehicle, fromApiVehiclePage, type FleetVehicleDto, type FleetVehiclePage } from "./vehicleMapper";
 
 import type { Vehicle, VehicleFilters } from "../../../types";
@@ -56,17 +56,24 @@ function applyFilters(
 }
 
 export const vehicleService = {
-  async getVehicles(filters?: VehicleFilters): Promise<Vehicle[]> {
+  async getVehicles(
+    filters?: VehicleFilters,
+    options?: HttpRequestOptions,
+  ): Promise<Vehicle[]> {
     const page = await httpClient.get<FleetVehiclePage>(
       `${API_ROUTES.vehicles}?limit=${PAGE_SIZE}`,
+      options,
     );
     const all = fromApiVehiclePage(page);
 
     return applyFilters(all, filters);
   },
 
-  async getVehicleById(id: string): Promise<Vehicle | undefined> {
-    const vehicle = await httpClient.get<FleetVehicleDto>(`${API_ROUTES.vehicles}/${id}`);
+  async getVehicleById(
+    id: string,
+    options?: HttpRequestOptions,
+  ): Promise<Vehicle | undefined> {
+    const vehicle = await httpClient.get<FleetVehicleDto>(`${API_ROUTES.vehicles}/${id}`, options);
     return fromApiVehicle(vehicle);
   },
 
@@ -76,9 +83,15 @@ export const vehicleService = {
    * (reservationOccupancyPort), no solo Vehicle.status. `from`/`to` deben
    * ir como fecha simple (yyyy-MM-dd), sin hora.
    */
-  async getAvailability(id: string, from: string, to: string): Promise<boolean> {
+  async getAvailability(
+    id: string,
+    from: string,
+    to: string,
+    options?: HttpRequestOptions,
+  ): Promise<boolean> {
     const res = await httpClient.get<{ available: boolean }>(
       `${API_ROUTES.vehicles}/${id}/availability?from=${from}&to=${to}`,
+      options,
     );
     return res.available;
   },

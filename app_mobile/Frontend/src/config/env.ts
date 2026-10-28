@@ -36,8 +36,6 @@ function readApiUrl(): string {
 
 export const API_URL = readApiUrl();
 
-export const IS_API_CONFIGURED = Boolean(process.env.EXPO_PUBLIC_API_URL);
-
 /**
  * Direcciones tipadas de la API.
  *
