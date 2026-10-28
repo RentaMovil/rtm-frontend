@@ -44,7 +44,6 @@
     "driving": "⚙️ Manual",
     "kmLimit": "∞ Limite de Km",
     "location": "📍 Aeroporto, Bogotá",
-    "cancellation": "Cancelamento grátis",
     "continue": "Continuar",
     "type": "Mini similar"
   },
@@ -1279,14 +1278,20 @@
       }
     }
   },
+  "mobileAppBanner": {
+    "title": "Use o app da RentaMóvil",
+    "description": "Escaneie o código ou baixe o APK para uma melhor experiência no seu celular.",
+    "download": "Baixar",
+    "close": "Fechar"
+  },
   "requirements": {
-    "title": "Requisitos para alugar um veículo",
-    "license": "Carta de condução",
-    "licenseDescription": "Apresente uma carta válida e em vigor para o tipo de veículo reservado.",
+    "title": "Por que reservar conosco",
+    "branches": "Filiais",
+    "branchesDescription": "Escolha a filial de retirada e devolução que for mais conveniente para você.",
     "insurance": "Seguro selecionado",
     "insuranceDescription": "Escolha a cobertura que melhor se adapte às necessidades da sua viagem.",
-    "id": "Documento de identidade",
-    "idDescription": "Leve o seu documento original para concluir a entrega do veículo."
+    "securePayment": "Pagamento verificado",
+    "securePaymentDescription": "Um administrador revisa seu comprovante antes de confirmar a reserva."
   },
   "title": {
     "rentamovil": "Viaje com a RentaMovil"

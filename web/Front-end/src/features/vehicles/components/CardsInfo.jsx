@@ -5,7 +5,7 @@ import './CardsInfo.style.css';
 import { useBranches } from '../../admin/branches/hooks/useBranch';// ajusta la ruta real
 import { useTranslation } from "react-i18next";
 import { FaCar, FaCheck, FaFile, FaMapMarked, FaMapMarkedAlt, FaShieldAlt } from 'react-icons/fa';
-import { Fa1, FaIdCard, FaIdCardClip, FaLocationDot, FaShield } from 'react-icons/fa6';
+import { Fa1, FaLocationDot, FaShield } from 'react-icons/fa6';
 import MapComponent from '../../booking/components/MapComponents';
 
 export const ProcessSteps = () => {
@@ -51,10 +51,10 @@ export const ProcessSteps = () => {
                             <div className="feature-item">
                                 <div className="item-card">
                                     <div className='cardinfo-container'>
-                                        <div className='column-r'><FaIdCard className='cardId-icon' /></div>
+                                        <div className='column-r'><FaMapMarkedAlt className='cardId-icon' /></div>
                                         <div className='column-l'>
-                                            <strong className="item-title">{t('requirements.license')}: </strong>
-                                            <span className="item-description">{t('requirements.licenseDescription')}</span>
+                                            <strong className="item-title">{t('requirements.branches')}: </strong>
+                                            <span className="item-description">{t('requirements.branchesDescription')}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -75,10 +75,10 @@ export const ProcessSteps = () => {
                             <div className="feature-item1">
                                 <div className="item-card">
                                     <div className='cardinfo-container'>
-                                        <div className='column-r'><FaIdCardClip className='cardId-icon' /></div>
+                                        <div className='column-r'><FaCheck className='cardId-icon' /></div>
                                         <div className='column-l'>
-                                            <strong className="item-title">{t('requirements.id')}: </strong>
-                                            <span className="item-description">{t('requirements.idDescription')}</span>
+                                            <strong className="item-title">{t('requirements.securePayment')}: </strong>
+                                            <span className="item-description">{t('requirements.securePaymentDescription')}</span>
                                         </div>
                                     </div>
                                 </div>

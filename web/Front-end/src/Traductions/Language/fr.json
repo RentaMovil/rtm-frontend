@@ -44,7 +44,6 @@
     "driving": "⚙️ Manuelle",
     "kmLimit": "∞ Km limite",
     "location": "📍 Aéroport, Bogotá",
-    "cancellation": "Annulation gratuite",
     "continue": "Continuer",
     "type": "Mini similaire"
   },
@@ -1279,14 +1278,20 @@
       }
     }
   },
+  "mobileAppBanner": {
+    "title": "Utilisez l'application RentaMóvil",
+    "description": "Scannez le code ou téléchargez l'APK pour une meilleure expérience sur votre téléphone.",
+    "download": "Télécharger",
+    "close": "Fermer"
+  },
   "requirements": {
-    "title": "Conditions pour louer un véhicule",
-    "license": "Permis de conduire",
-    "licenseDescription": "Présentez un permis valide et en cours de validité pour le type de véhicule réservé.",
+    "title": "Pourquoi réserver avec nous",
+    "branches": "Agences",
+    "branchesDescription": "Choisissez l'agence de prise en charge et de restitution qui vous convient le mieux.",
     "insurance": "Assurance choisie",
     "insuranceDescription": "Choisissez la couverture qui correspond le mieux aux besoins de votre voyage.",
-    "id": "Document d'identité",
-    "idDescription": "Apportez votre document original pour finaliser la remise du véhicule."
+    "securePayment": "Paiement vérifié",
+    "securePaymentDescription": "Un administrateur vérifie votre reçu avant de confirmer la réservation."
   },
   "title": {
     "rentamovil": "Voyagez avec RentaMovil"
