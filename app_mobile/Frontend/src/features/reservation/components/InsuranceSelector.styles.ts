@@ -31,14 +31,16 @@ export const createStyles = (colors: any) => {
       marginBottom: 20,
     },
 
-    // `.insurance-header-icon`: cuadrado 38px con tinte de acento.
+    // `.insurance-header-icon`: cuadrado 38px. Fondo neutro `--input`: en los
+    // temas oscuros `accentBg` y `button` son el mismo dorado y el icono
+    // desaparecia sobre su propio fondo.
     headerIcon: {
       width: 38,
       height: 38,
       borderRadius: 12,
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: colors.accentBg,
+      backgroundColor: colors.input,
     },
 
     headerText: {
@@ -98,47 +100,14 @@ export const createStyles = (colors: any) => {
       color: colors.text,
     },
 
-    // La descripcion es larga: en el web es 14px/1.5, y se mantiene.
-    description: {
+    // Fila condensada: la descripcion, la etiqueta y el precio se movieron al
+    // modal de detalle para que no se vea saturado en pantalla.
+    viewDetails: {
       ...text.caption,
-      marginTop: 3,
-      lineHeight: 20,
-      color: colors.text,
-      opacity: 0.85,
-    },
-
-    // `.insurance-price`: pastilla con el precio.
-    price: {
-      minWidth: 78,
-      paddingHorizontal: 10,
-      paddingVertical: 6,
-      borderRadius: 7,
-      alignItems: "center",
-      backgroundColor: colors.accentBg,
-      borderWidth: 1,
-      borderColor: colors.accentBorder,
-    },
-
-    priceText: {
-      ...text.label,
-      fontSize: 14,
-      color: colors.primaryDark,
-    },
-
-    // Etiqueta del catalogo (base / popular / premium). El web no la pinta en
-    // el selector de booking, pero el dato existe y distingue los planes.
-    tag: {
-      alignSelf: "flex-start",
-      marginTop: 6,
-      paddingHorizontal: 8,
-      paddingVertical: 2,
-      borderRadius: Radius.pill,
-      backgroundColor: colors.input,
-    },
-
-    tagText: {
-      ...text.overline,
-      fontSize: 10,
+      marginTop: 4,
+      fontSize: 13,
+      fontWeight: "700",
+      color: colors.primary,
     },
 
     // `.insurance-radio`: circulo 22px con el acento de fondo al elegir.

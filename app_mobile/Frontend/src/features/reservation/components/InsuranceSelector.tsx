@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -7,6 +8,7 @@ import AppCard from "../../../shared/components/AppCard/AppCard";
 import { useReservation } from "../context/ReservationContext";
 
 import { createStyles } from "./InsuranceSelector.styles";
+import InsuranceDetailModal from "./InsuranceDetailModal";
 
 import { themes } from "../../../theme/themes";
 import { useTheme } from "../../../theme/useTheme";
@@ -16,17 +18,14 @@ type Props = {
   readonly options: InsuranceType[];
 };
 
-/** Separador de miles es-CO, el mismo que usa el web en el precio del plan. */
-function formatMoney(value: number): string {
-  return value.toLocaleString("es-CO");
-}
-
 export default function InsuranceSelector({ options }: Props) {
   const { t } = useTranslation();
 
   const { reservation, updateInsurance } = useReservation();
 
   const selectedInsurance = reservation?.insuranceTypeId ?? null;
+
+  const [detailOption, setDetailOption] = useState<InsuranceType | null>(null);
 
   const { themeName } = useTheme();
   const colors = themes[themeName as keyof typeof themes];
@@ -65,21 +64,14 @@ export default function InsuranceSelector({ options }: Props) {
               <View style={styles.optionInfo}>
                 <Text style={styles.name}>{option.name}</Text>
 
-                <Text style={styles.description}>
-                  {option.description}
-                </Text>
-
-                <View style={styles.tag}>
-                  <Text style={styles.tagText}>
-                    {t(`insurance.tag.${option.tag}`)}
+                <TouchableOpacity
+                  onPress={() => setDetailOption(option)}
+                  hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+                >
+                  <Text style={styles.viewDetails}>
+                    {t("insurance.viewDetails")}
                   </Text>
-                </View>
-              </View>
-
-              <View style={styles.price}>
-                <Text style={styles.priceText}>
-                  ${formatMoney(option.price)}
-                </Text>
+                </TouchableOpacity>
               </View>
 
               {/* El web mete un icono de check dentro del radio, no un
@@ -99,6 +91,11 @@ export default function InsuranceSelector({ options }: Props) {
           );
         })}
       </View>
+
+      <InsuranceDetailModal
+        option={detailOption}
+        onClose={() => setDetailOption(null)}
+      />
     </AppCard>
   );
 }

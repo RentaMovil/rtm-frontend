@@ -77,8 +77,10 @@ export function createStyles(colors: any) {
         // acento neutro (el mismo tono que el resto de badges/botones de
         // acento), COMPLETED el primario y CANCELLED el error — igual que ya
         // distingue `ReservationCard` en el historial.
-        statusBadgePending: { backgroundColor: colors.accentBg },
-        statusTextPending: { color: colors.primaryDark },
+        // Fondo neutro: en los temas oscuros `accentBg` y `primaryDark` son
+        // el mismo dorado y el texto del badge se perdia.
+        statusBadgePending: { backgroundColor: colors.input },
+        statusTextPending: { color: colors.textHeading },
 
         statusBadgeConfirmed: { backgroundColor: colors.successSurface },
         statusTextConfirmed: { color: colors.success },
