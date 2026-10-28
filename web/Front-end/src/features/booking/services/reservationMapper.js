@@ -3,7 +3,7 @@ import { fromApiDateTime, toApiDateTime } from "../../../shared/utils/apiDate";
 import i18n from "../../../Traductions/index.js";
 
 // Estados de booking -> estados que ya usa la interfaz del cliente (estilos estado-*).
-// Las tres primeras son reservas vigentes: se pueden cancelar o modificar dentro de su plazo.
+// Las tres primeras son reservas vigentes: solo se puede cambiar la sucursal de devolución.
 const UI_STATUS = {
     PENDING_PAYMENT: 'activa',
     PENDING_REVIEW: 'activa',
@@ -83,7 +83,7 @@ export function toModifyReservationPayload(returnBranchId) {
     return { newReturnBranchId: Number(returnBranchId) };
 }
 
-export function toReservationViewModel(reservation, { vehiclesById = {}, branchesById = {}, insuranceById = {} } = {}) {
+export function toReservationViewModel(reservation, { vehiclesById = {}, insuranceById = {} } = {}) {
     const vehicle = vehiclesById[reservation.vehicle_id] || {};
     const days = Math.max(
         1,
@@ -96,7 +96,7 @@ export function toReservationViewModel(reservation, { vehiclesById = {}, branche
         status: UI_STATUS[reservation.status] ?? (reservation.status || '').toLowerCase(),
         // Estado real de booking (PENDING_PAYMENT, CONFIRMED...) por si la pantalla lo necesita
         backendStatus: reservation.status,
-        canCancel: canCancelReservation(reservation),
+
         created_at: reservation.reservation_date,
         pickupBranchId: reservation.pickup_branch_id,
         returnBranchId: reservation.return_branch_id,
