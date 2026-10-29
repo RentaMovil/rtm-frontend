@@ -12,7 +12,6 @@ import AccountView from './features/auth/components/AccountView';
 import ChangePassword from './features/auth/pages/ChangePassword.jsx';
 // Vehicles
 import Home from './features/vehicles/pages/Home.jsx';
-import HomeS from './features/vehicles/pages/HomeS.jsx';
 import { useAuth } from './contexts/AuthContext.jsx';
 // Booking
 import Reservation from './features/booking//pages/Reservation.jsx';
@@ -154,14 +153,6 @@ function App() {
         <Route
           path="/home"
           element={<HomeGate />}
-        />
-        <Route
-          path="/homeS"
-          element={
-            <RequireAuth>
-              <HomeS />
-            </RequireAuth>
-          }
         />
         <Route
           path="/reservation"

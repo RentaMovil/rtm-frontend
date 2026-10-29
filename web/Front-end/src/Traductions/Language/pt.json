@@ -1,4 +1,9 @@
 {
+  "errorBoundary": {
+    "title": "Algo deu errado",
+    "message": "Ocorreu um erro inesperado nesta seção. Você pode tentar recarregar a página.",
+    "reload": "Recarregar página"
+  },
   "dialog": {
     "accept": "Aceitar",
     "cancel": "Cancelar"
@@ -1589,6 +1594,7 @@
   },
   "vehicles": {
     "loadError": "Não foi possível carregar os veículos.",
+    "searchError": "Não foi possível buscar disponibilidade. Tente novamente.",
     "categoryUnavailable": "Categoria não disponível",
     "model": "Modelo:",
     "capacity": "Capacidade:",
