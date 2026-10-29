@@ -5,7 +5,7 @@ import { tokenStore } from './tokenStore.js';
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 let refreshPromise = null;
-async function rawRequest(endpoint, { method = 'GET', body, headers = {} } = {}) {
+async function rawRequest(endpoint, { method = 'GET', body, headers = {}, credentials } = {}) {
     const token = tokenStore.getAccessToken();
     return fetch(`${API_URL}${endpoint}`, {
         method,
@@ -15,26 +15,27 @@ async function rawRequest(endpoint, { method = 'GET', body, headers = {} } = {})
             ...headers,
         },
         body: body ? JSON.stringify(body) : undefined,
+        // Solo /auth/login, /auth/email/verify, /auth/refresh y /auth/logout lo necesitan: son
+        // los únicos que ponen o leen la cookie httpOnly del refresh token (ADR-005).
+        ...(credentials && { credentials }),
     });
 }
 
+// ADR-005: el refresh token ya no se lee de localStorage ni se manda en el body -- vive en una
+// cookie httpOnly que el navegador adjunta solo (iam la puso con Set-Cookie en el login). El
+// header X-Client-Platform le dice a iam que responda así, en vez del body que usa mobile.
 async function refreshAccessToken() {
-    const refreshToken = localStorage.getItem('rentamovil_refresh_token');
-    if (!refreshToken) throw new Error(i18n.t('common.httpErrors.noRefreshToken'));
-
     const res = await fetch(`${API_URL}/auth/refresh`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refreshToken }),
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json', 'X-Client-Platform': 'web' },
     });
 
     if (!res.ok) throw new Error(i18n.t('common.httpErrors.refreshFailed'));
 
     const data = await res.json();
     tokenStore.setAccessToken(data.accessToken);
-    // iam rota el refresh token en cada uso: si no se guarda el nuevo, el siguiente refresh
-    // manda el viejo, iam lo toma como robado y cierra todas las sesiones
-    localStorage.setItem('rentamovil_refresh_token', data.refreshToken);
+    // iam ya rotó el refresh token y lo volvió a mandar por Set-Cookie: no hay nada que guardar acá.
     return data;
 }
 
@@ -117,7 +118,7 @@ async function request(endpoint, options = {}) {
 
 export const httpClient = {
     get: (endpoint) => request(endpoint),
-    post: (endpoint, body) => request(endpoint, { method: 'POST', body }),
+    post: (endpoint, body, extra) => request(endpoint, { method: 'POST', body, ...extra }),
     put: (endpoint, body) => request(endpoint, { method: 'PUT', body }),
     patch: (endpoint, body) => request(endpoint, { method: 'PATCH', body }),
     delete: (endpoint) => request(endpoint, { method: 'DELETE' }),

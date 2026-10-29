@@ -13,7 +13,6 @@ import {
 import { authService } from "../features/auth/services/authService";
 import {
   clearSession,
-  getStoredRefreshToken,
   saveSession,
 } from "../features/auth/services/sessionStorage";
 import { tokenStore } from "../shared/api/tokenStore";
@@ -39,26 +38,24 @@ export function AuthProvider({ children }) {
     setUser(null);
   }, []);
 
+  // ADR-005: ya no hay un refresh token en localStorage para mirar antes de decidir si hay
+  // sesión -- vive en una cookie httpOnly que JS no puede leer. Así que esto ya no pregunta
+  // "¿hay token guardado?", sino que intenta el refresh y deja que iam responda. Un 401 aquí
+  // es el caso normal de un visitante que nunca inició sesión, no un error real: se limpia en
+  // silencio, sin mostrar mensaje.
   const restoreSession = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const refreshToken = getStoredRefreshToken();
-
-      if (!refreshToken) {
-        return;
-      }
-
       const session = await authService.refreshSession();
       const profile = await authService.getProfile();
 
       // /users/me no trae permisos, se toman de la respuesta del refresh
       setUser({ ...profile, permissions: session.user?.permissions ?? [] });
 
-    } catch (restoreError) {
+    } catch {
       clearLocalAuth();
-      setError(restoreError?.message ?? "No fue posible restaurar la sesión.");
     } finally {
       setIsLoading(false);
     }

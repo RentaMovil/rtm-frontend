@@ -9,19 +9,22 @@ import { ReservationProvider } from './features/booking/context/ReservationConte
 import { PaymentProvider } from './features/payment/context/PaymentContext.jsx'
 import { NotificationRealtimeProvider } from './features/notification/context/NotificationRealtimeContext.jsx'
 import DialogProvider from './shared/components/dialog/DialogProvider.jsx'
+import ErrorBoundary from './shared/components/ErrorBoundary/ErrorBoundary.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <DialogProvider>
-      <AuthProvider>
-        <NotificationRealtimeProvider>
-          <ReservationProvider>
-            <PaymentProvider>
-              <App />
-            </PaymentProvider>
-          </ReservationProvider>
-        </NotificationRealtimeProvider>
-      </AuthProvider>
-    </DialogProvider>
+    <ErrorBoundary>
+      <DialogProvider>
+        <AuthProvider>
+          <NotificationRealtimeProvider>
+            <ReservationProvider>
+              <PaymentProvider>
+                <App />
+              </PaymentProvider>
+            </ReservationProvider>
+          </NotificationRealtimeProvider>
+        </AuthProvider>
+      </DialogProvider>
+    </ErrorBoundary>
   </StrictMode>,
 )

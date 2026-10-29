@@ -1,4 +1,9 @@
 {
+  "errorBoundary": {
+    "title": "Algo salió mal",
+    "message": "Ocurrió un error inesperado en esta sección. Puedes intentar recargar la página.",
+    "reload": "Recargar página"
+  },
   "dialog": {
     "accept": "Aceptar",
     "cancel": "Cancelar"
