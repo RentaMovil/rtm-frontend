@@ -4,25 +4,24 @@ import { toLoginPayload, toRegisterPayload, toAuthUserViewModel } from "./authMa
 import {
     saveSession,
     getStoredUser,
-    getStoredRefreshToken,
     clearSession,
 } from "./sessionStorage";
 
 const RESOURCE = "/auth";
+// ADR-005: con este header, iam manda el refresh token por cookie httpOnly en vez del body.
+const WEB_CLIENT_HEADERS = { headers: { "X-Client-Platform": "web" }, credentials: "include" };
 
 export const authService = {
     async login(credentials) {
         const response = await httpClient.post(
             `${RESOURCE}/login`,
-            toLoginPayload(credentials)
+            toLoginPayload(credentials),
+            WEB_CLIENT_HEADERS
         );
         const user = toAuthUserViewModel(response);
 
         tokenStore.setAccessToken(response.accessToken);
-        saveSession({
-            refreshToken: response.refreshToken,
-            user,
-        });
+        saveSession({ user });
 
         return { user };
     },
@@ -41,14 +40,15 @@ export const authService = {
     // Confirma el código del registro. Si es válido, activa la cuenta y ya devuelve sesión,
     // igual que login -- no hay que loguearse dos veces.
     async verifyEmail(email, code) {
-        const response = await httpClient.post(`${RESOURCE}/email/verify`, { email, code });
+        const response = await httpClient.post(
+            `${RESOURCE}/email/verify`,
+            { email, code },
+            WEB_CLIENT_HEADERS
+        );
         const user = toAuthUserViewModel(response);
 
         tokenStore.setAccessToken(response.accessToken);
-        saveSession({
-            refreshToken: response.refreshToken,
-            user,
-        });
+        saveSession({ user });
 
         return { user };
     },
@@ -57,27 +57,16 @@ export const authService = {
     resendEmailVerification: (email) =>
         httpClient.post(`${RESOURCE}/email/resend`, { email }),
 
-    async refreshSession() {
-        const refreshToken = getStoredRefreshToken();
-
-        if (!refreshToken) {
-            throw new Error("No hay refresh token");
-        }
-
-        // El mismo refresh que usa httpClient ante un 401: si ya hay uno en curso se reutiliza.
-        // Guarda el access token y el refresh token rotado.
-        return refreshSession();
-    },
+    // El mismo refresh que usa httpClient ante un 401: si ya hay uno en curso se reutiliza.
+    // El refresh token va solo en la cookie httpOnly; si no hay sesión, iam responde 401.
+    refreshSession,
 
     async logout() {
-        const refreshToken = getStoredRefreshToken();
-
-        if (refreshToken) {
-            try {
-                await httpClient.post(`${RESOURCE}/logout`, { refreshToken });
-            } catch {
-                // La sesión local se limpia aunque el servidor no responda.
-            }
+        try {
+            // Sin body: iam lee el refresh token de la cookie y la limpia en la respuesta.
+            await httpClient.post(`${RESOURCE}/logout`, undefined, WEB_CLIENT_HEADERS);
+        } catch {
+            // La sesión local se limpia aunque el servidor no responda.
         }
 
         tokenStore.clear();
