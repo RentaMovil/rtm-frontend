@@ -21,6 +21,10 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['react-native']
   },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./vitest.setup.js'],
+  },
   preview: {
     // Sin esto, vite preview rechaza con 403 cualquier Host que no sea localhost (protección
     // propia de Vite contra DNS rebinding) -- necesario porque nginx reenvía con Host: rentamovil.tech.
