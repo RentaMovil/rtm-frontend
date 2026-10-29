@@ -1,4 +1,9 @@
 {
+  "errorBoundary": {
+    "title": "Une erreur est survenue",
+    "message": "Une erreur inattendue s'est produite dans cette section. Vous pouvez essayer de recharger la page.",
+    "reload": "Recharger la page"
+  },
   "dialog": {
     "accept": "Accepter",
     "cancel": "Annuler"

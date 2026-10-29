@@ -1,4 +1,9 @@
 {
+  "errorBoundary": {
+    "title": "Something went wrong",
+    "message": "An unexpected error occurred in this section. You can try reloading the page.",
+    "reload": "Reload page"
+  },
   "dialog": {
     "accept": "OK",
     "cancel": "Cancel"
