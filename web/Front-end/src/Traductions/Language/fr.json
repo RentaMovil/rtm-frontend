@@ -1594,6 +1594,7 @@
   },
   "vehicles": {
     "loadError": "Les véhicules n'ont pas pu être chargés.",
+    "searchError": "Impossible de rechercher la disponibilité. Réessayez.",
     "categoryUnavailable": "Catégorie non disponible",
     "model": "Modèle :",
     "capacity": "Capacité :",
