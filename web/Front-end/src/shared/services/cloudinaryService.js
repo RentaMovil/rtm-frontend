@@ -1,3 +1,5 @@
+import { hasValidFileSignature } from '../utils/fileSignature.js';
+
 // Cuenta de Cloudinary del proyecto. El cloud name y el preset sin firma no son secretos: viajan
 // en la peticion desde el navegador. El api_secret no va aqui: lo usara payment-billing en el
 // servidor para subir las facturas.
@@ -22,6 +24,11 @@ export const cloudinaryService = {
         }
         if (file.size > MAX_BYTES) {
             throw new Error('El archivo supera los 10 MB');
+        }
+        // file.type lo deriva el navegador de la extensión, no del contenido real: esto chequea
+        // los magic bytes para que no baste con renombrar cualquier archivo a ".jpg".
+        if (!(await hasValidFileSignature(file, ALLOWED_TYPES))) {
+            throw new Error('El archivo no es una imagen o PDF válido');
         }
 
         const formData = new FormData();
