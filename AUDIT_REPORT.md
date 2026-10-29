@@ -3,15 +3,15 @@
 **Proyecto:** RentaMóvil (Web & Mobile Application)
 **Fecha de Evaluación:** Octubre 2026
 **Evaluador:** Jules (Senior Software Engineering Agent)
-**Alcance de la Auditoría:** Arquitectura, Código Limpio (Clean Code), Seguridad, Control de Errores, Rendimiento y Pruebas.
+**Alcance de la Auditoría:** Arquitectura, Código Limpio (Clean Code), Seguridad, Control de Errores, Rendimiento e Infraestructura de Pruebas.
 
 ---
 
 ## 1. Resumen Ejecutivo
 
-El presente informe expone los resultados de la auditoría integral de calidad realizada sobre las plataformas **Web** (`web/Front-end`) y **Mobile** (`app_mobile/Frontend`) del ecosistema RentaMóvil.
+El presente informe contiene los resultados de la revisión integral de calidad de software realizada sobre los proyectos **Web** (`web/Front-end`) y **Mobile** (`app_mobile/Frontend`) del repositorio RentaMóvil.
 
-En general, el proyecto exhibe una arquitectura modular bien delimitada por características (**Feature-Driven Architecture**), desacoplamiento aceptable mediante mapeadores y servicios de datos, e integración i18n multilenguaje. Sin embargo, se han identificado hallazgos críticos de calidad de código, riesgos de seguridad en el manejo de tokens/sesión y fallas en patrones React (efectos secundarios y manipulación de refs durante render).
+El sistema demuestra una arquitectura modular sólida orientada a características (**Feature-Driven Architecture**), con desacoplamiento entre capa UI, mappers de datos y clientes HTTP. No obstante, existen hallazgos de severidad alta en patrones React (llamadas síncronas a `setState` en `useEffect`, mutación de refs durante render), vulnerabilidades de seguridad en el almacenamiento de tokens de sesión y disparidad en la infraestructura de pruebas automatizadas.
 
 | Dimensión de Calidad | Evaluación Web | Evaluación Mobile | Estado General |
 | :--- | :---: | :---: | :---: |
@@ -26,16 +26,16 @@ En general, el proyecto exhibe una arquitectura modular bien delimitada por cara
 ## 2. Evaluación Arquitectónica
 
 ### 2.1 Estructura del Proyecto Web (`web/Front-end`)
-- **Patrón Modular:** La aplicación adopta una arquitectura basada en características (`features/admin`, `features/auth`, `features/booking`, `features/payment`, `features/vehicles`), promoviendo la cohesión alta.
-- **Servicios e Interceptores HTTP:** Posee una capa de comunicación HTTP centralizada (`src/shared/api/httpClient.js`) con refresco automático de tokens.
-- **Puntos de Mejora Arquitectónica:**
-  - Mezca de responsabilidades en componentes UI (componentes de páginas gestionan estado global, filtrado y lógica de negocio simultáneamente).
-  - Presencia de scripts duplicados / componentes obsoletos (ej. `Home.jsx` vs `HomeS.jsx`).
+- **Patrón Modular:** Organizado por dominios de negocio (`features/admin`, `features/auth`, `features/booking`, `features/payment`, `features/vehicles`), lo que promueve una alta cohesión y facilita la navegación en el código.
+- **Comunicación HTTP:** Implementa un cliente Axios/Fetch interceptado (`shared/api/httpClient.js`) para manejar autenticación y refresco automático de tokens.
+- **Puntos de Mejora:**
+  - Acoplamiento ocasional de estado global dentro de componentes de páginas.
+  - Código duplicado / componentes no referenciados (ej. `Home.jsx` vs `HomeS.jsx`).
 
 ### 2.2 Estructura del Proyecto Mobile (`app_mobile/Frontend`)
-- **Tecnología y Enrutamiento:** Construido sobre Expo SDK 54, React Native 0.81 y Expo Router.
-- **Separación de Capas:** Excelente tipado TypeScript (`types/`), servicios de mapeo (`vehicleMapper.ts`, `insuranceMapper.ts`), y abstracción de almacenamiento tokenStore (`tokenStore.ts`) combinando `SecureStore` y `AsyncStorage`.
-- **Patrones de Diseño:** Correcto uso de Context API para autenticación, pagos, notificaciones y reservas.
+- **Tecnología y Enrutamiento:** Desarrollado con Expo SDK 54, React Native 0.81 y Expo Router.
+- **Capa de Abstracción:** Excelente definición de tipos TypeScript (`types/`), mappers de entidades (`vehicleMapper.ts`, `insuranceMapper.ts`) y almacenamiento seguro con `SecureStore` + `AsyncStorage`.
+- **Estado Global:** Buen uso de Context API (`AuthContext`, `PaymentContext`, `NotificationContext`, `ReservationContext`).
 
 ---
 
@@ -43,64 +43,60 @@ En general, el proyecto exhibe una arquitectura modular bien delimitada por cara
 
 ### 3.1 Hallazgos en React & React Native
 1. **Llamadas síncronas a `setState` dentro de `useEffect` (Web):**
-   - Múltiples hooks y páginas (ej. `useCars.js`, `Home.jsx`, `BankAccounts.jsx`, `useUsers.js`, `useVehicles.js`) invocan `setState` de forma síncrona dentro del cuerpo de `useEffect`, provocando renderizados en cascada (cascading re-renders) y ralentización de la UI.
-2. **Mutación de Refs durante el Renderizado (Web):**
-   - En `useNotificationStream.js` se modificaba `handlersRef.current` directamente en el cuerpo del render (corregido durante la intervención para ejecutarse dentro de un `useEffect`).
-3. **Funciones Impuras en Render (Web):**
-   - En `HistoryReservationDetail.jsx` se realizaba cálculo temporal `Date.now()` dentro de `useMemo` sin dependencias completas (corregido).
-4. **Dependencias de Hooks (Web & Mobile):**
-   - Abundantes advertencias `react-hooks/exhaustive-deps` por omitir dependencias (ej. `t` de i18n, `location.pathname`, `today`).
+   - Múltiples componentes y hooks (ej. `useCars.js`, `Home.jsx`, `CardsInfo.jsx`, `FiltrerPrice.jsx`, `useUsers.js`) realizan `setState` directo en el cuerpo del efecto, provocando renderizados en cascada (cascading re-renders) que degradan el rendimiento.
+2. **Mutación de Refs en Render:**
+   - Detectado en `useNotificationStream.js` al asignar `handlersRef.current` directamente durante la fase de renderizado.
+3. **Purity / Funciones Impuras:**
+   - Invocación de `Date.now()` dentro de bloques memoizados (`useMemo`) en componentes de UI sin listar las dependencias apropiadas.
+4. **Desconexión en Dependencias de Hooks:**
+   - Múltiples advertencias `react-hooks/exhaustive-deps` al omitir funciones de traducción `t` o valores de ubicación.
 
-### 3.2 Tipado y TypeScript (Mobile)
-- Uso persistente de `: any` en firmas de métodos o contextos de datos en el cliente móvil, disminuyendo los beneficios del compilador TypeScript y ocultando errores en tiempo de ejecución.
+### 3.2 Tipado y Mantenibilidad (Mobile)
+- Ocurrencias de tipos flexibles (`: any`) en firmas de métodos y contextos de datos, restando efectividad al compilador de TypeScript.
 
 ---
 
 ## 4. Análisis de Seguridad
 
 1. **Almacenamiento de Tokens de Sesión (Web):**
-   - El `refreshToken` se almacena en `localStorage` (`sessionStorage.js` y `httpClient.js`). `localStorage` es susceptible a ataques **XSS (Cross-Site Scripting)**. Se recomienda migrar el refresco a cookies `HttpOnly` + `SameSite=Strict`.
-2. **Canal de Notificaciones SSE (Web):**
-   - En `useNotificationStream.js`, el token de acceso se envía a través de parámetros URL query string (`/notifications/stream?token=...`). Los parámetros URL quedan expuestos en logs de servidores web, proxies e historial del navegador.
-3. **Manejo de Secretos y Configuración de Entornos:**
-   - La URL del gateway en desarrollo y fallback local de endpoints API están expuestos en duro en el código cliente (`env.ts` / `vite.config.js`). Aunque aceptable para desarrollo local, debe ser controlado estrictamente por variables de entorno `.env` en producción.
-4. **Sanitización de Archivos y Carga de Recibos:**
-   - Carga de imágenes para comprobantes de pago carece de validación de firma mágica (magic bytes) en el cliente Web antes de subir al backend.
+   - Uso de `localStorage` para almacenar tokens de refresco (`sessionStorage.js`). El almacenamiento web local es vulnerable a ataques de **Cross-Site Scripting (XSS)**. Se recomienda migrar a cookies `HttpOnly` con flag `SameSite=Strict`.
+2. **Fuga de Tokens en Query String (Web):**
+   - El canal de notificaciones en tiempo real (SSE) en `useNotificationStream.js` envía el token en la URL (`/notifications/stream?token=...`). Esto expone credenciales en logs de proxies, servidores y en el historial.
+3. **Hardcoding de URLs de Entorno:**
+   - URLs de prueba y fallback local para la API se encuentran estáticas en `env.ts` / `vite.config.js`. Deben provenir estrictamente de variables de entorno administradas.
 
 ---
 
 ## 5. Análisis de Bugs y Manejo de Errores
 
-1. **Falta de Error Boundaries (Web):**
-   - La aplicación Web carece de componentes `ErrorBoundary` a nivel global o por ruta. Si un componente lanza un fallo no capturado durante el renderizado, toda la pantalla se torna en blanco (White Screen of Death).
-2. **Promesas Desatendidas y Manejo de Excepciones:**
-   - En varias llamadas a API (`fetchVehicle`, `filterAvailableVehicles`), los errores se capturan con `.catch()` vacíos o se imprimen a `console.error` sin notificar al usuario final con un mensaje interactivo o notificación toast.
-3. **Incompatibilidad de Librerías:**
-   - Identificado en `MaintenanceForm.jsx` violación `react-hooks/incompatible-library` por llamadas a librerías de formularios incompatibles.
+1. **Ausencia de Error Boundaries (Web):**
+   - La aplicación Web carece de componentes `ErrorBoundary`. Cualquier excepción no capturada durante el renderizado provocará el colapso completo de la SPA ("pantalla en blanco").
+2. **Promesas y Manejo de Excepciones:**
+   - Captura de errores con bloques `.catch()` vacíos o únicamente impresión por consola (`console.error`), sin proporcionar realimentación interactiva (Toast/Alert) al usuario.
 
 ---
 
-## 6. Pruebas y Cobertura (Testing Infrastructure)
+## 6. Pruebas e Infraestructura (Testing Infrastructure)
 
 - **Plataforma Mobile:**
-  - Cuenta con Jest + `jest-expo` configurado.
-  - Cobertura existente en utilidades y mapeadores (`httpClient.test.ts`, `tokenStore.test.ts`, `vehicleMapper.test.ts`, `branchMapper.test.ts`, `insuranceMapper.test.ts`).
-  - **Resultado de la Suite:** 5/5 Test Suites pasadas (19/19 unit tests ok).
+  - Configuración activa con Jest y `jest-expo`.
+  - Cobertura de pruebas unitarias sobre mappers y almacenamiento de tokens (`httpClient.test.ts`, `tokenStore.test.ts`, `vehicleMapper.test.ts`, `branchMapper.test.ts`, `insuranceMapper.test.ts`).
+  - **Estado:** 19/19 pruebas unitarias ejecutadas exitosamente.
 - **Plataforma Web:**
-  - **Ausencia total de suite de pruebas unitarias/integración.** El proyecto Web no posee un runner de pruebas (Vitest/Jest) ni scripts de test configurados en `package.json`.
+  - **Sin suite de pruebas unitarias.** `package.json` no contiene ejecutor de pruebas (Vitest/Jest) ni scripts de test.
 
 ---
 
-## 7. Plan de Acción y Priorización de Remediación
+## 7. Plan de Acción y Matriz de Prioridades
 
-| Prioridad | Acción Recomendada | Proyecto | Complejidad |
+| Prioridad | Remediación Recomendada | Proyecto | Complejidad |
 | :--- | :--- | :---: | :---: |
-| 🔴 **P0 (Inmediato)** | Configurar Vitest/React Testing Library y escribir pruebas para flujos críticos de auth y reserva. | Web | Media |
-| 🔴 **P0 (Inmediato)** | Migrar almacenamiento de refresh tokens a cookies `HttpOnly` en Web. | Web | Alta |
-| 🟡 **P1 (Alta)** | Refactorizar `useEffect` que provocan llamadas síncronas a `setState` para evitar cascading renders. | Web | Media |
-| 🟡 **P1 (Alta)** | Implementar `ErrorBoundary` global y por ruta en la SPA Web. | Web | Baja |
-| 🟢 **P2 (Media)** | Reemplazar tipos `: any` restantes en el proyecto Mobile por interfaces TypeScript estrictas. | Mobile | Media |
-| 🟢 **P2 (Media)** | Eliminar código redundante (`HomeS.jsx`) y limpiar imports no utilizados. | Web | Baja |
+| 🔴 **P0 (Inmediato)** | Configurar Vitest/React Testing Library y añadir pruebas unitarias para flujos críticos en Web. | Web | Media |
+| 🔴 **P0 (Inmediato)** | Migrar refresco de tokens a cookies `HttpOnly` en la SPA Web. | Web | Alta |
+| 🟡 **P1 (Alta)** | Refactorizar `useEffect` con `setState` síncrono para eliminar cascading re-renders. | Web | Media |
+| 🟡 **P1 (Alta)** | Implementar `ErrorBoundary` global para capturar fallos de renderizado en Web. | Web | Baja |
+| 🟢 **P2 (Media)** | Reemplazar tipos `: any` restantes en Mobile por interfaces estrictas. | Mobile | Media |
+| 🟢 **P2 (Media)** | Depurar componentes obsoletos/no utilizados (`HomeS.jsx`). | Web | Baja |
 
 ---
 
