@@ -89,7 +89,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "RentaMóvil",
-          tabBarLabel: `${t("tabs.home")} - ${t("tabs.homeModule")}`,
+          tabBarLabel: t("tabs.home"),
           tabBarIcon: ({ focused, color }) => <TabIcon name="car" color={focused ? colors.button : color} />,
           headerRight: HeaderRightButton,
         }}
@@ -98,7 +98,7 @@ export default function TabLayout() {
         name="reservations"
         options={{
           title: "RentaMóvil",
-          tabBarLabel: `${t("tabs.reservations")} - ${t("tabs.reservationsModule")}`,
+          tabBarLabel: t("tabs.reservations"),
           tabBarIcon: ({ focused, color }) => <TabIcon name="bookmark" color={focused ? colors.button : color} />,
         }}
       />
@@ -106,7 +106,7 @@ export default function TabLayout() {
         name="account"
         options={{
           title: "RentaMóvil",
-          tabBarLabel: `${t("tabs.account")} - ${t("tabs.accountModule")}`,
+          tabBarLabel: t("tabs.account"),
           tabBarIcon: ({ focused, color }) => <TabIcon name="user" color={focused ? colors.button : color} />,
         }}
       />

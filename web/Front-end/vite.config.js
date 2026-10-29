@@ -16,11 +16,14 @@ function stripOrigin(proxy) {
 }
 
 // https://vite.dev/config/
-/* global process */
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
     exclude: ['react-native']
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./vitest.setup.js'],
   },
   preview: {
     // Sin esto, vite preview rechaza con 403 cualquier Host que no sea localhost (protección

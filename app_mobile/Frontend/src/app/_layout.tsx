@@ -223,7 +223,6 @@ function InnerNav() {
     }, [
         isLoading,
         isAuthenticated,
-        router,
         segments,
     ]);
 

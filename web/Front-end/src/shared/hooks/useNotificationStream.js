@@ -18,10 +18,7 @@ const RECONNECT_DELAY_MS = 3000;
 export function useNotificationStream({ onNotification, onAdminNotification } = {}) {
   const { isAuthenticated } = useAuth();
   const handlersRef = useRef({ onNotification, onAdminNotification });
-
-  useEffect(() => {
-    handlersRef.current = { onNotification, onAdminNotification };
-  });
+  handlersRef.current = { onNotification, onAdminNotification };
 
   useEffect(() => {
     if (!isAuthenticated) return undefined;

@@ -1,12 +1,9 @@
-const REFRESH_TOKEN_KEY = "rentamovil_refresh_token";
 const USER_KEY = "rentamovil_user";
 const LEGACY_USER_KEY = "user";
+// ADR-005: el refresh token ya no pasa por aquí -- vive solo en la cookie httpOnly que
+// pone iam (localStorage es legible por cualquier script, la cookie httpOnly no).
 
-export function saveSession({ refreshToken, user }) {
-    if (refreshToken) {
-        localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
-    }
-
+export function saveSession({ user }) {
     if (user) {
         localStorage.setItem(USER_KEY, JSON.stringify(user));
     }
@@ -27,12 +24,7 @@ export function getStoredUser() {
     }
 }
 
-export function getStoredRefreshToken() {
-    return localStorage.getItem(REFRESH_TOKEN_KEY);
-}
-
 export function clearSession() {
-    localStorage.removeItem(REFRESH_TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
     localStorage.removeItem(LEGACY_USER_KEY);
 }

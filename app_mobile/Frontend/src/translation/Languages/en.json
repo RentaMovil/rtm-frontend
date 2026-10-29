@@ -24,6 +24,10 @@
   "insurance": {
     "title": "Insurance",
     "subtitle": "Select the coverage you want for your reservation.",
+    "viewDetails": "View details",
+    "detailTitle": "Insurance details",
+    "price": "Price",
+    "close": "Close",
     "tag": {
       "base": "Basic",
       "popular": "Popular",
@@ -70,7 +74,6 @@
     "bags": "Bags",
     "kmLimit": "∞ Km limit",
     "location": "Airport",
-    "cancellation": "Free cancellation",
     "continue": "Continue",
     "rent": "Rent",
     "perDay": "per day",
@@ -110,7 +113,7 @@
       "title": "Terms and conditions",
       "version": "Version",
       "effectiveDateLabel": "Effective from",
-      "documentEffectiveDate": "September 24, 2026",
+      "documentEffectiveDate": "October 27, 2026",
       "summaryTitle": "Reservation summary",
       "vehicleLabel": "Vehicle",
       "pickupLabel": "Pickup",
@@ -128,10 +131,10 @@
           ]
         },
         "requisitos": {
-          "title": "2. Customer and driver requirements",
+          "title": "2. Customer requirements",
           "paragraphs": [
-            "The customer declares that they meet the minimum age required by applicable regulations, that they hold a valid driving licence covering the entire rental period, and that they have the authorization and capacity to enter into this contract.",
-            "At the time of handover, the customer must present identification documents, driving licence and any other requirements stated in the reservation or at the branch. Any additional driver must be authorized in advance by RentaMóvil. Providing false, expired or insufficient information may lead to suspension or cancellation of the service, without prejudice to the customer's rights."
+            "The customer declares that they meet the minimum age required by applicable regulations, hold a valid driving licence for the entire rental period, and have the legal capacity to accept these terms. The platform does not request or verify driving documents.",
+            "At pickup the customer must present, at the branch, their identity document, licence and any other requirements communicated. The reservation holder is responsible for the vehicle during the rental; the platform does not manage additional drivers. Providing false, expired or insufficient information may prevent the vehicle from being handed over, without prejudice to the customer's rights."
           ]
         },
         "reserva": {
@@ -151,8 +154,8 @@
         "cambios": {
           "title": "5. Changes, cancellation and refunds",
           "paragraphs": [
-            "Change or cancellation requests must be submitted through official channels before the pickup date and time. The conditions, deadlines, costs and penalties expressly shown in the offer and accepted by the customer when confirming the reservation will apply. If no special condition is visible, RentaMóvil will disclose the applicable cost before processing the request.",
-            "No refund will be issued for services already rendered, third-party expenses, damages attributable to the customer, or cases set out in applicable regulations, without prejudice to the consumer's non-waivable rights and the specific rules of the chosen coverage."
+            "Once a reservation is created it cannot be cancelled from the platform, and the vehicle, pickup date and return date cannot be changed. Only the return branch can be changed, while more than 3 days remain before the return date and the reservation status allows it.",
+            "An approved payment is not refundable at the customer's request. The exceptions are cases where RentaMóvil cannot provide the service (section 11) and the inalienable consumer rights provided by law."
           ]
         },
         "entrega": {
@@ -163,10 +166,10 @@
           ]
         },
         "deposito": {
-          "title": "7. Security deposit and third-party payments",
+          "title": "7. Guarantees and third-party payments",
           "paragraphs": [
-            "When applicable, the customer must place a deposit or provide a guarantee according to the amount and mechanism stated in the reservation or rental contract. This deposit is a performance guarantee and not a payment for the reservation, unless expressly stated otherwise.",
-            "The deposit will be released once the vehicle is returned and its condition, documentation, fuel, mileage and absence of outstanding obligations are verified. If there are damages, fines or other pending amounts, the verified amount may be deducted, respecting the required notifications, process and the customer's rights."
+            "The platform does not charge or manage security deposits. If a branch requires an additional guarantee, it will be communicated before pickup and handled outside the platform, and it is not part of the reservation payment.",
+            "Damages, fines or other amounts attributable to the customer will be claimed in accordance with the law, with prior notice and respecting the customer's right to dispute them. The platform does not process these charges."
           ]
         },
         "uso": {
@@ -184,10 +187,10 @@
           ]
         },
         "devolucion": {
-          "title": "10. Return and extension",
+          "title": "10. Return",
           "paragraphs": [
             "The vehicle must be returned to the stated branch, date and time, with the same fuel level, mileage, accessories, documents and quality condition, except for permitted ordinary wear. The return will be documented through an inspection and handover record.",
-            "Any extension must be requested before the return time and is subject to availability and the current rate. A delay in returning the vehicle does not create an automatic extension. A late return or one made outside the agreed branch may result in additional charges and, where applicable, the application of the deposit."
+            "The return date and time of the reservation are fixed: they cannot be changed or extended from the platform. A late return does not produce an automatic extension. A late return, or one made outside the agreed branch, may generate additional charges as communicated by the branch."
           ]
         },
         "disponibilidad": {
@@ -613,7 +616,7 @@
     "no": "No",
     "confirm": "Confirm",
     "loadErrorTitle": "Error loading reservations",
-    "loadErrorMessage": "Your reservations could not be loaded. Check your connection and try again.",
+    "loadErrorMessage": "Could not load your reservations. Check your connection and try again.",
     "loadingText": "Loading reservations...",
     "activityTitle": "YOUR ACTIVITY",
     "myReservationsLabel": "My reservations",
@@ -629,11 +632,8 @@
   },
   "tabs": {
     "home": "Home",
-    "homeModule": "Module",
     "reservations": "Reservations",
-    "reservationsModule": "Module",
-    "account": "Account",
-    "accountModule": "Module"
+    "account": "Account"
   },
   "themes": {
     "light": "Light green",

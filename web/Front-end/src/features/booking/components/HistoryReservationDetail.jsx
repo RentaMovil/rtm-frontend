@@ -48,7 +48,6 @@ function ReservationDetailModal({ isOpen, reserva, onClose, onUpdateReturnBranch
             (endDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24);
 
         return daysUntilEnd > MIN_DAYS_BEFORE_RETURN_TO_EDIT;
-    // eslint-disable-next-line react-hooks/purity
     }, [reserva]);
 
     if (!isOpen || !reserva) return null;

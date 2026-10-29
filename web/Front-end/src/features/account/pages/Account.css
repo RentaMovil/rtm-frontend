@@ -494,7 +494,8 @@
     }
 
     .btn-danger {
-    background: var(--cancel);
+    /* --cancel solo existe en el tema "light"; con fallback no queda transparente en los demás */
+    background: var(--cancel, #ef4444);
     color: #ffffff;
     border: none;
     padding: 12px 24px;

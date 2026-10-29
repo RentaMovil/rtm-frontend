@@ -79,7 +79,7 @@
 
 .estado-cancelada {
   background: rgba(239, 68, 68, 0.15);
-  color: var(--cancel);
+  color: var(--cancel, #ef4444);
 }
 
 .estado-completada {

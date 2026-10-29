@@ -176,30 +176,57 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .message-error {
+    /* Mismo rojo que usa el resto del proyecto (--error, con el mismo
+       fallback #ef4444 que ya se repite en Account.css, History, etc.). */
+    --fc-error: var(--error, #ef4444);
+
     position: absolute;
-    top: calc(100% + 4px);
-    left: 12px;
-    background: #d93025;
-    color: white;
-    font-size: 12px;
-    padding: 6px 10px;
-    border-radius: 6px;
-    /*white-space: nowrap;*/
+    top: calc(100% + 10px);
+    left: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    min-width: 220px;
+    max-width: 260px;
+    background: var(--card-bg);
+    color: var(--fc-error);
+    font-size: 12.5px;
+    line-height: 1.4;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid color-mix(in srgb, var(--fc-error) 35%, transparent);
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--fc-error) 18%, transparent), 0 2px 6px var(--shadow, rgba(0, 0, 0, 0.06));
     white-space: normal;
-    max-width: 100%;
     word-break: break-word;
     z-index: 10;
-    animation: slideDown 0.2s ease;
+    animation: popIn 0.18s ease;
 }
 
-@keyframes slideDown {
+.message-error::after {
+    content: "!";
+    order: -1;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--fc-error);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+}
+
+@keyframes popIn {
     from {
         opacity: 0;
-        transform: translateY(-8px);
+        transform: translateY(-6px) scale(0.97);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -207,12 +234,13 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     content: "";
     position: absolute;
     top: -6px;
-    left: 14px;
-    width: 0;
-    height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-bottom: 6px solid #d93025;
+    left: 18px;
+    width: 12px;
+    height: 12px;
+    background: var(--card-bg);
+    border-left: 1px solid color-mix(in srgb, var(--fc-error) 35%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--fc-error) 35%, transparent);
+    transform: rotate(45deg);
 }
 
 .error {

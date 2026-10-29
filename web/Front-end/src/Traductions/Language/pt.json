@@ -1,4 +1,9 @@
 {
+  "errorBoundary": {
+    "title": "Algo deu errado",
+    "message": "Ocorreu um erro inesperado nesta seção. Você pode tentar recarregar a página.",
+    "reload": "Recarregar página"
+  },
   "dialog": {
     "accept": "Aceitar",
     "cancel": "Cancelar"
@@ -28,6 +33,7 @@
     "errorBranch": "Filial inválida",
     "errorHour": "Horário inválido (8:00 - 18:00)",
     "errorPastHour": "O horário de retirada já passou. Escolha um horário futuro.",
+    "errorReturnBeforePickup": "Se for o mesmo dia, o horário de devolução deve ser depois do horário de retirada.",
     "success": "Busca realizada",
     "deliveryLocation": "Local de retirada",
     "deliveryDate": "Data de retirada",
@@ -44,7 +50,6 @@
     "driving": "⚙️ Manual",
     "kmLimit": "∞ Limite de Km",
     "location": "📍 Aeroporto, Bogotá",
-    "cancellation": "Cancelamento grátis",
     "continue": "Continuar",
     "type": "Mini similar"
   },
@@ -199,7 +204,7 @@
       "Ao criar uma conta na RentaMovil, você autoriza o tratamento de seus dados pessoais (nome, sobrenome, e-mail, telefone e usuário) conforme a Lei colombiana 1581 de 2012 (Habeas Data).",
       "Finalidade: gerenciar sua conta, reservas, pagamentos e faturamento, e entrar em contato sobre o serviço.",
       "Seus direitos: conhecer, atualizar, retificar e excluir seus dados, e revogar esta autorização a qualquer momento.",
-      "Seus dados não serão compartilhados com terceiros, exceto por obrigação legal ou para concluir o serviço contratado (por exemplo, processamento de pagamentos).",
+      "Seus dados não serão compartilhados com terceiros, exceto por obrigação legal ou para concluir o serviço contratado (por exemplo, o armazenamento de fotos de perfil e comprovantes de pagamento).",
       "As condições de locação de veículos serão apresentadas e aceitas novamente durante o processo de reserva."
     ]
   },
@@ -1279,14 +1284,20 @@
       }
     }
   },
+  "mobileAppBanner": {
+    "title": "Use o app da RentaMóvil",
+    "description": "Escaneie o código ou baixe o APK para uma melhor experiência no seu celular.",
+    "download": "Baixar",
+    "close": "Fechar"
+  },
   "requirements": {
-    "title": "Requisitos para alugar um veículo",
-    "license": "Carta de condução",
-    "licenseDescription": "Apresente uma carta válida e em vigor para o tipo de veículo reservado.",
+    "title": "Por que reservar conosco",
+    "branches": "Filiais",
+    "branchesDescription": "Escolha a filial de retirada e devolução que for mais conveniente para você.",
     "insurance": "Seguro selecionado",
     "insuranceDescription": "Escolha a cobertura que melhor se adapte às necessidades da sua viagem.",
-    "id": "Documento de identidade",
-    "idDescription": "Leve o seu documento original para concluir a entrega do veículo."
+    "securePayment": "Pagamento verificado",
+    "securePaymentDescription": "Um administrador revisa seu comprovante antes de confirmar a reserva."
   },
   "title": {
     "rentamovil": "Viaje com a RentaMovil"
@@ -1435,7 +1446,7 @@
     "noLocationAvailable": "Nenhuma localização disponível"
   },
   "rentalTerms": {
-    "effectiveDate": "24 de setembro de 2026",
+    "effectiveDate": "27 de outubro de 2026",
     "sections": {
       "objeto": {
         "title": "1. Objeto e aceitação",
@@ -1445,10 +1456,10 @@
         ]
       },
       "requisitos": {
-        "title": "2. Requisitos do cliente e do condutor",
+        "title": "2. Requisitos do cliente",
         "paragraphs": [
-          "O cliente declara ter a idade mínima exigida pela regulamentação aplicável, possuir carteira de habilitação válida durante todo o período da locação, e ter autorização e capacidade para celebrar este contrato.",
-          "No momento da entrega, deverá apresentar os documentos de identidade, carteira de habilitação e demais requisitos informados na reserva ou na filial. Qualquer condutor adicional deverá ser previamente autorizado pela RentaMóvil. O fornecimento de informações falsas, vencidas ou insuficientes poderá suspender ou cancelar o serviço, sem prejuízo dos direitos do cliente."
+          "O cliente declara que tem a idade mínima exigida pela norma aplicável, que possui carteira de habilitação válida durante todo o período da locação e que tem capacidade legal para aceitar estes termos. A plataforma não solicita nem verifica documentos de condução.",
+          "No momento da entrega, o cliente deverá apresentar na filial o documento de identidade, a habilitação e os demais requisitos informados. O titular da reserva é o responsável pelo veículo durante a locação; a plataforma não gerencia condutores adicionais. A prestação de informações falsas, vencidas ou insuficientes poderá impedir a entrega do veículo, sem prejuízo dos direitos do cliente."
         ]
       },
       "reserva": {
@@ -1468,8 +1479,8 @@
       "cambios": {
         "title": "5. Alterações, cancelamento e reembolsos",
         "paragraphs": [
-          "As solicitações de alteração ou cancelamento devem ser apresentadas pelos canais oficiais antes da data e hora de retirada. Serão aplicadas as condições, prazos, custos e penalidades expressamente exibidos na oferta e aceitos pelo cliente ao confirmar a reserva. Caso não exista uma condição especial visível, a RentaMóvil informará o custo aplicável antes de processar a solicitação.",
-          "Não haverá reembolso por serviços já prestados, despesas perante terceiros, danos imputáveis ao cliente ou casos previstos na regulamentação aplicável, sem prejuízo dos direitos irrenunciáveis do consumidor e das regras específicas da cobertura escolhida."
+          "Depois de criada, a reserva não pode ser cancelada pela plataforma, e não podem ser alterados o veículo, a data de retirada nem a data de devolução. Só é possível alterar a filial de devolução, enquanto faltarem mais de 3 dias para a data de devolução e o status da reserva permitir.",
+          "Um pagamento aprovado não é reembolsável por decisão do cliente. Excetuam-se os casos em que a RentaMóvil não possa prestar o serviço (seção 11) e os direitos irrenunciáveis do consumidor previstos em lei."
         ]
       },
       "entrega": {
@@ -1480,10 +1491,10 @@
         ]
       },
       "deposito": {
-        "title": "7. Depósito de garantia e pagamentos a terceiros",
+        "title": "7. Garantias e pagamentos a terceiros",
         "paragraphs": [
-          "Quando aplicável, o cliente deverá constituir um depósito ou fornecer uma garantia conforme o valor e o mecanismo informados na reserva ou no contrato de locação. Esse depósito é uma garantia de cumprimento e não um pagamento da reserva, salvo indicação expressa em contrário.",
-          "O depósito será liberado após a devolução do veículo e a verificação do estado, da documentação, do combustível, da quilometragem e da ausência de obrigações pendentes. Caso existam danos, multas ou outros valores pendentes, o valor comprovado poderá ser descontado, respeitando as notificações, o processo e os direitos do cliente."
+          "A plataforma não cobra nem gerencia depósitos de garantia. Se uma filial exigir garantia adicional, ela será informada antes da entrega e gerenciada fora da plataforma, e não faz parte do pagamento da reserva.",
+          "Danos, multas ou outros valores atribuíveis ao cliente serão cobrados conforme a lei, com notificação prévia e respeitando o direito do cliente de contestá-los. A plataforma não processa essas cobranças."
         ]
       },
       "uso": {
@@ -1501,10 +1512,10 @@
         ]
       },
       "devolucion": {
-        "title": "10. Devolução e extensão",
+        "title": "10. Devolução",
         "paragraphs": [
           "O veículo deve ser devolvido na filial, data e horário indicados, com o mesmo nível de combustível, quilometragem, acessórios, documentos e estado de qualidade, exceto o desgaste ordinário permitido. A devolução será documentada por meio de uma inspeção e termo de entrega.",
-          "Qualquer extensão deve ser solicitada antes do horário de devolução e está sujeita à disponibilidade e à tarifa vigente. O atraso na devolução não gera uma extensão automática. Uma devolução tardia ou fora da filial acordada pode gerar cobranças adicionais e, quando aplicável, a execução da garantia."
+          "A data e a hora de devolução da reserva são fixas: não podem ser alteradas nem prorrogadas pela plataforma. O atraso na devolução não gera prorrogação automática. Uma devolução tardia, ou feita fora da filial combinada, pode gerar cobranças adicionais conforme informado pela filial."
         ]
       },
       "disponibilidad": {
@@ -1583,6 +1594,7 @@
   },
   "vehicles": {
     "loadError": "Não foi possível carregar os veículos.",
+    "searchError": "Não foi possível buscar disponibilidade. Tente novamente.",
     "categoryUnavailable": "Categoria não disponível",
     "model": "Modelo:",
     "capacity": "Capacidade:",

@@ -77,8 +77,10 @@ export function createStyles(colors: any) {
         // acento neutro (el mismo tono que el resto de badges/botones de
         // acento), COMPLETED el primario y CANCELLED el error — igual que ya
         // distingue `ReservationCard` en el historial.
-        statusBadgePending: { backgroundColor: colors.accentBg },
-        statusTextPending: { color: colors.primaryDark },
+        // Fondo neutro: en los temas oscuros `accentBg` y `primaryDark` son
+        // el mismo dorado y el texto del badge se perdia.
+        statusBadgePending: { backgroundColor: colors.input },
+        statusTextPending: { color: colors.textHeading },
 
         statusBadgeConfirmed: { backgroundColor: colors.successSurface },
         statusTextConfirmed: { color: colors.success },
@@ -236,126 +238,5 @@ export function createStyles(colors: any) {
             color: colors.buttonText,
         },
 
-        // Acción de cancelación
-        cancelButton: {
-            alignItems: "center",
-            padding: 15,
-            borderWidth: 1,
-            borderColor: colors.error,
-            borderRadius: 12,
-            backgroundColor: colors.card,
-        },
-
-        cancelButtonText: {
-            fontSize: 15,
-            fontWeight: "700",
-            color: colors.error,
-        },
-
-        cancelButtonDisabled: {
-            borderColor: colors.border,
-            opacity: 0.6,
-        },
-
-        cancelButtonTextDisabled: {
-            color: colors.secondaryText,
-        },
-
-        cancelReasonText: {
-            marginTop: 8,
-            fontSize: 13,
-            textAlign: "center",
-            color: colors.secondaryText,
-        },
-
-        // Modal de confirmación
-        modalOverlay: {
-            flex: 1,
-            justifyContent: "center",
-            padding: 24,
-            backgroundColor: colors.overlay,
-        },
-
-        modalContent: {
-            padding: 24,
-            borderRadius: 20,
-            backgroundColor: colors.card,
-            shadowColor: colors.shadow,
-            shadowOffset: {
-                width: 0,
-                height: 10,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 20,
-            elevation: 12,
-        },
-
-        modalIcon: {
-            width: 46,
-            height: 46,
-            alignSelf: "center",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: 14,
-            borderRadius: 23,
-            backgroundColor: colors.errorSurface,
-        },
-
-        modalIconText: {
-            fontSize: 27,
-            fontWeight: "800",
-            color: colors.error,
-        },
-
-        modalTitle: {
-            marginBottom: 8,
-            fontSize: 22,
-            fontWeight: "800",
-            textAlign: "center",
-            color: colors.text,
-        },
-
-        modalMessage: {
-            fontSize: 15,
-            lineHeight: 22,
-            textAlign: "center",
-            color: colors.secondaryText,
-        },
-
-        modalActions: {
-            gap: 10,
-            marginTop: 24,
-        },
-
-        keepButton: {
-            alignItems: "center",
-            padding: 13,
-            borderWidth: 1,
-            borderColor: colors.border,
-            borderRadius: 11,
-        },
-
-        keepButtonText: {
-            fontSize: 15,
-            fontWeight: "700",
-            color: colors.text,
-        },
-
-        confirmCancelButton: {
-            alignItems: "center",
-            padding: 14,
-            borderRadius: 11,
-            backgroundColor: colors.error,
-        },
-
-        confirmCancelButtonText: {
-            fontSize: 15,
-            fontWeight: "700",
-            color: colors.buttonText,
-        },
-
-        disabledButton: {
-            opacity: 0.65,
-        },
     });
 }

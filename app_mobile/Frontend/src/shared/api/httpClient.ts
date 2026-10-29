@@ -234,11 +234,9 @@ async function request<T>(
       throw new ApiError(message, res.status, errorBody);
     }
 
-    if (res.status === 204) {
-      return null as T;
-    }
-
-    return (await res.json()) as T;
+    // 204, o 202 sin cuerpo (ej. /auth/password/forgot): no hay JSON que leer
+    const text = await res.text();
+    return (text ? JSON.parse(text) : null) as T;
   } catch (error) {
     if (timedOut) throw new HttpRequestTimeoutError(endpoint);
     if (callerSignal?.aborted) throw createAbortError();

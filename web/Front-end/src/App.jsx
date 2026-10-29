@@ -12,7 +12,6 @@ import AccountView from './features/auth/components/AccountView';
 import ChangePassword from './features/auth/pages/ChangePassword.jsx';
 // Vehicles
 import Home from './features/vehicles/pages/Home.jsx';
-import HomeS from './features/vehicles/pages/HomeS.jsx';
 import { useAuth } from './contexts/AuthContext.jsx';
 // Booking
 import Reservation from './features/booking//pages/Reservation.jsx';
@@ -59,6 +58,7 @@ import ChangePasswordLogin from './features/auth/pages/ChangePasswordLogin.jsx';
 // Super Admin
 import UserManagement from './features/admin/users/pages/UserManagement.jsx';
 import BankAccounts from './features/admin/bankAccounts/pages/BankAccounts.jsx';
+import MobileAppBanner from './shared/components/MobileAppBanner/MobileAppBanner.jsx';
 
 // Admin con sesión ya restaurada: lleva directo a HomeAdmin, sin esperar a que
 // entre a /account para que la navbar refleje el rol real.
@@ -80,6 +80,7 @@ function App() {
   }, [theme]);
   return (
     <BrowserRouter>
+      <MobileAppBanner />
 
       <Routes>
         <Route 
@@ -152,14 +153,6 @@ function App() {
         <Route
           path="/home"
           element={<HomeGate />}
-        />
-        <Route
-          path="/homeS"
-          element={
-            <RequireAuth>
-              <HomeS />
-            </RequireAuth>
-          }
         />
         <Route
           path="/reservation"

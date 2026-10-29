@@ -105,7 +105,18 @@ const FilterCalendar = forwardRef(
 
       }
 
-    }, [date, dateReturn, t]);
+      // Mismo día: la hora de devolución debe ser posterior a la de entrega.
+      if (date && dateReturn === date && hora && returnhora) {
+
+        setErrorReturnHora(
+          returnhora <= hora
+            ? t("filterCalendar.errorReturnBeforePickup")
+            : ""
+        );
+
+      }
+
+    }, [date, dateReturn, hora, returnhora, t]);
 
 
     /*
@@ -209,6 +220,16 @@ const FilterCalendar = forwardRef(
   };
 
 
+    /*
+     * ============================================================
+     * MOSTRAR TODAS LAS SUCURSALES AL ENTRAR AL CAMPO
+     * ============================================================
+     */
+    const handleFocus = () => {
+      setSugerencias(branches || []);
+    };
+
+
 
     /*
      * ============================================================
@@ -288,6 +309,12 @@ const FilterCalendar = forwardRef(
       const pickupAt = new Date(`${date}T${hora}`);
       if (!date || !hora || pickupAt.getTime() <= Date.now()) {
         setErrorHora(t("filterCalendar.errorPastHour"));
+        return false;
+      }
+
+      // Mismo día: la hora de devolución debe ser posterior a la de entrega.
+      if (dateReturn === date && returnhora <= hora) {
+        setErrorReturnHora(t("filterCalendar.errorReturnBeforePickup"));
         return false;
       }
 
@@ -389,9 +416,9 @@ const FilterCalendar = forwardRef(
                 }`}
               value={query}
               onChange={handleChange}
+              onFocus={handleFocus}
               placeholder={t("filterCalendar.branchPlaceholder")}
               autoComplete="off"
-              required
             />
 
             {errorSucursal && (
@@ -468,7 +495,6 @@ const FilterCalendar = forwardRef(
                   : ""
                 }`}
               value={hora}
-              min={date === toLocalDate(new Date()) ? getCurrentTime() : undefined}
               onChange={(e) => {
 
                 setHora(e.target.value);
@@ -495,7 +521,6 @@ const FilterCalendar = forwardRef(
             <input
               type="date"
               className="input-container"
-              min={today}
               min={date}
               value={dateReturn}
               onChange={(e) =>

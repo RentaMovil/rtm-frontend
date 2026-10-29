@@ -66,8 +66,7 @@ export const notificationService = {
 
   async markAsRead(notificationId: number): Promise<Notification> {
     return httpClient.patch<Notification>(
-      `${API_ROUTES.notifications}/${notificationId}`,
-      { is_read: true, read_at: new Date().toISOString() },
+      `${API_ROUTES.notifications}/${notificationId}/read`,
     );
   },
 };

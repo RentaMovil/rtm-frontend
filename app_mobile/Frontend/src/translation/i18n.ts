@@ -7,7 +7,6 @@ import en from "./Languages/en.json";
 import fr from "./Languages/fr.json";
 import pt from "./Languages/pt.json";
 
-// eslint-disable-next-line import/no-named-as-default-member
 i18n
     .use(initReactI18next)
     .init({

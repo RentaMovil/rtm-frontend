@@ -24,6 +24,10 @@
   "insurance": {
     "title": "Seguro",
     "subtitle": "Selecciona la cobertura que deseas para tu reserva.",
+    "viewDetails": "Ver detalles",
+    "detailTitle": "Detalle del seguro",
+    "price": "Precio",
+    "close": "Cerrar",
     "tag": {
       "base": "Básico",
       "popular": "Popular",
@@ -70,7 +74,6 @@
     "bags": "Maletas",
     "kmLimit": "∞ Km límite",
     "location": "Aeropuerto",
-    "cancellation": "Cancelacion gratis",
     "continue": "Continuar",
     "rent": "Alquilar",
     "perDay": "por día",
@@ -110,7 +113,7 @@
       "title": "Términos y condiciones",
       "version": "Versión",
       "effectiveDateLabel": "Vigente desde",
-      "documentEffectiveDate": "24 de septiembre de 2026",
+      "documentEffectiveDate": "27 de octubre de 2026",
       "summaryTitle": "Resumen de la reserva",
       "vehicleLabel": "Vehículo",
       "pickupLabel": "Recogida",
@@ -128,10 +131,10 @@
           ]
         },
         "requisitos": {
-          "title": "2. Requisitos del cliente y del conductor",
+          "title": "2. Requisitos del cliente",
           "paragraphs": [
-            "El cliente declara que tiene la edad mínima exigida por la normativa aplicable, que posee licencia de conducción vigente y válida durante todo el período del alquiler, y que cuenta con autorización y capacidad para celebrar este contrato.",
-            "Al momento de la entrega deberá presentar los documentos de identidad, licencia y demás requisitos informados en la reserva o en la sucursal. Cualquier conductor adicional deberá ser autorizado previamente por RentaMóvil. La entrega de información falsa, vencida o insuficiente podrá suspender o cancelar el servicio, sin perjuicio de los derechos que correspondan al cliente."
+            "El cliente declara que tiene la edad mínima exigida por la normativa aplicable, que posee licencia de conducción vigente y válida durante todo el período del alquiler, y que tiene capacidad legal para aceptar estos términos. La plataforma no solicita ni verifica documentos de conducción.",
+            "Al momento de la entrega deberá presentar en la sucursal los documentos de identidad, la licencia y demás requisitos informados. El titular de la reserva es el responsable del vehículo durante el alquiler; la plataforma no gestiona conductores adicionales. La entrega de información falsa, vencida o insuficiente podrá impedir la entrega del vehículo, sin perjuicio de los derechos que correspondan al cliente."
           ]
         },
         "reserva": {
@@ -149,10 +152,10 @@
           ]
         },
         "cambios": {
-          "title": "5. Cambios, cancelación y reembolsos",
+          "title": "5. Modificaciones, cancelación y reembolsos",
           "paragraphs": [
-            "Las solicitudes de cambio o cancelación deben presentarse por los canales oficiales antes de la fecha y hora de recogida. Se aplicarán las condiciones, plazos, costos y penalidades que se muestren expresamente en la oferta y que el cliente acepte al confirmar la reserva. Si no existe una condición especial visible, RentaMóvil informará el costo aplicable antes de procesar la solicitud.",
-            "No procederá un reembolso por servicios ya prestados, gastos ante terceros, daños imputables al cliente o casos previstos en la normativa aplicable, sin perjuicio de los derechos irrenunciables del consumidor y de las reglas específicas de la cobertura elegida."
+            "Una vez creada la reserva, esta no puede cancelarse desde la plataforma, y no pueden modificarse el vehículo, la fecha de recogida ni la fecha de devolución. Solo es posible cambiar la sucursal de devolución, mientras falten más de 3 días para la fecha de devolución y el estado de la reserva lo permita.",
+            "El pago aprobado no es reembolsable por decisión del cliente. Se exceptúan los casos en que RentaMóvil no pueda prestar el servicio (sección 11) y los derechos irrenunciables del consumidor previstos en la ley."
           ]
         },
         "entrega": {
@@ -163,10 +166,10 @@
           ]
         },
         "deposito": {
-          "title": "7. Depósito de garantía y pagos a terceros",
+          "title": "7. Garantías y pagos a terceros",
           "paragraphs": [
-            "Cuando corresponda, el cliente deberá constituir un depósito o entregar un medio de garantía conforme al monto y mecanismo informados en la reserva o en el contrato de alquiler. Ese depósito es una garantía de cumplimiento y no un pago de la reserva, salvo que se indique expresamente lo contrario.",
-            "El depósito se liberará una vez devuelto el vehículo y verificados el estado, la documentación, el combustible, la kilometraje y la ausencia de obligaciones. Si existen daños, multas u otras sumas pendientes, se podrá descontar el importe comprobado, respetando las notificaciones, el proceso y los derechos del cliente."
+            "La plataforma no cobra ni gestiona depósitos de garantía. Si la sucursal exigiera una garantía adicional, se informará antes de la entrega y se gestionará fuera de la plataforma, y no formará parte del pago de la reserva.",
+            "Los daños, multas u otras sumas imputables al cliente se reclamarán conforme a la ley, con notificación previa y respetando el derecho del cliente a controvertirlas. La plataforma no procesa estos cobros."
           ]
         },
         "uso": {
@@ -184,10 +187,10 @@
           ]
         },
         "devolucion": {
-          "title": "10. Devolución y extensión",
+          "title": "10. Devolución",
           "paragraphs": [
             "El vehículo debe devolverse en la sucursal, fecha y hora indicadas, con el mismo nivel de combustible, kilometraje, accesorios, documentos y estado de calidad, salvo el desgaste ordinario permitido. La devolución se documentará mediante una inspección y acta de entrega.",
-            "Cualquier extensión debe solicitarse antes de la hora de devolución y está sujeta a disponibilidad y a la tarifa vigente. No produce una extensión automática la demora en la devolución. Una devolución tardía o fuera de la sucursal convenida puede generar cobros adicionales y, cuando corresponda, la aplicación de la garantía."
+            "La fecha y hora de devolución de la reserva son fijas: no pueden modificarse ni ampliarse desde la plataforma. La demora en la devolución no produce una extensión automática. Una devolución tardía o fuera de la sucursal convenida puede generar cobros adicionales conforme a lo informado por la sucursal."
           ]
         },
         "disponibilidad": {
@@ -627,11 +630,8 @@
   },
   "tabs": {
     "home": "Inicio",
-    "homeModule": "Módulo",
     "reservations": "Reservas",
-    "reservationsModule": "Módulo",
-    "account": "Cuenta",
-    "accountModule": "Módulo"
+    "account": "Cuenta"
   },
   "themes": {
     "light": "Verde claro",

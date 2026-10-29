@@ -3,7 +3,7 @@ import { fromApiDateTime, toApiDateTime } from "../../../shared/utils/apiDate";
 import i18n from "../../../Traductions/index.js";
 
 // Estados de booking -> estados que ya usa la interfaz del cliente (estilos estado-*).
-// Las tres primeras son reservas vigentes: se pueden cancelar o modificar dentro de su plazo.
+// Las tres primeras son reservas vigentes: solo se puede cambiar la sucursal de devolución.
 const UI_STATUS = {
     PENDING_PAYMENT: 'activa',
     PENDING_REVIEW: 'activa',
@@ -36,7 +36,12 @@ export function fromApiReservation(reservation) {
     };
 }
 
+// ADR-015: el cliente no puede cancelar una reserva. El backend ya no expone
+// POST /reservations/{id}/cancel; este codigo de UI queda inactivo y puede eliminarse.
+const CUSTOMER_CANCELLATION_ENABLED = false;
+
 export function canCancelReservation(reservation, now = Date.now()) {
+    if (!CUSTOMER_CANCELLATION_ENABLED) return false;
     if (UI_STATUS[reservation.status] !== 'activa') return false;
     const startDate = new Date(reservation.start_date).getTime();
     return startDate - now > CANCELLATION_DEADLINE_DAYS * DAY_MS;
@@ -78,7 +83,7 @@ export function toModifyReservationPayload(returnBranchId) {
     return { newReturnBranchId: Number(returnBranchId) };
 }
 
-export function toReservationViewModel(reservation, { vehiclesById = {}, branchesById = {}, insuranceById = {} } = {}) {
+export function toReservationViewModel(reservation, { vehiclesById = {}, insuranceById = {} } = {}) {
     const vehicle = vehiclesById[reservation.vehicle_id] || {};
     const days = Math.max(
         1,
@@ -91,7 +96,7 @@ export function toReservationViewModel(reservation, { vehiclesById = {}, branche
         status: UI_STATUS[reservation.status] ?? (reservation.status || '').toLowerCase(),
         // Estado real de booking (PENDING_PAYMENT, CONFIRMED...) por si la pantalla lo necesita
         backendStatus: reservation.status,
-        canCancel: canCancelReservation(reservation),
+
         created_at: reservation.reservation_date,
         pickupBranchId: reservation.pickup_branch_id,
         returnBranchId: reservation.return_branch_id,

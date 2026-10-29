@@ -20,26 +20,29 @@ function CartVehicule({ vehicle, rentalSearch, showActions = true }) {
     const handleContinue = () => {
         if (!showActions) return;
 
-        // Catálogo público; reservar sí exige sesión.
+        const reservationState = {
+            vehicle,
+            img: vehicle.imageUrl,
+            name: vehicle.name,
+            price,
+            branch: vehicle.branchName,
+            model: vehicle.modelName,
+            type: vehicle.categoryName,
+            engineType: vehicle.engineTypeName,
+            capacity: vehicle.capacity,
+            rentalSearch,
+        };
+
+        // Catálogo público; reservar sí exige sesión. Se guarda a dónde iba
+        // (la reserva de este vehículo) para volver ahí después de loguearse.
         if (!isAuthenticated) {
-            navigate("/login");
+            navigate("/login", {
+                state: { from: "/Reservation", fromState: reservationState },
+            });
             return;
         }
 
-        navigate("/Reservation", {
-            state: {
-                vehicle,
-                img: vehicle.imageUrl,
-                name: vehicle.name,
-                price,
-                branch: vehicle.branchName,
-                model: vehicle.modelName,
-                type: vehicle.categoryName,
-                engineType: vehicle.engineTypeName,
-                capacity: vehicle.capacity,
-                rentalSearch,
-            },
-        });
+        navigate("/Reservation", { state: reservationState });
     };
 //--/--/--/--/--------------------
 //--/--/----------------------
@@ -75,7 +78,6 @@ function CartVehicule({ vehicle, rentalSearch, showActions = true }) {
             </div>
             <div className="car-price">
                 <p className="price">${formattedPrice}</p>
-                <span className="free">{t('cartVehicule.cancellation')}</span>
                 {showActions && (
                     <button type="button" onClick={handleContinue}>{t('cartVehicule.continue')}</button>
                 )}

@@ -27,6 +27,7 @@ function Home() {
   const { cars, isLoading: loading, error } = useCars();
   const [hasSearchedCars, setHasSearchedCars] = useState(false);
   const [carsFiltered, setCarsFiltered] = useState([]);
+  const [searchError, setSearchError] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
   const [brandFilter, setBrandFilter] = useState("");
@@ -52,25 +53,35 @@ function Home() {
     if (location.state?.triggerSearch && location.state?.rentalSearch && cars.length > 0) {
       const { branch, startDate, endDate, startTime, endTime } = location.state.rentalSearch;
 
+      // Deliberado: refleja de inmediato en el buscador los datos con los que se navegó aquí
+      // (otra pantalla ya hizo la búsqueda), para que el usuario los vea sin esperar a que
+      // termine la verificación de disponibilidad de abajo.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSearchData({ branch, startDate, endDate, startTime, endTime });
+      setSearchError(null);
 
-      filterAvailableVehicles(cars, branch, startDate, endDate).then((disponibles) => {
-        setCarsFiltered(disponibles);
-        setHasSearchedCars(true);
-      });
+      filterAvailableVehicles(cars, branch, startDate, endDate)
+        .then((disponibles) => {
+          setCarsFiltered(disponibles);
+          setHasSearchedCars(true);
+        })
+        .catch(() => setSearchError(t("vehicles.searchError")));
 
       navigate(location.pathname, { replace: true, state: {} });
     }
-  }, [location.state, cars, navigate]);
+  }, [location.state, location.pathname, cars, navigate, t]);
 
   const handleSearch = ({ branch, startDate, endDate, startTime, endTime }) => {
     const newSearchData = { branch, startDate, endDate, startTime, endTime };
     setSearchData(newSearchData);
+    setSearchError(null);
 
-    filterAvailableVehicles(cars, branch, startDate, endDate).then((disponibles) => {
-      setCarsFiltered(disponibles);
-      setHasSearchedCars(true);
-    });
+    filterAvailableVehicles(cars, branch, startDate, endDate)
+      .then((disponibles) => {
+        setCarsFiltered(disponibles);
+        setHasSearchedCars(true);
+      })
+      .catch(() => setSearchError(t("vehicles.searchError")));
   };
 
   const handleClearFilters = () => {
@@ -141,15 +152,15 @@ function Home() {
 
             <div className="card-vehicule-container">
               {loading && <p className="search-message">{t("filtersHome.searching")}</p>}
-              {!loading && error && <p className="notFound">{error}</p>}
+              {!loading && (error || searchError) && <p className="notFound">{error || searchError}</p>}
 
-              {!loading && !error && visibleCars.length === 0 && (
+              {!loading && !error && !searchError && visibleCars.length === 0 && (
                 <p className="notFound">
                   {t("filtersHome.noVehiclesFiltered")} <FaSearch />
                 </p>
               )}
 
-              {!loading && !error && visibleCars.length > 0 &&
+              {!loading && !error && !searchError && visibleCars.length > 0 &&
                 visibleCars.map((car) => (
                   <CartVehicule
                     key={car.id}
